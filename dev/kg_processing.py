@@ -17,6 +17,7 @@ import numpy as np
 import torch
 import logging
 from torch import cat
+from collections import defaultdict
 
 logging.basicConfig(
     level=logging.INFO,  
@@ -169,8 +170,12 @@ def clean_knowledge_graph(kg, config):
             logging.info(f'Adding created reverses {[rel for rel in undirected_relations_names]} to the list of known duplicated relations.')
             duplicated_relations_list.extend(undirected_relations_list)
 
-    logging.info("Splitting the dataset into train, validation and test sets...")
-    kg_train, kg_val, kg_test = kg.split_kg(validation=True)
+    if config['clean_kg']['zero_shot_split']:
+        logging.info(f"Zero shot split with relation {config['clean_kg']['zero_shot_split_param']}.")
+        kg_train, kg_val, kg_test = zero_shot_split(kg, config['clean_kg']['zero_shot_split_param'])
+    else:
+        logging.info("Splitting the dataset into train, validation and test sets...")
+        kg_train, kg_val, kg_test = kg.split_kg(validation=True)
 
     kg_train_ok, _ = verify_entity_coverage(kg_train, kg)
     if not kg_train_ok:
@@ -194,9 +199,6 @@ def clean_knowledge_graph(kg, config):
     else:
         logging.info("Entity coverage verified successfully.")
 
-    if config.get("clean_kg", {}).get("rel_swap", False):
-        kg_train, kg_val, kg_test = specs_sets(kg_train, kg_val, kg_test, config)
-
     new_train, new_val, new_test = my_data_redundancy.ensure_entity_coverage(kg_train, kg_val, kg_test)
 
 
@@ -214,85 +216,112 @@ def clean_knowledge_graph(kg, config):
 
     return new_train, new_val, new_test
 
-def specs_sets(kg_train, kg_val, kg_test, config):
-    """
-    Modify the train, validation, and test sets according to specific relation swapping configurations.
 
-    Parameters
-    ----------
-    kg_train: KnowledgeGraph
-        The training knowledge graph.
-    kg_val: KnowledgeGraph
-        The validation knowledge graph.
-    kg_test: KnowledgeGraph
-        The test knowledge graph.
-    config: dict
-        The configuration dictionary containing relation swapping parameters.
-
-    Returns
-    -------
-    new_kg_train: KnowledgeGraph
-        The modified training knowledge graph.
-    new_kg_val: KnowledgeGraph
-        The modified validation knowledge graph.
-    new_kg_test: KnowledgeGraph
-        The modified test knowledge graph.
-    """
+def zero_shot_split(kg, target_rel, val_ratio=0.1, test_ratio=0.1):
+    # Create a mask for the target relation
+    is_target = kg.relations == kg.rel2ix[target_rel]
     
-    logging.info(f"Changing relation {config['clean_kg']['rel_swap_params'][0]} to {config['clean_kg']['rel_swap_params'][1]}...")
-    logging.info(f"Triplets from {config['clean_kg']['rel_swap_params'][0]} will be kept only in test set with relation name {config['clean_kg']['rel_swap_params'][1]}...")
+    # Identify triplets related to the target relation
+    target_indices = is_target.nonzero(as_tuple=True)[0]
     
-    df_train, df_val, df_test = kg_train.get_df(), kg_val.get_df(), kg_test.get_df()
-    df_combined = pd.concat([df_train, df_val, df_test])
+    # Define empty masks for train, val, test sets
+    mask_val = torch.zeros_like(is_target)
+    mask_test = torch.zeros_like(is_target)
+    mask_train_target = torch.zeros_like(is_target) # this one is for target triplets to put in train
+    
+    # Identify entities that appear only in target relation (these ones should go to train set)
+    unique_target_heads = torch.unique(kg.head_idx[target_indices])
+    unique_target_tails = torch.unique(kg.tail_idx[target_indices])
+    unique_target_entities = torch.unique(torch.cat([unique_target_heads, unique_target_tails]))
+    
+    only_target_entities = []
+    for entity in unique_target_entities:
+        entity_in_triplet = (kg.head_idx == entity) | (kg.tail_idx == entity)
+        if (entity_in_triplet & ~is_target).sum() == 0:  # entity only seen in target rel
+            only_target_entities.append(entity.item())
+            mask_train_target = mask_train_target | entity_in_triplet
+    
+    # Every triple that is not a target triple, or has an entity only seen in target rel, goes to train set
+    mask_train = ~is_target | mask_train_target
 
-    # Identify drugs and diseases with the "orpha_treatment" relation
-    drugs = df_combined[df_combined["rel"] == config['clean_kg']["rel_swap_params"][0]]["from"].values
-    diseases = df_combined[df_combined["rel"] == config['clean_kg']["rel_swap_params"][0]]["to"].values
-    kg_df_no_orpha = df_combined[df_combined["rel"] != config['clean_kg']["rel_swap_params"][0]]
+    # If the triple was sent to train because of the tail, we need to add tro the train set every target triplets with the same head
+    train_target_heads = torch.unique(kg.head_idx[mask_train_target & is_target])
+    for head in train_target_heads:
+        same_head_target = (kg.head_idx == head) & is_target
+        mask_train_target = mask_train_target | same_head_target
 
-    # Determine entities connected by other relations
-    set_from = set(kg_df_no_orpha["from"])
-    set_to = set(kg_df_no_orpha["to"])
-    union_set = set_from.union(set_to)
+    # We update mask_train to include those that are not target OR marked as train_target
+    mask_train = ~is_target | mask_train_target
 
-    # Identify missing drugs and diseases
-    missing_drugs = [drug for drug in drugs if drug not in union_set]
-    missing_diseases = [disease for disease in diseases if disease not in union_set]
-
-    # Separate relations to test and modify
-    to_test = df_train[
-        (df_train['rel'] == config['clean_kg']["rel_swap_params"][0]) &
-        (~(df_train['from'].isin(missing_drugs)) | (df_train['to'].isin(missing_diseases)))
-    ]
-    to_modify = df_train[
-        (df_train['rel'] == config['clean_kg']["rel_swap_params"][0]) &
-        ((df_train['from'].isin(missing_drugs)) | (df_train['to'].isin(missing_diseases)))
-    ]
-
-    df_train = df_train.drop(to_test.index)
-    to_test['rel'] = config['clean_kg']["rel_swap_params"][1]
-    df_test = pd.concat([df_test, to_test])
-    df_train.loc[to_modify.index, 'rel'] = config['clean_kg']["rel_swap_params"][1]
-    df_val.loc[df_val['rel'] == config['clean_kg']["rel_swap_params"][0], 'rel'] = config['clean_kg']["rel_swap_params"][1]
-
-    if not config['clean_kg']["mixed_test"]:
-        rels_in_test = config['clean_kg']["mixed_params"]
-        logging.info(f'Keeping only relations {rels_in_test} in the test set and validation set.')
-        to_transfer = df_test[~df_test['rel'].isin(rels_in_test)]
-        to_transfer_val = df_val[~df_val['rel'].isin(rels_in_test)]
-
-        df_train = pd.concat([df_train, to_transfer, to_transfer_val])
-        df_test = df_test[df_test['rel'].isin(rels_in_test)]
-        df_val = df_val[df_val['rel'].isin(rels_in_test)]
-
-    # Update entity and relation dictionaries
-    df_combined = pd.concat([df_train, df_val, df_test])
-    ent2ix = {entity: idx for idx, entity in enumerate(pd.concat([df_combined['from'], df_combined['to']]).unique())}
-    rel2ix = {relation: idx for idx, relation in enumerate(df_combined['rel'].unique())}
-
-    # Re-create KnowledgeGraph objects
-    new_kg_train = my_knowledge_graph.KnowledgeGraph(df=df_train, ent2ix=ent2ix, rel2ix=rel2ix)
-    new_kg_val = my_knowledge_graph.KnowledgeGraph(df=df_val, ent2ix=ent2ix, rel2ix=rel2ix)
-    new_kg_test = my_knowledge_graph.KnowledgeGraph(df=df_test, ent2ix=ent2ix, rel2ix=rel2ix)
-
-    return new_kg_train, new_kg_val, new_kg_test
+    
+    # Group triples by head for the target relation
+    remaining_target_mask = is_target & ~mask_train_target
+    remaining_target_indices = remaining_target_mask.nonzero(as_tuple=True)[0]
+    
+    head_to_indices = defaultdict(list)
+    for idx in remaining_target_indices.tolist():
+        head = kg.head_idx[idx].item()
+        head_to_indices[head].append(idx)
+    
+    # Split greedy based on the number of triplets per head
+    remaining_heads = list(head_to_indices.keys())
+    random.shuffle(remaining_heads)
+    
+    total_triplets = sum(len(v) for v in head_to_indices.values())
+    target_val_count = int(val_ratio * total_triplets)
+    target_test_count = int(test_ratio * total_triplets)
+    
+    val_heads = []
+    test_heads = []
+    val_total = 0
+    test_total = 0
+    
+    for head in remaining_heads:
+        triplets = head_to_indices[head]
+        n = len(triplets)
+        
+        if val_total + n <= target_val_count:
+            val_heads.append(head)
+            val_total += n
+        elif test_total + n <= target_test_count:
+            test_heads.append(head)
+            test_total += n
+    
+    # Update masks for val and test
+    for h in val_heads:
+        mask_val[head_to_indices[h]] = True
+    
+    for h in test_heads:
+        mask_test[head_to_indices[h]] = True
+    
+    # Final update for the train mask (in case there are remaining target triplets)
+    mask_train = mask_train | (~mask_val & ~mask_test & is_target)
+    
+    train_kg = my_knowledge_graph.KnowledgeGraph(
+        kg={'heads': kg.head_idx[mask_train],
+        'tails': kg.tail_idx[mask_train],
+        'relations': kg.relations[mask_train]},
+        ent2ix=kg.ent2ix, rel2ix=kg.rel2ix,
+        dict_of_heads=kg.dict_of_heads,
+        dict_of_tails=kg.dict_of_tails,
+        dict_of_rels=kg.dict_of_rels)
+    
+    val_kg = my_knowledge_graph.KnowledgeGraph(
+            kg={'heads': kg.head_idx[mask_val],
+            'tails': kg.tail_idx[mask_val],
+            'relations': kg.relations[mask_val]},
+            ent2ix=kg.ent2ix, rel2ix=kg.rel2ix,
+            dict_of_heads=kg.dict_of_heads,
+            dict_of_tails=kg.dict_of_tails,
+            dict_of_rels=kg.dict_of_rels)
+    
+    test_kg = my_knowledge_graph.KnowledgeGraph(
+            kg={'heads': kg.head_idx[mask_test],
+            'tails': kg.tail_idx[mask_test],
+            'relations': kg.relations[mask_test]},
+            ent2ix=kg.ent2ix, rel2ix=kg.rel2ix,
+            dict_of_heads=kg.dict_of_heads,
+            dict_of_tails=kg.dict_of_tails,
+            dict_of_rels=kg.dict_of_rels)
+    
+    return train_kg, val_kg, test_kg

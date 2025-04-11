@@ -1,0 +1,102 @@
+2025-04-10 15:53:41,924 - WARNING - /home/galadriel/anaconda3/envs/benchmark/lib/python3.9/site-packages/torch/__config__.py:10: UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 11040). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver. (Triggered internally at ../c10/cuda/CUDAFunctions.cpp:108.)
+  return torch._C._show_config()
+
+2025-04-10 15:53:43,880 - WARNING - /home/galadriel/anaconda3/envs/benchmark/lib/python3.9/site-packages/ignite/handlers/checkpoint.py:16: DeprecationWarning: `TorchScript` support for functional optimizers is deprecated and will be removed in a future PyTorch release. Consider using the `torch.compile` optimizer instead.
+  from torch.distributed.optim import ZeroRedundancyOptimizer
+
+2025-04-10 15:53:43,911 - INFO - Configuration loaded:
+{
+    "common": {
+        "seed": 42,
+        "input_csv": "/home/galadriel/dr_benchmark/knowledge_graph/shep_kg_without_orphan_treatments.csv",
+        "out": "/home/galadriel/dr_benchmark/DL3experiment/zero_shot/kg_processing/",
+        "run_kg_prep": true,
+        "run_training": false,
+        "run_evaluation": false
+    },
+    "clean_kg": {
+        "remove_duplicates_triplets": true,
+        "make_directed": true,
+        "make_directed_params": [
+            "disease_disease",
+            "drug_drug",
+            "protein_protein"
+        ],
+        "check_DL1": true,
+        "check_DL1_params": {
+            "theta1": 0.8,
+            "theta2": 0.8
+        },
+        "permute_kg": false,
+        "zero_shot_split": true,
+        "zero_shot_split_param": "indication",
+        "clean_train_set": true
+    }
+}
+2025-04-10 15:53:43,912 - INFO - Setting number of threads to 20
+2025-04-10 15:53:43,912 - INFO - Loading parameters from /home/galadriel/dr_benchmark/DL3experiment/zero_shot/kg_processing/params.yaml
+2025-04-10 15:53:43,913 - INFO - Output folder: /home/galadriel/dr_benchmark/DL3experiment/zero_shot/kg_processing/
+2025-04-10 15:53:43,913 - INFO - Preparing KG...
+2025-04-10 15:53:52,101 - WARNING - /home/galadriel/dr_benchmark/dev/kg_processing.py:98: DtypeWarning: Columns (2,6) have mixed types. Specify dtype option on import or set low_memory=False.
+  kg_df = pd.read_csv(input_file, sep="\t")[["my_x_id", "my_y_id", "relation"]]
+
+2025-04-10 15:55:36,707 - INFO - Removing duplicated triplets...
+  0%|          | 0/30 [00:00<?, ?it/s]  7%|▋         | 2/30 [00:00<00:04,  6.63it/s] 13%|█▎        | 4/30 [00:00<00:03,  8.09it/s] 17%|█▋        | 5/30 [00:01<00:07,  3.38it/s] 23%|██▎       | 7/30 [00:01<00:07,  3.14it/s]2025-04-10 15:55:38,861 - INFO - 52 duplicates found. Keeping 86247 unique triplets for relation 7
+ 27%|██▋       | 8/30 [00:02<00:06,  3.32it/s]2025-04-10 15:55:46,292 - INFO - 1336314 duplicates found. Keeping 1336314 unique triplets for relation 8
+ 30%|███       | 9/30 [00:09<00:45,  2.16s/it] 33%|███▎      | 10/30 [00:09<00:32,  1.63s/it]2025-04-10 15:55:46,617 - INFO - 185 duplicates found. Keeping 25468 unique triplets for relation 10
+ 40%|████      | 12/30 [00:09<00:17,  1.05it/s]2025-04-10 15:55:46,714 - INFO - 70 duplicates found. Keeping 2070 unique triplets for relation 14
+ 60%|██████    | 18/30 [00:10<00:04,  2.91it/s]2025-04-10 15:55:46,936 - INFO - 16 duplicates found. Keeping 21909 unique triplets for relation 21
+ 73%|███████▎  | 22/30 [00:10<00:01,  4.39it/s] 83%|████████▎ | 25/30 [00:10<00:01,  4.69it/s] 90%|█████████ | 27/30 [00:11<00:00,  4.66it/s] 97%|█████████▋| 29/30 [00:15<00:00,  1.38it/s]100%|██████████| 30/30 [00:16<00:00,  1.34it/s]100%|██████████| 30/30 [00:16<00:00,  1.78it/s]
+2025-04-10 15:57:08,795 - INFO - Checking for semantically redundant and Cartesian product relations...
+  0%|          | 0/30 [00:00<?, ?it/s]  3%|▎         | 1/30 [00:00<00:04,  6.19it/s]  7%|▋         | 2/30 [00:00<00:11,  2.50it/s] 10%|█         | 3/30 [00:00<00:07,  3.74it/s] 13%|█▎        | 4/30 [00:01<00:07,  3.50it/s] 17%|█▋        | 5/30 [00:01<00:07,  3.13it/s] 23%|██▎       | 7/30 [00:03<00:16,  1.39it/s] 27%|██▋       | 8/30 [00:04<00:17,  1.29it/s] 30%|███       | 9/30 [00:22<01:52,  5.35s/it] 33%|███▎      | 10/30 [00:23<01:23,  4.16s/it] 37%|███▋      | 11/30 [00:23<00:58,  3.07s/it] 43%|████▎     | 13/30 [00:23<00:29,  1.71s/it] 57%|█████▋    | 17/30 [00:23<00:09,  1.31it/s] 63%|██████▎   | 19/30 [00:24<00:06,  1.72it/s] 73%|███████▎  | 22/30 [00:24<00:03,  2.50it/s] 80%|████████  | 24/30 [00:24<00:02,  2.95it/s] 87%|████████▋ | 26/30 [00:30<00:03,  1.02it/s] 90%|█████████ | 27/30 [00:30<00:02,  1.06it/s] 93%|█████████▎| 28/30 [00:31<00:01,  1.18it/s] 97%|█████████▋| 29/30 [00:50<00:04,  4.82s/it]100%|██████████| 30/30 [00:54<00:00,  4.53s/it]100%|██████████| 30/30 [00:54<00:00,  1.81s/it]
+2025-04-10 15:58:03,037 - INFO - Finding duplicate relations
+  0%|          | 0/435 [00:00<?, ?it/s] 11%|█▏        | 50/435 [00:00<00:00, 491.75it/s] 23%|██▎       | 100/435 [00:00<00:00, 489.29it/s] 34%|███▍      | 149/435 [00:00<00:00, 438.28it/s] 45%|████▍     | 194/435 [00:00<00:00, 287.37it/s] 53%|█████▎    | 229/435 [00:01<00:01, 149.59it/s] 60%|█████▉    | 259/435 [00:01<00:01, 172.07it/s] 93%|█████████▎| 404/435 [00:01<00:00, 396.06it/s]100%|██████████| 435/435 [00:01<00:00, 276.01it/s]
+2025-04-10 15:58:04,614 - INFO - Duplicate relations: 0
+2025-04-10 15:58:04,614 - INFO - Reverse duplicate relations: 0
+
+  0%|          | 0/30 [00:00<?, ?it/s]  3%|▎         | 1/30 [00:00<00:03,  8.82it/s]  7%|▋         | 2/30 [00:00<00:04,  6.43it/s] 13%|█▎        | 4/30 [00:00<00:02, 10.79it/s] 20%|██        | 6/30 [00:00<00:02,  9.45it/s] 27%|██▋       | 8/30 [00:01<00:04,  4.41it/s] 30%|███       | 9/30 [00:08<00:35,  1.67s/it] 33%|███▎      | 10/30 [00:08<00:26,  1.33s/it] 37%|███▋      | 11/30 [00:08<00:19,  1.02s/it] 40%|████      | 12/30 [00:08<00:14,  1.27it/s] 47%|████▋     | 14/30 [00:08<00:07,  2.12it/s] 60%|██████    | 18/30 [00:08<00:02,  4.39it/s] 67%|██████▋   | 20/30 [00:09<00:02,  4.35it/s] 73%|███████▎  | 22/30 [00:09<00:01,  4.34it/s] 80%|████████  | 24/30 [00:10<00:01,  4.60it/s] 83%|████████▎ | 25/30 [00:10<00:01,  3.73it/s] 87%|████████▋ | 26/30 [00:13<00:03,  1.26it/s] 90%|█████████ | 27/30 [00:13<00:01,  1.51it/s] 93%|█████████▎| 28/30 [00:14<00:01,  1.87it/s] 97%|█████████▋| 29/30 [00:20<00:02,  2.14s/it]100%|██████████| 30/30 [00:21<00:00,  1.81s/it]100%|██████████| 30/30 [00:21<00:00,  1.38it/s]
+2025-04-10 15:58:27,571 - INFO - Adding reverse triplets for relations disease_disease, drug_drug, protein_protein...
+2025-04-10 15:59:07,390 - INFO - Adding created reverses ['disease_disease', 'drug_drug', 'protein_protein'] to the list of known redundant relations.
+2025-04-10 15:59:07,390 - INFO - Zero shot split with relation indication.
+2025-04-10 15:59:51,336 - INFO - Entity coverage verified successfully.
+2025-04-10 15:59:51,336 - INFO - Cleaning the train set to avoid data leakage...
+2025-04-10 15:59:51,336 - INFO - Step 1: with respect to validation set.
+2025-04-10 15:59:51,336 - INFO - Processing relation pair: (4, 30)
+2025-04-10 16:00:46,245 - INFO - Found 0 triplets to remove for relation 30 with reverse 4.
+2025-04-10 16:01:38,758 - INFO - Found 0 reverse triplets to remove for relation 4 with reverse 30.
+2025-04-10 16:01:38,758 - INFO - Processing relation pair: (8, 31)
+2025-04-10 16:02:32,080 - INFO - Found 0 triplets to remove for relation 31 with reverse 8.
+2025-04-10 16:03:24,324 - INFO - Found 0 reverse triplets to remove for relation 8 with reverse 31.
+2025-04-10 16:03:24,324 - INFO - Processing relation pair: (29, 32)
+2025-04-10 16:04:17,315 - INFO - Found 0 triplets to remove for relation 32 with reverse 29.
+2025-04-10 16:05:10,249 - INFO - Found 0 reverse triplets to remove for relation 29 with reverse 32.
+2025-04-10 16:05:10,253 - INFO - Step 2: with respect to test set.
+2025-04-10 16:05:10,253 - INFO - Processing relation pair: (4, 30)
+2025-04-10 16:06:06,297 - INFO - Found 0 triplets to remove for relation 30 with reverse 4.
+2025-04-10 16:06:59,686 - INFO - Found 0 reverse triplets to remove for relation 4 with reverse 30.
+2025-04-10 16:06:59,687 - INFO - Processing relation pair: (8, 31)
+2025-04-10 16:07:52,152 - INFO - Found 0 triplets to remove for relation 31 with reverse 8.
+2025-04-10 16:08:44,264 - INFO - Found 0 reverse triplets to remove for relation 8 with reverse 31.
+2025-04-10 16:08:44,265 - INFO - Processing relation pair: (29, 32)
+2025-04-10 16:09:36,232 - INFO - Found 0 triplets to remove for relation 32 with reverse 29.
+2025-04-10 16:10:32,704 - INFO - Found 0 reverse triplets to remove for relation 29 with reverse 32.
+2025-04-10 16:10:33,748 - INFO - Entity coverage verified successfully.
+2025-04-10 16:10:34,250 - INFO - Total entities in full kg: 134026
+2025-04-10 16:10:34,250 - INFO - Entities present in kg_train: 134026
+2025-04-10 16:10:34,250 - INFO - Missing entities in kg_train: 0
+2025-04-10 16:10:35,318 - INFO - Entity coverage verified successfully.
+2025-04-10 16:10:35,318 - INFO - Computing triplet proportions...
+2025-04-10 16:10:35,374 - INFO - {0: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 1: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 2: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 3: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 4: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 5: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 6: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 7: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 8: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 9: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 10: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 11: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 12: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 13: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 14: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 15: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 16: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 17: {'train': 0.8059299191374663, 'test': 0.09703504043126684, 'val': 0.09703504043126684}, 18: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 19: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 20: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 21: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 22: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 23: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 24: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 25: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 26: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 27: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 28: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 29: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 30: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 31: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 32: {'train': 1.0, 'test': 0.0, 'val': 0.0}}
+2025-04-10 16:10:35,374 - INFO - Saving results to /home/galadriel/dr_benchmark/DL3experiment/zero_shot/kg_processing/kg.pkl...
+2025-04-10 16:10:51,787 - INFO - Detected device: cpu
+2025-04-10 16:10:51,787 - INFO - Initializing model...
+Traceback (most recent call last):
+  File "/home/galadriel/dr_benchmark/dev/run_training.py", line 929, in <module>
+    main(args)
+  File "/home/galadriel/dr_benchmark/dev/run_training.py", line 89, in main
+    train_model(kg_train, kg_val, kg_test, config)
+  File "/home/galadriel/dr_benchmark/dev/run_training.py", line 534, in train_model
+    model, criterion = initialize_model(config, kg_train, device)
+  File "/home/galadriel/dr_benchmark/dev/run_training.py", line 122, in initialize_model
+    model_name = config['model'].get('name', 'TransE')
+KeyError: 'model'
