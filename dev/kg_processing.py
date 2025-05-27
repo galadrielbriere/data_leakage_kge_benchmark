@@ -135,19 +135,20 @@ def clean_knowledge_graph(kg, config):
 
     duplicated_relations_list = []
 
-    if config['clean_kg']['check_synonymous_antisynonymous']:
-        logging.info("Checking for synonymous and antisynonymous relations...")
-        theta1 = config['clean_kg']['check_synonymous_antisynonymous_params']['theta1']
-        theta2 = config['clean_kg']['check_synonymous_antisynonymous_params']['theta2']
+    if config['clean_kg']['check_DL1']:
+        logging.info("Checking for semantically redundant and Cartesian product relations...")
+        theta1 = config['clean_kg']['check_DL1_params']['theta1']
+        theta2 = config['clean_kg']['check_DL1_params']['theta2']
+
         duplicates_relations, rev_duplicates_relations = my_data_redundancy.duplicates(kg, theta1=theta1, theta2=theta2)
         if duplicates_relations:
-            logging.info(f'Adding {len(duplicates_relations)} synonymous relations ({[id_to_rel_name[rel] for rel in duplicates_relations]}) to the list of known duplicated relations.')
+            logging.info(f'Adding {len(duplicates_relations)} near-duplicate relations ({[id_to_rel_name[rel] for rel in duplicates_relations]}) to the list of known redundant relations.')
             duplicated_relations_list.extend(duplicates_relations)
         if rev_duplicates_relations:
-            logging.info(f'Adding {len(rev_duplicates_relations)} anti-synonymous relations ({[id_to_rel_name[rel] for rel in rev_duplicates_relations]}) to the list of known duplicated relations.')
+            logging.info(f'Adding {len(rev_duplicates_relations)} near-reverse-duplicate relations ({[id_to_rel_name[rel] for rel in rev_duplicates_relations]}) to the list of known redundant relations.')
             duplicated_relations_list.extend(rev_duplicates_relations)
-    
-        theta = config['clean_kg']['check_synonymous_antisynonymous_params']['theta']
+
+        theta = config.get("clean_kg", {}).get("check_DL1_params", {}).get("theta", 0.8)
         cartesian_rels = my_data_redundancy.cartesian_product_relations(kg, theta=theta)
         if cartesian_rels:
             logging.info(f'Adding {len(cartesian_rels)} Cartesian product relations ({[id_to_rel_name[rel] for rel in cartesian_rels]}) to the list of known Cartesian product relations.')
@@ -166,13 +167,13 @@ def clean_knowledge_graph(kg, config):
         logging.info(f'Adding reverse triplets for relations {relation_names}...')
         kg, undirected_relations_list = my_data_redundancy.add_inverse_relations(kg, [kg.rel2ix[key] for key in undirected_relations_names])
             
-        if config['clean_kg']['check_synonymous_antisynonymous']:
-            logging.info(f'Adding created reverses {[rel for rel in undirected_relations_names]} to the list of known duplicated relations.')
+        if config['clean_kg']['check_DL1']:
+            logging.info(f'Adding created reverses {[rel for rel in undirected_relations_names]} to the list of known redundant relations.')
             duplicated_relations_list.extend(undirected_relations_list)
 
     if config['clean_kg']['zero_shot_split']:
         logging.info(f"Zero shot split with relation {config['clean_kg']['zero_shot_split_param']}.")
-        kg_train, kg_val, kg_test = zero_shot_split(kg, config['clean_kg']['zero_shot_split_param'])
+        kg_train, kg_val, kg_test = zero_shot_by_head_frequency_bin(kg, config['clean_kg']['zero_shot_split_param'])
     else:
         logging.info("Splitting the dataset into train, validation and test sets...")
         kg_train, kg_val, kg_test = kg.split_kg(validation=True)
@@ -201,7 +202,6 @@ def clean_knowledge_graph(kg, config):
 
     new_train, new_val, new_test = my_data_redundancy.ensure_entity_coverage(kg_train, kg_val, kg_test)
 
-
     kg_train_ok, missing_entities = verify_entity_coverage(new_train, kg)
     if not kg_train_ok:
         logging.info(f"Entity coverage verification failed. {len(missing_entities)} entities are missing.")
@@ -215,6 +215,132 @@ def clean_knowledge_graph(kg, config):
         logging.info(my_data_redundancy.compute_triplet_proportions(kg_train, kg_test, kg_val))
 
     return new_train, new_val, new_test
+
+
+def zero_shot_by_head_frequency_bin(kg, target_rel, val_ratio=0.1, test_ratio=0.1):
+    # 1. Mask for target relation
+    target_rel_ix = kg.rel2ix[target_rel]
+    is_target = (kg.relations == target_rel_ix)
+    
+    # 2. Indices of target triples
+    target_indices = is_target.nonzero(as_tuple=True)[0]
+    
+    # 3. Counting head frequency in target relation
+    target_heads = kg.head_idx[target_indices]
+    unique_heads, counts = torch.unique(target_heads, return_counts=True)
+    
+    # 4. Bins definition
+    bins = {
+        0: (1, 1),
+        1: (2, 2),
+        2: (3, 5),
+        3: (6, 10),
+        4: (11, 50),
+        5: (51, 100),
+        6: (101, float('inf'))
+    }
+    
+    # 5. Associate each head to its corresponding bin
+    head_to_bin = {}
+    for head, count in zip(unique_heads.tolist(), counts.tolist()):
+        for b, (low, high) in bins.items():
+            if low <= count <= high:
+                head_to_bin[head] = b
+                break
+    
+    # 6. Find target triple index for each head
+    head_to_indices = defaultdict(list)
+    for idx in target_indices.tolist():
+        head = kg.head_idx[idx].item()
+        head_to_indices[head].append(idx)
+    
+    # 7. Fill each bin
+    bin_to_heads = defaultdict(list)
+    for head, b in head_to_bin.items():
+        bin_to_heads[b].append(head)
+    
+    # 8. Masks
+    mask_val = torch.zeros_like(is_target)
+    mask_test = torch.zeros_like(is_target)
+    mask_train_target = torch.zeros_like(is_target)
+    
+    # 9. Non-target triples goes in train
+    mask_train = ~is_target.clone()
+    
+    # 10. Entities appearing only with target relation goes to train
+    unique_target_entities = torch.unique(torch.cat([kg.head_idx[target_indices], kg.tail_idx[target_indices]]))
+    only_target_entities = []
+    for entity in unique_target_entities.tolist():
+        entity_mask = (kg.head_idx == entity) | (kg.tail_idx == entity)
+        if ((entity_mask & ~is_target).sum() == 0):
+            only_target_entities.append(entity)
+            mask_train_target |= entity_mask
+    
+    mask_train |= mask_train_target
+    
+    # 11. Allocate val/test sets proportionally by number of heads per bin 
+    for b, heads in bin_to_heads.items():
+        random.shuffle(heads)
+
+        n_total_heads = len(heads)
+        n_val_heads = int(val_ratio * n_total_heads)
+        n_test_heads = int(test_ratio * n_total_heads)
+
+        # Ensure at least one head goes to val if possible
+        if n_val_heads == 0 and n_total_heads > 0:
+            n_val_heads = 1
+        # Ensure at least one head goes to test if possible and heads remain after val
+        if n_test_heads == 0 and n_total_heads - n_val_heads > 0:
+            n_test_heads = 1
+
+        val_heads = heads[:n_val_heads]
+        test_heads = heads[n_val_heads:n_val_heads + n_test_heads]
+
+        for h in val_heads:
+            mask_val[head_to_indices[h]] = True
+        for h in test_heads:
+            mask_test[head_to_indices[h]] = True
+
+    # 12. Final train update : remaining triples goes in train
+    mask_train |= (is_target & ~(mask_val | mask_test))
+    
+    # 13. Train, validation and test splits
+    train_kg = my_knowledge_graph.KnowledgeGraph(
+        kg={'heads': kg.head_idx[mask_train],
+            'tails': kg.tail_idx[mask_train],
+            'relations': kg.relations[mask_train]},
+        ent2ix=kg.ent2ix, rel2ix=kg.rel2ix,
+        dict_of_heads=kg.dict_of_heads,
+        dict_of_tails=kg.dict_of_tails,
+        dict_of_rels=kg.dict_of_rels)
+    
+    val_kg = my_knowledge_graph.KnowledgeGraph(
+        kg={'heads': kg.head_idx[mask_val],
+            'tails': kg.tail_idx[mask_val],
+            'relations': kg.relations[mask_val]},
+        ent2ix=kg.ent2ix, rel2ix=kg.rel2ix,
+        dict_of_heads=kg.dict_of_heads,
+        dict_of_tails=kg.dict_of_tails,
+        dict_of_rels=kg.dict_of_rels)
+    
+    test_kg = my_knowledge_graph.KnowledgeGraph(
+        kg={'heads': kg.head_idx[mask_test],
+            'tails': kg.tail_idx[mask_test],
+            'relations': kg.relations[mask_test]},
+        ent2ix=kg.ent2ix, rel2ix=kg.rel2ix,
+        dict_of_heads=kg.dict_of_heads,
+        dict_of_tails=kg.dict_of_tails,
+        dict_of_rels=kg.dict_of_rels)
+    
+    # 14. Logging 
+    print("=== Split summary ===")
+    for split_name, mask in zip(['Train', 'Validation', 'Test'], [mask_train, mask_val, mask_test]):
+        idxs = mask.nonzero(as_tuple=True)[0]
+        split_target_idxs = idxs[(kg.relations[idxs] == target_rel_ix)]
+        split_heads = torch.unique(kg.head_idx[split_target_idxs])
+        print(f"{split_name} : {len(split_target_idxs)} target triplets, {len(split_heads)} unique heads")
+    
+    return train_kg, val_kg, test_kg
 
 
 def zero_shot_split(kg, target_rel, val_ratio=0.1, test_ratio=0.1):
