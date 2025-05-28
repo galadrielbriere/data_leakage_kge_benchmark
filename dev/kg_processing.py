@@ -17,7 +17,7 @@ import numpy as np
 import torch
 import logging
 from torch import cat
-from collections import defaultdict
+from collections import defaultdict, Counter
 
 logging.basicConfig(
     level=logging.INFO,  
@@ -216,58 +216,122 @@ def clean_knowledge_graph(kg, config):
 
     return new_train, new_val, new_test
 
+def entity_stats(kg, target_rel: str, split_name: str, position: str = "head", n: int = 5):
+    """
+    Displays statistics for entities (head or tail) involved in a given target relation.
+    
+    Args:
+    - kg: a KnowledgeGraph object with .head_idx, .tail_idx, .relations, .rel2ix
+    - target_rel: name (str) of the target relation (e.g., "indication")
+    - split_name: name (str) of the split for display (e.g., "Train")
+    - position: "head" or "tail" to specify which part of the triplet to analyze
+    """
+    rel_id = kg.rel2ix[target_rel]
+    is_target = kg.relations == rel_id
+    
+    if position == "head":
+        entities = kg.head_idx[is_target].tolist()
+        label = "head"
+    elif position == "tail":
+        entities = kg.tail_idx[is_target].tolist()
+        label = "tail"
+    else:
+        raise ValueError("Position must be either 'head' or 'tail'.")
 
-def zero_shot_by_head_frequency_bin(kg, target_rel, val_ratio=0.1, test_ratio=0.1):
+    counts = Counter(entities)
+
+    logging.info(f"=== {split_name} ===")
+    logging.info(f"Total number of target triplets : {len(entities)}")
+    logging.info(f"Number of unique {label}s       : {len(counts)}")
+    logging.info(f"Top {n} most frequent {label}s:")
+    for i, (entity_id, freq) in enumerate(counts.most_common(n)):
+        logging.info(f"  {i+1}. {label.capitalize()} ID {entity_id} : {freq} times")
+
+def zero_shot_by_head_frequency_bin(kg, target_rel, val_ratio=0.1, test_ratio=0.1, bins=None):
+    """
+    Split a Knowledge Graph for zero-shot learning based on the frequency of heads in a target relation.
+    
+    The function ensures:
+    - Train contains all non-target triples and some target triples.
+    - Validation and test sets only contain triples from the target relation.
+    - Heads in val/test are exclusive (zero-shot) with respect to the target relation.
+    - Distribution of heads in val/test is stratified by frequency bin.
+    - All entities appear at least once in the train split.
+
+    Args:
+        kg: KnowledgeGraph object with attributes `head_idx`, `tail_idx`, `relations`, etc.
+        target_rel (str): Name of the target relation.
+        val_ratio (float): Ratio of unique heads (per bin) to assign to the validation set.
+        test_ratio (float): Ratio of unique heads (per bin) to assign to the test set.
+        bins (dict, optional): Dictionary defining frequency bins. 
+            Keys are bin IDs, values are (min_count, max_count) tuples.
+            Default bins:
+                {
+                    0: (1, 1),
+                    1: (2, 2),
+                    2: (3, 5),
+                    3: (6, 10),
+                    4: (11, 50),
+                    5: (51, 100),
+                    6: (101, float('inf'))
+                }
+
+    Returns:
+        train_kg, val_kg, test_kg: Splits of the original KnowledgeGraph.
+    """
+    
+    # Default bins if not provided
+    if bins is None:
+        bins = {
+            0: (1, 1),
+            1: (2, 2),
+            2: (3, 5),
+            3: (6, 10),
+            4: (11, 50),
+            5: (51, 100),
+            6: (101, 129),
+            7: (130, float('inf'))
+        }
+
     # 1. Mask for target relation
     target_rel_ix = kg.rel2ix[target_rel]
     is_target = (kg.relations == target_rel_ix)
-    
+
     # 2. Indices of target triples
     target_indices = is_target.nonzero(as_tuple=True)[0]
-    
-    # 3. Counting head frequency in target relation
+
+    # 3. Count head frequencies in the target relation
     target_heads = kg.head_idx[target_indices]
     unique_heads, counts = torch.unique(target_heads, return_counts=True)
-    
-    # 4. Bins definition
-    bins = {
-        0: (1, 1),
-        1: (2, 2),
-        2: (3, 5),
-        3: (6, 10),
-        4: (11, 50),
-        5: (51, 100),
-        6: (101, float('inf'))
-    }
-    
-    # 5. Associate each head to its corresponding bin
+
+    # 4. Assign each head to its frequency bin
     head_to_bin = {}
     for head, count in zip(unique_heads.tolist(), counts.tolist()):
         for b, (low, high) in bins.items():
             if low <= count <= high:
                 head_to_bin[head] = b
                 break
-    
-    # 6. Find target triple index for each head
+
+    # 5. Map heads to their target triple indices
     head_to_indices = defaultdict(list)
     for idx in target_indices.tolist():
         head = kg.head_idx[idx].item()
         head_to_indices[head].append(idx)
-    
-    # 7. Fill each bin
+
+    # 6. Group heads by bins
     bin_to_heads = defaultdict(list)
     for head, b in head_to_bin.items():
         bin_to_heads[b].append(head)
-    
-    # 8. Masks
+
+    # 7. Prepare split masks
     mask_val = torch.zeros_like(is_target)
     mask_test = torch.zeros_like(is_target)
     mask_train_target = torch.zeros_like(is_target)
-    
-    # 9. Non-target triples goes in train
+
+    # 8. Add all non-target triples to train
     mask_train = ~is_target.clone()
-    
-    # 10. Entities appearing only with target relation goes to train
+
+    # 9. Ensure entities appearing only in target relation are in train
     unique_target_entities = torch.unique(torch.cat([kg.head_idx[target_indices], kg.tail_idx[target_indices]]))
     only_target_entities = []
     for entity in unique_target_entities.tolist():
@@ -275,36 +339,32 @@ def zero_shot_by_head_frequency_bin(kg, target_rel, val_ratio=0.1, test_ratio=0.
         if ((entity_mask & ~is_target).sum() == 0):
             only_target_entities.append(entity)
             mask_train_target |= entity_mask
-    
     mask_train |= mask_train_target
-    
-    # 11. Allocate val/test sets proportionally by number of heads per bin 
+
+    # 10. Allocate val/test sets per bin
     for b, heads in bin_to_heads.items():
         random.shuffle(heads)
+        n_total = len(heads)
+        n_val = int(val_ratio * n_total)
+        n_test = int(test_ratio * n_total)
 
-        n_total_heads = len(heads)
-        n_val_heads = int(val_ratio * n_total_heads)
-        n_test_heads = int(test_ratio * n_total_heads)
+        if n_val == 0 and n_total > 0:
+            n_val = 1
+        if n_test == 0 and n_total - n_val > 0:
+            n_test = 1
 
-        # Ensure at least one head goes to val if possible
-        if n_val_heads == 0 and n_total_heads > 0:
-            n_val_heads = 1
-        # Ensure at least one head goes to test if possible and heads remain after val
-        if n_test_heads == 0 and n_total_heads - n_val_heads > 0:
-            n_test_heads = 1
-
-        val_heads = heads[:n_val_heads]
-        test_heads = heads[n_val_heads:n_val_heads + n_test_heads]
+        val_heads = heads[:n_val]
+        test_heads = heads[n_val:n_val + n_test]
 
         for h in val_heads:
             mask_val[head_to_indices[h]] = True
         for h in test_heads:
             mask_test[head_to_indices[h]] = True
 
-    # 12. Final train update : remaining triples goes in train
+    # 11. Remaining target triples go to train
     mask_train |= (is_target & ~(mask_val | mask_test))
-    
-    # 13. Train, validation and test splits
+
+    # 12. Create final KG splits (kept identical to your original version)
     train_kg = my_knowledge_graph.KnowledgeGraph(
         kg={'heads': kg.head_idx[mask_train],
             'tails': kg.tail_idx[mask_train],
@@ -313,7 +373,7 @@ def zero_shot_by_head_frequency_bin(kg, target_rel, val_ratio=0.1, test_ratio=0.
         dict_of_heads=kg.dict_of_heads,
         dict_of_tails=kg.dict_of_tails,
         dict_of_rels=kg.dict_of_rels)
-    
+
     val_kg = my_knowledge_graph.KnowledgeGraph(
         kg={'heads': kg.head_idx[mask_val],
             'tails': kg.tail_idx[mask_val],
@@ -322,7 +382,7 @@ def zero_shot_by_head_frequency_bin(kg, target_rel, val_ratio=0.1, test_ratio=0.
         dict_of_heads=kg.dict_of_heads,
         dict_of_tails=kg.dict_of_tails,
         dict_of_rels=kg.dict_of_rels)
-    
+
     test_kg = my_knowledge_graph.KnowledgeGraph(
         kg={'heads': kg.head_idx[mask_test],
             'tails': kg.tail_idx[mask_test],
@@ -331,15 +391,23 @@ def zero_shot_by_head_frequency_bin(kg, target_rel, val_ratio=0.1, test_ratio=0.
         dict_of_heads=kg.dict_of_heads,
         dict_of_tails=kg.dict_of_tails,
         dict_of_rels=kg.dict_of_rels)
-    
-    # 14. Logging 
-    print("=== Split summary ===")
+
+    # 13. Logging
+    logging.info("=== Split summary ===")
     for split_name, mask in zip(['Train', 'Validation', 'Test'], [mask_train, mask_val, mask_test]):
         idxs = mask.nonzero(as_tuple=True)[0]
         split_target_idxs = idxs[(kg.relations[idxs] == target_rel_ix)]
         split_heads = torch.unique(kg.head_idx[split_target_idxs])
-        print(f"{split_name} : {len(split_target_idxs)} target triplets, {len(split_heads)} unique heads")
-    
+        logging.info(f"{split_name} : {len(split_target_idxs)} target triplets, {len(split_heads)} unique heads")
+
+    entity_stats(train_kg, target_rel=target_rel, split_name="Train", position="head")  
+    entity_stats(val_kg, target_rel=target_rel, split_name="Validation", position="head")  
+    entity_stats(test_kg, target_rel=target_rel, split_name="Test", position="head")  
+
+    entity_stats(train_kg, target_rel=target_rel, split_name="Train", position="tail")  
+    entity_stats(val_kg, target_rel=target_rel, split_name="Validation", position="tail")  
+    entity_stats(test_kg, target_rel=target_rel, split_name="Test", position="tail")  
+
     return train_kg, val_kg, test_kg
 
 
@@ -451,3 +519,4 @@ def zero_shot_split(kg, target_rel, val_ratio=0.1, test_ratio=0.1):
             dict_of_rels=kg.dict_of_rels)
     
     return train_kg, val_kg, test_kg
+
