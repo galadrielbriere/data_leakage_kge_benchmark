@@ -30,7 +30,6 @@ import networkx as nx
 
 from torchkge.utils.datasets import load_fb15k
 
-from torchkge.evaluation import LinkPredictionEvaluator
 from torchkge.utils import MarginLoss, BinaryCrossEntropyLoss, DataLoader
 
 from ignite.metrics import RunningAverage
@@ -45,6 +44,7 @@ from kg_processing import (
 )
 
 from my_knowledge_graph import KnowledgeGraph
+from my_evaluation import LinkPredictionEvaluator
 from mixed_sampler import MixedNegativeSampler
 from positional_sampler import PositionalNegativeSampler
 
@@ -899,7 +899,15 @@ def train_model(kg_train, kg_val, kg_test, config):
             inference_mrr = evaluator.mrr()[1]
             inference_hit10 = evaluator.hit_at_k(10)[1]
 
-            results = {"Inference MRR": inference_mrr, "Inference hit@10:": inference_hit10}
+            evaluator = LinkPredictionEvaluator(new_model, orpha_kg)
+            candidate_idx = [idx for name, idx in orpha_kg.ent2ix.items() if name.startswith("disease_")]
+            evaluator.evaluate(b_size=eval_batch_size, verbose=True, candidate_idx=candidate_idx, mode="tail")
+    
+            inference_mrr_diseases = evaluator.mrr()[1]
+            inference_hit10_diseases = evaluator.hit_at_k_tails(10)[1]
+
+            results = {"Inference MRR": inference_mrr, "Inference hit@10:": inference_hit10,
+                       "Inference MRR Diseases": inference_mrr_diseases, "Inference hit@10 Diseases": inference_hit10_diseases}
 
             logging.info(f"MRR on inference set: {inference_mrr}")
 
