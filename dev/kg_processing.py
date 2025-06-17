@@ -171,9 +171,13 @@ def clean_knowledge_graph(kg, config):
             logging.info(f'Adding created reverses {[rel for rel in undirected_relations_names]} to the list of known redundant relations.')
             duplicated_relations_list.extend(undirected_relations_list)
 
-    if config['clean_kg']['zero_shot_split']:
-        logging.info(f"Zero shot split with relation {config['clean_kg']['zero_shot_split_param']}.")
-        kg_train, kg_val, kg_test = zero_shot_by_head_frequency_bin(kg, config['clean_kg']['zero_shot_split_param'])
+    if config['clean_kg']['cold_start_split']:
+        if config['clean_kg']['cold_start_split'] == "head":
+            logging.info(f"Cold start split with relation {config['clean_kg']['cold_start_split_param']}.")
+            kg_train, kg_val, kg_test = cold_start_by_head_frequency_bin(kg, config['clean_kg']['cold_start_split_param'])
+        elif config['clean_kg']['cold_start_split'] == "tail":
+            logging.info(f"Cold start split with relation {config['clean_kg']['cold_start_split_param']}.")
+            kg_train, kg_val, kg_test = cold_start_by_tail_frequency_bin(kg, config['clean_kg']['cold_start_split_param'])
     else:
         logging.info("Splitting the dataset into train, validation and test sets...")
         kg_train, kg_val, kg_test = kg.split_kg(validation=True)
@@ -247,14 +251,14 @@ def entity_stats(kg, target_rel: str, split_name: str, position: str = "head", n
     for i, (entity_id, freq) in enumerate(counts.most_common(n)):
         logging.info(f"  {i+1}. {label.capitalize()} ID {entity_id} : {freq} times")
 
-def zero_shot_by_head_frequency_bin(kg, target_rel, val_ratio=0.1, test_ratio=0.1, bins=None):
+def cold_start_by_head_frequency_bin(kg, target_rel, val_ratio=0.1, test_ratio=0.1, bins=None):
     """
-    Split a Knowledge Graph for zero-shot learning based on the frequency of heads in a target relation.
-    
+    Split a Knowledge Graph for cold start learning based on the frequency of heads in a target relation.
+
     The function ensures:
     - Train contains all non-target triples and some target triples.
     - Validation and test sets only contain triples from the target relation.
-    - Heads in val/test are exclusive (zero-shot) with respect to the target relation.
+    - Heads in val/test are exclusive (cold start) with respect to the target relation.
     - Distribution of heads in val/test is stratified by frequency bin.
     - All entities appear at least once in the train split.
 
@@ -393,7 +397,7 @@ def zero_shot_by_head_frequency_bin(kg, target_rel, val_ratio=0.1, test_ratio=0.
         dict_of_rels=kg.dict_of_rels)
 
     # 13. Logging
-    logging.info("=== Split summary ===")
+    logging.info("=== Head-based Cold Start Split Summary ===")
     for split_name, mask in zip(['Train', 'Validation', 'Test'], [mask_train, mask_val, mask_test]):
         idxs = mask.nonzero(as_tuple=True)[0]
         split_target_idxs = idxs[(kg.relations[idxs] == target_rel_ix)]
@@ -410,8 +414,142 @@ def zero_shot_by_head_frequency_bin(kg, target_rel, val_ratio=0.1, test_ratio=0.
 
     return train_kg, val_kg, test_kg
 
+def cold_start_by_tail_frequency_bin(kg, target_rel, val_ratio=0.1, test_ratio=0.1, bins=None):
+    """
+    Split a Knowledge Graph for cold start learning based on the frequency of *tails* (diseases)
+    in a target relation (e.g. drug -indication-> disease). 
 
-def zero_shot_split(kg, target_rel, val_ratio=0.1, test_ratio=0.1):
+    Same structure and logic as cold_start_by_head_frequency_bin, but flipped to cold start on tails.
+
+    Returns:
+        train_kg, val_kg, test_kg
+    """
+    if bins is None:
+        bins = {
+            0: (1, 1),       
+            1: (2, 3),       
+            2: (4, 7),       
+            3: (8, 15),      
+            4: (16, 30),     
+            5: (31, 60),     
+            6: (61, float('inf'))  
+        }
+
+
+    target_rel_ix = kg.rel2ix[target_rel]
+    is_target = (kg.relations == target_rel_ix)
+    target_indices = is_target.nonzero(as_tuple=True)[0]
+
+    # Count tail frequencies in target relation
+    target_tails = kg.tail_idx[target_indices]
+    unique_tails, counts = torch.unique(target_tails, return_counts=True)
+
+    # Assign tails to bins
+    tail_to_bin = {}
+    for tail, count in zip(unique_tails.tolist(), counts.tolist()):
+        for b, (low, high) in bins.items():
+            if low <= count <= high:
+                tail_to_bin[tail] = b
+                break
+
+    # Map tails to their target triple indices
+    tail_to_indices = defaultdict(list)
+    for idx in target_indices.tolist():
+        tail = kg.tail_idx[idx].item()
+        tail_to_indices[tail].append(idx)
+
+    # Group tails by bins
+    bin_to_tails = defaultdict(list)
+    for tail, b in tail_to_bin.items():
+        bin_to_tails[b].append(tail)
+
+    # Prepare split masks
+    mask_val = torch.zeros_like(is_target)
+    mask_test = torch.zeros_like(is_target)
+    mask_train_target = torch.zeros_like(is_target)
+    mask_train = ~is_target.clone()
+
+    # Ensure all entities are seen at least once
+    unique_target_entities = torch.unique(torch.cat([kg.head_idx[target_indices], kg.tail_idx[target_indices]]))
+    only_target_entities = []
+    for entity in unique_target_entities.tolist():
+        entity_mask = (kg.head_idx == entity) | (kg.tail_idx == entity)
+        if ((entity_mask & ~is_target).sum() == 0):
+            only_target_entities.append(entity)
+            mask_train_target |= entity_mask
+    mask_train |= mask_train_target
+
+    # Allocate val/test sets per bin
+    for b, tails in bin_to_tails.items():
+        random.shuffle(tails)
+        n_total = len(tails)
+        n_val = int(val_ratio * n_total)
+        n_test = int(test_ratio * n_total)
+
+        if n_val == 0 and n_total > 0:
+            n_val = 1
+        if n_test == 0 and n_total - n_val > 0:
+            n_test = 1
+
+        val_tails = tails[:n_val]
+        test_tails = tails[n_val:n_val + n_test]
+
+        for t in val_tails:
+            mask_val[tail_to_indices[t]] = True
+        for t in test_tails:
+            mask_test[tail_to_indices[t]] = True
+
+    # Remaining target triples go to train
+    mask_train |= (is_target & ~(mask_val | mask_test))
+
+    # Create final KG splits
+    train_kg = my_knowledge_graph.KnowledgeGraph(
+        kg={'heads': kg.head_idx[mask_train],
+            'tails': kg.tail_idx[mask_train],
+            'relations': kg.relations[mask_train]},
+        ent2ix=kg.ent2ix, rel2ix=kg.rel2ix,
+        dict_of_heads=kg.dict_of_heads,
+        dict_of_tails=kg.dict_of_tails,
+        dict_of_rels=kg.dict_of_rels)
+
+    val_kg = my_knowledge_graph.KnowledgeGraph(
+        kg={'heads': kg.head_idx[mask_val],
+            'tails': kg.tail_idx[mask_val],
+            'relations': kg.relations[mask_val]},
+        ent2ix=kg.ent2ix, rel2ix=kg.rel2ix,
+        dict_of_heads=kg.dict_of_heads,
+        dict_of_tails=kg.dict_of_tails,
+        dict_of_rels=kg.dict_of_rels)
+
+    test_kg = my_knowledge_graph.KnowledgeGraph(
+        kg={'heads': kg.head_idx[mask_test],
+            'tails': kg.tail_idx[mask_test],
+            'relations': kg.relations[mask_test]},
+        ent2ix=kg.ent2ix, rel2ix=kg.rel2ix,
+        dict_of_heads=kg.dict_of_heads,
+        dict_of_tails=kg.dict_of_tails,
+        dict_of_rels=kg.dict_of_rels)
+
+    # Logging
+    logging.info("=== Tail-based Cold Start Split Summary ===")
+    for split_name, mask in zip(['Train', 'Validation', 'Test'], [mask_train, mask_val, mask_test]):
+        idxs = mask.nonzero(as_tuple=True)[0]
+        split_target_idxs = idxs[(kg.relations[idxs] == target_rel_ix)]
+        split_tails = torch.unique(kg.tail_idx[split_target_idxs])
+        logging.info(f"{split_name} : {len(split_target_idxs)} target triplets, {len(split_tails)} unique tails")
+
+    entity_stats(train_kg, target_rel=target_rel, split_name="Train", position="tail")  
+    entity_stats(val_kg, target_rel=target_rel, split_name="Validation", position="tail")  
+    entity_stats(test_kg, target_rel=target_rel, split_name="Test", position="tail")  
+
+    entity_stats(train_kg, target_rel=target_rel, split_name="Train", position="head")  
+    entity_stats(val_kg, target_rel=target_rel, split_name="Validation", position="head")  
+    entity_stats(test_kg, target_rel=target_rel, split_name="Test", position="head")  
+
+    return train_kg, val_kg, test_kg
+
+
+def cold_start_split(kg, target_rel, val_ratio=0.1, test_ratio=0.1):
     # Create a mask for the target relation
     is_target = kg.relations == kg.rel2ix[target_rel]
     
