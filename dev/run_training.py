@@ -862,8 +862,7 @@ def train_model(kg_train, kg_val, kg_test, config):
                 "remaining_relations": {
                     "Global_MRR": group_mrr_remaining,
                     "Individual_MRRs": individual_mrrs_remaining
-                },
-                "target_relations_by_frequency": {}  
+                }  
             }
 
 
@@ -875,7 +874,9 @@ def train_model(kg_train, kg_val, kg_test, config):
                 logging.info(f"MRR for frequent nodes (threshold={threshold}) in relation {relation}: {frequent_mrr}")
                 logging.info(f"MRR for infrequent nodes (threshold={threshold}) in relation {relation}: {infrequent_mrr}")
 
-                results["target_relations_by_frequency"][relation] = {
+                key = f"target_relations_by_frequency_{threshold}"
+                results.setdefault(key, {})
+                results[key][relation] = {
                     "Frequent_MRR": frequent_mrr,
                     "Infrequent_MRR": infrequent_mrr,
                     "Threshold": threshold
