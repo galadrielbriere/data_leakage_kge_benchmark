@@ -366,7 +366,7 @@ def link_pred(model, kg, batch_size):
     evaluator.evaluate(b_size=batch_size, verbose=True)
     
     test_mrr = evaluator.mrr()[1]
-    test_hits = evaluator.hits_at_k(k=10)[1]
+    test_hits = evaluator.hit_at_k(k=10)[1]
     return test_mrr, test_hits
 
 
