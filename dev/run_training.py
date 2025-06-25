@@ -366,14 +366,17 @@ def link_pred(model, kg, batch_size):
     evaluator.evaluate(b_size=batch_size, verbose=True)
     
     test_mrr = evaluator.mrr()[1]
-    return test_mrr
+    test_hits = evaluator.hits_at_k(k=10)[1]
+    return test_mrr, test_hits
 
 
 def calculate_mrr_for_relations(kg, model, eval_batch_size, relations):
     # MRR calculé avec pondération par le nombre de faits
     mrr_sum = 0.0
+    hit_sum = 0.0
     fact_count = 0
     individual_mrrs = {}  # Dictionnaire pour stocker les MRR par relation
+    individulal_hits = {}  # Dictionnaire pour stocker les hits par relation
 
     for relation_name in relations:
         # Récupérer l'indice et les faits associés
@@ -389,20 +392,23 @@ def calculate_mrr_for_relations(kg, model, eval_batch_size, relations):
         new_kg.dict_of_rels = kg.dict_of_rels
         new_kg.dict_of_heads = kg.dict_of_heads
         new_kg.dict_of_tails = kg.dict_of_tails
-        test_mrr = link_pred(model, new_kg, eval_batch_size)
+        test_mrr, test_hits = link_pred(model, new_kg, eval_batch_size)
         
         # Enregistrer le MRR pour chaque relation
         individual_mrrs[relation_name] = test_mrr
+        individulal_hits[relation_name] = test_hits
         
         # Accumuler le MRR global avec pondération
         mrr_sum += test_mrr * indices_to_keep.numel()
+        hit_sum += test_hits * indices_to_keep.numel()
         fact_count += indices_to_keep.numel()
     
     # Calcul du MRR global pour le groupe de relations
     group_mrr = mrr_sum / fact_count if fact_count > 0 else 0
-    
+    group_hit = hit_sum / fact_count if fact_count > 0 else 0
+
     # Retourner le MRR total, le nombre de faits, les MRR individuels par relation, et le MRR global pour le groupe
-    return mrr_sum, fact_count, individual_mrrs, group_mrr
+    return mrr_sum, hit_sum, fact_count, individual_mrrs, group_mrr, individulal_hits, group_hit
 
 def categorize_test_nodes(kg_train, kg_test, relation_name, threshold):
     """
@@ -496,10 +502,10 @@ def calculate_mrr_for_categories(kg_test, model, eval_batch_size, frequent_indic
     kg_infrequent.dict_of_tails = kg_test.dict_of_tails
     
     # Calculer le MRR pour chaque catégorie
-    frequent_mrr = link_pred(model, kg_frequent, eval_batch_size) if frequent_indices else 0
-    infrequent_mrr = link_pred(model, kg_infrequent, eval_batch_size) if infrequent_indices else 0
+    frequent_mrr, frequent_hits = link_pred(model, kg_frequent, eval_batch_size) if frequent_indices else 0
+    infrequent_mrr, infrequent_hits = link_pred(model, kg_infrequent, eval_batch_size) if infrequent_indices else 0
 
-    return frequent_mrr, infrequent_mrr
+    return frequent_mrr, infrequent_mrr, frequent_hits, infrequent_hits
 
 def read_training_metrics(training_metrics_file):
     df = pd.read_csv(training_metrics_file)
@@ -644,7 +650,7 @@ def train_model(kg_train, kg_val, kg_test, config):
         logging.info(f"Evaluating on validation set at epoch {engine.state.epoch}...")
         model.eval()  # Met le modèle en mode évaluation
         with torch.no_grad():
-            val_mrr = link_pred(model, kg_val, eval_batch_size) 
+            val_mrr, _ = link_pred(model, kg_val, eval_batch_size) 
         engine.state.metrics['val_mrr'] = val_mrr 
         logging.info(f"Validation MRR: {val_mrr}")
 
@@ -833,21 +839,24 @@ def train_model(kg_train, kg_val, kg_test, config):
             list_rel_2 = config.get('evaluation', {}).get('target_relations', [])
             thresholds = config.get('evaluation', {}).get('thresholds', [])
             mrr_file = os.path.join(config['common']['out'], 'evaluation_metrics.yaml')
+            hit_file = os.path.join(config['common']['out'], 'evaluation_hit@10.yaml')
 
             all_relations = set(kg_test.rel2ix.keys())
             remaining_relations = all_relations - set(list_rel_1) - set(list_rel_2)
             remaining_relations = list(remaining_relations)
 
-            total_mrr_sum_list_1, fact_count_list_1, individual_mrrs_list_1, group_mrr_list_1 = calculate_mrr_for_relations(
+            total_mrr_sum_list_1, total_hit_sum_list_1, fact_count_list_1, individual_mrrs_list_1, group_mrr_list_1, individual_hits_list_1, group_hits_list_1 = calculate_mrr_for_relations(
                 kg_test, new_model, eval_batch_size, list_rel_1)
-            total_mrr_sum_list_2, fact_count_list_2, individual_mrrs_list_2, group_mrr_list_2 = calculate_mrr_for_relations(
+            total_mrr_sum_list_2, total_hit_sum_list_2, fact_count_list_2, individual_mrrs_list_2, group_mrr_list_2, individual_hits_list_2, group_hits_list_2 = calculate_mrr_for_relations(
                 kg_test, new_model, eval_batch_size, list_rel_2)
-            total_mrr_sum_remaining, fact_count_remaining, individual_mrrs_remaining, group_mrr_remaining = calculate_mrr_for_relations(
+            total_mrr_sum_remaining, total_hit_sum_remaining, fact_count_remaining, individual_mrrs_remaining, group_mrr_remaining, individual_hits_remaining, group_hits_remaining = calculate_mrr_for_relations(
                 kg_test, new_model, eval_batch_size, remaining_relations)
 
             global_mrr = (total_mrr_sum_list_1 + total_mrr_sum_list_2 + total_mrr_sum_remaining) / (fact_count_list_1 + fact_count_list_2 + fact_count_remaining)
+            global_hits = (total_hit_sum_list_1 + total_hit_sum_list_2 + total_hit_sum_remaining) / (fact_count_list_1 + fact_count_list_2 + fact_count_remaining)
 
             logging.info(f"Final Test MRR with best model: {global_mrr}")
+            logging.info(f"Final Test Hits@10 with best model: {global_hits}")
 
             results = {
                 "Global_MRR": global_mrr,
@@ -865,14 +874,32 @@ def train_model(kg_train, kg_val, kg_test, config):
                 }  
             }
 
+            results_hit = {
+                "Global_Hit@10": global_hits,
+                "made_directed_relations": {
+                    "Global_Hit@10": group_hits_list_1,
+                    "Individual_Hit@10s": individual_hits_list_1
+                },
+                "target_relations": {
+                    "Global_Hit@10": group_hits_list_2,
+                    "Individual_Hit@10s": individual_hits_list_2
+                },
+                "remaining_relations": {
+                    "Global_Hit@10": group_hits_remaining,
+                    "Individual_Hit@10s": individual_hits_remaining
+                }
+            }
+
 
             for i in range(len(list_rel_2)):
                 relation = list_rel_2[i]
                 threshold = thresholds[i]
                 frequent_indices, infrequent_indices = categorize_test_nodes(kg_train, kg_test, relation, threshold)
-                frequent_mrr, infrequent_mrr = calculate_mrr_for_categories(kg_test, new_model, eval_batch_size, frequent_indices, infrequent_indices)
+                frequent_mrr, infrequent_mrr, frequent_hits, infrequent_hits = calculate_mrr_for_categories(kg_test, new_model, eval_batch_size, frequent_indices, infrequent_indices)
                 logging.info(f"MRR for frequent nodes (threshold={threshold}) in relation {relation}: {frequent_mrr}")
                 logging.info(f"MRR for infrequent nodes (threshold={threshold}) in relation {relation}: {infrequent_mrr}")
+                logging.info(f"Hits@10 for frequent nodes (threshold={threshold}) in relation {relation}: {frequent_hits}")
+                logging.info(f"Hits@10 for infrequent nodes (threshold={threshold}) in relation {relation}: {infrequent_hits}")
 
                 key = f"target_relations_by_frequency_{threshold}"
                 results.setdefault(key, {})
@@ -881,13 +908,22 @@ def train_model(kg_train, kg_val, kg_test, config):
                     "Infrequent_MRR": infrequent_mrr,
                     "Threshold": threshold
                 }
+                results_hit.setdefault(key, {})
+                results_hit[key][relation] = {
+                    "Frequent_Hit@10": frequent_hits,
+                    "Infrequent_Hit@10": infrequent_hits,
+                    "Threshold": threshold
+                }
                 
             
             with open(mrr_file, "w") as file:
                 yaml.dump(results, file, default_flow_style=False, sort_keys=False)
+            logging.info(f"MRR evaluation results stored in {mrr_file}")
 
-            logging.info(f"Evaluation results stored in {mrr_file}")
-        
+            with open(hit_file, "w") as file:
+                yaml.dump(results_hit, file, default_flow_style=False, sort_keys=False)
+            logging.info(f"Hit@10 evaluation results stored in {hit_file}")
+
         if run_inference:
             inference_mrr_file = os.path.join(config['common']['out'], 'inference_metrics.yaml')
 
