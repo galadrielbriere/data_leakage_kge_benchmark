@@ -1,39 +1,46 @@
 common:  # Global parameters
   seed: 42  # Seed for reproducibility
-  input_csv: "/path/to/knowledge_graph.csv"  # Input KG file
-  out: "./results"  # Output directory for results
+  input_csv: "/path/to/knowledge_graph.tsv"  # Path to the input knowledge graph (TSV format with columns: "from", "to", "rel")
+  out: "/path/to/results"  # Output directory for results
   run_kg_prep: true  # Run KG preprocessing
-  run_training: false  # Train embeddings
+  run_training: false  # Train the model
   run_evaluation: false  # Evaluate the model on the test set
+  run_inference: "/path/to/inference_kg.tsv"  # Optional: path to the inference KG (TSV with columns: "from", "to", "rel"). Set to false to disable.
 
 clean_kg:  # Preprocessing settings
-  remove_duplicates_triplets: true  # Remove duplicate triples
+  remove_duplicates_triplets: true  # Recommended. Remove duplicate triples (e.g., a--ppi--b and b--ppi--a are considered duplicate triples)
 
-  make_directed: true  # Make undirected relations directed
-  make_directed_params:  # Relations to make directed
+  make_directed: true  # Optional. For specified relations, add reversed triplets (e.g., if a--r--b exists, also add b--r--a)
+  make_directed_params:  # List of relation names to make directed
     - "disease_disease"
     - "drug_drug"
     - "protein_protein"
 
-  check_synonymous_antisynonymous: true  # Remove redundant or Cartesian product relations
-  check_synonymous_antisynonymous_params:
+  check_DL1: true  # Recommended. Detect if there are redundant or Cartesian product relations in the KG.
+  check_DL1_params: # See paper for details on DL1 detection criteria
+    theta: 0.8   # Threshold for cartesian product relations
     theta1: 0.8  # Threshold for near-duplicate relations
     theta2: 0.8  # Threshold for near-reverse relations
 
-  permute_kg: false  # Whether to permute a specific relation
+  clean_train_set: true  # Recommended. Whether to remove redundant triplets involved in DL1 (redundant or Cartesian-product relations) from the training set
+
+  permute_kg: false  # Optional. Whether to permute a specific relation (DL2 experiment, see paper)
   permute_kg_params:  # Relations to permute
     - "indication"  
 
-  zero_shot_split: true
-  zero_shot_split_param: "indication"
+  cold_start_split: 'head'  # Optional. Set to 'head' or 'tail' to perform a cold-start split on that position, or to false for a standard random split
+  cold_start_split_param: "indication"  # Target relation for which the cold-start constraint applies
+
+
 
 model:  # Model settings
   name: "TransE"  # Model name (any from TorchKGE)
-  emb_dim: 400  # Embedding dimension
+  emb_dim: 200  # Embedding dimension
   margin: 1  # Margin for translational models 
 
 sampler:  # Sampling strategy
   name: "Mixed"  # Sampler to use (Uniform, Positional, Bernouilli or Mixed)
+  n_neg: 5 # Number of negatives to generate for each sampler and each fact (ignored for Positional)
 
 optimizer:  # Optimizer configuration
   name: "Adam"  # Optimizer name (any from PyTorch)
@@ -41,27 +48,33 @@ optimizer:  # Optimizer configuration
     lr: 0.001 # Learning Rate
     weight_decay: 0.001  # Weight decay (L2 regularization)
 
-lr_scheduler:  # Learning rate scheduler
+lr_scheduler:  # Optional. Learning rate scheduler
   type: "CosineAnnealingWarmRestarts"  # Scheduler type (any from Pytorch)
   params:
     T_0: 10  # First cycle length
     T_mult: 2  # Multiplicative factor for cycle length
 
 training:  # Training parameters
-  max_epochs: 2000  # Maximum number of epochs
-  patience: 20  # Early stopping patience on validation MRR
+  max_epochs: 100  # Maximum number of epochs
+  patience: 10  # Early stopping patience on validation MRR
   batch_size: 2048  # Training batch size
-  eval_interval: 10  # Evaluation interval during training
+  eval_interval: 5  # Evaluation interval during training
   eval_batch_size: 32  # Evaluation batch size
 
-evaluation:  # Evaluation settings
-  made_directed_relations:  # Relations made directed
+
+evaluation:  # Evaluation settings – always computes filtered MRR and Hit@10
+  made_directed_relations:  # Optional. Redundant/inverse relations (e.g. r and r_inv) to reproduce DL1 benchmark
     - "drug_drug"
     - "disease_disease"
     - "protein_protein"
     - "drug_drug_inv"
     - "disease_disease_inv"
     - "protein_protein_inv"
-  target_relations:  # Specific relations to evaluate
+    # Can be left empty.
+  target_relations:  # Relations to evaluate specifically
     - "indication"
-  thresholds: [10]  # Thresholds for node frequencies (used for each target relation)
+    - "indication"
+  thresholds:         # Optional. Same length as target_relations. For each relation, test facts are split by frequency in training:
+                      # entities seen ≥ threshold vs < threshold with that relation
+    - 10
+    - 5
