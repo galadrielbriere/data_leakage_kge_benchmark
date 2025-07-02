@@ -1,7 +1,6 @@
 # Benchmarking Data Leakage on Link Prediction in Biomedical Knowledge Graph Embeddings
 
 ### Authors and paper
----
 - **Galadriel Brière** (Aix Marseille Univ, INSERM, MMG, Marseille, France) 
 - **Thomas Stosskopf** (TAGC, TGML, INSERM, UMR1090, Aix-Marseille University) 
 - **Benjamin Loire** (Aix Marseille Univ, INSERM, MMG, Marseille, France) 
@@ -25,8 +24,6 @@ This repository implements a systematic approach to assess and reduce data leaka
   - Cold-start splits (head-based or tail-based)
 - Customizable training and evaluation pipelines using configuration files.
 - Supports KGE models from TorchKGE.
-
----
 
 ## Installation
 
@@ -54,7 +51,6 @@ This repository implements a systematic approach to assess and reduce data leaka
    pip install pandas matplotlib numpy pyyaml tqdm ignite pytorch-ignite
    ```
 
----
 
 ## Usage
 
@@ -148,14 +144,12 @@ evaluation:  # Evaluation settings – always computes filtered MRR and Hit@10
 
 ```
 
----
 
 ### Pipeline execution
 
 ```bash
 python dev/run_training.py --config config.yaml 
 ```
----
 
 ## Reproducing Paper Results
 
