@@ -23,8 +23,6 @@ import gc
 import json
 import csv 
 import matplotlib.pyplot as plt
-import TransGNN
-import DistGNN
 import pandas as pd
 import networkx as nx
 
@@ -117,7 +115,7 @@ def plot_learning_curves(training_metrics_file, config):
 def initialize_model(config, kg_train, device):
     """Initialize the model based on the configuration."""
 
-    translational_models = ['TransE', 'TransH', 'TransR', 'TransD', 'TorusE', 'TransEModelWithGCN']
+    translational_models = ['TransE', 'TransH', 'TransR', 'TransD', 'TorusE']
 
     model_name = config['model'].get('name', 'TransE')
     if 'name' not in config['model']:
@@ -195,14 +193,6 @@ def initialize_model(config, kg_train, device):
             warnings.warn("The 'n_filters' field is missing in the configuration. Defaulting to 32.")
 
         model = torchkge.models.ConvKBModel(emb_dim, n_filters, kg_train.n_ent, kg_train.n_rel)
-        criterion = BinaryCrossEntropyLoss()
-
-    elif model_name == "TransEModelWithGCN":
-        model = TransGNN.TransEModelWithGCN(emb_dim, kg_train.n_ent, kg_train.n_rel, kg_train, device, num_gcn_layers=1)
-        criterion = MarginLoss(margin)
-
-    elif model_name == "DistMultModelWithGCN":
-        model = DistGNN.DistMultModelWithGCN(emb_dim, kg_train.n_ent, kg_train.n_rel, kg_train, device, num_gcn_layers=1)
         criterion = BinaryCrossEntropyLoss()
 
     else:
