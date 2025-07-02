@@ -155,7 +155,7 @@ python dev/run_training.py --config config.yaml
 
 ### Knowledge Graph Availability
 
-The Knowledge Graph used in our study is available on [Zenodo](https://zenodo.org/records/14577331?token=eyJhbGciOiJIUzUxMiJ9.eyJpZCI6IjUwNTIxYWExLWExN2QtNDIwZi05YWUyLTI2MDI0OTM5MDlmOSIsImRhdGEiOnt9LCJyYW5kb20iOiI2YTY3NjY5ZTYwNWYwYWY3ZTZhMGJjOGY1YTJjNGIzYSJ9.ZSG9I-RjKuiUqiwpY66TvPLE6wAlvj3TdhjMvUCX-jUALSvFxa7tSBZpKFAgSJxLodX9ZhKQ_hJam4zd01cKyg). This Knowledge Graph is derived directly from the [Shepherd Knowledge Graph](https://zitniklab.hms.harvard.edu/projects/SHEPHERD/), with updated node identifiers to include node type.
+The Knowledge Graph used in our study is available on [Zenodo](https://zenodo.org/records/15791540?token=eyJhbGciOiJIUzUxMiJ9.eyJpZCI6IjMwNWJiMDcwLWUzODMtNDg3Mi04ZGRmLWRjYzQwZGYwNGU5ZiIsImRhdGEiOnt9LCJyYW5kb20iOiJmNzEwMGY0OGY1MTg0MTQ3MDEzMmU3MDEyYThjMTdhZCJ9.JRxTSjM7C1-j0XwUi39IDGgYMXtUsDI3goNddf5lxGZnfYv2zXLTS4mKhSb8_d51uTdfsl4iycO2M3DO7CkUhw). This Knowledge Graph is derived directly from the [Shepherd Knowledge Graph](https://zitniklab.hms.harvard.edu/projects/SHEPHERD/), with updated node identifiers to include node type.
 
 ### Configuration and Results 
 
