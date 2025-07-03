@@ -14,7 +14,7 @@ module load python
 conda deactivate
 conda activate torch_pyg
 
-cd $WORK/dr_benchmark/DL3experiment/zero_shot/models_disease/run2/DistMult/
+cd $WORK/dr_benchmark/DL3experiment/cold_start/models_disease/run2/DistMult/
 
 srun python $WORK/dr_benchmark/dev/run_training.py \
     --config params.yaml 

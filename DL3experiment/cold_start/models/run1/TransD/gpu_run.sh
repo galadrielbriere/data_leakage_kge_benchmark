@@ -14,7 +14,7 @@ module load python
 conda deactivate
 conda activate torch_pyg
 
-cd $WORK/dr_benchmark/DL3experiment/zero_shot/models/run1/TransD/
+cd $WORK/dr_benchmark/DL3experiment/cold_start/models/run1/TransD/
 
 srun python $WORK/dr_benchmark/dev/run_training.py \
     --config params.yaml 
