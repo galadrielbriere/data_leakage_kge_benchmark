@@ -128,9 +128,11 @@ def clean_knowledge_graph(kg, config):
 
     id_to_rel_name = {v: k for k, v in kg.rel2ix.items()}
 
+    logging.info(f'KG with {len(kg.ent2ix)} entities')
+
     if config["clean_kg"]['remove_duplicates_triplets']:
         logging.info("Removing duplicated triplets...")
-        kg = my_data_redundancy.remove_duplicates_triplets(kg)
+        kg = my_data_redundancy.remove_duplicates_triplets(kg, ix2rel=id_to_rel_name)
 
     duplicated_relations_list = []
 
@@ -141,10 +143,16 @@ def clean_knowledge_graph(kg, config):
 
         duplicates_relations, rev_duplicates_relations = my_data_redundancy.duplicates(kg, theta1=theta1, theta2=theta2)
         if duplicates_relations:
-            logging.info(f'Adding {len(duplicates_relations)} near-duplicate relations ({[id_to_rel_name[rel] for rel in duplicates_relations]}) to the list of known redundant relations.')
+            logging.info(f'Adding {len(duplicates_relations)} near-duplicate relations '
+                 f'({[(id_to_rel_name[a], id_to_rel_name[b]) for a, b in duplicates_relations]}) '
+                 f'to the list of known redundant relations.')
+            # logging.info(f'Adding {len(duplicates_relations)} near-duplicate relations ({[id_to_rel_name[rel] for rel in duplicates_relations]}) to the list of known redundant relations.')
             duplicated_relations_list.extend(duplicates_relations)
         if rev_duplicates_relations:
-            logging.info(f'Adding {len(rev_duplicates_relations)} near-reverse-duplicate relations ({[id_to_rel_name[rel] for rel in rev_duplicates_relations]}) to the list of known redundant relations.')
+            logging.info(f'Adding {len(rev_duplicates_relations)} near-reverse-duplicate relations '
+                 f'({[(id_to_rel_name[a], id_to_rel_name[b]) for a, b in rev_duplicates_relations]}) '
+                 f'to the list of known redundant relations.')
+            # logging.info(f'Adding {len(rev_duplicates_relations)} near-reverse-duplicate relations ({[id_to_rel_name[rel] for rel in rev_duplicates_relations]}) to the list of known redundant relations.')
             duplicated_relations_list.extend(rev_duplicates_relations)
 
         theta = config.get("clean_kg", {}).get("check_DL1_params", {}).get("theta", 0.8)

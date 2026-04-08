@@ -347,19 +347,39 @@ class KnowledgeGraph(Dataset):
 
         # adding missing entities to the train set
         u = cat((self.head_idx[mask], self.tail_idx[mask])).unique()
+
+        ############
+        # Au lieu de la boucle sur missing_entities
         if len(u) < self.n_ent:
-            missing_entities = tensor(list(set(uniques_e.tolist()) -
-                                           set(u.tolist())), dtype=long)
-            for e in missing_entities:
-                sub_mask = ((self.head_idx == e) |
-                            (self.tail_idx == e)).nonzero(as_tuple=False)[:, 0]
-                rand = randperm(len(sub_mask))
-                sizes = self.get_sizes(mask.shape[0],
-                                       share=share,
-                                       validation=validation)
-                mask[sub_mask[rand[:sizes[0]]]] = True
-                if validation:
-                    mask_val[sub_mask[rand[:sizes[0]]]] = False
+            missing_entities = tensor(list(set(uniques_e.tolist()) - set(u.tolist())), dtype=long)
+            print(f"missing_entities={len(missing_entities)}")
+
+            # Vectorisé : un seul scan du tenseur
+            head_missing = torch.isin(self.head_idx, missing_entities)
+            tail_missing = torch.isin(self.tail_idx, missing_entities)
+            combined = head_missing | tail_missing
+            indices = combined.nonzero(as_tuple=False)[:, 0]
+            mask[indices] = True
+            if validation:
+                mask_val[indices] = False
+
+        ############
+
+
+        # if len(u) < self.n_ent:
+        #     missing_entities = tensor(list(set(uniques_e.tolist()) -
+        #                                    set(u.tolist())), dtype=long)
+        #     print(f"missing_entities={len(missing_entities)}")
+        #     for e in missing_entities:
+        #         sub_mask = ((self.head_idx == e) |
+        #                     (self.tail_idx == e)).nonzero(as_tuple=False)[:, 0]
+        #         rand = randperm(len(sub_mask))
+        #         sizes = self.get_sizes(mask.shape[0],
+        #                                share=share,
+        #                                validation=validation)
+        #         mask[sub_mask[rand[:sizes[0]]]] = True
+        #         if validation:
+        #             mask_val[sub_mask[rand[:sizes[0]]]] = False
 
         if validation:
             assert not (mask & mask_val).any().item()

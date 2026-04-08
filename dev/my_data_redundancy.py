@@ -388,55 +388,93 @@ def ensure_entity_coverage(kg_train, kg_val, kg_test):
 
     return kg_train, kg_val, kg_test
 
-
 def clean_datasets(kg1, kg2, known_reverses):
-    """
-    Clean KG1 (training KG) by removing reverse duplicate triples contained in KG2 (test or val KG).
-
-    Parameters
-    ----------
-    kg1: torchkge.data_structures.KnowledgeGraph
-        The first knowledge graph.
-    kg2: torchkge.data_structures.KnowledgeGraph
-        The second knowledge graph.
-    known_reverses: list of tuples
-        Each tuple contains two relations (r1, r2) that are known reverse relations.
-
-    Returns
-    -------
-    kg1: torchkge.data_structures.KnowledgeGraph
-        The cleaned first knowledge graph.
-    """
+    def encode_pairs(heads, tails, n_ent):
+        """Encode (h,t) pairs as single integers for exact matching."""
+        return heads * n_ent + tails
 
     for r1, r2 in known_reverses:
-
         logging.info(f"Processing relation pair: ({r1}, {r2})")
+        n_ent = kg1.n_ent
 
-        # Get (h, t) pairs in kg2 related by r1
-        kg2_ht_r1 = get_pairs(kg2, r1, type='ht')
-        # Get indices of (h, t) in kg1 that are related by r2
-        indices_to_remove_kg1 = [i for i, (h, t) in enumerate(zip(kg1.tail_idx, kg1.head_idx)) if (h.item(), t.item()) in kg2_ht_r1 and kg1.relations[i].item() == r2]
-        indices_to_remove_kg1.extend([i for i, (h, t) in enumerate(zip(kg1.head_idx, kg1.tail_idx)) if (h.item(), t.item()) in kg2_ht_r1 and kg1.relations[i].item() == r2])
-        
-        # Remove those (h, t) pairs from kg1
-        kg1 = kg1.remove_triples(torch.tensor(indices_to_remove_kg1, dtype=torch.long))
+        # --- Sens 1 : cherche dans kg1 les triplets r2 dont (tail,head) = (h,t) d'un triplet r1 de kg2 ---
+        mask_kg2_r1 = (kg2.relations == r1)
+        # Les paires (h,t) de kg2 pour r1, encodées
+        kg2_pairs_r1 = encode_pairs(kg2.head_idx[mask_kg2_r1], kg2.tail_idx[mask_kg2_r1], n_ent)
 
-        logging.info(f"Found {len(indices_to_remove_kg1)} triplets to remove for relation {r2} with reverse {r1}.")
+        mask_kg1_r2 = (kg1.relations == r2)
+        # Dans kg1 pour r2, on cherche les triplets dont (tail,head) matche kg2_pairs_r1
+        kg1_reversed_pairs_r2 = encode_pairs(kg1.tail_idx[mask_kg1_r2], kg1.head_idx[mask_kg1_r2], n_ent)
+        match = torch.isin(kg1_reversed_pairs_r2, kg2_pairs_r1)
+        indices_to_remove = mask_kg1_r2.nonzero(as_tuple=True)[0][match]
 
-        # Get (h, t) pairs in kg2 related by r2
-        kg2_ht_r2 = get_pairs(kg2, r2, type='ht')
-        # Get indices of (h, t) in kg1 that are related by r1
-        indices_to_remove_kg1_reverse = [i for i, (h, t) in enumerate(zip(kg1.tail_idx, kg1.head_idx)) if (h.item(), t.item()) in kg2_ht_r2 and kg1.relations[i].item() == r1]
-        indices_to_remove_kg1_reverse.extend([i for i, (h, t) in enumerate(zip(kg1.head_idx, kg1.tail_idx)) if (h.item(), t.item()) in kg2_ht_r2 and kg1.relations[i].item() == r1])
+        if len(indices_to_remove) > 0:
+            kg1 = kg1.remove_triples(indices_to_remove)
+        logging.info(f"Found {len(indices_to_remove)} triplets to remove for relation {r2} with reverse {r1}.")
 
-        # Remove those (h, t) pairs from kg1
-        kg1 = kg1.remove_triples(torch.tensor(indices_to_remove_kg1_reverse, dtype=torch.long))
+        # --- Sens 2 : cherche dans kg1 les triplets r1 dont (tail,head) = (h,t) d'un triplet r2 de kg2 ---
+        mask_kg2_r2 = (kg2.relations == r2)
+        kg2_pairs_r2 = encode_pairs(kg2.head_idx[mask_kg2_r2], kg2.tail_idx[mask_kg2_r2], n_ent)
 
-        logging.info(f"Found {len(indices_to_remove_kg1_reverse)} reverse triplets to remove for relation {r1} with reverse {r2}.")
-    
+        mask_kg1_r1 = (kg1.relations == r1)
+        kg1_reversed_pairs_r1 = encode_pairs(kg1.tail_idx[mask_kg1_r1], kg1.head_idx[mask_kg1_r1], n_ent)
+        match2 = torch.isin(kg1_reversed_pairs_r1, kg2_pairs_r2)
+        indices_to_remove2 = mask_kg1_r1.nonzero(as_tuple=True)[0][match2]
+
+        if len(indices_to_remove2) > 0:
+            kg1 = kg1.remove_triples(indices_to_remove2)
+        logging.info(f"Found {len(indices_to_remove2)} reverse triplets to remove for relation {r1} with reverse {r2}.")
+
     return kg1
 
-def remove_duplicates_triplets(kg):
+# def clean_datasets(kg1, kg2, known_reverses):
+#     """
+#     Clean KG1 (training KG) by removing reverse duplicate triples contained in KG2 (test or val KG).
+
+#     Parameters
+#     ----------
+#     kg1: torchkge.data_structures.KnowledgeGraph
+#         The first knowledge graph.
+#     kg2: torchkge.data_structures.KnowledgeGraph
+#         The second knowledge graph.
+#     known_reverses: list of tuples
+#         Each tuple contains two relations (r1, r2) that are known reverse relations.
+
+#     Returns
+#     -------
+#     kg1: torchkge.data_structures.KnowledgeGraph
+#         The cleaned first knowledge graph.
+#     """
+
+#     for r1, r2 in known_reverses:
+
+#         logging.info(f"Processing relation pair: ({r1}, {r2})")
+
+#         # Get (h, t) pairs in kg2 related by r1
+#         kg2_ht_r1 = get_pairs(kg2, r1, type='ht')
+#         # Get indices of (h, t) in kg1 that are related by r2
+#         indices_to_remove_kg1 = [i for i, (h, t) in enumerate(zip(kg1.tail_idx, kg1.head_idx)) if (h.item(), t.item()) in kg2_ht_r1 and kg1.relations[i].item() == r2]
+#         indices_to_remove_kg1.extend([i for i, (h, t) in enumerate(zip(kg1.head_idx, kg1.tail_idx)) if (h.item(), t.item()) in kg2_ht_r1 and kg1.relations[i].item() == r2])
+        
+#         # Remove those (h, t) pairs from kg1
+#         kg1 = kg1.remove_triples(torch.tensor(indices_to_remove_kg1, dtype=torch.long))
+
+#         logging.info(f"Found {len(indices_to_remove_kg1)} triplets to remove for relation {r2} with reverse {r1}.")
+
+#         # Get (h, t) pairs in kg2 related by r2
+#         kg2_ht_r2 = get_pairs(kg2, r2, type='ht')
+#         # Get indices of (h, t) in kg1 that are related by r1
+#         indices_to_remove_kg1_reverse = [i for i, (h, t) in enumerate(zip(kg1.tail_idx, kg1.head_idx)) if (h.item(), t.item()) in kg2_ht_r2 and kg1.relations[i].item() == r1]
+#         indices_to_remove_kg1_reverse.extend([i for i, (h, t) in enumerate(zip(kg1.head_idx, kg1.tail_idx)) if (h.item(), t.item()) in kg2_ht_r2 and kg1.relations[i].item() == r1])
+
+#         # Remove those (h, t) pairs from kg1
+#         kg1 = kg1.remove_triples(torch.tensor(indices_to_remove_kg1_reverse, dtype=torch.long))
+
+#         logging.info(f"Found {len(indices_to_remove_kg1_reverse)} reverse triplets to remove for relation {r1} with reverse {r2}.")
+    
+#     return kg1
+
+def remove_duplicates_triplets(kg, ix2rel=None):
     """
     Remove duplicate triples from a knowledge graph for each relation and keep only unique triples.
 
@@ -487,7 +525,9 @@ def remove_duplicates_triplets(kg):
 
         # Logging duplicate information
         if len(pairs) - len(unique) > 0:
-            logging.info(f'{len(pairs) - len(unique)} duplicates found. Keeping {len(unique)} unique triplets for relation {r_}')
+            rel_name = f" ({ix2rel[r_]})" if ix2rel is not None else ""
+            logging.info(f'{len(pairs) - len(unique)} duplicates found. Keeping {len(unique)} unique triplets for relation {r_}{rel_name}')
+            # logging.info(f'{len(pairs) - len(unique)} duplicates found. Keeping {len(unique)} unique triplets for relation {r_}')
 
     # Return a new KnowledgeGraph instance with only unique triples retained
     return kg.keep_triples(keep)
