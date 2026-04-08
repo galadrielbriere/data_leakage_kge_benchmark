@@ -82,14 +82,22 @@ def set_random_seeds(seed):
     torch.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
 
+# def save_knowledge_graph(config, kg_train, kg_val, kg_test):
+#     """Save the knowledge graph to files."""
+#     pickle_filename = os.path.join(config['common']['out'], 'kg.pkl')
+#     logging.info(f"Saving results to {pickle_filename}...")
+#     with open(pickle_filename, 'wb') as file:
+#         pickle.dump(kg_train, file)
+#         pickle.dump(kg_val, file)
+#         pickle.dump(kg_test, file)
+
 def save_knowledge_graph(config, kg_train, kg_val, kg_test):
     """Save the knowledge graph to files."""
-    pickle_filename = os.path.join(config['common']['out'], 'kg.pkl')
-    logging.info(f"Saving results to {pickle_filename}...")
-    with open(pickle_filename, 'wb') as file:
-        pickle.dump(kg_train, file)
-        pickle.dump(kg_val, file)
-        pickle.dump(kg_test, file)
+    out = config['common']['out']
+    logging.info(f"Saving results to {out}...")
+    torch.save(kg_train, os.path.join(out, 'kg_train.pt'))
+    torch.save(kg_val,   os.path.join(out, 'kg_val.pt'))
+    torch.save(kg_test,  os.path.join(out, 'kg_test.pt'))
 
 def prepare_knowledge_graph(config):
     """Prepare and clean the knowledge graph."""
@@ -111,14 +119,29 @@ def prepare_knowledge_graph(config):
 
     return kg_train, kg_val, kg_test
 
+# def load_knowledge_graph(config):
+#     """Load the knowledge graph from pickle files."""
+#     pickle_filename = config["common"]['input_pkl']
+#     logging.info(f'Will not run the preparation step. Using KG stored in: {pickle_filename}')
+#     with open(pickle_filename, 'rb') as file:
+#         kg_train = pickle.load(file)
+#         kg_val = pickle.load(file)
+#         kg_test = pickle.load(file)
+#     return kg_train, kg_val, kg_test
+
 def load_knowledge_graph(config):
-    """Load the knowledge graph from pickle files."""
-    pickle_filename = config["common"]['input_pkl']
-    logging.info(f'Will not run the preparation step. Using KG stored in: {pickle_filename}')
-    with open(pickle_filename, 'rb') as file:
-        kg_train = pickle.load(file)
-        kg_val = pickle.load(file)
-        kg_test = pickle.load(file)
+    input_path = config["common"]['input_pkl']
+    if input_path.endswith('.pkl'):
+        # legacy
+        with open(input_path, 'rb') as f:
+            kg_train = pickle.load(f)
+            kg_val   = pickle.load(f)
+            kg_test  = pickle.load(f)
+    else:
+        # nouveau format .pt
+        kg_train = torch.load(os.path.join(input_path, 'kg_train.pt'), weights_only=False)
+        kg_val   = torch.load(os.path.join(input_path, 'kg_val.pt'),   weights_only=False)
+        kg_test  = torch.load(os.path.join(input_path, 'kg_test.pt'),  weights_only=False)
     return kg_train, kg_val, kg_test
 
 def clean_knowledge_graph(kg, config):
