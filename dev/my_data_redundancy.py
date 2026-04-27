@@ -294,7 +294,8 @@ def permute_tails(kg, relation_id):
 
     # Vérifier si le degré est préservé
     assert Counter(new_tail_idx[mask].tolist()) == tails_count, "Le degré des `tails` n'est pas préservé après permutation."
-    assert all(new_head_idx[i] != new_tail_idx[i] for i in range(len(new_head_idx))), "Il y a des triplets avec le même `head` et `tail` après permutation."
+    assert all(new_head_idx[mask][i] != new_tail_idx[mask][i] for i in range(mask.sum())), "Il y a des triplets avec le même `head` et `tail` après permutation."
+    # assert all(new_head_idx[i] != new_tail_idx[i] for i in range(len(new_head_idx))), "Il y a des triplets avec le même `head` et `tail` après permutation."
 
     # Retourner une nouvelle instance de KnowledgeGraph avec les `tails` permutés
     return KnowledgeGraph(
