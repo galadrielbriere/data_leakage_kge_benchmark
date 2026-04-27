@@ -297,6 +297,13 @@ def permute_tails(kg, relation_id):
     assert all(new_head_idx[mask][i] != new_tail_idx[mask][i] for i in range(mask.sum())), "Il y a des triplets avec le même `head` et `tail` après permutation."
     # assert all(new_head_idx[i] != new_tail_idx[i] for i in range(len(new_head_idx))), "Il y a des triplets avec le même `head` et `tail` après permutation."
 
+    # Vérifier qu'aucun triplet permuté ne reproduit un triplet existant dans le KG
+    original_triplets = set(zip(heads_for_relation, tails_for_relation))
+    permuted_triplets = set(zip(new_head_idx[mask].tolist(), new_tail_idx[mask].tolist()))
+    overlap = original_triplets & permuted_triplets
+    if len(overlap) > 0:
+        logging.warning(f"{len(overlap)}/{len(original_triplets)} triplets permutés correspondent à des triplets existants.")
+
     # Retourner une nouvelle instance de KnowledgeGraph avec les `tails` permutés
     return KnowledgeGraph(
         kg={'heads': new_head_idx, 'tails': new_tail_idx, 'relations': new_relations},
