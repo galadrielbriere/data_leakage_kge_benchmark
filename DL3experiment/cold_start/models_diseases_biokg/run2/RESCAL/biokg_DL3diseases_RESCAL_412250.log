@@ -1,0 +1,96 @@
+2026-05-02 21:13:06,725 - WARNING - /linkhome/rech/genuyp01/ufq76hz/.conda/envs/torch_pyg/lib/python3.10/site-packages/ignite/handlers/checkpoint.py:16: DeprecationWarning: `TorchScript` support for functional optimizers is deprecated and will be removed in a future PyTorch release. Consider using the `torch.compile` optimizer instead.
+  from torch.distributed.optim import ZeroRedundancyOptimizer
+
+2026-05-02 21:13:06,894 - INFO - Configuration loaded:
+{
+    "common": {
+        "seed": 42,
+        "input_pkl": "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/DL3experiment/cold_start/biokg_processing_disease",
+        "out": "./",
+        "run_kg_prep": false,
+        "run_training": false,
+        "run_evaluation": true,
+        "plot_training_metrics": true,
+        "run_inference": "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/knowledge_graph/biokg_orphan_associations_only.tsv"
+    },
+    "model": {
+        "name": "RESCAL",
+        "emb_dim": 200
+    },
+    "sampler": {
+        "name": "Mixed",
+        "n_neg": 5
+    },
+    "optimizer": {
+        "name": "Adam",
+        "params": {
+            "lr": 0.001,
+            "weight_decay": 0.001
+        }
+    },
+    "lr_scheduler": {
+        "type": "CosineAnnealingWarmRestarts",
+        "params": {
+            "T_0": 10,
+            "T_mult": 2
+        }
+    },
+    "training": {
+        "max_epochs": 500,
+        "batch_size": 4096,
+        "eval_interval": 20,
+        "eval_batch_size": 64,
+        "patience": 10
+    },
+    "evaluation": {
+        "made_directed_relations": [
+            "DDI",
+            "PPI",
+            "DDI_inv",
+            "PPI_inv",
+            "DPI",
+            "DRUG_TARGET"
+        ],
+        "target_relations": [
+            "DRUG_DISEASE_ASSOCIATION"
+        ],
+        "thresholds": [
+            10,
+            5
+        ]
+    }
+}
+2026-05-02 21:13:06,894 - INFO - Setting number of threads to 5
+2026-05-02 21:13:07,098 - INFO - Loading parameters from params.yaml
+2026-05-02 21:13:07,098 - INFO - Output folder: ./
+2026-05-02 21:13:07,098 - INFO - Loading KG...
+2026-05-02 21:14:31,646 - INFO - Done
+2026-05-02 21:14:31,696 - INFO - Detected device: cuda
+2026-05-02 21:14:31,706 - INFO - Initializing model...
+2026-05-02 21:14:32,350 - INFO - Optimizer 'Adam' initialized with parameters: {'lr': 0.001, 'weight_decay': 0.001}
+2026-05-02 21:14:32,350 - INFO - Initializing sampler...
+2026-05-02 21:15:15,191 - INFO - Scheduler 'CosineAnnealingWarmRestarts' initialized with parameters: {'T_0': 10, 'T_mult': 2}
+2026-05-02 21:15:15,211 - INFO - Number of training batches: 856
+2026-05-02 21:15:21,303 - INFO - Loading best model.
+2026-05-02 21:15:21,304 - INFO - Best model is ./checkpoints/best_model_checkpoint_val_mrr=0.0524.pt
+2026-05-02 21:15:21,305 - WARNING - /lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/dev/run_training.py:820: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  checkpoint = torch.load(os.path.join(checkpoint_dir, best_model), map_location=device)
+
+2026-05-02 21:15:21,898 - INFO - Best model successfully loaded.
+2026-05-02 21:15:21,898 - INFO - Evaluating on the test set with best model...
+DRUG_DISEASE_ASSOCIATION
+Link prediction evaluation:   0%|          | 0/100 [00:00<?, ?batch/s]Link prediction evaluation:   1%|          | 1/100 [00:00<00:38,  2.55batch/s]Link prediction evaluation:   3%|▎         | 3/100 [00:00<00:14,  6.65batch/s]Link prediction evaluation:   5%|▌         | 5/100 [00:00<00:10,  9.36batch/s]Link prediction evaluation:   7%|▋         | 7/100 [00:00<00:08, 11.20batch/s]Link prediction evaluation:   9%|▉         | 9/100 [00:00<00:07, 12.47batch/s]Link prediction evaluation:  11%|█         | 11/100 [00:01<00:06, 13.30batch/s]Link prediction evaluation:  13%|█▎        | 13/100 [00:01<00:06, 13.75batch/s]Link prediction evaluation:  15%|█▌        | 15/100 [00:01<00:05, 14.18batch/s]Link prediction evaluation:  17%|█▋        | 17/100 [00:01<00:05, 14.51batch/s]Link prediction evaluation:  19%|█▉        | 19/100 [00:01<00:05, 14.73batch/s]Link prediction evaluation:  21%|██        | 21/100 [00:01<00:05, 14.88batch/s]Link prediction evaluation:  23%|██▎       | 23/100 [00:01<00:05, 15.03batch/s]Link prediction evaluation:  25%|██▌       | 25/100 [00:01<00:04, 15.11batch/s]Link prediction evaluation:  27%|██▋       | 27/100 [00:02<00:04, 15.14batch/s]Link prediction evaluation:  29%|██▉       | 29/100 [00:02<00:04, 15.19batch/s]Link prediction evaluation:  31%|███       | 31/100 [00:02<00:04, 15.21batch/s]Link prediction evaluation:  33%|███▎      | 33/100 [00:02<00:04, 15.25batch/s]Link prediction evaluation:  35%|███▌      | 35/100 [00:02<00:04, 15.27batch/s]Link prediction evaluation:  37%|███▋      | 37/100 [00:02<00:04, 15.27batch/s]Link prediction evaluation:  39%|███▉      | 39/100 [00:02<00:03, 15.29batch/s]Link prediction evaluation:  41%|████      | 41/100 [00:03<00:03, 15.28batch/s]Link prediction evaluation:  43%|████▎     | 43/100 [00:03<00:03, 15.26batch/s]Link prediction evaluation:  45%|████▌     | 45/100 [00:03<00:03, 15.30batch/s]Link prediction evaluation:  47%|████▋     | 47/100 [00:03<00:03, 15.32batch/s]Link prediction evaluation:  49%|████▉     | 49/100 [00:03<00:03, 15.32batch/s]Link prediction evaluation:  51%|█████     | 51/100 [00:03<00:03, 15.31batch/s]Link prediction evaluation:  53%|█████▎    | 53/100 [00:03<00:03, 15.30batch/s]Link prediction evaluation:  55%|█████▌    | 55/100 [00:03<00:02, 15.29batch/s]Link prediction evaluation:  57%|█████▋    | 57/100 [00:04<00:02, 15.29batch/s]Link prediction evaluation:  59%|█████▉    | 59/100 [00:04<00:02, 15.26batch/s]Link prediction evaluation:  61%|██████    | 61/100 [00:04<00:02, 15.25batch/s]Link prediction evaluation:  63%|██████▎   | 63/100 [00:04<00:02, 15.26batch/s]Link prediction evaluation:  65%|██████▌   | 65/100 [00:04<00:02, 15.25batch/s]Link prediction evaluation:  67%|██████▋   | 67/100 [00:04<00:02, 15.23batch/s]Link prediction evaluation:  69%|██████▉   | 69/100 [00:04<00:02, 15.23batch/s]Link prediction evaluation:  71%|███████   | 71/100 [00:04<00:01, 15.25batch/s]Link prediction evaluation:  73%|███████▎  | 73/100 [00:05<00:01, 15.28batch/s]Link prediction evaluation:  75%|███████▌  | 75/100 [00:05<00:01, 15.24batch/s]Link prediction evaluation:  77%|███████▋  | 77/100 [00:05<00:01, 15.24batch/s]Link prediction evaluation:  79%|███████▉  | 79/100 [00:05<00:01, 15.26batch/s]Link prediction evaluation:  81%|████████  | 81/100 [00:05<00:01, 15.27batch/s]Link prediction evaluation:  83%|████████▎ | 83/100 [00:05<00:01, 15.25batch/s]Link prediction evaluation:  85%|████████▌ | 85/100 [00:05<00:00, 15.27batch/s]Link prediction evaluation:  87%|████████▋ | 87/100 [00:06<00:00, 15.28batch/s]Link prediction evaluation:  89%|████████▉ | 89/100 [00:06<00:00, 15.28batch/s]Link prediction evaluation:  91%|█████████ | 91/100 [00:06<00:00, 15.29batch/s]Link prediction evaluation:  93%|█████████▎| 93/100 [00:06<00:00, 15.31batch/s]Link prediction evaluation:  95%|█████████▌| 95/100 [00:06<00:00, 15.28batch/s]Link prediction evaluation:  97%|█████████▋| 97/100 [00:06<00:00, 15.29batch/s]Link prediction evaluation:  99%|█████████▉| 99/100 [00:06<00:00, 15.30batch/s]Link prediction evaluation: 100%|██████████| 100/100 [00:06<00:00, 14.66batch/s]
+2026-05-02 21:15:28,950 - INFO - Final Test MRR with best model: 0.0545780211687088
+2026-05-02 21:15:28,951 - INFO - Final Test Hits@10 with best model: 0.08831414580345154
+Link prediction evaluation:   0%|          | 0/90 [00:00<?, ?batch/s]Link prediction evaluation:   2%|▏         | 2/90 [00:00<00:05, 15.33batch/s]Link prediction evaluation:   4%|▍         | 4/90 [00:00<00:05, 15.26batch/s]Link prediction evaluation:   7%|▋         | 6/90 [00:00<00:05, 15.26batch/s]Link prediction evaluation:   9%|▉         | 8/90 [00:00<00:05, 15.25batch/s]Link prediction evaluation:  11%|█         | 10/90 [00:00<00:05, 15.24batch/s]Link prediction evaluation:  13%|█▎        | 12/90 [00:00<00:05, 15.25batch/s]Link prediction evaluation:  16%|█▌        | 14/90 [00:00<00:04, 15.27batch/s]Link prediction evaluation:  18%|█▊        | 16/90 [00:01<00:04, 15.27batch/s]Link prediction evaluation:  20%|██        | 18/90 [00:01<00:04, 15.26batch/s]Link prediction evaluation:  22%|██▏       | 20/90 [00:01<00:04, 15.28batch/s]Link prediction evaluation:  24%|██▍       | 22/90 [00:01<00:04, 15.27batch/s]Link prediction evaluation:  27%|██▋       | 24/90 [00:01<00:04, 15.25batch/s]Link prediction evaluation:  29%|██▉       | 26/90 [00:01<00:04, 15.25batch/s]Link prediction evaluation:  31%|███       | 28/90 [00:01<00:04, 15.25batch/s]Link prediction evaluation:  33%|███▎      | 30/90 [00:01<00:03, 15.26batch/s]Link prediction evaluation:  36%|███▌      | 32/90 [00:02<00:03, 15.27batch/s]Link prediction evaluation:  38%|███▊      | 34/90 [00:02<00:03, 15.27batch/s]Link prediction evaluation:  40%|████      | 36/90 [00:02<00:03, 15.27batch/s]Link prediction evaluation:  42%|████▏     | 38/90 [00:02<00:03, 15.23batch/s]Link prediction evaluation:  44%|████▍     | 40/90 [00:02<00:03, 15.27batch/s]Link prediction evaluation:  47%|████▋     | 42/90 [00:02<00:03, 15.26batch/s]Link prediction evaluation:  49%|████▉     | 44/90 [00:02<00:03, 15.28batch/s]Link prediction evaluation:  51%|█████     | 46/90 [00:03<00:02, 15.28batch/s]Link prediction evaluation:  53%|█████▎    | 48/90 [00:03<00:02, 15.25batch/s]Link prediction evaluation:  56%|█████▌    | 50/90 [00:03<00:02, 15.26batch/s]Link prediction evaluation:  58%|█████▊    | 52/90 [00:03<00:02, 15.24batch/s]Link prediction evaluation:  60%|██████    | 54/90 [00:03<00:02, 15.23batch/s]Link prediction evaluation:  62%|██████▏   | 56/90 [00:03<00:02, 15.26batch/s]Link prediction evaluation:  64%|██████▍   | 58/90 [00:03<00:02, 15.25batch/s]Link prediction evaluation:  67%|██████▋   | 60/90 [00:03<00:01, 15.24batch/s]Link prediction evaluation:  69%|██████▉   | 62/90 [00:04<00:01, 15.22batch/s]Link prediction evaluation:  71%|███████   | 64/90 [00:04<00:01, 15.26batch/s]Link prediction evaluation:  73%|███████▎  | 66/90 [00:04<00:01, 15.26batch/s]Link prediction evaluation:  76%|███████▌  | 68/90 [00:04<00:01, 15.25batch/s]Link prediction evaluation:  78%|███████▊  | 70/90 [00:04<00:01, 15.24batch/s]Link prediction evaluation:  80%|████████  | 72/90 [00:04<00:01, 15.23batch/s]Link prediction evaluation:  82%|████████▏ | 74/90 [00:04<00:01, 15.23batch/s]Link prediction evaluation:  84%|████████▍ | 76/90 [00:04<00:00, 15.23batch/s]Link prediction evaluation:  87%|████████▋ | 78/90 [00:05<00:00, 15.27batch/s]Link prediction evaluation:  89%|████████▉ | 80/90 [00:05<00:00, 15.25batch/s]Link prediction evaluation:  91%|█████████ | 82/90 [00:05<00:00, 15.26batch/s]Link prediction evaluation:  93%|█████████▎| 84/90 [00:05<00:00, 15.27batch/s]Link prediction evaluation:  96%|█████████▌| 86/90 [00:05<00:00, 15.26batch/s]Link prediction evaluation:  98%|█████████▊| 88/90 [00:05<00:00, 15.27batch/s]Link prediction evaluation: 100%|██████████| 90/90 [00:05<00:00, 16.03batch/s]Link prediction evaluation: 100%|██████████| 90/90 [00:05<00:00, 15.31batch/s]
+Link prediction evaluation:   0%|          | 0/10 [00:00<?, ?batch/s]Link prediction evaluation:  20%|██        | 2/10 [00:00<00:00, 16.16batch/s]Link prediction evaluation:  40%|████      | 4/10 [00:00<00:00, 16.04batch/s]Link prediction evaluation:  60%|██████    | 6/10 [00:00<00:00, 16.01batch/s]Link prediction evaluation:  80%|████████  | 8/10 [00:00<00:00, 16.00batch/s]Link prediction evaluation: 100%|██████████| 10/10 [00:00<00:00, 16.97batch/s]
+2026-05-02 21:15:45,989 - INFO - MRR for frequent nodes (threshold=10) in relation DRUG_DISEASE_ASSOCIATION: 0.05082758888602257
+2026-05-02 21:15:45,989 - INFO - MRR for infrequent nodes (threshold=10) in relation DRUG_DISEASE_ASSOCIATION: 0.09033173322677612
+2026-05-02 21:15:45,989 - INFO - Hits@10 for frequent nodes (threshold=10) in relation DRUG_DISEASE_ASSOCIATION: 0.08372538723051548
+2026-05-02 21:15:45,989 - INFO - Hits@10 for infrequent nodes (threshold=10) in relation DRUG_DISEASE_ASSOCIATION: 0.13205980136990547
+2026-05-02 21:15:46,031 - INFO - MRR evaluation results stored in ./evaluation_metrics.yaml
+2026-05-02 21:15:46,050 - INFO - Hit@10 evaluation results stored in ./evaluation_hit@10.yaml
+Link prediction evaluation:   0%|          | 0/5 [00:00<?, ?batch/s]Link prediction evaluation:  40%|████      | 2/5 [00:00<00:00, 17.44batch/s]Link prediction evaluation:  80%|████████  | 4/5 [00:00<00:00, 17.54batch/s]Link prediction evaluation: 100%|██████████| 5/5 [00:00<00:00, 19.13batch/s]
+Link prediction evaluation:   0%|          | 0/5 [00:00<?, ?batch/s]Link prediction evaluation:  80%|████████  | 4/5 [00:00<00:00, 34.91batch/s]Link prediction evaluation: 100%|██████████| 5/5 [00:00<00:00, 38.12batch/s]
+2026-05-02 21:15:46,575 - INFO - MRR on inference set: 0.015015948563814163
+2026-05-02 21:15:46,626 - INFO - Evaluation results stored in ./inference_metrics.yaml

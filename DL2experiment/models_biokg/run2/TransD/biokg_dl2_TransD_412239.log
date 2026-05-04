@@ -1,0 +1,101 @@
+2026-05-02 21:09:56,345 - WARNING - /linkhome/rech/genuyp01/ufq76hz/.conda/envs/torch_pyg/lib/python3.10/site-packages/ignite/handlers/checkpoint.py:16: DeprecationWarning: `TorchScript` support for functional optimizers is deprecated and will be removed in a future PyTorch release. Consider using the `torch.compile` optimizer instead.
+  from torch.distributed.optim import ZeroRedundancyOptimizer
+
+2026-05-02 21:09:56,424 - INFO - Configuration loaded:
+{
+    "common": {
+        "seed": 42,
+        "input_pkl": "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/DL2experiment/biokg_processing",
+        "out": "./",
+        "run_kg_prep": false,
+        "run_training": false,
+        "run_evaluation": true,
+        "plot_training_metrics": true,
+        "run_inference": "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/knowledge_graph/biokg_orphan_associations_only.tsv"
+    },
+    "model": {
+        "name": "TransD",
+        "emb_dim": 200,
+        "margin": 1
+    },
+    "sampler": {
+        "name": "Mixed",
+        "n_neg": 5
+    },
+    "optimizer": {
+        "name": "Adam",
+        "params": {
+            "lr": 0.001,
+            "weight_decay": 0.001
+        }
+    },
+    "lr_scheduler": {
+        "type": "CosineAnnealingWarmRestarts",
+        "params": {
+            "T_0": 10,
+            "T_mult": 2
+        }
+    },
+    "training": {
+        "max_epochs": 500,
+        "batch_size": 4096,
+        "eval_interval": 20,
+        "eval_batch_size": 16,
+        "patience": 10
+    },
+    "evaluation": {
+        "made_directed_relations": [
+            "DDI",
+            "PPI",
+            "DDI_inv",
+            "PPI_inv",
+            "DPI",
+            "DRUG_TARGET"
+        ],
+        "target_relations": [
+            "DRUG_DISEASE_ASSOCIATION"
+        ],
+        "thresholds": [
+            10,
+            5
+        ]
+    }
+}
+2026-05-02 21:09:56,424 - INFO - Setting number of threads to 5
+2026-05-02 21:09:56,615 - INFO - Loading parameters from params.yaml
+2026-05-02 21:09:56,615 - INFO - Output folder: ./
+2026-05-02 21:09:56,615 - INFO - Loading KG...
+2026-05-02 21:11:17,046 - INFO - Done
+2026-05-02 21:11:17,097 - INFO - Detected device: cuda
+2026-05-02 21:11:17,103 - INFO - Initializing model...
+2026-05-02 21:11:17,103 - WARNING - /lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/dev/run_training.py:130: UserWarning: The 'rel_emb_dim' field is missing for model TransD. Defaulting to 200.
+  warnings.warn(f"The 'rel_emb_dim' field is missing for model {model_name}. Defaulting to {emb_dim}.")
+
+2026-05-02 21:11:18,302 - INFO - Optimizer 'Adam' initialized with parameters: {'lr': 0.001, 'weight_decay': 0.001}
+2026-05-02 21:11:18,302 - INFO - Initializing sampler...
+2026-05-02 21:11:52,930 - INFO - Scheduler 'CosineAnnealingWarmRestarts' initialized with parameters: {'T_0': 10, 'T_mult': 2}
+2026-05-02 21:11:52,944 - INFO - Number of training batches: 575
+Traceback (most recent call last):
+  File "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/dev/run_training.py", line 964, in <module>
+    main(args)
+  File "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/dev/run_training.py", line 87, in main
+    train_model(kg_train, kg_val, kg_test, config)
+  File "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/dev/run_training.py", line 802, in train_model
+    plot_learning_curves(training_metrics_file, config)
+  File "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/dev/run_training.py", line 91, in plot_learning_curves
+    df = read_training_metrics(training_metrics_file)
+  File "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/dev/run_training.py", line 501, in read_training_metrics
+    df = pd.read_csv(training_metrics_file)
+  File "/linkhome/rech/genuyp01/ufq76hz/.conda/envs/torch_pyg/lib/python3.10/site-packages/pandas/io/parsers/readers.py", line 1026, in read_csv
+    return _read(filepath_or_buffer, kwds)
+  File "/linkhome/rech/genuyp01/ufq76hz/.conda/envs/torch_pyg/lib/python3.10/site-packages/pandas/io/parsers/readers.py", line 620, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+  File "/linkhome/rech/genuyp01/ufq76hz/.conda/envs/torch_pyg/lib/python3.10/site-packages/pandas/io/parsers/readers.py", line 1620, in __init__
+    self._engine = self._make_engine(f, self.engine)
+  File "/linkhome/rech/genuyp01/ufq76hz/.conda/envs/torch_pyg/lib/python3.10/site-packages/pandas/io/parsers/readers.py", line 1880, in _make_engine
+    self.handles = get_handle(
+  File "/linkhome/rech/genuyp01/ufq76hz/.conda/envs/torch_pyg/lib/python3.10/site-packages/pandas/io/common.py", line 873, in get_handle
+    handle = open(
+FileNotFoundError: [Errno 2] No such file or directory: './training_metrics.csv'
+srun: error: r9i0n8: task 0: Exited with exit code 1
+srun: Terminating StepId=412239.0

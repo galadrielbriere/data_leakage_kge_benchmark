@@ -1,0 +1,254 @@
+2026-05-02 21:14:05,357 - WARNING - /linkhome/rech/genuyp01/ufq76hz/.conda/envs/torch_pyg/lib/python3.10/site-packages/ignite/handlers/checkpoint.py:16: DeprecationWarning: `TorchScript` support for functional optimizers is deprecated and will be removed in a future PyTorch release. Consider using the `torch.compile` optimizer instead.
+  from torch.distributed.optim import ZeroRedundancyOptimizer
+
+2026-05-02 21:14:05,514 - INFO - Configuration loaded:
+{
+    "common": {
+        "seed": 42,
+        "input_pkl": "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/DL3experiment/cold_start/biokg_processing_disease",
+        "out": "./",
+        "run_kg_prep": false,
+        "run_training": false,
+        "run_evaluation": true,
+        "plot_training_metrics": true,
+        "run_inference": "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/knowledge_graph/biokg_orphan_associations_only.tsv"
+    },
+    "model": {
+        "name": "TransD",
+        "emb_dim": 200,
+        "margin": 1
+    },
+    "sampler": {
+        "name": "Mixed",
+        "n_neg": 5
+    },
+    "optimizer": {
+        "name": "Adam",
+        "params": {
+            "lr": 0.001,
+            "weight_decay": 0.001
+        }
+    },
+    "lr_scheduler": {
+        "type": "CosineAnnealingWarmRestarts",
+        "params": {
+            "T_0": 10,
+            "T_mult": 2
+        }
+    },
+    "training": {
+        "max_epochs": 500,
+        "batch_size": 4096,
+        "eval_interval": 20,
+        "eval_batch_size": 16,
+        "patience": 10
+    },
+    "evaluation": {
+        "made_directed_relations": [
+            "DDI",
+            "PPI",
+            "DDI_inv",
+            "PPI_inv",
+            "DPI",
+            "DRUG_TARGET"
+        ],
+        "target_relations": [
+            "DRUG_DISEASE_ASSOCIATION"
+        ],
+        "thresholds": [
+            10,
+            5
+        ]
+    }
+}
+2026-05-02 21:14:05,514 - INFO - Setting number of threads to 5
+2026-05-02 21:14:05,684 - INFO - Loading parameters from params.yaml
+2026-05-02 21:14:05,684 - INFO - Output folder: ./
+2026-05-02 21:14:05,684 - INFO - Loading KG...
+2026-05-02 21:15:26,246 - INFO - Done
+2026-05-02 21:15:26,290 - INFO - Detected device: cuda
+2026-05-02 21:15:26,300 - INFO - Initializing model...
+2026-05-02 21:15:26,300 - WARNING - /lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/dev/run_training.py:130: UserWarning: The 'rel_emb_dim' field is missing for model TransD. Defaulting to 200.
+  warnings.warn(f"The 'rel_emb_dim' field is missing for model {model_name}. Defaulting to {emb_dim}.")
+
+2026-05-02 21:15:27,554 - INFO - Optimizer 'Adam' initialized with parameters: {'lr': 0.001, 'weight_decay': 0.001}
+2026-05-02 21:15:27,554 - INFO - Initializing sampler...
+2026-05-02 21:16:09,869 - INFO - Scheduler 'CosineAnnealingWarmRestarts' initialized with parameters: {'T_0': 10, 'T_mult': 2}
+2026-05-02 21:16:09,888 - INFO - Number of training batches: 856
+2026-05-02 21:16:15,872 - WARNING - /lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/dev/run_training.py:130: UserWarning: The 'rel_emb_dim' field is missing for model TransD. Defaulting to 200.
+  warnings.warn(f"The 'rel_emb_dim' field is missing for model {model_name}. Defaulting to {emb_dim}.")
+
+2026-05-02 21:16:16,905 - INFO - Loading best model.
+2026-05-02 21:16:16,907 - INFO - Best model is ./checkpoints/best_model_checkpoint_val_mrr=0.0215.pt
+2026-05-02 21:16:16,907 - WARNING - /lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/dev/run_training.py:820: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  checkpoint = torch.load(os.path.join(checkpoint_dir, best_model), map_location=device)
+
+2026-05-02 21:16:19,757 - INFO - Best model successfully loaded.
+2026-05-02 21:16:19,757 - INFO - Evaluating on the test set with best model...
+DRUG_DISEASE_ASSOCIATION
+Link prediction evaluation:   0%|          | 0/397 [00:00<?, ?batch/s]
+Projecting entities:   0%|          | 0/105522 [00:00<?, ?entities/s][A
+Projecting entities:   0%|          | 64/105522 [00:00<02:44, 639.41entities/s][A
+Projecting entities:   1%|          | 818/105522 [00:00<00:22, 4696.72entities/s][A
+Projecting entities:   1%|▏         | 1580/105522 [00:00<00:17, 6029.49entities/s][A
+Projecting entities:   2%|▏         | 2339/105522 [00:00<00:15, 6641.92entities/s][A
+Projecting entities:   3%|▎         | 3052/105522 [00:00<00:15, 6816.95entities/s][A
+Projecting entities:   4%|▎         | 3764/105522 [00:00<00:14, 6916.86entities/s][A
+Projecting entities:   4%|▍         | 4473/105522 [00:00<00:14, 6970.74entities/s][A
+Projecting entities:   5%|▍         | 5182/105522 [00:00<00:14, 7005.72entities/s][A
+Projecting entities:   6%|▌         | 5889/105522 [00:00<00:14, 7023.92entities/s][A
+Projecting entities:   6%|▋         | 6600/105522 [00:01<00:14, 7049.71entities/s][A
+Projecting entities:   7%|▋         | 7311/105522 [00:01<00:13, 7066.42entities/s][A
+Projecting entities:   8%|▊         | 8022/105522 [00:01<00:13, 7077.76entities/s][A
+Projecting entities:   8%|▊         | 8730/105522 [00:01<00:13, 7071.87entities/s][A
+Projecting entities:   9%|▉         | 9440/105522 [00:01<00:13, 7079.54entities/s][A
+Projecting entities:  10%|▉         | 10151/105522 [00:01<00:13, 7085.91entities/s][A
+Projecting entities:  10%|█         | 10863/105522 [00:01<00:13, 7095.83entities/s][A
+Projecting entities:  11%|█         | 11573/105522 [00:01<00:13, 7085.18entities/s][A
+Projecting entities:  12%|█▏        | 12284/105522 [00:01<00:13, 7090.19entities/s][A
+Projecting entities:  12%|█▏        | 12995/105522 [00:01<00:13, 7093.13entities/s][A
+Projecting entities:  13%|█▎        | 13706/105522 [00:02<00:12, 7096.84entities/s][A
+Projecting entities:  14%|█▎        | 14416/105522 [00:02<00:12, 7088.10entities/s][A
+Projecting entities:  14%|█▍        | 15126/105522 [00:02<00:12, 7090.01entities/s][A
+Projecting entities:  15%|█▌        | 15838/105522 [00:02<00:12, 7096.93entities/s][A
+Projecting entities:  16%|█▌        | 16549/105522 [00:02<00:12, 7098.99entities/s][A
+Projecting entities:  16%|█▋        | 17259/105522 [00:02<00:12, 7087.16entities/s][A
+Projecting entities:  17%|█▋        | 17969/105522 [00:02<00:12, 7090.61entities/s][A
+Projecting entities:  18%|█▊        | 18680/105522 [00:02<00:12, 7093.50entities/s][A
+Projecting entities:  18%|█▊        | 19393/105522 [00:02<00:12, 7101.99entities/s][A
+Projecting entities:  19%|█▉        | 20104/105522 [00:02<00:12, 7090.79entities/s][A
+Projecting entities:  20%|█▉        | 20814/105522 [00:03<00:11, 7088.55entities/s][A
+Projecting entities:  20%|██        | 21525/105522 [00:03<00:11, 7093.00entities/s][A
+Projecting entities:  21%|██        | 22236/105522 [00:03<00:11, 7095.37entities/s][A
+Projecting entities:  22%|██▏       | 22946/105522 [00:03<00:11, 7090.23entities/s][A
+Projecting entities:  22%|██▏       | 23657/105522 [00:03<00:11, 7093.24entities/s][A
+Projecting entities:  23%|██▎       | 24367/105522 [00:03<00:11, 7090.66entities/s][A
+Projecting entities:  24%|██▍       | 25077/105522 [00:03<00:11, 7080.18entities/s][A
+Projecting entities:  24%|██▍       | 25787/105522 [00:03<00:11, 7084.76entities/s][A
+Projecting entities:  25%|██▌       | 26497/105522 [00:03<00:11, 7087.23entities/s][A
+Projecting entities:  26%|██▌       | 27207/105522 [00:03<00:11, 7089.69entities/s][A
+Projecting entities:  26%|██▋       | 27916/105522 [00:04<00:10, 7080.06entities/s][A
+Projecting entities:  27%|██▋       | 28628/105522 [00:04<00:10, 7089.17entities/s][A
+Projecting entities:  28%|██▊       | 29337/105522 [00:04<00:10, 7088.90entities/s][A
+Projecting entities:  28%|██▊       | 30048/105522 [00:04<00:10, 7093.26entities/s][A
+Projecting entities:  29%|██▉       | 30758/105522 [00:04<00:10, 7083.56entities/s][A
+Projecting entities:  30%|██▉       | 31467/105522 [00:04<00:10, 7084.62entities/s][A
+Projecting entities:  30%|███       | 32177/105522 [00:04<00:10, 7088.87entities/s][A
+Projecting entities:  31%|███       | 32886/105522 [00:04<00:10, 7087.01entities/s][A
+Projecting entities:  32%|███▏      | 33595/105522 [00:04<00:10, 7081.16entities/s][A
+Projecting entities:  33%|███▎      | 34307/105522 [00:04<00:10, 7090.05entities/s][A
+Projecting entities:  33%|███▎      | 35019/105522 [00:05<00:09, 7096.04entities/s][A
+Projecting entities:  34%|███▍      | 35729/105522 [00:05<00:09, 7096.09entities/s][A
+Projecting entities:  35%|███▍      | 36439/105522 [00:05<00:09, 7087.28entities/s][A
+Projecting entities:  35%|███▌      | 37151/105522 [00:05<00:09, 7094.46entities/s][A
+Projecting entities:  36%|███▌      | 37863/105522 [00:05<00:09, 7099.23entities/s][A
+Projecting entities:  37%|███▋      | 38574/105522 [00:05<00:09, 7100.77entities/s][A
+Projecting entities:  37%|███▋      | 39285/105522 [00:05<00:09, 7090.14entities/s][A
+Projecting entities:  38%|███▊      | 39996/105522 [00:05<00:09, 7093.58entities/s][A
+Projecting entities:  39%|███▊      | 40707/105522 [00:05<00:09, 7097.92entities/s][A
+Projecting entities:  39%|███▉      | 41418/105522 [00:05<00:09, 7099.55entities/s][A
+Projecting entities:  40%|███▉      | 42128/105522 [00:06<00:08, 7089.10entities/s][A
+Projecting entities:  41%|████      | 42839/105522 [00:06<00:08, 7093.55entities/s][A
+Projecting entities:  41%|████▏     | 43551/105522 [00:06<00:08, 7099.04entities/s][A
+Projecting entities:  42%|████▏     | 44263/105522 [00:06<00:08, 7103.31entities/s][A
+Projecting entities:  43%|████▎     | 44974/105522 [00:06<00:08, 7091.04entities/s][A
+Projecting entities:  43%|████▎     | 45685/105522 [00:06<00:08, 7094.72entities/s][A
+Projecting entities:  44%|████▍     | 46398/105522 [00:06<00:08, 7102.81entities/s][A
+Projecting entities:  45%|████▍     | 47110/105522 [00:06<00:08, 7105.11entities/s][A
+Projecting entities:  45%|████▌     | 47821/105522 [00:06<00:08, 7098.07entities/s][A
+Projecting entities:  46%|████▌     | 48533/105522 [00:06<00:08, 7104.37entities/s][A
+Projecting entities:  47%|████▋     | 49244/105522 [00:07<00:07, 7104.13entities/s][A
+Projecting entities:  47%|████▋     | 49955/105522 [00:07<00:07, 7102.72entities/s][A
+Projecting entities:  48%|████▊     | 50666/105522 [00:07<00:07, 7094.50entities/s][A
+Projecting entities:  49%|████▊     | 51378/105522 [00:07<00:07, 7100.33entities/s][A
+Projecting entities:  49%|████▉     | 52091/105522 [00:07<00:07, 7107.19entities/s][A
+Projecting entities:  50%|█████     | 52802/105522 [00:07<00:07, 7105.05entities/s][A
+Projecting entities:  51%|█████     | 53513/105522 [00:07<00:07, 7098.97entities/s][A
+Projecting entities:  51%|█████▏    | 54225/105522 [00:07<00:07, 7102.60entities/s][A
+Projecting entities:  52%|█████▏    | 54936/105522 [00:07<00:07, 7099.69entities/s][A
+Projecting entities:  53%|█████▎    | 55648/105522 [00:07<00:07, 7103.36entities/s][A
+Projecting entities:  53%|█████▎    | 56359/105522 [00:08<00:06, 7095.23entities/s][A
+Projecting entities:  54%|█████▍    | 57070/105522 [00:08<00:06, 7097.68entities/s][A
+Projecting entities:  55%|█████▍    | 57781/105522 [00:08<00:06, 7100.81entities/s][A
+Projecting entities:  55%|█████▌    | 58492/105522 [00:08<00:06, 7095.33entities/s][A
+Projecting entities:  56%|█████▌    | 59202/105522 [00:08<00:06, 7084.64entities/s][A
+Projecting entities:  57%|█████▋    | 59911/105522 [00:08<00:06, 7085.44entities/s][A
+Projecting entities:  57%|█████▋    | 60621/105522 [00:08<00:06, 7087.60entities/s][A
+Projecting entities:  58%|█████▊    | 61330/105522 [00:08<00:06, 7088.07entities/s][A
+Projecting entities:  59%|█████▉    | 62039/105522 [00:08<00:06, 7080.87entities/s][A
+Projecting entities:  59%|█████▉    | 62749/105522 [00:08<00:06, 7083.36entities/s][A
+Projecting entities:  60%|██████    | 63458/105522 [00:09<00:05, 7083.87entities/s][A
+Projecting entities:  61%|██████    | 64168/105522 [00:09<00:05, 7087.16entities/s][A
+Projecting entities:  61%|██████▏   | 64877/105522 [00:09<00:05, 7080.28entities/s][A
+Projecting entities:  62%|██████▏   | 65587/105522 [00:09<00:05, 7085.08entities/s][A
+Projecting entities:  63%|██████▎   | 66297/105522 [00:09<00:05, 7088.31entities/s][A
+Projecting entities:  63%|██████▎   | 67006/105522 [00:09<00:05, 7080.55entities/s][A
+Projecting entities:  64%|██████▍   | 67717/105522 [00:09<00:05, 7087.51entities/s][A
+Projecting entities:  65%|██████▍   | 68428/105522 [00:09<00:05, 7092.23entities/s][A
+Projecting entities:  66%|██████▌   | 69138/105522 [00:09<00:05, 7091.24entities/s][A
+Projecting entities:  66%|██████▌   | 69848/105522 [00:09<00:05, 7085.12entities/s][A
+Projecting entities:  67%|██████▋   | 70559/105522 [00:10<00:04, 7089.61entities/s][A
+Projecting entities:  68%|██████▊   | 71272/105522 [00:10<00:04, 7098.98entities/s][A
+Projecting entities:  68%|██████▊   | 71982/105522 [00:10<00:04, 7096.46entities/s][A
+Projecting entities:  69%|██████▉   | 72692/105522 [00:10<00:04, 7064.32entities/s][A
+Projecting entities:  70%|██████▉   | 73399/105522 [00:10<00:04, 7060.47entities/s][A
+Projecting entities:  70%|███████   | 74108/105522 [00:10<00:04, 7066.86entities/s][A
+Projecting entities:  71%|███████   | 74816/105522 [00:10<00:04, 7070.62entities/s][A
+Projecting entities:  72%|███████▏  | 75524/105522 [00:10<00:04, 7056.76entities/s][A
+Projecting entities:  72%|███████▏  | 76234/105522 [00:10<00:04, 7066.89entities/s][A
+Projecting entities:  73%|███████▎  | 76943/105522 [00:10<00:04, 7072.16entities/s][A
+Projecting entities:  74%|███████▎  | 77651/105522 [00:11<00:03, 7070.76entities/s][A
+Projecting entities:  74%|███████▍  | 78359/105522 [00:11<00:03, 7065.39entities/s][A
+Projecting entities:  75%|███████▍  | 79069/105522 [00:11<00:03, 7073.52entities/s][A
+Projecting entities:  76%|███████▌  | 79778/105522 [00:11<00:03, 7076.84entities/s][A
+Projecting entities:  76%|███████▋  | 80487/105522 [00:11<00:03, 7078.25entities/s][A
+Projecting entities:  77%|███████▋  | 81195/105522 [00:11<00:03, 7068.24entities/s][A
+Projecting entities:  78%|███████▊  | 81904/105522 [00:11<00:03, 7072.47entities/s][A
+Projecting entities:  78%|███████▊  | 82614/105522 [00:11<00:03, 7078.48entities/s][A
+Projecting entities:  79%|███████▉  | 83322/105522 [00:11<00:03, 7076.45entities/s][A
+Projecting entities:  80%|███████▉  | 84030/105522 [00:11<00:03, 7065.98entities/s][A
+Projecting entities:  80%|████████  | 84739/105522 [00:12<00:02, 7072.87entities/s][A
+Projecting entities:  81%|████████  | 85449/105522 [00:12<00:02, 7079.05entities/s][A
+Projecting entities:  82%|████████▏ | 86157/105522 [00:12<00:02, 7077.38entities/s][A
+Projecting entities:  82%|████████▏ | 86865/105522 [00:12<00:02, 7071.66entities/s][A
+Projecting entities:  83%|████████▎ | 87573/105522 [00:12<00:02, 7067.69entities/s][A
+Projecting entities:  84%|████████▎ | 88281/105522 [00:12<00:02, 7068.64entities/s][A
+Projecting entities:  84%|████████▍ | 88989/105522 [00:12<00:02, 7071.63entities/s][A
+Projecting entities:  85%|████████▌ | 89697/105522 [00:12<00:02, 7060.28entities/s][A
+Projecting entities:  86%|████████▌ | 90405/105522 [00:12<00:02, 7065.43entities/s][A
+Projecting entities:  86%|████████▋ | 91115/105522 [00:12<00:02, 7073.31entities/s][A
+Projecting entities:  87%|████████▋ | 91824/105522 [00:13<00:01, 7077.69entities/s][A
+Projecting entities:  88%|████████▊ | 92532/105522 [00:13<00:01, 7069.08entities/s][A
+Projecting entities:  88%|████████▊ | 93242/105522 [00:13<00:01, 7076.70entities/s][A
+Projecting entities:  89%|████████▉ | 93951/105522 [00:13<00:01, 7078.23entities/s][A
+Projecting entities:  90%|████████▉ | 94659/105522 [00:13<00:01, 7073.76entities/s][A
+Projecting entities:  90%|█████████ | 95367/105522 [00:13<00:01, 7064.11entities/s][A
+Projecting entities:  91%|█████████ | 96075/105522 [00:13<00:01, 7066.24entities/s][A
+Projecting entities:  92%|█████████▏| 96783/105522 [00:13<00:01, 7068.35entities/s][A
+Projecting entities:  92%|█████████▏| 97493/105522 [00:13<00:01, 7075.40entities/s][A
+Projecting entities:  93%|█████████▎| 98201/105522 [00:13<00:01, 7069.17entities/s][A
+Projecting entities:  94%|█████████▎| 98910/105522 [00:14<00:00, 7075.15entities/s][A
+Projecting entities:  94%|█████████▍| 99619/105522 [00:14<00:00, 7078.61entities/s][A
+Projecting entities:  95%|█████████▌| 100330/105522 [00:14<00:00, 7086.72entities/s][A
+Projecting entities:  96%|█████████▌| 101039/105522 [00:14<00:00, 7082.90entities/s][A
+Projecting entities:  96%|█████████▋| 101748/105522 [00:14<00:00, 7084.39entities/s][A
+Projecting entities:  97%|█████████▋| 102458/105522 [00:14<00:00, 7088.33entities/s][A
+Projecting entities:  98%|█████████▊| 103169/105522 [00:14<00:00, 7094.34entities/s][A
+Projecting entities:  98%|█████████▊| 103879/105522 [00:14<00:00, 7085.77entities/s][A
+Projecting entities:  99%|█████████▉| 104589/105522 [00:14<00:00, 7088.39entities/s][A
+Projecting entities: 100%|█████████▉| 105299/105522 [00:14<00:00, 7089.47entities/s][AProjecting entities: 100%|██████████| 105522/105522 [00:14<00:00, 7053.21entities/s]
+Link prediction evaluation:   0%|          | 1/397 [00:15<1:41:17, 15.35s/batch]Link prediction evaluation:   2%|▏         | 6/397 [00:15<12:25,  1.91s/batch]  Link prediction evaluation:   3%|▎         | 11/397 [00:15<05:31,  1.16batch/s]Link prediction evaluation:   4%|▍         | 16/397 [00:15<03:06,  2.04batch/s]Link prediction evaluation:   5%|▌         | 21/397 [00:15<01:56,  3.24batch/s]Link prediction evaluation:   7%|▋         | 26/397 [00:15<01:16,  4.83batch/s]Link prediction evaluation:   8%|▊         | 31/397 [00:16<00:53,  6.88batch/s]Link prediction evaluation:   9%|▉         | 36/397 [00:16<00:38,  9.46batch/s]Link prediction evaluation:  10%|█         | 41/397 [00:16<00:28, 12.54batch/s]Link prediction evaluation:  12%|█▏        | 46/397 [00:16<00:21, 16.06batch/s]Link prediction evaluation:  13%|█▎        | 51/397 [00:16<00:17, 19.85batch/s]Link prediction evaluation:  14%|█▍        | 56/397 [00:16<00:14, 23.69batch/s]Link prediction evaluation:  15%|█▌        | 61/397 [00:16<00:12, 27.34batch/s]Link prediction evaluation:  17%|█▋        | 66/397 [00:16<00:10, 30.59batch/s]Link prediction evaluation:  18%|█▊        | 71/397 [00:17<00:09, 33.39batch/s]Link prediction evaluation:  19%|█▉        | 76/397 [00:17<00:09, 35.61batch/s]Link prediction evaluation:  20%|██        | 81/397 [00:17<00:08, 37.35batch/s]Link prediction evaluation:  22%|██▏       | 86/397 [00:17<00:08, 38.72batch/s]Link prediction evaluation:  23%|██▎       | 91/397 [00:17<00:07, 39.77batch/s]Link prediction evaluation:  24%|██▍       | 96/397 [00:17<00:07, 40.45batch/s]Link prediction evaluation:  25%|██▌       | 101/397 [00:17<00:07, 40.97batch/s]Link prediction evaluation:  27%|██▋       | 106/397 [00:17<00:07, 41.30batch/s]Link prediction evaluation:  28%|██▊       | 111/397 [00:17<00:06, 41.54batch/s]Link prediction evaluation:  29%|██▉       | 116/397 [00:18<00:06, 41.76batch/s]Link prediction evaluation:  30%|███       | 121/397 [00:18<00:06, 41.90batch/s]Link prediction evaluation:  32%|███▏      | 126/397 [00:18<00:06, 41.98batch/s]Link prediction evaluation:  33%|███▎      | 131/397 [00:18<00:06, 42.08batch/s]Link prediction evaluation:  34%|███▍      | 136/397 [00:18<00:06, 42.13batch/s]Link prediction evaluation:  36%|███▌      | 141/397 [00:18<00:06, 42.19batch/s]Link prediction evaluation:  37%|███▋      | 146/397 [00:18<00:05, 42.19batch/s]Link prediction evaluation:  38%|███▊      | 151/397 [00:18<00:05, 42.17batch/s]Link prediction evaluation:  39%|███▉      | 156/397 [00:19<00:05, 42.25batch/s]Link prediction evaluation:  41%|████      | 161/397 [00:19<00:05, 42.18batch/s]Link prediction evaluation:  42%|████▏     | 166/397 [00:19<00:05, 42.19batch/s]Link prediction evaluation:  43%|████▎     | 171/397 [00:19<00:05, 42.17batch/s]Link prediction evaluation:  44%|████▍     | 176/397 [00:19<00:05, 42.30batch/s]Link prediction evaluation:  46%|████▌     | 181/397 [00:19<00:05, 42.21batch/s]Link prediction evaluation:  47%|████▋     | 186/397 [00:19<00:04, 42.30batch/s]Link prediction evaluation:  48%|████▊     | 191/397 [00:19<00:04, 42.23batch/s]Link prediction evaluation:  49%|████▉     | 196/397 [00:19<00:04, 42.28batch/s]Link prediction evaluation:  51%|█████     | 201/397 [00:20<00:04, 42.25batch/s]Link prediction evaluation:  52%|█████▏    | 206/397 [00:20<00:04, 42.29batch/s]Link prediction evaluation:  53%|█████▎    | 211/397 [00:20<00:04, 42.22batch/s]Link prediction evaluation:  54%|█████▍    | 216/397 [00:20<00:04, 42.22batch/s]Link prediction evaluation:  56%|█████▌    | 221/397 [00:20<00:04, 42.28batch/s]Link prediction evaluation:  57%|█████▋    | 226/397 [00:20<00:04, 42.22batch/s]Link prediction evaluation:  58%|█████▊    | 231/397 [00:20<00:03, 42.18batch/s]Link prediction evaluation:  59%|█████▉    | 236/397 [00:20<00:03, 42.16batch/s]Link prediction evaluation:  61%|██████    | 241/397 [00:21<00:03, 42.16batch/s]Link prediction evaluation:  62%|██████▏   | 246/397 [00:21<00:03, 42.22batch/s]Link prediction evaluation:  63%|██████▎   | 251/397 [00:21<00:03, 42.24batch/s]Link prediction evaluation:  64%|██████▍   | 256/397 [00:21<00:03, 42.29batch/s]Link prediction evaluation:  66%|██████▌   | 261/397 [00:21<00:03, 42.30batch/s]Link prediction evaluation:  67%|██████▋   | 266/397 [00:21<00:03, 42.29batch/s]Link prediction evaluation:  68%|██████▊   | 271/397 [00:21<00:02, 42.26batch/s]Link prediction evaluation:  70%|██████▉   | 276/397 [00:21<00:02, 42.26batch/s]Link prediction evaluation:  71%|███████   | 281/397 [00:21<00:02, 42.33batch/s]Link prediction evaluation:  72%|███████▏  | 286/397 [00:22<00:02, 42.43batch/s]Link prediction evaluation:  73%|███████▎  | 291/397 [00:22<00:02, 42.44batch/s]Link prediction evaluation:  75%|███████▍  | 296/397 [00:22<00:02, 42.39batch/s]Link prediction evaluation:  76%|███████▌  | 301/397 [00:22<00:02, 42.36batch/s]Link prediction evaluation:  77%|███████▋  | 306/397 [00:22<00:02, 42.34batch/s]Link prediction evaluation:  78%|███████▊  | 311/397 [00:22<00:02, 42.38batch/s]Link prediction evaluation:  80%|███████▉  | 316/397 [00:22<00:01, 42.35batch/s]Link prediction evaluation:  81%|████████  | 321/397 [00:22<00:01, 42.41batch/s]Link prediction evaluation:  82%|████████▏ | 326/397 [00:23<00:01, 42.42batch/s]Link prediction evaluation:  83%|████████▎ | 331/397 [00:23<00:01, 42.36batch/s]Link prediction evaluation:  85%|████████▍ | 336/397 [00:23<00:01, 42.34batch/s]Link prediction evaluation:  86%|████████▌ | 341/397 [00:23<00:01, 42.31batch/s]Link prediction evaluation:  87%|████████▋ | 346/397 [00:23<00:01, 42.34batch/s]Link prediction evaluation:  88%|████████▊ | 351/397 [00:23<00:01, 42.33batch/s]Link prediction evaluation:  90%|████████▉ | 356/397 [00:23<00:00, 42.30batch/s]Link prediction evaluation:  91%|█████████ | 361/397 [00:23<00:00, 42.27batch/s]Link prediction evaluation:  92%|█████████▏| 366/397 [00:23<00:00, 42.21batch/s]Link prediction evaluation:  93%|█████████▎| 371/397 [00:24<00:00, 42.31batch/s]Link prediction evaluation:  95%|█████████▍| 376/397 [00:24<00:00, 42.29batch/s]Link prediction evaluation:  96%|█████████▌| 381/397 [00:24<00:00, 42.25batch/s]Link prediction evaluation:  97%|█████████▋| 386/397 [00:24<00:00, 42.25batch/s]Link prediction evaluation:  98%|█████████▊| 391/397 [00:24<00:00, 42.22batch/s]Link prediction evaluation: 100%|█████████▉| 396/397 [00:24<00:00, 42.22batch/s]Link prediction evaluation: 100%|██████████| 397/397 [00:24<00:00, 16.07batch/s]
+2026-05-02 21:16:44,673 - INFO - Final Test MRR with best model: 0.020674649626016617
+2026-05-02 21:16:44,673 - INFO - Final Test Hits@10 with best model: 0.04384166561067104
+Link prediction evaluation:   0%|          | 0/359 [00:00<?, ?batch/s]Link prediction evaluation:   1%|▏         | 5/359 [00:00<00:08, 42.18batch/s]Link prediction evaluation:   3%|▎         | 10/359 [00:00<00:08, 41.97batch/s]Link prediction evaluation:   4%|▍         | 15/359 [00:00<00:08, 42.12batch/s]Link prediction evaluation:   6%|▌         | 20/359 [00:00<00:08, 42.14batch/s]Link prediction evaluation:   7%|▋         | 25/359 [00:00<00:07, 42.20batch/s]Link prediction evaluation:   8%|▊         | 30/359 [00:00<00:07, 42.12batch/s]Link prediction evaluation:  10%|▉         | 35/359 [00:00<00:07, 42.06batch/s]Link prediction evaluation:  11%|█         | 40/359 [00:00<00:07, 42.09batch/s]Link prediction evaluation:  13%|█▎        | 45/359 [00:01<00:07, 42.16batch/s]Link prediction evaluation:  14%|█▍        | 50/359 [00:01<00:07, 42.24batch/s]Link prediction evaluation:  15%|█▌        | 55/359 [00:01<00:07, 42.22batch/s]Link prediction evaluation:  17%|█▋        | 60/359 [00:01<00:07, 42.23batch/s]Link prediction evaluation:  18%|█▊        | 65/359 [00:01<00:06, 42.25batch/s]Link prediction evaluation:  19%|█▉        | 70/359 [00:01<00:06, 42.21batch/s]Link prediction evaluation:  21%|██        | 75/359 [00:01<00:06, 42.19batch/s]Link prediction evaluation:  22%|██▏       | 80/359 [00:01<00:06, 42.31batch/s]Link prediction evaluation:  24%|██▎       | 85/359 [00:02<00:06, 42.31batch/s]Link prediction evaluation:  25%|██▌       | 90/359 [00:02<00:06, 42.27batch/s]Link prediction evaluation:  26%|██▋       | 95/359 [00:02<00:06, 42.27batch/s]Link prediction evaluation:  28%|██▊       | 100/359 [00:02<00:06, 42.22batch/s]Link prediction evaluation:  29%|██▉       | 105/359 [00:02<00:06, 42.24batch/s]Link prediction evaluation:  31%|███       | 110/359 [00:02<00:05, 42.22batch/s]Link prediction evaluation:  32%|███▏      | 115/359 [00:02<00:05, 42.23batch/s]Link prediction evaluation:  33%|███▎      | 120/359 [00:02<00:05, 42.32batch/s]Link prediction evaluation:  35%|███▍      | 125/359 [00:02<00:05, 42.35batch/s]Link prediction evaluation:  36%|███▌      | 130/359 [00:03<00:05, 42.29batch/s]Link prediction evaluation:  38%|███▊      | 135/359 [00:03<00:05, 42.23batch/s]Link prediction evaluation:  39%|███▉      | 140/359 [00:03<00:05, 42.19batch/s]Link prediction evaluation:  40%|████      | 145/359 [00:03<00:05, 42.15batch/s]Link prediction evaluation:  42%|████▏     | 150/359 [00:03<00:04, 42.10batch/s]Link prediction evaluation:  43%|████▎     | 155/359 [00:03<00:04, 42.10batch/s]Link prediction evaluation:  45%|████▍     | 160/359 [00:03<00:04, 42.16batch/s]Link prediction evaluation:  46%|████▌     | 165/359 [00:03<00:04, 42.14batch/s]Link prediction evaluation:  47%|████▋     | 170/359 [00:04<00:04, 42.16batch/s]Link prediction evaluation:  49%|████▊     | 175/359 [00:04<00:04, 42.15batch/s]Link prediction evaluation:  50%|█████     | 180/359 [00:04<00:04, 42.15batch/s]Link prediction evaluation:  52%|█████▏    | 185/359 [00:04<00:04, 42.15batch/s]Link prediction evaluation:  53%|█████▎    | 190/359 [00:04<00:04, 42.13batch/s]Link prediction evaluation:  54%|█████▍    | 195/359 [00:04<00:03, 42.08batch/s]Link prediction evaluation:  56%|█████▌    | 200/359 [00:04<00:03, 42.14batch/s]Link prediction evaluation:  57%|█████▋    | 205/359 [00:04<00:03, 42.10batch/s]Link prediction evaluation:  58%|█████▊    | 210/359 [00:04<00:03, 42.09batch/s]Link prediction evaluation:  60%|█████▉    | 215/359 [00:05<00:03, 42.03batch/s]Link prediction evaluation:  61%|██████▏   | 220/359 [00:05<00:03, 42.06batch/s]Link prediction evaluation:  63%|██████▎   | 225/359 [00:05<00:03, 42.15batch/s]Link prediction evaluation:  64%|██████▍   | 230/359 [00:05<00:03, 42.07batch/s]Link prediction evaluation:  65%|██████▌   | 235/359 [00:05<00:02, 42.02batch/s]Link prediction evaluation:  67%|██████▋   | 240/359 [00:05<00:02, 42.01batch/s]Link prediction evaluation:  68%|██████▊   | 245/359 [00:05<00:02, 41.95batch/s]Link prediction evaluation:  70%|██████▉   | 250/359 [00:05<00:02, 41.92batch/s]Link prediction evaluation:  71%|███████   | 255/359 [00:06<00:02, 42.02batch/s]Link prediction evaluation:  72%|███████▏  | 260/359 [00:06<00:02, 42.08batch/s]Link prediction evaluation:  74%|███████▍  | 265/359 [00:06<00:02, 42.04batch/s]Link prediction evaluation:  75%|███████▌  | 270/359 [00:06<00:02, 42.02batch/s]Link prediction evaluation:  77%|███████▋  | 275/359 [00:06<00:02, 41.97batch/s]Link prediction evaluation:  78%|███████▊  | 280/359 [00:06<00:01, 42.04batch/s]Link prediction evaluation:  79%|███████▉  | 285/359 [00:06<00:01, 42.02batch/s]Link prediction evaluation:  81%|████████  | 290/359 [00:06<00:01, 42.01batch/s]Link prediction evaluation:  82%|████████▏ | 295/359 [00:07<00:01, 42.04batch/s]Link prediction evaluation:  84%|████████▎ | 300/359 [00:07<00:01, 42.00batch/s]Link prediction evaluation:  85%|████████▍ | 305/359 [00:07<00:01, 42.04batch/s]Link prediction evaluation:  86%|████████▋ | 310/359 [00:07<00:01, 42.07batch/s]Link prediction evaluation:  88%|████████▊ | 315/359 [00:07<00:01, 42.08batch/s]Link prediction evaluation:  89%|████████▉ | 320/359 [00:07<00:00, 42.07batch/s]Link prediction evaluation:  91%|█████████ | 325/359 [00:07<00:00, 42.07batch/s]Link prediction evaluation:  92%|█████████▏| 330/359 [00:07<00:00, 42.06batch/s]Link prediction evaluation:  93%|█████████▎| 335/359 [00:07<00:00, 42.12batch/s]Link prediction evaluation:  95%|█████████▍| 340/359 [00:08<00:00, 42.14batch/s]Link prediction evaluation:  96%|█████████▌| 345/359 [00:08<00:00, 42.08batch/s]Link prediction evaluation:  97%|█████████▋| 350/359 [00:08<00:00, 42.06batch/s]Link prediction evaluation:  99%|█████████▉| 355/359 [00:08<00:00, 42.09batch/s]Link prediction evaluation: 100%|██████████| 359/359 [00:08<00:00, 42.16batch/s]
+Link prediction evaluation:   0%|          | 0/38 [00:00<?, ?batch/s]Link prediction evaluation:  13%|█▎        | 5/38 [00:00<00:00, 43.56batch/s]Link prediction evaluation:  26%|██▋       | 10/38 [00:00<00:00, 43.55batch/s]Link prediction evaluation:  39%|███▉      | 15/38 [00:00<00:00, 43.48batch/s]Link prediction evaluation:  53%|█████▎    | 20/38 [00:00<00:00, 43.51batch/s]Link prediction evaluation:  66%|██████▌   | 25/38 [00:00<00:00, 43.50batch/s]Link prediction evaluation:  79%|███████▉  | 30/38 [00:00<00:00, 43.49batch/s]Link prediction evaluation:  92%|█████████▏| 35/38 [00:00<00:00, 43.49batch/s]Link prediction evaluation: 100%|██████████| 38/38 [00:00<00:00, 43.92batch/s]
+2026-05-02 21:17:04,615 - INFO - MRR for frequent nodes (threshold=10) in relation DRUG_DISEASE_ASSOCIATION: 0.01992306485772133
+2026-05-02 21:17:04,615 - INFO - MRR for infrequent nodes (threshold=10) in relation DRUG_DISEASE_ASSOCIATION: 0.027839645743370056
+2026-05-02 21:17:04,615 - INFO - Hits@10 for frequent nodes (threshold=10) in relation DRUG_DISEASE_ASSOCIATION: 0.04173200856894255
+2026-05-02 21:17:04,615 - INFO - Hits@10 for infrequent nodes (threshold=10) in relation DRUG_DISEASE_ASSOCIATION: 0.06395348906517029
+2026-05-02 21:17:04,657 - INFO - MRR evaluation results stored in ./evaluation_metrics.yaml
+2026-05-02 21:17:04,679 - INFO - Hit@10 evaluation results stored in ./evaluation_hit@10.yaml
+Link prediction evaluation:   0%|          | 0/19 [00:00<?, ?batch/s]Link prediction evaluation:  26%|██▋       | 5/19 [00:00<00:00, 45.43batch/s]Link prediction evaluation:  53%|█████▎    | 10/19 [00:00<00:00, 45.78batch/s]Link prediction evaluation:  79%|███████▉  | 15/19 [00:00<00:00, 46.03batch/s]Link prediction evaluation: 100%|██████████| 19/19 [00:00<00:00, 47.72batch/s]
+Link prediction evaluation:   0%|          | 0/19 [00:00<?, ?batch/s]Link prediction evaluation:  47%|████▋     | 9/19 [00:00<00:00, 87.53batch/s]Link prediction evaluation:  95%|█████████▍| 18/19 [00:00<00:00, 88.78batch/s]Link prediction evaluation: 100%|██████████| 19/19 [00:00<00:00, 92.01batch/s]
+2026-05-02 21:17:05,396 - INFO - MRR on inference set: 0.0031642895191907883
+2026-05-02 21:17:05,412 - INFO - Evaluation results stored in ./inference_metrics.yaml
