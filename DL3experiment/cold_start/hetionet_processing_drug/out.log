@@ -1,0 +1,162 @@
+2026-05-06 16:57:37,065 - WARNING - /home/galadriel/anaconda3/envs/benchmark/lib/python3.9/site-packages/ignite/handlers/checkpoint.py:16: DeprecationWarning: `TorchScript` support for functional optimizers is deprecated and will be removed in a future PyTorch release. Consider using the `torch.compile` optimizer instead.
+  from torch.distributed.optim import ZeroRedundancyOptimizer
+
+2026-05-06 16:57:37,089 - INFO - Configuration loaded:
+{
+    "common": {
+        "seed": 42,
+        "input_csv": "knowledge_graph/hetionet_without_orphan_associations.tsv",
+        "out": "DL3experiment/cold_start/hetionet_processing_drug/",
+        "run_kg_prep": true,
+        "run_training": false,
+        "run_evaluation": false
+    },
+    "clean_kg": {
+        "remove_duplicates_triplets": true,
+        "make_directed": true,
+        "make_directed_params": [
+            "DrD",
+            "CrC",
+            "GiG",
+            "GcG"
+        ],
+        "check_DL1": true,
+        "check_DL1_params": {
+            "theta1": 0.5,
+            "theta2": 0.5,
+            "theta": 0.5
+        },
+        "permute_kg": false,
+        "cold_start_split": "head",
+        "cold_start_split_param": "CtD",
+        "clean_train_set": true
+    }
+}
+2026-05-06 16:57:37,089 - INFO - Setting number of threads to 20
+2026-05-06 16:57:37,109 - INFO - Loading parameters from /home/galadriel/dr_benchmark/DL3experiment/cold_start/hetionet_processing_drug/params.yaml
+2026-05-06 16:57:37,110 - INFO - Output folder: DL3experiment/cold_start/hetionet_processing_drug/
+2026-05-06 16:57:37,110 - INFO - Preparing KG...
+2026-05-06 16:58:22,527 - INFO - KG with 45158 entities
+2026-05-06 16:58:22,527 - INFO - Removing duplicated triplets...
+  0%|          | 0/24 [00:00<?, ?it/s]  4%|▍         | 1/24 [00:00<00:06,  3.33it/s]  8%|▊         | 2/24 [00:01<00:23,  1.07s/it] 12%|█▎        | 3/24 [00:02<00:14,  1.41it/s] 21%|██        | 5/24 [00:02<00:08,  2.32it/s] 33%|███▎      | 8/24 [00:02<00:03,  4.65it/s] 46%|████▌     | 11/24 [00:02<00:01,  7.30it/s] 58%|█████▊    | 14/24 [00:02<00:01,  9.85it/s] 67%|██████▋   | 16/24 [00:03<00:00, 11.40it/s] 75%|███████▌  | 18/24 [00:03<00:00,  6.90it/s] 83%|████████▎ | 20/24 [00:05<00:01,  2.76it/s] 92%|█████████▏| 22/24 [00:06<00:00,  3.01it/s]2026-05-06 16:58:29,301 - INFO - 1689 duplicates found. Keeping 263983 unique triplets for relation 22 (Gr>G)
+ 96%|█████████▌| 23/24 [00:06<00:00,  2.46it/s]100%|██████████| 24/24 [00:06<00:00,  3.54it/s]
+2026-05-06 16:59:12,501 - INFO - Checking for semantically redundant and Cartesian product relations...
+  0%|          | 0/24 [00:00<?, ?it/s]  4%|▍         | 1/24 [00:01<00:25,  1.10s/it]  8%|▊         | 2/24 [00:08<01:41,  4.61s/it] 12%|█▎        | 3/24 [00:09<01:02,  3.00s/it] 17%|█▋        | 4/24 [00:09<00:37,  1.87s/it] 21%|██        | 5/24 [00:10<00:32,  1.73s/it] 25%|██▌       | 6/24 [00:11<00:22,  1.22s/it] 38%|███▊      | 9/24 [00:11<00:07,  1.93it/s] 46%|████▌     | 11/24 [00:11<00:05,  2.52it/s] 54%|█████▍    | 13/24 [00:11<00:03,  3.50it/s] 67%|██████▋   | 16/24 [00:11<00:01,  5.38it/s] 75%|███████▌  | 18/24 [00:15<00:03,  1.50it/s] 79%|███████▉  | 19/24 [00:21<00:08,  1.62s/it] 83%|████████▎ | 20/24 [00:24<00:07,  1.84s/it] 88%|████████▊ | 21/24 [00:25<00:05,  1.69s/it] 92%|█████████▏| 22/24 [00:26<00:03,  1.50s/it] 96%|█████████▌| 23/24 [00:29<00:01,  1.83s/it]100%|██████████| 24/24 [00:29<00:00,  1.23s/it]
+2026-05-06 16:59:41,991 - INFO - Finding duplicate relations
+  0%|          | 0/276 [00:00<?, ?it/s]  6%|▌         | 17/276 [00:00<00:01, 153.15it/s] 12%|█▏        | 33/276 [00:00<00:02, 114.08it/s] 16%|█▋        | 45/276 [00:00<00:02, 80.78it/s]  23%|██▎       | 63/276 [00:00<00:02, 106.39it/s] 36%|███▌      | 99/276 [00:00<00:01, 168.28it/s] 43%|████▎     | 118/276 [00:00<00:00, 164.96it/s] 74%|███████▍  | 205/276 [00:00<00:00, 352.99it/s] 93%|█████████▎| 256/276 [00:01<00:00, 371.75it/s]100%|██████████| 276/276 [00:01<00:00, 208.14it/s]
+2026-05-06 16:59:43,318 - INFO - Duplicate relations: 0
+2026-05-06 16:59:43,318 - INFO - Reverse duplicate relations: 0
+
+  0%|          | 0/24 [00:00<?, ?it/s]  4%|▍         | 1/24 [00:00<00:06,  3.51it/s]  8%|▊         | 2/24 [00:03<00:39,  1.78s/it] 12%|█▎        | 3/24 [00:03<00:22,  1.09s/it] 21%|██        | 5/24 [00:05<00:18,  1.00it/s] 38%|███▊      | 9/24 [00:05<00:05,  2.52it/s] 46%|████▌     | 11/24 [00:05<00:03,  3.31it/s] 62%|██████▎   | 15/24 [00:05<00:01,  5.77it/s] 75%|███████▌  | 18/24 [00:06<00:01,  5.42it/s] 83%|████████▎ | 20/24 [00:09<00:02,  1.93it/s] 92%|█████████▏| 22/24 [00:09<00:00,  2.22it/s] 96%|█████████▌| 23/24 [00:12<00:00,  1.40it/s]100%|██████████| 24/24 [00:12<00:00,  1.99it/s]
+2026-05-06 16:59:55,909 - INFO - Adding reverse triplets for relations DrD, CrC, GiG, GcG...
+2026-05-06 17:00:14,174 - INFO - Adding created reverses ['DrD', 'CrC', 'GiG', 'GcG'] to the list of known redundant relations.
+2026-05-06 17:00:14,174 - INFO - Cold start split with relation CtD.
+2026-05-06 17:00:14,938 - INFO - === Head-based Cold Start Split Summary ===
+2026-05-06 17:00:14,942 - INFO - Train : 611 target triplets, 312 unique heads
+2026-05-06 17:00:14,943 - INFO - Validation : 75 target triplets, 37 unique heads
+2026-05-06 17:00:14,943 - INFO - Test : 67 target triplets, 37 unique heads
+2026-05-06 17:00:14,944 - INFO - === Train ===
+2026-05-06 17:00:14,944 - INFO - Total number of target triplets : 611
+2026-05-06 17:00:14,944 - INFO - Number of unique heads       : 312
+2026-05-06 17:00:14,944 - INFO - Top 5 most frequent heads:
+2026-05-06 17:00:14,945 - INFO -   1. Head ID 13600 : 19 times
+2026-05-06 17:00:14,945 - INFO -   2. Head ID 13670 : 15 times
+2026-05-06 17:00:14,945 - INFO -   3. Head ID 13491 : 14 times
+2026-05-06 17:00:14,945 - INFO -   4. Head ID 13889 : 13 times
+2026-05-06 17:00:14,945 - INFO -   5. Head ID 13655 : 12 times
+2026-05-06 17:00:14,945 - INFO - === Validation ===
+2026-05-06 17:00:14,945 - INFO - Total number of target triplets : 75
+2026-05-06 17:00:14,945 - INFO - Number of unique heads       : 37
+2026-05-06 17:00:14,945 - INFO - Top 5 most frequent heads:
+2026-05-06 17:00:14,945 - INFO -   1. Head ID 14019 : 17 times
+2026-05-06 17:00:14,945 - INFO -   2. Head ID 13982 : 9 times
+2026-05-06 17:00:14,945 - INFO -   3. Head ID 13882 : 4 times
+2026-05-06 17:00:14,945 - INFO -   4. Head ID 13490 : 3 times
+2026-05-06 17:00:14,945 - INFO -   5. Head ID 13500 : 3 times
+2026-05-06 17:00:14,945 - INFO - === Test ===
+2026-05-06 17:00:14,945 - INFO - Total number of target triplets : 67
+2026-05-06 17:00:14,945 - INFO - Number of unique heads       : 37
+2026-05-06 17:00:14,945 - INFO - Top 5 most frequent heads:
+2026-05-06 17:00:14,945 - INFO -   1. Head ID 13805 : 11 times
+2026-05-06 17:00:14,945 - INFO -   2. Head ID 13578 : 7 times
+2026-05-06 17:00:14,945 - INFO -   3. Head ID 13414 : 4 times
+2026-05-06 17:00:14,945 - INFO -   4. Head ID 14194 : 3 times
+2026-05-06 17:00:14,945 - INFO -   5. Head ID 13729 : 3 times
+2026-05-06 17:00:14,946 - INFO - === Train ===
+2026-05-06 17:00:14,946 - INFO - Total number of target triplets : 611
+2026-05-06 17:00:14,946 - INFO - Number of unique tails       : 75
+2026-05-06 17:00:14,946 - INFO - Top 5 most frequent tails:
+2026-05-06 17:00:14,946 - INFO -   1. Tail ID 14723 : 49 times
+2026-05-06 17:00:14,946 - INFO -   2. Tail ID 14788 : 41 times
+2026-05-06 17:00:14,946 - INFO -   3. Tail ID 14791 : 31 times
+2026-05-06 17:00:14,946 - INFO -   4. Tail ID 14768 : 24 times
+2026-05-06 17:00:14,946 - INFO -   5. Tail ID 14802 : 21 times
+2026-05-06 17:00:14,946 - INFO - === Validation ===
+2026-05-06 17:00:14,946 - INFO - Total number of target triplets : 75
+2026-05-06 17:00:14,947 - INFO - Number of unique tails       : 39
+2026-05-06 17:00:14,947 - INFO - Top 5 most frequent tails:
+2026-05-06 17:00:14,947 - INFO -   1. Tail ID 14723 : 9 times
+2026-05-06 17:00:14,947 - INFO -   2. Tail ID 14802 : 5 times
+2026-05-06 17:00:14,947 - INFO -   3. Tail ID 14788 : 4 times
+2026-05-06 17:00:14,947 - INFO -   4. Tail ID 14805 : 3 times
+2026-05-06 17:00:14,947 - INFO -   5. Tail ID 14775 : 3 times
+2026-05-06 17:00:14,947 - INFO - === Test ===
+2026-05-06 17:00:14,947 - INFO - Total number of target triplets : 67
+2026-05-06 17:00:14,947 - INFO - Number of unique tails       : 34
+2026-05-06 17:00:14,947 - INFO - Top 5 most frequent tails:
+2026-05-06 17:00:14,947 - INFO -   1. Tail ID 14723 : 10 times
+2026-05-06 17:00:14,947 - INFO -   2. Tail ID 14788 : 6 times
+2026-05-06 17:00:14,947 - INFO -   3. Tail ID 14769 : 3 times
+2026-05-06 17:00:14,947 - INFO -   4. Tail ID 14791 : 3 times
+2026-05-06 17:00:14,947 - INFO -   5. Tail ID 14740 : 2 times
+2026-05-06 17:00:15,432 - INFO - Entity coverage verified successfully.
+2026-05-06 17:00:15,432 - INFO - Cleaning the train set to avoid data leakage...
+2026-05-06 17:00:15,432 - INFO - Step 1: with respect to validation set.
+2026-05-06 17:00:15,432 - INFO - Processing relation pair: (14, 24)
+2026-05-06 17:00:15,435 - INFO - Found 0 triplets to remove for relation 24 with reverse 14.
+2026-05-06 17:00:15,436 - INFO - Found 0 reverse triplets to remove for relation 14 with reverse 24.
+2026-05-06 17:00:15,437 - INFO - Processing relation pair: (7, 25)
+2026-05-06 17:00:15,438 - INFO - Found 0 triplets to remove for relation 25 with reverse 7.
+2026-05-06 17:00:15,440 - INFO - Found 0 reverse triplets to remove for relation 7 with reverse 25.
+2026-05-06 17:00:15,440 - INFO - Processing relation pair: (17, 26)
+2026-05-06 17:00:15,443 - INFO - Found 0 triplets to remove for relation 26 with reverse 17.
+2026-05-06 17:00:15,450 - INFO - Found 0 reverse triplets to remove for relation 17 with reverse 26.
+2026-05-06 17:00:15,450 - INFO - Processing relation pair: (16, 27)
+2026-05-06 17:00:15,454 - INFO - Found 0 triplets to remove for relation 27 with reverse 16.
+2026-05-06 17:00:15,463 - INFO - Found 0 reverse triplets to remove for relation 16 with reverse 27.
+2026-05-06 17:00:15,463 - INFO - Step 2: with respect to test set.
+2026-05-06 17:00:15,463 - INFO - Processing relation pair: (14, 24)
+2026-05-06 17:00:15,465 - INFO - Found 0 triplets to remove for relation 24 with reverse 14.
+2026-05-06 17:00:15,467 - INFO - Found 0 reverse triplets to remove for relation 14 with reverse 24.
+2026-05-06 17:00:15,467 - INFO - Processing relation pair: (7, 25)
+2026-05-06 17:00:15,469 - INFO - Found 0 triplets to remove for relation 25 with reverse 7.
+2026-05-06 17:00:15,473 - INFO - Found 0 reverse triplets to remove for relation 7 with reverse 25.
+2026-05-06 17:00:15,473 - INFO - Processing relation pair: (17, 26)
+2026-05-06 17:00:15,477 - INFO - Found 0 triplets to remove for relation 26 with reverse 17.
+2026-05-06 17:00:15,481 - INFO - Found 0 reverse triplets to remove for relation 17 with reverse 26.
+2026-05-06 17:00:15,481 - INFO - Processing relation pair: (16, 27)
+2026-05-06 17:00:15,484 - INFO - Found 0 triplets to remove for relation 27 with reverse 16.
+2026-05-06 17:00:15,487 - INFO - Found 0 reverse triplets to remove for relation 16 with reverse 27.
+2026-05-06 17:00:15,972 - INFO - Entity coverage verified successfully.
+2026-05-06 17:00:16,207 - INFO - Total entities in full kg: 45158
+2026-05-06 17:00:16,207 - INFO - Entities present in kg_train: 45158
+2026-05-06 17:00:16,207 - INFO - Missing entities in kg_train: 0
+2026-05-06 17:00:16,696 - INFO - Entity coverage verified successfully.
+2026-05-06 17:00:16,697 - INFO - Computing triplet proportions...
+2026-05-06 17:00:16,716 - INFO - {0: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 1: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 2: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 3: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 4: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 5: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 6: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 7: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 8: {'train': 0.8114209827357237, 'test': 0.08897742363877822, 'val': 0.099601593625498}, 9: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 10: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 11: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 12: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 13: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 14: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 15: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 16: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 17: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 18: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 19: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 20: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 21: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 22: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 23: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 24: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 25: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 26: {'train': 1.0, 'test': 0.0, 'val': 0.0}, 27: {'train': 1.0, 'test': 0.0, 'val': 0.0}}
+2026-05-06 17:00:16,717 - INFO - Saving results to DL3experiment/cold_start/hetionet_processing_drug/...
+2026-05-06 17:01:09,422 - WARNING - /home/galadriel/anaconda3/envs/benchmark/lib/python3.9/site-packages/torch/cuda/__init__.py:128: UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 11040). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver. (Triggered internally at ../c10/cuda/CUDAFunctions.cpp:108.)
+  return torch._C._cuda_getDeviceCount() > 0
+
+2026-05-06 17:01:09,422 - INFO - Detected device: cpu
+2026-05-06 17:01:09,422 - INFO - Initializing model...
+Traceback (most recent call last):
+  File "/home/galadriel/dr_benchmark/dev/run_training.py", line 964, in <module>
+    main(args)
+  File "/home/galadriel/dr_benchmark/dev/run_training.py", line 87, in main
+    train_model(kg_train, kg_val, kg_test, config)
+  File "/home/galadriel/dr_benchmark/dev/run_training.py", line 530, in train_model
+    model, criterion = initialize_model(config, kg_train, device)
+  File "/home/galadriel/dr_benchmark/dev/run_training.py", line 120, in initialize_model
+    model_name = config['model'].get('name', 'TransE')
+KeyError: 'model'
