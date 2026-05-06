@@ -172,20 +172,34 @@ def main():
     thresholds              = config.get('evaluation', {}).get('thresholds', [])
     output_dir              = config.get('output_directory', '.')
     orpha_path              = config.get('evaluation', {}).get('inference_kg', '')
+    kg_dir                  = config.get('kg_pkl', '')
 
+    # Chargement des KGs KGATE depuis les .pt
+    logging.info(f"Chargement des KGs depuis {kg_dir}...")
+    kg_train = torch.load(os.path.join(kg_dir, 'kg_train.pt'), weights_only=False)
+    kg_val   = torch.load(os.path.join(kg_dir, 'kg_val.pt'),   weights_only=False)
+    kg_test  = torch.load(os.path.join(kg_dir, 'kg_test.pt'),  weights_only=False)
+    logging.info(f"KGs chargés : train={kg_train.triplet_count}, val={kg_val.triplet_count}, test={kg_test.triplet_count}")
+
+    # Initialisation de l'Architect avec les KGs directement
     logging.info(f"Initializing Architect from {args.config}...")
-    architect = Architect(config_path=args.config)
+    architect = Architect(
+        config_path=args.config,
+        kg=(kg_train, kg_val, kg_test)
+    )
 
+    # Training
     logging.info("Starting training...")
     architect.train_model()
 
+    # Evaluation
     logging.info("Starting evaluation on test set...")
     run_evaluation(architect, made_directed_relations, target_relations, thresholds, output_dir)
 
+    # Inference
     if orpha_path:
         logging.info("Starting inference evaluation...")
         run_inference(architect, orpha_path, output_dir)
-
 
 if __name__ == '__main__':
     main()
