@@ -134,7 +134,8 @@ def run_inference(architect, orpha_path, output_dir):
             batch_size=architect.evaluation_batch_size,
             encoder=architect.encoder,
             decoder=architect.decoder,
-            knowledge_graph=orpha_kg,
+            knowledge_graph=architect.kg_train,
+            evaluated_knowledge_graph=orpha_kg,
             node_embeddings=architect.node_embeddings,
             edge_embeddings=architect.edge_embeddings
         )
