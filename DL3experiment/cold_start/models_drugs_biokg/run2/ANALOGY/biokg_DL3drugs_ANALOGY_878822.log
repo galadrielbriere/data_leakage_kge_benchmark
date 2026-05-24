@@ -1,0 +1,800 @@
+2026-05-19 20:06:29,250 - WARNING - /linkhome/rech/genuyp01/ufq76hz/.conda/envs/torch_pyg/lib/python3.10/site-packages/ignite/handlers/checkpoint.py:16: DeprecationWarning: `TorchScript` support for functional optimizers is deprecated and will be removed in a future PyTorch release. Consider using the `torch.compile` optimizer instead.
+  from torch.distributed.optim import ZeroRedundancyOptimizer
+
+2026-05-19 20:06:30,702 - INFO - Configuration loaded:
+{
+    "common": {
+        "seed": 42,
+        "input_pkl": "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/DL3experiment/cold_start/biokg_processing_drug",
+        "out": "./",
+        "run_kg_prep": false,
+        "run_training": true,
+        "run_evaluation": true,
+        "plot_training_metrics": true,
+        "run_inference": "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/knowledge_graph/biokg_orphan_associations_only.tsv"
+    },
+    "model": {
+        "name": "ANALOGY",
+        "emb_dim": 200,
+        "margin": 1
+    },
+    "sampler": {
+        "name": "Mixed",
+        "n_neg": 5
+    },
+    "optimizer": {
+        "name": "Adam",
+        "params": {
+            "lr": 0.001,
+            "weight_decay": 0.001
+        }
+    },
+    "lr_scheduler": {
+        "type": "CosineAnnealingWarmRestarts",
+        "params": {
+            "T_0": 10,
+            "T_mult": 2
+        }
+    },
+    "training": {
+        "max_epochs": 500,
+        "batch_size": 4096,
+        "eval_interval": 20,
+        "eval_batch_size": 64,
+        "patience": 10
+    },
+    "evaluation": {
+        "made_directed_relations": [
+            "DDI",
+            "PPI",
+            "DDI_inv",
+            "PPI_inv",
+            "DPI",
+            "DRUG_TARGET"
+        ],
+        "target_relations": [
+            "DRUG_DISEASE_ASSOCIATION"
+        ],
+        "thresholds": [
+            10,
+            5
+        ]
+    }
+}
+2026-05-19 20:06:30,703 - INFO - Setting number of threads to 5
+2026-05-19 20:06:30,927 - INFO - Loading parameters from params.yaml
+2026-05-19 20:06:30,928 - INFO - Output folder: ./
+2026-05-19 20:06:30,928 - INFO - Loading KG...
+2026-05-19 20:07:49,363 - INFO - Done
+2026-05-19 20:07:49,424 - INFO - Detected device: cuda
+2026-05-19 20:07:49,605 - INFO - Initializing model...
+2026-05-19 20:07:49,606 - WARNING - /lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/dev/run_training.py:186: UserWarning: The 'scalar_share' field is missing for model ANALOGY. Defaulting to 0.5.
+  warnings.warn(f"The 'scalar_share' field is missing for model {model_name}. Defaulting to 0.5.")
+
+2026-05-19 20:07:50,351 - INFO - Optimizer 'Adam' initialized with parameters: {'lr': 0.001, 'weight_decay': 0.001}
+2026-05-19 20:07:50,351 - INFO - Initializing sampler...
+2026-05-19 20:08:33,258 - INFO - Scheduler 'CosineAnnealingWarmRestarts' initialized with parameters: {'T_0': 10, 'T_mult': 2}
+2026-05-19 20:08:33,277 - INFO - Number of training batches: 856
+2026-05-19 20:08:33,287 - INFO - Engine run starting with max_epochs=500.
+2026-05-19 20:10:34,723 - INFO - Epoch 1 - Train Loss: 33286.32554976176, Validation MRR: 0, Learning Rate: 0.001
+2026-05-19 20:10:39,234 - INFO - Memory cleaned.
+2026-05-19 20:10:39,916 - INFO - Epoch[1] Complete. Time taken: 00:02:06.629
+2026-05-19 20:12:39,524 - INFO - Epoch 2 - Train Loss: 25989.128693803752, Validation MRR: 0, Learning Rate: 0.0009755282581475768
+2026-05-19 20:12:43,803 - INFO - Memory cleaned.
+2026-05-19 20:12:44,485 - INFO - Epoch[2] Complete. Time taken: 00:02:04.568
+2026-05-19 20:14:43,400 - INFO - Epoch 3 - Train Loss: 18679.679463033637, Validation MRR: 0, Learning Rate: 0.0009045084971874737
+2026-05-19 20:14:47,723 - INFO - Memory cleaned.
+2026-05-19 20:14:48,482 - INFO - Epoch[3] Complete. Time taken: 00:02:03.997
+2026-05-19 20:16:47,732 - INFO - Epoch 4 - Train Loss: 14644.05132801118, Validation MRR: 0, Learning Rate: 0.0007938926261462366
+2026-05-19 20:16:52,017 - INFO - Memory cleaned.
+2026-05-19 20:16:52,760 - INFO - Epoch[4] Complete. Time taken: 00:02:04.278
+2026-05-19 20:18:51,929 - INFO - Epoch 5 - Train Loss: 12191.035557621453, Validation MRR: 0, Learning Rate: 0.0006545084971874737
+2026-05-19 20:18:56,214 - INFO - Memory cleaned.
+2026-05-19 20:18:56,968 - INFO - Epoch[5] Complete. Time taken: 00:02:04.207
+2026-05-19 20:20:56,094 - INFO - Epoch 6 - Train Loss: 10596.072465231602, Validation MRR: 0, Learning Rate: 0.0005
+2026-05-19 20:21:00,374 - INFO - Memory cleaned.
+2026-05-19 20:21:01,123 - INFO - Epoch[6] Complete. Time taken: 00:02:04.155
+2026-05-19 20:23:00,279 - INFO - Epoch 7 - Train Loss: 9559.221712528166, Validation MRR: 0, Learning Rate: 0.00034549150281252633
+2026-05-19 20:23:04,566 - INFO - Memory cleaned.
+2026-05-19 20:23:05,321 - INFO - Epoch[7] Complete. Time taken: 00:02:04.198
+2026-05-19 20:25:04,361 - INFO - Epoch 8 - Train Loss: 8991.003376036548, Validation MRR: 0, Learning Rate: 0.00020610737385376348
+2026-05-19 20:25:08,653 - INFO - Memory cleaned.
+2026-05-19 20:25:09,413 - INFO - Epoch[8] Complete. Time taken: 00:02:04.091
+2026-05-19 20:27:08,339 - INFO - Epoch 9 - Train Loss: 8670.986830760865, Validation MRR: 0, Learning Rate: 9.549150281252633e-05
+2026-05-19 20:27:12,618 - INFO - Memory cleaned.
+2026-05-19 20:27:13,375 - INFO - Epoch[9] Complete. Time taken: 00:02:03.962
+2026-05-19 20:29:12,510 - INFO - Epoch 10 - Train Loss: 8580.430740760967, Validation MRR: 0, Learning Rate: 2.4471741852423235e-05
+2026-05-19 20:29:16,796 - INFO - Memory cleaned.
+2026-05-19 20:29:17,552 - INFO - Epoch[10] Complete. Time taken: 00:02:04.177
+2026-05-19 20:31:16,742 - INFO - Epoch 11 - Train Loss: 7719.187530775589, Validation MRR: 0, Learning Rate: 0.001
+2026-05-19 20:31:21,032 - INFO - Memory cleaned.
+2026-05-19 20:31:21,799 - INFO - Epoch[11] Complete. Time taken: 00:02:04.247
+2026-05-19 20:33:20,968 - INFO - Epoch 12 - Train Loss: 6458.6788914836725, Validation MRR: 0, Learning Rate: 0.0009938441702975688
+2026-05-19 20:33:25,252 - INFO - Memory cleaned.
+2026-05-19 20:33:26,011 - INFO - Epoch[12] Complete. Time taken: 00:02:04.212
+2026-05-19 20:35:25,164 - INFO - Epoch 13 - Train Loss: 5616.020556373152, Validation MRR: 0, Learning Rate: 0.0009755282581475768
+2026-05-19 20:35:29,449 - INFO - Memory cleaned.
+2026-05-19 20:35:30,210 - INFO - Epoch[13] Complete. Time taken: 00:02:04.199
+2026-05-19 20:37:29,387 - INFO - Epoch 14 - Train Loss: 5010.127090216396, Validation MRR: 0, Learning Rate: 0.0009455032620941839
+2026-05-19 20:37:33,666 - INFO - Memory cleaned.
+2026-05-19 20:37:34,442 - INFO - Epoch[14] Complete. Time taken: 00:02:04.231
+2026-05-19 20:39:33,417 - INFO - Epoch 15 - Train Loss: 4597.845575851682, Validation MRR: 0, Learning Rate: 0.0009045084971874737
+2026-05-19 20:39:37,695 - INFO - Memory cleaned.
+2026-05-19 20:39:38,451 - INFO - Epoch[15] Complete. Time taken: 00:02:04.010
+2026-05-19 20:41:37,495 - INFO - Epoch 16 - Train Loss: 4289.922413868291, Validation MRR: 0, Learning Rate: 0.0008535533905932737
+2026-05-19 20:41:41,775 - INFO - Memory cleaned.
+2026-05-19 20:41:42,534 - INFO - Epoch[16] Complete. Time taken: 00:02:04.082
+2026-05-19 20:43:41,627 - INFO - Epoch 17 - Train Loss: 4074.164935410925, Validation MRR: 0, Learning Rate: 0.0007938926261462366
+2026-05-19 20:43:45,907 - INFO - Memory cleaned.
+2026-05-19 20:43:46,664 - INFO - Epoch[17] Complete. Time taken: 00:02:04.130
+2026-05-19 20:45:45,636 - INFO - Epoch 18 - Train Loss: 3904.0309847504113, Validation MRR: 0, Learning Rate: 0.0007269952498697733
+2026-05-19 20:45:49,913 - INFO - Memory cleaned.
+2026-05-19 20:45:50,682 - INFO - Epoch[18] Complete. Time taken: 00:02:04.018
+2026-05-19 20:47:49,718 - INFO - Epoch 19 - Train Loss: 3783.2755910160686, Validation MRR: 0, Learning Rate: 0.0006545084971874737
+2026-05-19 20:47:53,996 - INFO - Memory cleaned.
+2026-05-19 20:47:54,755 - INFO - Epoch[19] Complete. Time taken: 00:02:04.073
+2026-05-19 20:49:53,858 - INFO - Epoch 20 - Train Loss: 3693.139772140781, Validation MRR: 0, Learning Rate: 0.0005782172325201155
+2026-05-19 20:49:58,135 - INFO - Memory cleaned.
+2026-05-19 20:49:58,135 - INFO - Evaluating on validation set at epoch 20...
+Link prediction evaluation:   0%|          | 0/81 [00:00<?, ?batch/s]Link prediction evaluation:   1%|          | 1/81 [00:00<00:20,  3.89batch/s]Link prediction evaluation:   2%|▏         | 2/81 [00:00<00:13,  5.88batch/s]Link prediction evaluation:   4%|▎         | 3/81 [00:00<00:11,  6.99batch/s]Link prediction evaluation:   5%|▍         | 4/81 [00:00<00:09,  7.72batch/s]Link prediction evaluation:   6%|▌         | 5/81 [00:00<00:09,  8.18batch/s]Link prediction evaluation:   7%|▋         | 6/81 [00:00<00:08,  8.50batch/s]Link prediction evaluation:   9%|▊         | 7/81 [00:00<00:08,  8.71batch/s]Link prediction evaluation:  10%|▉         | 8/81 [00:01<00:08,  8.86batch/s]Link prediction evaluation:  11%|█         | 9/81 [00:01<00:08,  8.96batch/s]Link prediction evaluation:  12%|█▏        | 10/81 [00:01<00:07,  9.03batch/s]Link prediction evaluation:  14%|█▎        | 11/81 [00:01<00:07,  9.09batch/s]Link prediction evaluation:  15%|█▍        | 12/81 [00:01<00:07,  9.13batch/s]Link prediction evaluation:  16%|█▌        | 13/81 [00:01<00:07,  9.16batch/s]Link prediction evaluation:  17%|█▋        | 14/81 [00:01<00:07,  9.17batch/s]Link prediction evaluation:  19%|█▊        | 15/81 [00:01<00:07,  9.19batch/s]Link prediction evaluation:  20%|█▉        | 16/81 [00:01<00:07,  9.19batch/s]Link prediction evaluation:  21%|██        | 17/81 [00:01<00:06,  9.18batch/s]Link prediction evaluation:  22%|██▏       | 18/81 [00:02<00:06,  9.20batch/s]Link prediction evaluation:  23%|██▎       | 19/81 [00:02<00:06,  9.19batch/s]Link prediction evaluation:  25%|██▍       | 20/81 [00:02<00:06,  9.19batch/s]Link prediction evaluation:  26%|██▌       | 21/81 [00:02<00:06,  9.21batch/s]Link prediction evaluation:  27%|██▋       | 22/81 [00:02<00:06,  9.19batch/s]Link prediction evaluation:  28%|██▊       | 23/81 [00:02<00:06,  9.20batch/s]Link prediction evaluation:  30%|██▉       | 24/81 [00:02<00:06,  9.19batch/s]Link prediction evaluation:  31%|███       | 25/81 [00:02<00:06,  9.19batch/s]Link prediction evaluation:  32%|███▏      | 26/81 [00:02<00:05,  9.20batch/s]Link prediction evaluation:  33%|███▎      | 27/81 [00:03<00:05,  9.20batch/s]Link prediction evaluation:  35%|███▍      | 28/81 [00:03<00:05,  9.21batch/s]Link prediction evaluation:  36%|███▌      | 29/81 [00:03<00:05,  9.21batch/s]Link prediction evaluation:  37%|███▋      | 30/81 [00:03<00:05,  9.18batch/s]Link prediction evaluation:  38%|███▊      | 31/81 [00:03<00:05,  9.20batch/s]Link prediction evaluation:  40%|███▉      | 32/81 [00:03<00:05,  9.20batch/s]Link prediction evaluation:  41%|████      | 33/81 [00:03<00:05,  9.20batch/s]Link prediction evaluation:  42%|████▏     | 34/81 [00:03<00:05,  9.22batch/s]Link prediction evaluation:  43%|████▎     | 35/81 [00:03<00:04,  9.23batch/s]Link prediction evaluation:  44%|████▍     | 36/81 [00:04<00:04,  9.23batch/s]Link prediction evaluation:  46%|████▌     | 37/81 [00:04<00:04,  9.23batch/s]Link prediction evaluation:  47%|████▋     | 38/81 [00:04<00:04,  9.24batch/s]Link prediction evaluation:  48%|████▊     | 39/81 [00:04<00:04,  9.24batch/s]Link prediction evaluation:  49%|████▉     | 40/81 [00:04<00:04,  9.22batch/s]Link prediction evaluation:  51%|█████     | 41/81 [00:04<00:04,  9.22batch/s]Link prediction evaluation:  52%|█████▏    | 42/81 [00:04<00:04,  9.22batch/s]Link prediction evaluation:  53%|█████▎    | 43/81 [00:04<00:04,  9.23batch/s]Link prediction evaluation:  54%|█████▍    | 44/81 [00:04<00:04,  9.22batch/s]Link prediction evaluation:  56%|█████▌    | 45/81 [00:05<00:03,  9.22batch/s]Link prediction evaluation:  57%|█████▋    | 46/81 [00:05<00:03,  9.20batch/s]Link prediction evaluation:  58%|█████▊    | 47/81 [00:05<00:03,  9.20batch/s]Link prediction evaluation:  59%|█████▉    | 48/81 [00:05<00:03,  9.19batch/s]Link prediction evaluation:  60%|██████    | 49/81 [00:05<00:03,  9.19batch/s]Link prediction evaluation:  62%|██████▏   | 50/81 [00:05<00:03,  9.20batch/s]Link prediction evaluation:  63%|██████▎   | 51/81 [00:05<00:03,  9.20batch/s]Link prediction evaluation:  64%|██████▍   | 52/81 [00:05<00:03,  9.19batch/s]Link prediction evaluation:  65%|██████▌   | 53/81 [00:05<00:03,  9.19batch/s]Link prediction evaluation:  67%|██████▋   | 54/81 [00:06<00:02,  9.20batch/s]Link prediction evaluation:  68%|██████▊   | 55/81 [00:06<00:02,  9.21batch/s]Link prediction evaluation:  69%|██████▉   | 56/81 [00:06<00:02,  9.20batch/s]Link prediction evaluation:  70%|███████   | 57/81 [00:06<00:02,  9.19batch/s]Link prediction evaluation:  72%|███████▏  | 58/81 [00:06<00:02,  9.19batch/s]Link prediction evaluation:  73%|███████▎  | 59/81 [00:06<00:02,  9.20batch/s]Link prediction evaluation:  74%|███████▍  | 60/81 [00:06<00:02,  9.20batch/s]Link prediction evaluation:  75%|███████▌  | 61/81 [00:06<00:02,  9.21batch/s]Link prediction evaluation:  77%|███████▋  | 62/81 [00:06<00:02,  9.22batch/s]Link prediction evaluation:  78%|███████▊  | 63/81 [00:06<00:01,  9.21batch/s]Link prediction evaluation:  79%|███████▉  | 64/81 [00:07<00:01,  9.21batch/s]Link prediction evaluation:  80%|████████  | 65/81 [00:07<00:01,  9.20batch/s]Link prediction evaluation:  81%|████████▏ | 66/81 [00:07<00:01,  9.20batch/s]Link prediction evaluation:  83%|████████▎ | 67/81 [00:07<00:01,  9.20batch/s]Link prediction evaluation:  84%|████████▍ | 68/81 [00:07<00:01,  9.19batch/s]Link prediction evaluation:  85%|████████▌ | 69/81 [00:07<00:01,  9.19batch/s]Link prediction evaluation:  86%|████████▋ | 70/81 [00:07<00:01,  9.19batch/s]Link prediction evaluation:  88%|████████▊ | 71/81 [00:07<00:01,  9.20batch/s]Link prediction evaluation:  89%|████████▉ | 72/81 [00:07<00:00,  9.21batch/s]Link prediction evaluation:  90%|█████████ | 73/81 [00:08<00:00,  9.20batch/s]Link prediction evaluation:  91%|█████████▏| 74/81 [00:08<00:00,  9.21batch/s]Link prediction evaluation:  93%|█████████▎| 75/81 [00:08<00:00,  9.21batch/s]Link prediction evaluation:  94%|█████████▍| 76/81 [00:08<00:00,  9.21batch/s]Link prediction evaluation:  95%|█████████▌| 77/81 [00:08<00:00,  9.22batch/s]Link prediction evaluation:  96%|█████████▋| 78/81 [00:08<00:00,  9.23batch/s]Link prediction evaluation:  98%|█████████▊| 79/81 [00:08<00:00,  9.21batch/s]Link prediction evaluation:  99%|█████████▉| 80/81 [00:08<00:00,  9.21batch/s]Link prediction evaluation: 100%|██████████| 81/81 [00:08<00:00,  9.12batch/s]
+2026-05-19 20:50:07,084 - INFO - Validation MRR: 0.015506483614444733
+2026-05-19 20:50:08,434 - INFO - Epoch[20] Complete. Time taken: 00:02:13.678
+2026-05-19 20:52:07,351 - INFO - Epoch 21 - Train Loss: 3610.431196356511, Validation MRR: 0.015506483614444733, Learning Rate: 0.0005
+2026-05-19 20:52:11,635 - INFO - Memory cleaned.
+2026-05-19 20:52:12,388 - INFO - Epoch[21] Complete. Time taken: 00:02:03.954
+2026-05-19 20:54:11,310 - INFO - Epoch 22 - Train Loss: 3563.189372196803, Validation MRR: 0.015506483614444733, Learning Rate: 0.0004217827674798847
+2026-05-19 20:54:15,589 - INFO - Memory cleaned.
+2026-05-19 20:54:16,347 - INFO - Epoch[22] Complete. Time taken: 00:02:03.959
+2026-05-19 20:56:15,109 - INFO - Epoch 23 - Train Loss: 3505.874836537323, Validation MRR: 0.015506483614444733, Learning Rate: 0.00034549150281252633
+2026-05-19 20:56:19,387 - INFO - Memory cleaned.
+2026-05-19 20:56:20,152 - INFO - Epoch[23] Complete. Time taken: 00:02:03.805
+2026-05-19 20:58:19,261 - INFO - Epoch 24 - Train Loss: 3479.453821303492, Validation MRR: 0.015506483614444733, Learning Rate: 0.00027300475013022663
+2026-05-19 20:58:23,552 - INFO - Memory cleaned.
+2026-05-19 20:58:24,314 - INFO - Epoch[24] Complete. Time taken: 00:02:04.162
+2026-05-19 21:00:23,508 - INFO - Epoch 25 - Train Loss: 3433.2792296035673, Validation MRR: 0.015506483614444733, Learning Rate: 0.00020610737385376348
+2026-05-19 21:00:27,793 - INFO - Memory cleaned.
+2026-05-19 21:00:28,560 - INFO - Epoch[25] Complete. Time taken: 00:02:04.245
+2026-05-19 21:02:27,762 - INFO - Epoch 26 - Train Loss: 3421.2709283186587, Validation MRR: 0.015506483614444733, Learning Rate: 0.00014644660940672628
+2026-05-19 21:02:32,046 - INFO - Memory cleaned.
+2026-05-19 21:02:32,812 - INFO - Epoch[26] Complete. Time taken: 00:02:04.252
+2026-05-19 21:04:31,999 - INFO - Epoch 27 - Train Loss: 3394.7907194195172, Validation MRR: 0.015506483614444733, Learning Rate: 9.549150281252633e-05
+2026-05-19 21:04:36,276 - INFO - Memory cleaned.
+2026-05-19 21:04:37,060 - INFO - Epoch[27] Complete. Time taken: 00:02:04.248
+2026-05-19 21:06:36,038 - INFO - Epoch 28 - Train Loss: 3390.2088330550523, Validation MRR: 0.015506483614444733, Learning Rate: 5.449673790581611e-05
+2026-05-19 21:06:40,315 - INFO - Memory cleaned.
+2026-05-19 21:06:41,074 - INFO - Epoch[28] Complete. Time taken: 00:02:04.014
+2026-05-19 21:08:39,829 - INFO - Epoch 29 - Train Loss: 3394.2712106303925, Validation MRR: 0.015506483614444733, Learning Rate: 2.4471741852423235e-05
+2026-05-19 21:08:44,104 - INFO - Memory cleaned.
+2026-05-19 21:08:44,871 - INFO - Epoch[29] Complete. Time taken: 00:02:03.798
+2026-05-19 21:10:43,856 - INFO - Epoch 30 - Train Loss: 3383.083279183128, Validation MRR: 0.015506483614444733, Learning Rate: 6.15582970243117e-06
+2026-05-19 21:10:49,203 - INFO - Memory cleaned.
+2026-05-19 21:10:50,121 - INFO - Epoch[30] Complete. Time taken: 00:02:05.249
+2026-05-19 21:12:49,228 - INFO - Epoch 31 - Train Loss: 3542.4287956117864, Validation MRR: 0.015506483614444733, Learning Rate: 0.001
+2026-05-19 21:12:53,610 - INFO - Memory cleaned.
+2026-05-19 21:12:54,317 - INFO - Epoch[31] Complete. Time taken: 00:02:04.197
+2026-05-19 21:14:53,436 - INFO - Epoch 32 - Train Loss: 3463.3699060093772, Validation MRR: 0.015506483614444733, Learning Rate: 0.000998458666866564
+2026-05-19 21:14:57,717 - INFO - Memory cleaned.
+2026-05-19 21:14:58,504 - INFO - Epoch[32] Complete. Time taken: 00:02:04.186
+2026-05-19 21:16:57,640 - INFO - Epoch 33 - Train Loss: 3401.4756844417075, Validation MRR: 0.015506483614444733, Learning Rate: 0.0009938441702975688
+2026-05-19 21:17:01,909 - INFO - Memory cleaned.
+2026-05-19 21:17:02,681 - INFO - Epoch[33] Complete. Time taken: 00:02:04.177
+2026-05-19 21:19:01,912 - INFO - Epoch 34 - Train Loss: 3388.342715651698, Validation MRR: 0.015506483614444733, Learning Rate: 0.0009861849601988384
+2026-05-19 21:19:06,171 - INFO - Memory cleaned.
+2026-05-19 21:19:06,938 - INFO - Epoch[34] Complete. Time taken: 00:02:04.257
+2026-05-19 21:21:06,192 - INFO - Epoch 35 - Train Loss: 3338.7690296675873, Validation MRR: 0.015506483614444733, Learning Rate: 0.0009755282581475768
+2026-05-19 21:21:10,451 - INFO - Memory cleaned.
+2026-05-19 21:21:11,217 - INFO - Epoch[35] Complete. Time taken: 00:02:04.280
+2026-05-19 21:23:10,456 - INFO - Epoch 36 - Train Loss: 3307.5031504859794, Validation MRR: 0.015506483614444733, Learning Rate: 0.0009619397662556434
+2026-05-19 21:23:14,718 - INFO - Memory cleaned.
+2026-05-19 21:23:15,503 - INFO - Epoch[36] Complete. Time taken: 00:02:04.285
+2026-05-19 21:25:14,803 - INFO - Epoch 37 - Train Loss: 3283.7192338925547, Validation MRR: 0.015506483614444733, Learning Rate: 0.0009455032620941839
+2026-05-19 21:25:19,065 - INFO - Memory cleaned.
+2026-05-19 21:25:19,840 - INFO - Epoch[37] Complete. Time taken: 00:02:04.337
+2026-05-19 21:27:19,197 - INFO - Epoch 38 - Train Loss: 3271.7599758402807, Validation MRR: 0.015506483614444733, Learning Rate: 0.0009263200821770461
+2026-05-19 21:27:23,451 - INFO - Memory cleaned.
+2026-05-19 21:27:24,238 - INFO - Epoch[38] Complete. Time taken: 00:02:04.398
+2026-05-19 21:29:23,460 - INFO - Epoch 39 - Train Loss: 3252.825591316363, Validation MRR: 0.015506483614444733, Learning Rate: 0.0009045084971874737
+2026-05-19 21:29:27,714 - INFO - Memory cleaned.
+2026-05-19 21:29:28,494 - INFO - Epoch[39] Complete. Time taken: 00:02:04.256
+2026-05-19 21:31:27,735 - INFO - Epoch 40 - Train Loss: 3230.350843316378, Validation MRR: 0.015506483614444733, Learning Rate: 0.0008802029828000156
+2026-05-19 21:31:31,986 - INFO - Memory cleaned.
+2026-05-19 21:31:31,986 - INFO - Evaluating on validation set at epoch 40...
+Link prediction evaluation:   0%|          | 0/81 [00:00<?, ?batch/s]Link prediction evaluation:   1%|          | 1/81 [00:00<00:09,  8.21batch/s]Link prediction evaluation:   2%|▏         | 2/81 [00:00<00:08,  8.78batch/s]Link prediction evaluation:   4%|▎         | 3/81 [00:00<00:08,  8.91batch/s]Link prediction evaluation:   5%|▍         | 4/81 [00:00<00:08,  9.04batch/s]Link prediction evaluation:   6%|▌         | 5/81 [00:00<00:08,  9.08batch/s]Link prediction evaluation:   7%|▋         | 6/81 [00:00<00:08,  9.13batch/s]Link prediction evaluation:   9%|▊         | 7/81 [00:00<00:08,  9.15batch/s]Link prediction evaluation:  10%|▉         | 8/81 [00:00<00:07,  9.17batch/s]Link prediction evaluation:  11%|█         | 9/81 [00:00<00:07,  9.18batch/s]Link prediction evaluation:  12%|█▏        | 10/81 [00:01<00:07,  9.19batch/s]Link prediction evaluation:  14%|█▎        | 11/81 [00:01<00:07,  9.21batch/s]Link prediction evaluation:  15%|█▍        | 12/81 [00:01<00:07,  9.22batch/s]Link prediction evaluation:  16%|█▌        | 13/81 [00:01<00:07,  9.22batch/s]Link prediction evaluation:  17%|█▋        | 14/81 [00:01<00:07,  9.23batch/s]Link prediction evaluation:  19%|█▊        | 15/81 [00:01<00:07,  9.23batch/s]Link prediction evaluation:  20%|█▉        | 16/81 [00:01<00:07,  9.22batch/s]Link prediction evaluation:  21%|██        | 17/81 [00:01<00:06,  9.21batch/s]Link prediction evaluation:  22%|██▏       | 18/81 [00:01<00:06,  9.22batch/s]Link prediction evaluation:  23%|██▎       | 19/81 [00:02<00:06,  9.21batch/s]Link prediction evaluation:  25%|██▍       | 20/81 [00:02<00:06,  9.21batch/s]Link prediction evaluation:  26%|██▌       | 21/81 [00:02<00:06,  9.23batch/s]Link prediction evaluation:  27%|██▋       | 22/81 [00:02<00:06,  9.21batch/s]Link prediction evaluation:  28%|██▊       | 23/81 [00:02<00:06,  9.22batch/s]Link prediction evaluation:  30%|██▉       | 24/81 [00:02<00:06,  9.21batch/s]Link prediction evaluation:  31%|███       | 25/81 [00:02<00:06,  9.21batch/s]Link prediction evaluation:  32%|███▏      | 26/81 [00:02<00:05,  9.21batch/s]Link prediction evaluation:  33%|███▎      | 27/81 [00:02<00:05,  9.22batch/s]Link prediction evaluation:  35%|███▍      | 28/81 [00:03<00:05,  9.23batch/s]Link prediction evaluation:  36%|███▌      | 29/81 [00:03<00:05,  9.22batch/s]Link prediction evaluation:  37%|███▋      | 30/81 [00:03<00:05,  9.21batch/s]Link prediction evaluation:  38%|███▊      | 31/81 [00:03<00:05,  9.22batch/s]Link prediction evaluation:  40%|███▉      | 32/81 [00:03<00:05,  9.22batch/s]Link prediction evaluation:  41%|████      | 33/81 [00:03<00:05,  9.22batch/s]Link prediction evaluation:  42%|████▏     | 34/81 [00:03<00:05,  9.24batch/s]Link prediction evaluation:  43%|████▎     | 35/81 [00:03<00:04,  9.25batch/s]Link prediction evaluation:  44%|████▍     | 36/81 [00:03<00:04,  9.25batch/s]Link prediction evaluation:  46%|████▌     | 37/81 [00:04<00:04,  9.25batch/s]Link prediction evaluation:  47%|████▋     | 38/81 [00:04<00:04,  9.25batch/s]Link prediction evaluation:  48%|████▊     | 39/81 [00:04<00:04,  9.26batch/s]Link prediction evaluation:  49%|████▉     | 40/81 [00:04<00:04,  9.24batch/s]Link prediction evaluation:  51%|█████     | 41/81 [00:04<00:04,  9.24batch/s]Link prediction evaluation:  52%|█████▏    | 42/81 [00:04<00:04,  9.24batch/s]Link prediction evaluation:  53%|█████▎    | 43/81 [00:04<00:04,  9.24batch/s]Link prediction evaluation:  54%|█████▍    | 44/81 [00:04<00:04,  9.24batch/s]Link prediction evaluation:  56%|█████▌    | 45/81 [00:04<00:03,  9.23batch/s]Link prediction evaluation:  57%|█████▋    | 46/81 [00:05<00:03,  9.21batch/s]Link prediction evaluation:  58%|█████▊    | 47/81 [00:05<00:03,  9.22batch/s]Link prediction evaluation:  59%|█████▉    | 48/81 [00:05<00:03,  9.21batch/s]Link prediction evaluation:  60%|██████    | 49/81 [00:05<00:03,  9.21batch/s]Link prediction evaluation:  62%|██████▏   | 50/81 [00:05<00:03,  9.22batch/s]Link prediction evaluation:  63%|██████▎   | 51/81 [00:05<00:03,  9.22batch/s]Link prediction evaluation:  64%|██████▍   | 52/81 [00:05<00:03,  9.21batch/s]Link prediction evaluation:  65%|██████▌   | 53/81 [00:05<00:03,  9.21batch/s]Link prediction evaluation:  67%|██████▋   | 54/81 [00:05<00:02,  9.22batch/s]Link prediction evaluation:  68%|██████▊   | 55/81 [00:05<00:02,  9.22batch/s]Link prediction evaluation:  69%|██████▉   | 56/81 [00:06<00:02,  9.21batch/s]Link prediction evaluation:  70%|███████   | 57/81 [00:06<00:02,  9.20batch/s]Link prediction evaluation:  72%|███████▏  | 58/81 [00:06<00:02,  9.21batch/s]Link prediction evaluation:  73%|███████▎  | 59/81 [00:06<00:02,  9.22batch/s]Link prediction evaluation:  74%|███████▍  | 60/81 [00:06<00:02,  9.22batch/s]Link prediction evaluation:  75%|███████▌  | 61/81 [00:06<00:02,  9.22batch/s]Link prediction evaluation:  77%|███████▋  | 62/81 [00:06<00:02,  9.24batch/s]Link prediction evaluation:  78%|███████▊  | 63/81 [00:06<00:01,  9.23batch/s]Link prediction evaluation:  79%|███████▉  | 64/81 [00:06<00:01,  9.23batch/s]Link prediction evaluation:  80%|████████  | 65/81 [00:07<00:01,  9.22batch/s]Link prediction evaluation:  81%|████████▏ | 66/81 [00:07<00:01,  9.22batch/s]Link prediction evaluation:  83%|████████▎ | 67/81 [00:07<00:01,  9.22batch/s]Link prediction evaluation:  84%|████████▍ | 68/81 [00:07<00:01,  9.21batch/s]Link prediction evaluation:  85%|████████▌ | 69/81 [00:07<00:01,  9.20batch/s]Link prediction evaluation:  86%|████████▋ | 70/81 [00:07<00:01,  9.21batch/s]Link prediction evaluation:  88%|████████▊ | 71/81 [00:07<00:01,  9.21batch/s]Link prediction evaluation:  89%|████████▉ | 72/81 [00:07<00:00,  9.22batch/s]Link prediction evaluation:  90%|█████████ | 73/81 [00:07<00:00,  9.22batch/s]Link prediction evaluation:  91%|█████████▏| 74/81 [00:08<00:00,  9.22batch/s]Link prediction evaluation:  93%|█████████▎| 75/81 [00:08<00:00,  9.23batch/s]Link prediction evaluation:  94%|█████████▍| 76/81 [00:08<00:00,  9.23batch/s]Link prediction evaluation:  95%|█████████▌| 77/81 [00:08<00:00,  9.24batch/s]Link prediction evaluation:  96%|█████████▋| 78/81 [00:08<00:00,  9.24batch/s]Link prediction evaluation:  98%|█████████▊| 79/81 [00:08<00:00,  9.22batch/s]Link prediction evaluation:  99%|█████████▉| 80/81 [00:08<00:00,  9.22batch/s]Link prediction evaluation: 100%|██████████| 81/81 [00:08<00:00,  9.28batch/s]
+2026-05-19 21:31:40,749 - INFO - Validation MRR: 0.010164789855480194
+2026-05-19 21:31:41,554 - INFO - Epoch[40] Complete. Time taken: 00:02:13.060
+2026-05-19 21:33:40,660 - INFO - Epoch 41 - Train Loss: 3214.3095551991587, Validation MRR: 0.010164789855480194, Learning Rate: 0.0008535533905932737
+2026-05-19 21:33:44,918 - INFO - Memory cleaned.
+2026-05-19 21:33:45,713 - INFO - Epoch[41] Complete. Time taken: 00:02:04.158
+2026-05-19 21:35:45,053 - INFO - Epoch 42 - Train Loss: 3185.7893321162906, Validation MRR: 0.010164789855480194, Learning Rate: 0.000824724024165092
+2026-05-19 21:35:49,308 - INFO - Memory cleaned.
+2026-05-19 21:35:50,141 - INFO - Epoch[42] Complete. Time taken: 00:02:04.428
+2026-05-19 21:37:49,326 - INFO - Epoch 43 - Train Loss: 3175.480547691216, Validation MRR: 0.010164789855480194, Learning Rate: 0.0007938926261462366
+2026-05-19 21:37:53,570 - INFO - Memory cleaned.
+2026-05-19 21:37:54,346 - INFO - Epoch[43] Complete. Time taken: 00:02:04.205
+2026-05-19 21:39:53,515 - INFO - Epoch 44 - Train Loss: 3161.172584531276, Validation MRR: 0.010164789855480194, Learning Rate: 0.0007612492823579744
+2026-05-19 21:39:57,754 - INFO - Memory cleaned.
+2026-05-19 21:39:58,520 - INFO - Epoch[44] Complete. Time taken: 00:02:04.174
+2026-05-19 21:41:57,691 - INFO - Epoch 45 - Train Loss: 3134.628014189846, Validation MRR: 0.010164789855480194, Learning Rate: 0.0007269952498697733
+2026-05-19 21:42:01,928 - INFO - Memory cleaned.
+2026-05-19 21:42:02,696 - INFO - Epoch[45] Complete. Time taken: 00:02:04.176
+2026-05-19 21:44:01,505 - INFO - Epoch 46 - Train Loss: 3124.6027738787093, Validation MRR: 0.010164789855480194, Learning Rate: 0.000691341716182545
+2026-05-19 21:44:05,742 - INFO - Memory cleaned.
+2026-05-19 21:44:06,528 - INFO - Epoch[46] Complete. Time taken: 00:02:03.832
+2026-05-19 21:46:05,168 - INFO - Epoch 47 - Train Loss: 3105.8861441214153, Validation MRR: 0.010164789855480194, Learning Rate: 0.0006545084971874737
+2026-05-19 21:46:09,401 - INFO - Memory cleaned.
+2026-05-19 21:46:10,167 - INFO - Epoch[47] Complete. Time taken: 00:02:03.638
+2026-05-19 21:48:09,043 - INFO - Epoch 48 - Train Loss: 3107.127445443001, Validation MRR: 0.010164789855480194, Learning Rate: 0.0006167226819279528
+2026-05-19 21:48:13,274 - INFO - Memory cleaned.
+2026-05-19 21:48:14,038 - INFO - Epoch[48] Complete. Time taken: 00:02:03.871
+2026-05-19 21:50:13,196 - INFO - Epoch 49 - Train Loss: 3080.4804717751645, Validation MRR: 0.010164789855480194, Learning Rate: 0.0005782172325201155
+2026-05-19 21:50:17,424 - INFO - Memory cleaned.
+2026-05-19 21:50:18,214 - INFO - Epoch[49] Complete. Time taken: 00:02:04.176
+2026-05-19 21:52:17,442 - INFO - Epoch 50 - Train Loss: 3093.095552183721, Validation MRR: 0.010164789855480194, Learning Rate: 0.0005392295478639225
+2026-05-19 21:52:21,670 - INFO - Memory cleaned.
+2026-05-19 21:52:22,464 - INFO - Epoch[50] Complete. Time taken: 00:02:04.249
+2026-05-19 21:54:21,802 - INFO - Epoch 51 - Train Loss: 3064.950708124659, Validation MRR: 0.010164789855480194, Learning Rate: 0.0005
+2026-05-19 21:54:26,027 - INFO - Memory cleaned.
+2026-05-19 21:54:26,796 - INFO - Epoch[51] Complete. Time taken: 00:02:04.332
+2026-05-19 21:56:26,108 - INFO - Epoch 52 - Train Loss: 3052.6920104152973, Validation MRR: 0.010164789855480194, Learning Rate: 0.0004607704521360776
+2026-05-19 21:56:30,336 - INFO - Memory cleaned.
+2026-05-19 21:56:31,132 - INFO - Epoch[52] Complete. Time taken: 00:02:04.336
+2026-05-19 21:58:30,447 - INFO - Epoch 53 - Train Loss: 3043.841906142465, Validation MRR: 0.010164789855480194, Learning Rate: 0.0004217827674798847
+2026-05-19 21:58:34,669 - INFO - Memory cleaned.
+2026-05-19 21:58:35,438 - INFO - Epoch[53] Complete. Time taken: 00:02:04.306
+2026-05-19 22:00:34,766 - INFO - Epoch 54 - Train Loss: 3049.993529511942, Validation MRR: 0.010164789855480194, Learning Rate: 0.00038327731807204733
+2026-05-19 22:00:38,979 - INFO - Memory cleaned.
+2026-05-19 22:00:39,749 - INFO - Epoch[54] Complete. Time taken: 00:02:04.312
+2026-05-19 22:02:38,930 - INFO - Epoch 55 - Train Loss: 3043.409721461246, Validation MRR: 0.010164789855480194, Learning Rate: 0.00034549150281252633
+2026-05-19 22:02:43,177 - INFO - Memory cleaned.
+2026-05-19 22:02:43,945 - INFO - Epoch[55] Complete. Time taken: 00:02:04.195
+2026-05-19 22:04:43,070 - INFO - Epoch 56 - Train Loss: 3036.558004194888, Validation MRR: 0.010164789855480194, Learning Rate: 0.0003086582838174551
+2026-05-19 22:04:47,273 - INFO - Memory cleaned.
+2026-05-19 22:04:48,037 - INFO - Epoch[56] Complete. Time taken: 00:02:04.092
+2026-05-19 22:06:47,141 - INFO - Epoch 57 - Train Loss: 3025.8549448744416, Validation MRR: 0.010164789855480194, Learning Rate: 0.00027300475013022663
+2026-05-19 22:06:51,341 - INFO - Memory cleaned.
+2026-05-19 22:06:52,107 - INFO - Epoch[57] Complete. Time taken: 00:02:04.070
+2026-05-19 22:08:51,196 - INFO - Epoch 58 - Train Loss: 3010.4716025073203, Validation MRR: 0.010164789855480194, Learning Rate: 0.00023875071764202561
+2026-05-19 22:08:55,393 - INFO - Memory cleaned.
+2026-05-19 22:08:56,165 - INFO - Epoch[58] Complete. Time taken: 00:02:04.058
+2026-05-19 22:10:55,336 - INFO - Epoch 59 - Train Loss: 3015.1062601956455, Validation MRR: 0.010164789855480194, Learning Rate: 0.00020610737385376348
+2026-05-19 22:10:59,531 - INFO - Memory cleaned.
+2026-05-19 22:11:00,302 - INFO - Epoch[59] Complete. Time taken: 00:02:04.138
+2026-05-19 22:12:59,495 - INFO - Epoch 60 - Train Loss: 3000.9484923682476, Validation MRR: 0.010164789855480194, Learning Rate: 0.00017527597583490823
+2026-05-19 22:13:03,684 - INFO - Memory cleaned.
+2026-05-19 22:13:03,684 - INFO - Evaluating on validation set at epoch 60...
+Link prediction evaluation:   0%|          | 0/81 [00:00<?, ?batch/s]Link prediction evaluation:   1%|          | 1/81 [00:00<00:08,  9.12batch/s]Link prediction evaluation:   2%|▏         | 2/81 [00:00<00:08,  9.16batch/s]Link prediction evaluation:   4%|▎         | 3/81 [00:00<00:08,  9.13batch/s]Link prediction evaluation:   5%|▍         | 4/81 [00:00<00:08,  9.17batch/s]Link prediction evaluation:   6%|▌         | 5/81 [00:00<00:08,  9.16batch/s]Link prediction evaluation:   7%|▋         | 6/81 [00:00<00:08,  9.18batch/s]Link prediction evaluation:   9%|▊         | 7/81 [00:00<00:08,  9.19batch/s]Link prediction evaluation:  10%|▉         | 8/81 [00:00<00:07,  9.19batch/s]Link prediction evaluation:  11%|█         | 9/81 [00:00<00:07,  9.20batch/s]Link prediction evaluation:  12%|█▏        | 10/81 [00:01<00:07,  9.20batch/s]Link prediction evaluation:  14%|█▎        | 11/81 [00:01<00:07,  9.21batch/s]Link prediction evaluation:  15%|█▍        | 12/81 [00:01<00:07,  9.22batch/s]Link prediction evaluation:  16%|█▌        | 13/81 [00:01<00:07,  9.22batch/s]Link prediction evaluation:  17%|█▋        | 14/81 [00:01<00:07,  9.22batch/s]Link prediction evaluation:  19%|█▊        | 15/81 [00:01<00:07,  9.23batch/s]Link prediction evaluation:  20%|█▉        | 16/81 [00:01<00:07,  9.22batch/s]Link prediction evaluation:  21%|██        | 17/81 [00:01<00:06,  9.21batch/s]Link prediction evaluation:  22%|██▏       | 18/81 [00:01<00:06,  9.22batch/s]Link prediction evaluation:  23%|██▎       | 19/81 [00:02<00:06,  9.21batch/s]Link prediction evaluation:  25%|██▍       | 20/81 [00:02<00:06,  9.21batch/s]Link prediction evaluation:  26%|██▌       | 21/81 [00:02<00:06,  9.22batch/s]Link prediction evaluation:  27%|██▋       | 22/81 [00:02<00:06,  9.21batch/s]Link prediction evaluation:  28%|██▊       | 23/81 [00:02<00:06,  9.22batch/s]Link prediction evaluation:  30%|██▉       | 24/81 [00:02<00:06,  9.21batch/s]Link prediction evaluation:  31%|███       | 25/81 [00:02<00:06,  9.21batch/s]Link prediction evaluation:  32%|███▏      | 26/81 [00:02<00:05,  9.21batch/s]Link prediction evaluation:  33%|███▎      | 27/81 [00:02<00:05,  9.22batch/s]Link prediction evaluation:  35%|███▍      | 28/81 [00:03<00:05,  9.22batch/s]Link prediction evaluation:  36%|███▌      | 29/81 [00:03<00:05,  9.21batch/s]Link prediction evaluation:  37%|███▋      | 30/81 [00:03<00:05,  9.20batch/s]Link prediction evaluation:  38%|███▊      | 31/81 [00:03<00:05,  9.22batch/s]Link prediction evaluation:  40%|███▉      | 32/81 [00:03<00:05,  9.21batch/s]Link prediction evaluation:  41%|████      | 33/81 [00:03<00:05,  9.22batch/s]Link prediction evaluation:  42%|████▏     | 34/81 [00:03<00:05,  9.24batch/s]Link prediction evaluation:  43%|████▎     | 35/81 [00:03<00:04,  9.24batch/s]Link prediction evaluation:  44%|████▍     | 36/81 [00:03<00:04,  9.25batch/s]Link prediction evaluation:  46%|████▌     | 37/81 [00:04<00:04,  9.25batch/s]Link prediction evaluation:  47%|████▋     | 38/81 [00:04<00:04,  9.25batch/s]Link prediction evaluation:  48%|████▊     | 39/81 [00:04<00:04,  9.26batch/s]Link prediction evaluation:  49%|████▉     | 40/81 [00:04<00:04,  9.23batch/s]Link prediction evaluation:  51%|█████     | 41/81 [00:04<00:04,  9.23batch/s]Link prediction evaluation:  52%|█████▏    | 42/81 [00:04<00:04,  9.23batch/s]Link prediction evaluation:  53%|█████▎    | 43/81 [00:04<00:04,  9.24batch/s]Link prediction evaluation:  54%|█████▍    | 44/81 [00:04<00:04,  9.23batch/s]Link prediction evaluation:  56%|█████▌    | 45/81 [00:04<00:03,  9.22batch/s]Link prediction evaluation:  57%|█████▋    | 46/81 [00:04<00:03,  9.20batch/s]Link prediction evaluation:  58%|█████▊    | 47/81 [00:05<00:03,  9.21batch/s]Link prediction evaluation:  59%|█████▉    | 48/81 [00:05<00:03,  9.20batch/s]Link prediction evaluation:  60%|██████    | 49/81 [00:05<00:03,  9.21batch/s]Link prediction evaluation:  62%|██████▏   | 50/81 [00:05<00:03,  9.22batch/s]Link prediction evaluation:  63%|██████▎   | 51/81 [00:05<00:03,  9.21batch/s]Link prediction evaluation:  64%|██████▍   | 52/81 [00:05<00:03,  9.20batch/s]Link prediction evaluation:  65%|██████▌   | 53/81 [00:05<00:03,  9.21batch/s]Link prediction evaluation:  67%|██████▋   | 54/81 [00:05<00:02,  9.21batch/s]Link prediction evaluation:  68%|██████▊   | 55/81 [00:05<00:02,  9.21batch/s]Link prediction evaluation:  69%|██████▉   | 56/81 [00:06<00:02,  9.21batch/s]Link prediction evaluation:  70%|███████   | 57/81 [00:06<00:02,  9.20batch/s]Link prediction evaluation:  72%|███████▏  | 58/81 [00:06<00:02,  9.20batch/s]Link prediction evaluation:  73%|███████▎  | 59/81 [00:06<00:02,  9.22batch/s]Link prediction evaluation:  74%|███████▍  | 60/81 [00:06<00:02,  9.21batch/s]Link prediction evaluation:  75%|███████▌  | 61/81 [00:06<00:02,  9.22batch/s]Link prediction evaluation:  77%|███████▋  | 62/81 [00:06<00:02,  9.23batch/s]Link prediction evaluation:  78%|███████▊  | 63/81 [00:06<00:01,  9.23batch/s]Link prediction evaluation:  79%|███████▉  | 64/81 [00:06<00:01,  9.22batch/s]Link prediction evaluation:  80%|████████  | 65/81 [00:07<00:01,  9.22batch/s]Link prediction evaluation:  81%|████████▏ | 66/81 [00:07<00:01,  9.21batch/s]Link prediction evaluation:  83%|████████▎ | 67/81 [00:07<00:01,  9.21batch/s]Link prediction evaluation:  84%|████████▍ | 68/81 [00:07<00:01,  9.21batch/s]Link prediction evaluation:  85%|████████▌ | 69/81 [00:07<00:01,  9.20batch/s]Link prediction evaluation:  86%|████████▋ | 70/81 [00:07<00:01,  9.21batch/s]Link prediction evaluation:  88%|████████▊ | 71/81 [00:07<00:01,  9.21batch/s]Link prediction evaluation:  89%|████████▉ | 72/81 [00:07<00:00,  9.22batch/s]Link prediction evaluation:  90%|█████████ | 73/81 [00:07<00:00,  9.22batch/s]Link prediction evaluation:  91%|█████████▏| 74/81 [00:08<00:00,  9.22batch/s]Link prediction evaluation:  93%|█████████▎| 75/81 [00:08<00:00,  9.22batch/s]Link prediction evaluation:  94%|█████████▍| 76/81 [00:08<00:00,  9.22batch/s]Link prediction evaluation:  95%|█████████▌| 77/81 [00:08<00:00,  9.22batch/s]Link prediction evaluation:  96%|█████████▋| 78/81 [00:08<00:00,  9.23batch/s]Link prediction evaluation:  98%|█████████▊| 79/81 [00:08<00:00,  9.22batch/s]Link prediction evaluation:  99%|█████████▉| 80/81 [00:08<00:00,  9.21batch/s]Link prediction evaluation: 100%|██████████| 81/81 [00:08<00:00,  9.28batch/s]
+2026-05-19 22:13:12,411 - INFO - Validation MRR: 0.009361507371068
+2026-05-19 22:13:13,188 - INFO - Epoch[60] Complete. Time taken: 00:02:12.886
+2026-05-19 22:15:12,344 - INFO - Epoch 61 - Train Loss: 2998.3236270162947, Validation MRR: 0.009361507371068, Learning Rate: 0.00014644660940672628
+2026-05-19 22:15:16,535 - INFO - Memory cleaned.
+2026-05-19 22:15:17,311 - INFO - Epoch[61] Complete. Time taken: 00:02:04.123
+2026-05-19 22:17:16,570 - INFO - Epoch 62 - Train Loss: 2994.3135609121227, Validation MRR: 0.009361507371068, Learning Rate: 0.00011979701719998454
+2026-05-19 22:17:20,789 - INFO - Memory cleaned.
+2026-05-19 22:17:21,566 - INFO - Epoch[62] Complete. Time taken: 00:02:04.255
+2026-05-19 22:19:20,951 - INFO - Epoch 63 - Train Loss: 2988.7894310939573, Validation MRR: 0.009361507371068, Learning Rate: 9.549150281252633e-05
+2026-05-19 22:19:25,221 - INFO - Memory cleaned.
+2026-05-19 22:19:25,933 - INFO - Epoch[63] Complete. Time taken: 00:02:04.366
+2026-05-19 22:21:25,586 - INFO - Epoch 64 - Train Loss: 2984.2739052321117, Validation MRR: 0.009361507371068, Learning Rate: 7.367991782295391e-05
+2026-05-19 22:21:29,778 - INFO - Memory cleaned.
+2026-05-19 22:21:30,504 - INFO - Epoch[64] Complete. Time taken: 00:02:04.571
+2026-05-19 22:23:29,801 - INFO - Epoch 65 - Train Loss: 2992.1909740753017, Validation MRR: 0.009361507371068, Learning Rate: 5.449673790581611e-05
+2026-05-19 22:23:33,972 - INFO - Memory cleaned.
+2026-05-19 22:23:34,761 - INFO - Epoch[65] Complete. Time taken: 00:02:04.257
+2026-05-19 22:25:33,984 - INFO - Epoch 66 - Train Loss: 2979.847949157903, Validation MRR: 0.009361507371068, Learning Rate: 3.806023374435663e-05
+2026-05-19 22:25:38,154 - INFO - Memory cleaned.
+2026-05-19 22:25:38,925 - INFO - Epoch[66] Complete. Time taken: 00:02:04.163
+2026-05-19 22:27:38,102 - INFO - Epoch 67 - Train Loss: 2965.569325801986, Validation MRR: 0.009361507371068, Learning Rate: 2.4471741852423235e-05
+2026-05-19 22:27:42,260 - INFO - Memory cleaned.
+2026-05-19 22:27:43,029 - INFO - Epoch[67] Complete. Time taken: 00:02:04.104
+2026-05-19 22:29:42,048 - INFO - Epoch 68 - Train Loss: 2987.3203244686824, Validation MRR: 0.009361507371068, Learning Rate: 1.3815039801161721e-05
+2026-05-19 22:29:46,208 - INFO - Memory cleaned.
+2026-05-19 22:29:46,972 - INFO - Epoch[68] Complete. Time taken: 00:02:03.943
+2026-05-19 22:31:46,016 - INFO - Epoch 69 - Train Loss: 2985.62880401457, Validation MRR: 0.009361507371068, Learning Rate: 6.15582970243117e-06
+2026-05-19 22:31:50,178 - INFO - Memory cleaned.
+2026-05-19 22:31:50,947 - INFO - Epoch[69] Complete. Time taken: 00:02:03.975
+2026-05-19 22:33:49,989 - INFO - Epoch 70 - Train Loss: 2975.052148429432, Validation MRR: 0.009361507371068, Learning Rate: 1.541333133436018e-06
+2026-05-19 22:33:54,151 - INFO - Memory cleaned.
+2026-05-19 22:33:54,911 - INFO - Epoch[70] Complete. Time taken: 00:02:03.964
+2026-05-19 22:35:53,903 - INFO - Epoch 71 - Train Loss: 3169.120225351158, Validation MRR: 0.009361507371068, Learning Rate: 0.001
+2026-05-19 22:35:58,062 - INFO - Memory cleaned.
+2026-05-19 22:35:58,829 - INFO - Epoch[71] Complete. Time taken: 00:02:03.917
+2026-05-19 22:37:57,863 - INFO - Epoch 72 - Train Loss: 3158.80994127248, Validation MRR: 0.009361507371068, Learning Rate: 0.0009996145181203615
+2026-05-19 22:38:02,024 - INFO - Memory cleaned.
+2026-05-19 22:38:02,784 - INFO - Epoch[72] Complete. Time taken: 00:02:03.955
+2026-05-19 22:40:01,826 - INFO - Epoch 73 - Train Loss: 3138.4161540024184, Validation MRR: 0.009361507371068, Learning Rate: 0.000998458666866564
+2026-05-19 22:40:05,992 - INFO - Memory cleaned.
+2026-05-19 22:40:06,775 - INFO - Epoch[73] Complete. Time taken: 00:02:03.990
+2026-05-19 22:42:05,713 - INFO - Epoch 74 - Train Loss: 3127.4271132648037, Validation MRR: 0.009361507371068, Learning Rate: 0.0009965342284774632
+2026-05-19 22:42:09,876 - INFO - Memory cleaned.
+2026-05-19 22:42:10,638 - INFO - Epoch[74] Complete. Time taken: 00:02:03.863
+2026-05-19 22:44:09,478 - INFO - Epoch 75 - Train Loss: 3126.23274705549, Validation MRR: 0.009361507371068, Learning Rate: 0.0009938441702975688
+2026-05-19 22:44:13,639 - INFO - Memory cleaned.
+2026-05-19 22:44:14,410 - INFO - Epoch[75] Complete. Time taken: 00:02:03.772
+2026-05-19 22:46:13,184 - INFO - Epoch 76 - Train Loss: 3113.8354371868295, Validation MRR: 0.009361507371068, Learning Rate: 0.0009903926402016153
+2026-05-19 22:46:17,347 - INFO - Memory cleaned.
+2026-05-19 22:46:18,110 - INFO - Epoch[76] Complete. Time taken: 00:02:03.700
+2026-05-19 22:48:16,862 - INFO - Epoch 77 - Train Loss: 3110.376450400723, Validation MRR: 0.009361507371068, Learning Rate: 0.0009861849601988384
+2026-05-19 22:48:21,023 - INFO - Memory cleaned.
+2026-05-19 22:48:21,794 - INFO - Epoch[77] Complete. Time taken: 00:02:03.684
+2026-05-19 22:50:20,777 - INFO - Epoch 78 - Train Loss: 3109.242124296481, Validation MRR: 0.009361507371068, Learning Rate: 0.0009812276182268236
+2026-05-19 22:50:24,939 - INFO - Memory cleaned.
+2026-05-19 22:50:25,703 - INFO - Epoch[78] Complete. Time taken: 00:02:03.908
+2026-05-19 22:52:24,436 - INFO - Epoch 79 - Train Loss: 3094.5029313197656, Validation MRR: 0.009361507371068, Learning Rate: 0.0009755282581475768
+2026-05-19 22:52:28,598 - INFO - Memory cleaned.
+2026-05-19 22:52:29,385 - INFO - Epoch[79] Complete. Time taken: 00:02:03.682
+2026-05-19 22:54:28,301 - INFO - Epoch 80 - Train Loss: 3096.981627568142, Validation MRR: 0.009361507371068, Learning Rate: 0.0009690956679612422
+2026-05-19 22:54:32,466 - INFO - Memory cleaned.
+2026-05-19 22:54:32,466 - INFO - Evaluating on validation set at epoch 80...
+Link prediction evaluation:   0%|          | 0/81 [00:00<?, ?batch/s]Link prediction evaluation:   1%|          | 1/81 [00:00<00:11,  7.24batch/s]Link prediction evaluation:   2%|▏         | 2/81 [00:00<00:09,  8.27batch/s]Link prediction evaluation:   4%|▎         | 3/81 [00:00<00:09,  8.61batch/s]Link prediction evaluation:   5%|▍         | 4/81 [00:00<00:08,  8.84batch/s]Link prediction evaluation:   6%|▌         | 5/81 [00:00<00:08,  8.95batch/s]Link prediction evaluation:   7%|▋         | 6/81 [00:00<00:08,  9.05batch/s]Link prediction evaluation:   9%|▊         | 7/81 [00:00<00:08,  9.10batch/s]Link prediction evaluation:  10%|▉         | 8/81 [00:00<00:07,  9.13batch/s]Link prediction evaluation:  11%|█         | 9/81 [00:01<00:07,  9.16batch/s]Link prediction evaluation:  12%|█▏        | 10/81 [00:01<00:07,  9.17batch/s]Link prediction evaluation:  14%|█▎        | 11/81 [00:01<00:07,  9.19batch/s]Link prediction evaluation:  15%|█▍        | 12/81 [00:01<00:07,  9.21batch/s]Link prediction evaluation:  16%|█▌        | 13/81 [00:01<00:07,  9.21batch/s]Link prediction evaluation:  17%|█▋        | 14/81 [00:01<00:07,  9.22batch/s]Link prediction evaluation:  19%|█▊        | 15/81 [00:01<00:07,  9.23batch/s]Link prediction evaluation:  20%|█▉        | 16/81 [00:01<00:07,  9.22batch/s]Link prediction evaluation:  21%|██        | 17/81 [00:01<00:06,  9.21batch/s]Link prediction evaluation:  22%|██▏       | 18/81 [00:01<00:06,  9.22batch/s]Link prediction evaluation:  23%|██▎       | 19/81 [00:02<00:06,  9.21batch/s]Link prediction evaluation:  25%|██▍       | 20/81 [00:02<00:06,  9.21batch/s]Link prediction evaluation:  26%|██▌       | 21/81 [00:02<00:06,  9.23batch/s]Link prediction evaluation:  27%|██▋       | 22/81 [00:02<00:06,  9.21batch/s]Link prediction evaluation:  28%|██▊       | 23/81 [00:02<00:06,  9.22batch/s]Link prediction evaluation:  30%|██▉       | 24/81 [00:02<00:06,  9.21batch/s]Link prediction evaluation:  31%|███       | 25/81 [00:02<00:06,  9.21batch/s]Link prediction evaluation:  32%|███▏      | 26/81 [00:02<00:05,  9.22batch/s]Link prediction evaluation:  33%|███▎      | 27/81 [00:02<00:05,  9.22batch/s]Link prediction evaluation:  35%|███▍      | 28/81 [00:03<00:05,  9.23batch/s]Link prediction evaluation:  36%|███▌      | 29/81 [00:03<00:05,  9.22batch/s]Link prediction evaluation:  37%|███▋      | 30/81 [00:03<00:05,  9.20batch/s]Link prediction evaluation:  38%|███▊      | 31/81 [00:03<00:05,  9.22batch/s]Link prediction evaluation:  40%|███▉      | 32/81 [00:03<00:05,  9.22batch/s]Link prediction evaluation:  41%|████      | 33/81 [00:03<00:05,  9.22batch/s]Link prediction evaluation:  42%|████▏     | 34/81 [00:03<00:05,  9.24batch/s]Link prediction evaluation:  43%|████▎     | 35/81 [00:03<00:04,  9.25batch/s]Link prediction evaluation:  44%|████▍     | 36/81 [00:03<00:04,  9.25batch/s]Link prediction evaluation:  46%|████▌     | 37/81 [00:04<00:04,  9.25batch/s]Link prediction evaluation:  47%|████▋     | 38/81 [00:04<00:04,  9.25batch/s]Link prediction evaluation:  48%|████▊     | 39/81 [00:04<00:04,  9.26batch/s]Link prediction evaluation:  49%|████▉     | 40/81 [00:04<00:04,  9.23batch/s]Link prediction evaluation:  51%|█████     | 41/81 [00:04<00:04,  9.24batch/s]Link prediction evaluation:  52%|█████▏    | 42/81 [00:04<00:04,  9.24batch/s]Link prediction evaluation:  53%|█████▎    | 43/81 [00:04<00:04,  9.24batch/s]Link prediction evaluation:  54%|█████▍    | 44/81 [00:04<00:04,  9.24batch/s]Link prediction evaluation:  56%|█████▌    | 45/81 [00:04<00:03,  9.23batch/s]Link prediction evaluation:  57%|█████▋    | 46/81 [00:05<00:03,  9.21batch/s]Link prediction evaluation:  58%|█████▊    | 47/81 [00:05<00:03,  9.22batch/s]Link prediction evaluation:  59%|█████▉    | 48/81 [00:05<00:03,  9.21batch/s]Link prediction evaluation:  60%|██████    | 49/81 [00:05<00:03,  9.21batch/s]Link prediction evaluation:  62%|██████▏   | 50/81 [00:05<00:03,  9.22batch/s]Link prediction evaluation:  63%|██████▎   | 51/81 [00:05<00:03,  9.22batch/s]Link prediction evaluation:  64%|██████▍   | 52/81 [00:05<00:03,  9.21batch/s]Link prediction evaluation:  65%|██████▌   | 53/81 [00:05<00:03,  9.21batch/s]Link prediction evaluation:  67%|██████▋   | 54/81 [00:05<00:02,  9.22batch/s]Link prediction evaluation:  68%|██████▊   | 55/81 [00:05<00:02,  9.22batch/s]Link prediction evaluation:  69%|██████▉   | 56/81 [00:06<00:02,  9.21batch/s]Link prediction evaluation:  70%|███████   | 57/81 [00:06<00:02,  9.20batch/s]Link prediction evaluation:  72%|███████▏  | 58/81 [00:06<00:02,  9.21batch/s]Link prediction evaluation:  73%|███████▎  | 59/81 [00:06<00:02,  9.22batch/s]Link prediction evaluation:  74%|███████▍  | 60/81 [00:06<00:02,  9.22batch/s]Link prediction evaluation:  75%|███████▌  | 61/81 [00:06<00:02,  9.22batch/s]Link prediction evaluation:  77%|███████▋  | 62/81 [00:06<00:02,  9.24batch/s]Link prediction evaluation:  78%|███████▊  | 63/81 [00:06<00:01,  9.23batch/s]Link prediction evaluation:  79%|███████▉  | 64/81 [00:06<00:01,  9.22batch/s]Link prediction evaluation:  80%|████████  | 65/81 [00:07<00:01,  9.22batch/s]Link prediction evaluation:  81%|████████▏ | 66/81 [00:07<00:01,  9.21batch/s]Link prediction evaluation:  83%|████████▎ | 67/81 [00:07<00:01,  9.21batch/s]Link prediction evaluation:  84%|████████▍ | 68/81 [00:07<00:01,  9.21batch/s]Link prediction evaluation:  85%|████████▌ | 69/81 [00:07<00:01,  9.20batch/s]Link prediction evaluation:  86%|████████▋ | 70/81 [00:07<00:01,  9.21batch/s]Link prediction evaluation:  88%|████████▊ | 71/81 [00:07<00:01,  9.21batch/s]Link prediction evaluation:  89%|████████▉ | 72/81 [00:07<00:00,  9.22batch/s]Link prediction evaluation:  90%|█████████ | 73/81 [00:07<00:00,  9.22batch/s]Link prediction evaluation:  91%|█████████▏| 74/81 [00:08<00:00,  9.22batch/s]Link prediction evaluation:  93%|█████████▎| 75/81 [00:08<00:00,  9.23batch/s]Link prediction evaluation:  94%|█████████▍| 76/81 [00:08<00:00,  9.23batch/s]Link prediction evaluation:  95%|█████████▌| 77/81 [00:08<00:00,  9.24batch/s]Link prediction evaluation:  96%|█████████▋| 78/81 [00:08<00:00,  9.24batch/s]Link prediction evaluation:  98%|█████████▊| 79/81 [00:08<00:00,  9.23batch/s]Link prediction evaluation:  99%|█████████▉| 80/81 [00:08<00:00,  9.22batch/s]Link prediction evaluation: 100%|██████████| 81/81 [00:08<00:00,  9.26batch/s]
+2026-05-19 22:54:41,256 - INFO - Validation MRR: 0.007559808436781168
+2026-05-19 22:54:42,030 - INFO - Epoch[80] Complete. Time taken: 00:02:12.646
+2026-05-19 22:56:40,743 - INFO - Epoch 81 - Train Loss: 3104.1652927278133, Validation MRR: 0.007559808436781168, Learning Rate: 0.0009619397662556434
+2026-05-19 22:56:44,912 - INFO - Memory cleaned.
+2026-05-19 22:56:45,710 - INFO - Epoch[81] Complete. Time taken: 00:02:03.679
+2026-05-19 22:58:44,860 - INFO - Epoch 82 - Train Loss: 3114.141163330361, Validation MRR: 0.007559808436781168, Learning Rate: 0.0009540715869125407
+2026-05-19 22:58:49,025 - INFO - Memory cleaned.
+2026-05-19 22:58:49,793 - INFO - Epoch[82] Complete. Time taken: 00:02:04.083
+2026-05-19 23:00:48,927 - INFO - Epoch 83 - Train Loss: 3117.7730632677053, Validation MRR: 0.007559808436781168, Learning Rate: 0.0009455032620941839
+2026-05-19 23:00:53,092 - INFO - Memory cleaned.
+2026-05-19 23:00:53,868 - INFO - Epoch[83] Complete. Time taken: 00:02:04.075
+2026-05-19 23:02:53,019 - INFO - Epoch 84 - Train Loss: 3072.4093253332517, Validation MRR: 0.007559808436781168, Learning Rate: 0.0009362480035363986
+2026-05-19 23:02:57,190 - INFO - Memory cleaned.
+2026-05-19 23:02:57,957 - INFO - Epoch[84] Complete. Time taken: 00:02:04.088
+2026-05-19 23:04:56,794 - INFO - Epoch 85 - Train Loss: 3083.2398501759003, Validation MRR: 0.007559808436781168, Learning Rate: 0.0009263200821770461
+2026-05-19 23:05:01,069 - INFO - Memory cleaned.
+2026-05-19 23:05:01,848 - INFO - Epoch[85] Complete. Time taken: 00:02:03.891
+2026-05-19 23:07:00,679 - INFO - Epoch 86 - Train Loss: 3081.329591415207, Validation MRR: 0.007559808436781168, Learning Rate: 0.0009157348061512727
+2026-05-19 23:07:04,847 - INFO - Memory cleaned.
+2026-05-19 23:07:05,623 - INFO - Epoch[86] Complete. Time taken: 00:02:03.775
+2026-05-19 23:09:04,394 - INFO - Epoch 87 - Train Loss: 3088.554219175289, Validation MRR: 0.007559808436781168, Learning Rate: 0.0009045084971874737
+2026-05-19 23:09:08,561 - INFO - Memory cleaned.
+2026-05-19 23:09:09,344 - INFO - Epoch[87] Complete. Time taken: 00:02:03.721
+2026-05-19 23:11:08,488 - INFO - Epoch 88 - Train Loss: 3084.1061345358726, Validation MRR: 0.007559808436781168, Learning Rate: 0.0008926584654403724
+2026-05-19 23:11:12,654 - INFO - Memory cleaned.
+2026-05-19 23:11:13,417 - INFO - Epoch[88] Complete. Time taken: 00:02:04.073
+2026-05-19 23:13:12,702 - INFO - Epoch 89 - Train Loss: 3071.8603825605755, Validation MRR: 0.007559808436781168, Learning Rate: 0.0008802029828000156
+2026-05-19 23:13:16,869 - INFO - Memory cleaned.
+2026-05-19 23:13:17,634 - INFO - Epoch[89] Complete. Time taken: 00:02:04.216
+2026-05-19 23:15:16,848 - INFO - Epoch 90 - Train Loss: 3046.143253555844, Validation MRR: 0.007559808436781168, Learning Rate: 0.0008671612547178428
+2026-05-19 23:15:21,015 - INFO - Memory cleaned.
+2026-05-19 23:15:21,794 - INFO - Epoch[90] Complete. Time taken: 00:02:04.160
+2026-05-19 23:17:20,999 - INFO - Epoch 91 - Train Loss: 3048.711876023387, Validation MRR: 0.007559808436781168, Learning Rate: 0.0008535533905932737
+2026-05-19 23:17:25,167 - INFO - Memory cleaned.
+2026-05-19 23:17:25,936 - INFO - Epoch[91] Complete. Time taken: 00:02:04.141
+2026-05-19 23:19:25,046 - INFO - Epoch 92 - Train Loss: 3054.4286657983407, Validation MRR: 0.007559808436781168, Learning Rate: 0.0008394003727664709
+2026-05-19 23:19:29,209 - INFO - Memory cleaned.
+2026-05-19 23:19:29,994 - INFO - Epoch[92] Complete. Time taken: 00:02:04.058
+2026-05-19 23:21:29,138 - INFO - Epoch 93 - Train Loss: 3033.25724155821, Validation MRR: 0.007559808436781168, Learning Rate: 0.000824724024165092
+2026-05-19 23:21:33,303 - INFO - Memory cleaned.
+2026-05-19 23:21:34,109 - INFO - Epoch[93] Complete. Time taken: 00:02:04.115
+2026-05-19 23:23:33,265 - INFO - Epoch 94 - Train Loss: 3037.8874581591404, Validation MRR: 0.007559808436781168, Learning Rate: 0.000809546974654917
+2026-05-19 23:23:37,446 - INFO - Memory cleaned.
+2026-05-19 23:23:38,130 - INFO - Epoch[94] Complete. Time taken: 00:02:04.021
+2026-05-19 23:25:37,690 - INFO - Epoch 95 - Train Loss: 3036.193144391809, Validation MRR: 0.007559808436781168, Learning Rate: 0.0007938926261462366
+2026-05-19 23:25:41,879 - INFO - Memory cleaned.
+2026-05-19 23:25:42,675 - INFO - Epoch[95] Complete. Time taken: 00:02:04.545
+2026-05-19 23:27:42,267 - INFO - Epoch 96 - Train Loss: 3034.0506184869364, Validation MRR: 0.007559808436781168, Learning Rate: 0.0007777851165098011
+2026-05-19 23:27:46,443 - INFO - Memory cleaned.
+2026-05-19 23:27:47,239 - INFO - Epoch[96] Complete. Time taken: 00:02:04.564
+2026-05-19 23:29:46,389 - INFO - Epoch 97 - Train Loss: 3026.252119493374, Validation MRR: 0.007559808436781168, Learning Rate: 0.0007612492823579744
+2026-05-19 23:29:50,553 - INFO - Memory cleaned.
+2026-05-19 23:29:51,333 - INFO - Epoch[97] Complete. Time taken: 00:02:04.094
+2026-05-19 23:31:50,467 - INFO - Epoch 98 - Train Loss: 3031.181300375789, Validation MRR: 0.007559808436781168, Learning Rate: 0.0007443106207484776
+2026-05-19 23:31:54,631 - INFO - Memory cleaned.
+2026-05-19 23:31:55,399 - INFO - Epoch[98] Complete. Time taken: 00:02:04.066
+2026-05-19 23:33:54,448 - INFO - Epoch 99 - Train Loss: 3010.1355756645466, Validation MRR: 0.007559808436781168, Learning Rate: 0.0007269952498697733
+2026-05-19 23:33:58,615 - INFO - Memory cleaned.
+2026-05-19 23:33:59,380 - INFO - Epoch[99] Complete. Time taken: 00:02:03.981
+2026-05-19 23:35:58,183 - INFO - Epoch 100 - Train Loss: 3000.5370304645007, Validation MRR: 0.007559808436781168, Learning Rate: 0.0007093298687687141
+2026-05-19 23:36:02,352 - INFO - Memory cleaned.
+2026-05-19 23:36:02,352 - INFO - Evaluating on validation set at epoch 100...
+Link prediction evaluation:   0%|          | 0/81 [00:00<?, ?batch/s]Link prediction evaluation:   1%|          | 1/81 [00:00<00:11,  7.17batch/s]Link prediction evaluation:   2%|▏         | 2/81 [00:00<00:09,  8.24batch/s]Link prediction evaluation:   4%|▎         | 3/81 [00:00<00:09,  8.60batch/s]Link prediction evaluation:   5%|▍         | 4/81 [00:00<00:08,  8.84batch/s]Link prediction evaluation:   6%|▌         | 5/81 [00:00<00:08,  8.95batch/s]Link prediction evaluation:   7%|▋         | 6/81 [00:00<00:08,  9.04batch/s]Link prediction evaluation:   9%|▊         | 7/81 [00:00<00:08,  9.09batch/s]Link prediction evaluation:  10%|▉         | 8/81 [00:00<00:07,  9.13batch/s]Link prediction evaluation:  11%|█         | 9/81 [00:01<00:07,  9.15batch/s]Link prediction evaluation:  12%|█▏        | 10/81 [00:01<00:07,  9.16batch/s]Link prediction evaluation:  14%|█▎        | 11/81 [00:01<00:07,  9.19batch/s]Link prediction evaluation:  15%|█▍        | 12/81 [00:01<00:07,  9.20batch/s]Link prediction evaluation:  16%|█▌        | 13/81 [00:01<00:07,  9.21batch/s]Link prediction evaluation:  17%|█▋        | 14/81 [00:01<00:07,  9.21batch/s]Link prediction evaluation:  19%|█▊        | 15/81 [00:01<00:07,  9.22batch/s]Link prediction evaluation:  20%|█▉        | 16/81 [00:01<00:07,  9.21batch/s]Link prediction evaluation:  21%|██        | 17/81 [00:01<00:06,  9.20batch/s]Link prediction evaluation:  22%|██▏       | 18/81 [00:01<00:06,  9.21batch/s]Link prediction evaluation:  23%|██▎       | 19/81 [00:02<00:06,  9.20batch/s]Link prediction evaluation:  25%|██▍       | 20/81 [00:02<00:06,  9.20batch/s]Link prediction evaluation:  26%|██▌       | 21/81 [00:02<00:06,  9.22batch/s]Link prediction evaluation:  27%|██▋       | 22/81 [00:02<00:06,  9.20batch/s]Link prediction evaluation:  28%|██▊       | 23/81 [00:02<00:06,  9.21batch/s]Link prediction evaluation:  30%|██▉       | 24/81 [00:02<00:06,  9.20batch/s]Link prediction evaluation:  31%|███       | 25/81 [00:02<00:06,  9.20batch/s]Link prediction evaluation:  32%|███▏      | 26/81 [00:02<00:05,  9.21batch/s]Link prediction evaluation:  33%|███▎      | 27/81 [00:02<00:05,  9.21batch/s]Link prediction evaluation:  35%|███▍      | 28/81 [00:03<00:05,  9.22batch/s]Link prediction evaluation:  36%|███▌      | 29/81 [00:03<00:05,  9.21batch/s]Link prediction evaluation:  37%|███▋      | 30/81 [00:03<00:05,  9.20batch/s]Link prediction evaluation:  38%|███▊      | 31/81 [00:03<00:05,  9.21batch/s]Link prediction evaluation:  40%|███▉      | 32/81 [00:03<00:05,  9.21batch/s]Link prediction evaluation:  41%|████      | 33/81 [00:03<00:05,  9.22batch/s]Link prediction evaluation:  42%|████▏     | 34/81 [00:03<00:05,  9.24batch/s]Link prediction evaluation:  43%|████▎     | 35/81 [00:03<00:04,  9.24batch/s]Link prediction evaluation:  44%|████▍     | 36/81 [00:03<00:04,  9.24batch/s]Link prediction evaluation:  46%|████▌     | 37/81 [00:04<00:04,  9.25batch/s]Link prediction evaluation:  47%|████▋     | 38/81 [00:04<00:04,  9.25batch/s]Link prediction evaluation:  48%|████▊     | 39/81 [00:04<00:04,  9.25batch/s]Link prediction evaluation:  49%|████▉     | 40/81 [00:04<00:04,  9.23batch/s]Link prediction evaluation:  51%|█████     | 41/81 [00:04<00:04,  9.23batch/s]Link prediction evaluation:  52%|█████▏    | 42/81 [00:04<00:04,  9.23batch/s]Link prediction evaluation:  53%|█████▎    | 43/81 [00:04<00:04,  9.23batch/s]Link prediction evaluation:  54%|█████▍    | 44/81 [00:04<00:04,  9.23batch/s]Link prediction evaluation:  56%|█████▌    | 45/81 [00:04<00:03,  9.22batch/s]Link prediction evaluation:  57%|█████▋    | 46/81 [00:05<00:03,  9.20batch/s]Link prediction evaluation:  58%|█████▊    | 47/81 [00:05<00:03,  9.21batch/s]Link prediction evaluation:  59%|█████▉    | 48/81 [00:05<00:03,  9.20batch/s]Link prediction evaluation:  60%|██████    | 49/81 [00:05<00:03,  9.20batch/s]Link prediction evaluation:  62%|██████▏   | 50/81 [00:05<00:03,  9.21batch/s]Link prediction evaluation:  63%|██████▎   | 51/81 [00:05<00:03,  9.20batch/s]Link prediction evaluation:  64%|██████▍   | 52/81 [00:05<00:03,  9.19batch/s]Link prediction evaluation:  65%|██████▌   | 53/81 [00:05<00:03,  9.20batch/s]Link prediction evaluation:  67%|██████▋   | 54/81 [00:05<00:02,  9.21batch/s]Link prediction evaluation:  68%|██████▊   | 55/81 [00:06<00:02,  9.21batch/s]Link prediction evaluation:  69%|██████▉   | 56/81 [00:06<00:02,  9.20batch/s]Link prediction evaluation:  70%|███████   | 57/81 [00:06<00:02,  9.20batch/s]Link prediction evaluation:  72%|███████▏  | 58/81 [00:06<00:02,  9.20batch/s]Link prediction evaluation:  73%|███████▎  | 59/81 [00:06<00:02,  9.21batch/s]Link prediction evaluation:  74%|███████▍  | 60/81 [00:06<00:02,  9.21batch/s]Link prediction evaluation:  75%|███████▌  | 61/81 [00:06<00:02,  9.22batch/s]Link prediction evaluation:  77%|███████▋  | 62/81 [00:06<00:02,  9.23batch/s]Link prediction evaluation:  78%|███████▊  | 63/81 [00:06<00:01,  9.22batch/s]Link prediction evaluation:  79%|███████▉  | 64/81 [00:06<00:01,  9.22batch/s]Link prediction evaluation:  80%|████████  | 65/81 [00:07<00:01,  9.21batch/s]Link prediction evaluation:  81%|████████▏ | 66/81 [00:07<00:01,  9.21batch/s]Link prediction evaluation:  83%|████████▎ | 67/81 [00:07<00:01,  9.21batch/s]Link prediction evaluation:  84%|████████▍ | 68/81 [00:07<00:01,  9.21batch/s]Link prediction evaluation:  85%|████████▌ | 69/81 [00:07<00:01,  9.20batch/s]Link prediction evaluation:  86%|████████▋ | 70/81 [00:07<00:01,  9.20batch/s]Link prediction evaluation:  88%|████████▊ | 71/81 [00:07<00:01,  9.20batch/s]Link prediction evaluation:  89%|████████▉ | 72/81 [00:07<00:00,  9.21batch/s]Link prediction evaluation:  90%|█████████ | 73/81 [00:07<00:00,  9.21batch/s]Link prediction evaluation:  91%|█████████▏| 74/81 [00:08<00:00,  9.22batch/s]Link prediction evaluation:  93%|█████████▎| 75/81 [00:08<00:00,  9.22batch/s]Link prediction evaluation:  94%|█████████▍| 76/81 [00:08<00:00,  9.23batch/s]Link prediction evaluation:  95%|█████████▌| 77/81 [00:08<00:00,  9.23batch/s]Link prediction evaluation:  96%|█████████▋| 78/81 [00:08<00:00,  9.24batch/s]Link prediction evaluation:  98%|█████████▊| 79/81 [00:08<00:00,  9.22batch/s]Link prediction evaluation:  99%|█████████▉| 80/81 [00:08<00:00,  9.21batch/s]Link prediction evaluation: 100%|██████████| 81/81 [00:08<00:00,  9.25batch/s]
+2026-05-19 23:36:11,193 - INFO - Validation MRR: 0.007559886667877436
+2026-05-19 23:36:11,953 - INFO - Epoch[100] Complete. Time taken: 00:02:12.573
+2026-05-19 23:38:11,078 - INFO - Epoch 101 - Train Loss: 3000.556492061842, Validation MRR: 0.007559886667877436, Learning Rate: 0.000691341716182545
+2026-05-19 23:38:15,247 - INFO - Memory cleaned.
+2026-05-19 23:38:16,019 - INFO - Epoch[101] Complete. Time taken: 00:02:04.065
+2026-05-19 23:40:15,182 - INFO - Epoch 102 - Train Loss: 3004.3413154856457, Validation MRR: 0.007559886667877436, Learning Rate: 0.0006730585285387465
+2026-05-19 23:40:19,346 - INFO - Memory cleaned.
+2026-05-19 23:40:20,105 - INFO - Epoch[102] Complete. Time taken: 00:02:04.086
+2026-05-19 23:42:19,275 - INFO - Epoch 103 - Train Loss: 2995.9999250566275, Validation MRR: 0.007559886667877436, Learning Rate: 0.0006545084971874737
+2026-05-19 23:42:23,439 - INFO - Memory cleaned.
+2026-05-19 23:42:24,212 - INFO - Epoch[103] Complete. Time taken: 00:02:04.107
+2026-05-19 23:44:23,342 - INFO - Epoch 104 - Train Loss: 3000.430087748061, Validation MRR: 0.007559886667877436, Learning Rate: 0.0006357202249325371
+2026-05-19 23:44:27,506 - INFO - Memory cleaned.
+2026-05-19 23:44:28,288 - INFO - Epoch[104] Complete. Time taken: 00:02:04.076
+2026-05-19 23:46:27,440 - INFO - Epoch 105 - Train Loss: 3007.541507265653, Validation MRR: 0.007559886667877436, Learning Rate: 0.0006167226819279528
+2026-05-19 23:46:31,605 - INFO - Memory cleaned.
+2026-05-19 23:46:32,381 - INFO - Epoch[105] Complete. Time taken: 00:02:04.093
+2026-05-19 23:48:31,554 - INFO - Epoch 106 - Train Loss: 2993.6072640956954, Validation MRR: 0.007559886667877436, Learning Rate: 0.0005975451610080642
+2026-05-19 23:48:35,715 - INFO - Memory cleaned.
+2026-05-19 23:48:36,496 - INFO - Epoch[106] Complete. Time taken: 00:02:04.114
+2026-05-19 23:50:35,514 - INFO - Epoch 107 - Train Loss: 2989.0057294560033, Validation MRR: 0.007559886667877436, Learning Rate: 0.0005782172325201155
+2026-05-19 23:50:39,673 - INFO - Memory cleaned.
+2026-05-19 23:50:40,447 - INFO - Epoch[107] Complete. Time taken: 00:02:03.951
+2026-05-19 23:52:39,599 - INFO - Epoch 108 - Train Loss: 2965.064872574152, Validation MRR: 0.007559886667877436, Learning Rate: 0.0005587686987289189
+2026-05-19 23:52:43,763 - INFO - Memory cleaned.
+2026-05-19 23:52:44,524 - INFO - Epoch[108] Complete. Time taken: 00:02:04.076
+2026-05-19 23:54:43,649 - INFO - Epoch 109 - Train Loss: 2977.464269091433, Validation MRR: 0.007559886667877436, Learning Rate: 0.0005392295478639225
+2026-05-19 23:54:47,813 - INFO - Memory cleaned.
+2026-05-19 23:54:48,584 - INFO - Epoch[109] Complete. Time taken: 00:02:04.060
+2026-05-19 23:56:47,647 - INFO - Epoch 110 - Train Loss: 2970.3626489378466, Validation MRR: 0.007559886667877436, Learning Rate: 0.0005196299078795343
+2026-05-19 23:56:51,806 - INFO - Memory cleaned.
+2026-05-19 23:56:52,565 - INFO - Epoch[110] Complete. Time taken: 00:02:03.981
+2026-05-19 23:58:51,587 - INFO - Epoch 111 - Train Loss: 2972.301196680266, Validation MRR: 0.007559886667877436, Learning Rate: 0.0005
+2026-05-19 23:58:55,746 - INFO - Memory cleaned.
+2026-05-19 23:58:56,515 - INFO - Epoch[111] Complete. Time taken: 00:02:03.950
+2026-05-20 00:00:55,667 - INFO - Epoch 112 - Train Loss: 2963.0551651956753, Validation MRR: 0.007559886667877436, Learning Rate: 0.00048037009212046586
+2026-05-20 00:00:59,831 - INFO - Memory cleaned.
+2026-05-20 00:01:00,592 - INFO - Epoch[112] Complete. Time taken: 00:02:04.077
+2026-05-20 00:02:59,751 - INFO - Epoch 113 - Train Loss: 2939.749475876997, Validation MRR: 0.007559886667877436, Learning Rate: 0.0004607704521360776
+2026-05-20 00:03:03,913 - INFO - Memory cleaned.
+2026-05-20 00:03:04,683 - INFO - Epoch[113] Complete. Time taken: 00:02:04.090
+2026-05-20 00:05:03,839 - INFO - Epoch 114 - Train Loss: 2938.1822299747205, Validation MRR: 0.007559886667877436, Learning Rate: 0.00044123130127108126
+2026-05-20 00:05:08,000 - INFO - Memory cleaned.
+2026-05-20 00:05:08,761 - INFO - Epoch[114] Complete. Time taken: 00:02:04.078
+2026-05-20 00:07:07,932 - INFO - Epoch 115 - Train Loss: 2949.423633209816, Validation MRR: 0.007559886667877436, Learning Rate: 0.0004217827674798847
+2026-05-20 00:07:12,133 - INFO - Memory cleaned.
+2026-05-20 00:07:12,898 - INFO - Epoch[115] Complete. Time taken: 00:02:04.137
+2026-05-20 00:09:12,121 - INFO - Epoch 116 - Train Loss: 2936.831750466065, Validation MRR: 0.007559886667877436, Learning Rate: 0.00040245483899193594
+2026-05-20 00:09:16,329 - INFO - Memory cleaned.
+2026-05-20 00:09:17,020 - INFO - Epoch[116] Complete. Time taken: 00:02:04.122
+2026-05-20 00:11:16,263 - INFO - Epoch 117 - Train Loss: 2943.785169107281, Validation MRR: 0.007559886667877436, Learning Rate: 0.00038327731807204733
+2026-05-20 00:11:20,472 - INFO - Memory cleaned.
+2026-05-20 00:11:21,241 - INFO - Epoch[117] Complete. Time taken: 00:02:04.221
+2026-05-20 00:13:20,456 - INFO - Epoch 118 - Train Loss: 2950.078423345212, Validation MRR: 0.007559886667877436, Learning Rate: 0.0003642797750674628
+2026-05-20 00:13:24,658 - INFO - Memory cleaned.
+2026-05-20 00:13:25,416 - INFO - Epoch[118] Complete. Time taken: 00:02:04.175
+2026-05-20 00:15:24,640 - INFO - Epoch 119 - Train Loss: 2929.450312934801, Validation MRR: 0.007559886667877436, Learning Rate: 0.00034549150281252633
+2026-05-20 00:15:28,841 - INFO - Memory cleaned.
+2026-05-20 00:15:29,607 - INFO - Epoch[119] Complete. Time taken: 00:02:04.190
+2026-05-20 00:17:28,827 - INFO - Epoch 120 - Train Loss: 2930.665923177147, Validation MRR: 0.007559886667877436, Learning Rate: 0.00032694147146125364
+2026-05-20 00:17:33,028 - INFO - Memory cleaned.
+2026-05-20 00:17:33,028 - INFO - Evaluating on validation set at epoch 120...
+Link prediction evaluation:   0%|          | 0/81 [00:00<?, ?batch/s]Link prediction evaluation:   1%|          | 1/81 [00:00<00:08,  9.11batch/s]Link prediction evaluation:   2%|▏         | 2/81 [00:00<00:08,  9.17batch/s]Link prediction evaluation:   4%|▎         | 3/81 [00:00<00:08,  9.14batch/s]Link prediction evaluation:   5%|▍         | 4/81 [00:00<00:08,  9.18batch/s]Link prediction evaluation:   6%|▌         | 5/81 [00:00<00:08,  9.16batch/s]Link prediction evaluation:   7%|▋         | 6/81 [00:00<00:08,  9.19batch/s]Link prediction evaluation:   9%|▊         | 7/81 [00:00<00:08,  9.19batch/s]Link prediction evaluation:  10%|▉         | 8/81 [00:00<00:07,  9.20batch/s]Link prediction evaluation:  11%|█         | 9/81 [00:00<00:07,  9.20batch/s]Link prediction evaluation:  12%|█▏        | 10/81 [00:01<00:07,  9.20batch/s]Link prediction evaluation:  14%|█▎        | 11/81 [00:01<00:07,  9.21batch/s]Link prediction evaluation:  15%|█▍        | 12/81 [00:01<00:07,  9.22batch/s]Link prediction evaluation:  16%|█▌        | 13/81 [00:01<00:07,  9.22batch/s]Link prediction evaluation:  17%|█▋        | 14/81 [00:01<00:07,  9.22batch/s]Link prediction evaluation:  19%|█▊        | 15/81 [00:01<00:07,  9.23batch/s]Link prediction evaluation:  20%|█▉        | 16/81 [00:01<00:07,  9.21batch/s]Link prediction evaluation:  21%|██        | 17/81 [00:01<00:06,  9.21batch/s]Link prediction evaluation:  22%|██▏       | 18/81 [00:01<00:06,  9.22batch/s]Link prediction evaluation:  23%|██▎       | 19/81 [00:02<00:06,  9.21batch/s]Link prediction evaluation:  25%|██▍       | 20/81 [00:02<00:06,  9.21batch/s]Link prediction evaluation:  26%|██▌       | 21/81 [00:02<00:06,  9.22batch/s]Link prediction evaluation:  27%|██▋       | 22/81 [00:02<00:06,  9.21batch/s]Link prediction evaluation:  28%|██▊       | 23/81 [00:02<00:06,  9.21batch/s]Link prediction evaluation:  30%|██▉       | 24/81 [00:02<00:06,  9.20batch/s]Link prediction evaluation:  31%|███       | 25/81 [00:02<00:06,  9.20batch/s]Link prediction evaluation:  32%|███▏      | 26/81 [00:02<00:05,  9.21batch/s]Link prediction evaluation:  33%|███▎      | 27/81 [00:02<00:05,  9.21batch/s]Link prediction evaluation:  35%|███▍      | 28/81 [00:03<00:05,  9.22batch/s]Link prediction evaluation:  36%|███▌      | 29/81 [00:03<00:05,  9.22batch/s]Link prediction evaluation:  37%|███▋      | 30/81 [00:03<00:05,  9.20batch/s]Link prediction evaluation:  38%|███▊      | 31/81 [00:03<00:05,  9.22batch/s]Link prediction evaluation:  40%|███▉      | 32/81 [00:03<00:05,  9.21batch/s]Link prediction evaluation:  41%|████      | 33/81 [00:03<00:05,  9.22batch/s]Link prediction evaluation:  42%|████▏     | 34/81 [00:03<00:05,  9.24batch/s]Link prediction evaluation:  43%|████▎     | 35/81 [00:03<00:04,  9.24batch/s]Link prediction evaluation:  44%|████▍     | 36/81 [00:03<00:04,  9.24batch/s]Link prediction evaluation:  46%|████▌     | 37/81 [00:04<00:04,  9.24batch/s]Link prediction evaluation:  47%|████▋     | 38/81 [00:04<00:04,  9.25batch/s]Link prediction evaluation:  48%|████▊     | 39/81 [00:04<00:04,  9.25batch/s]Link prediction evaluation:  49%|████▉     | 40/81 [00:04<00:04,  9.23batch/s]Link prediction evaluation:  51%|█████     | 41/81 [00:04<00:04,  9.23batch/s]Link prediction evaluation:  52%|█████▏    | 42/81 [00:04<00:04,  9.23batch/s]Link prediction evaluation:  53%|█████▎    | 43/81 [00:04<00:04,  9.24batch/s]Link prediction evaluation:  54%|█████▍    | 44/81 [00:04<00:04,  9.23batch/s]Link prediction evaluation:  56%|█████▌    | 45/81 [00:04<00:03,  9.23batch/s]Link prediction evaluation:  57%|█████▋    | 46/81 [00:04<00:03,  9.21batch/s]Link prediction evaluation:  58%|█████▊    | 47/81 [00:05<00:03,  9.21batch/s]Link prediction evaluation:  59%|█████▉    | 48/81 [00:05<00:03,  9.21batch/s]Link prediction evaluation:  60%|██████    | 49/81 [00:05<00:03,  9.20batch/s]Link prediction evaluation:  62%|██████▏   | 50/81 [00:05<00:03,  9.21batch/s]Link prediction evaluation:  63%|██████▎   | 51/81 [00:05<00:03,  9.21batch/s]Link prediction evaluation:  64%|██████▍   | 52/81 [00:05<00:03,  9.20batch/s]Link prediction evaluation:  65%|██████▌   | 53/81 [00:05<00:03,  9.21batch/s]Link prediction evaluation:  67%|██████▋   | 54/81 [00:05<00:02,  9.21batch/s]Link prediction evaluation:  68%|██████▊   | 55/81 [00:05<00:02,  9.22batch/s]Link prediction evaluation:  69%|██████▉   | 56/81 [00:06<00:02,  9.21batch/s]Link prediction evaluation:  70%|███████   | 57/81 [00:06<00:02,  9.20batch/s]Link prediction evaluation:  72%|███████▏  | 58/81 [00:06<00:02,  9.20batch/s]Link prediction evaluation:  73%|███████▎  | 59/81 [00:06<00:02,  9.21batch/s]Link prediction evaluation:  74%|███████▍  | 60/81 [00:06<00:02,  9.21batch/s]Link prediction evaluation:  75%|███████▌  | 61/81 [00:06<00:02,  9.22batch/s]Link prediction evaluation:  77%|███████▋  | 62/81 [00:06<00:02,  9.23batch/s]Link prediction evaluation:  78%|███████▊  | 63/81 [00:06<00:01,  9.22batch/s]Link prediction evaluation:  79%|███████▉  | 64/81 [00:06<00:01,  9.22batch/s]Link prediction evaluation:  80%|████████  | 65/81 [00:07<00:01,  9.21batch/s]Link prediction evaluation:  81%|████████▏ | 66/81 [00:07<00:01,  9.21batch/s]Link prediction evaluation:  83%|████████▎ | 67/81 [00:07<00:01,  9.21batch/s]Link prediction evaluation:  84%|████████▍ | 68/81 [00:07<00:01,  9.21batch/s]Link prediction evaluation:  85%|████████▌ | 69/81 [00:07<00:01,  9.20batch/s]Link prediction evaluation:  86%|████████▋ | 70/81 [00:07<00:01,  9.20batch/s]Link prediction evaluation:  88%|████████▊ | 71/81 [00:07<00:01,  9.20batch/s]Link prediction evaluation:  89%|████████▉ | 72/81 [00:07<00:00,  9.21batch/s]Link prediction evaluation:  90%|█████████ | 73/81 [00:07<00:00,  9.21batch/s]Link prediction evaluation:  91%|█████████▏| 74/81 [00:08<00:00,  9.22batch/s]Link prediction evaluation:  93%|█████████▎| 75/81 [00:08<00:00,  9.22batch/s]Link prediction evaluation:  94%|█████████▍| 76/81 [00:08<00:00,  9.22batch/s]Link prediction evaluation:  95%|█████████▌| 77/81 [00:08<00:00,  9.23batch/s]Link prediction evaluation:  96%|█████████▋| 78/81 [00:08<00:00,  9.24batch/s]Link prediction evaluation:  98%|█████████▊| 79/81 [00:08<00:00,  9.20batch/s]Link prediction evaluation:  99%|█████████▉| 80/81 [00:08<00:00,  9.18batch/s]Link prediction evaluation: 100%|██████████| 81/81 [00:08<00:00,  9.28batch/s]
+2026-05-20 00:17:41,758 - INFO - Validation MRR: 0.00801007729023695
+2026-05-20 00:17:42,533 - INFO - Epoch[120] Complete. Time taken: 00:02:12.927
+2026-05-20 00:19:41,489 - INFO - Epoch 121 - Train Loss: 2912.6350119316444, Validation MRR: 0.00801007729023695, Learning Rate: 0.0003086582838174551
+2026-05-20 00:19:45,655 - INFO - Memory cleaned.
+2026-05-20 00:19:46,431 - INFO - Epoch[121] Complete. Time taken: 00:02:03.897
+2026-05-20 00:21:45,356 - INFO - Epoch 122 - Train Loss: 2924.5956222162176, Validation MRR: 0.00801007729023695, Learning Rate: 0.0002906701312312861
+2026-05-20 00:21:49,518 - INFO - Memory cleaned.
+2026-05-20 00:21:50,278 - INFO - Epoch[122] Complete. Time taken: 00:02:03.847
+2026-05-20 00:23:49,332 - INFO - Epoch 123 - Train Loss: 2899.608892286865, Validation MRR: 0.00801007729023695, Learning Rate: 0.00027300475013022663
+2026-05-20 00:23:53,493 - INFO - Memory cleaned.
+2026-05-20 00:23:54,312 - INFO - Epoch[123] Complete. Time taken: 00:02:04.034
+2026-05-20 00:25:53,517 - INFO - Epoch 124 - Train Loss: 2917.9828110084163, Validation MRR: 0.00801007729023695, Learning Rate: 0.00025568937925152246
+2026-05-20 00:25:57,679 - INFO - Memory cleaned.
+2026-05-20 00:25:58,443 - INFO - Epoch[124] Complete. Time taken: 00:02:04.130
+2026-05-20 00:27:57,636 - INFO - Epoch 125 - Train Loss: 2916.0681463837695, Validation MRR: 0.00801007729023695, Learning Rate: 0.00023875071764202561
+2026-05-20 00:28:01,805 - INFO - Memory cleaned.
+2026-05-20 00:28:02,574 - INFO - Epoch[125] Complete. Time taken: 00:02:04.131
+2026-05-20 00:30:01,822 - INFO - Epoch 126 - Train Loss: 2908.3295470150215, Validation MRR: 0.00801007729023695, Learning Rate: 0.00022221488349019887
+2026-05-20 00:30:06,193 - INFO - Memory cleaned.
+2026-05-20 00:30:06,893 - INFO - Epoch[126] Complete. Time taken: 00:02:04.319
+2026-05-20 00:32:08,486 - INFO - Epoch 127 - Train Loss: 2910.311054671987, Validation MRR: 0.00801007729023695, Learning Rate: 0.00020610737385376348
+2026-05-20 00:32:12,720 - INFO - Memory cleaned.
+2026-05-20 00:32:13,513 - INFO - Epoch[127] Complete. Time taken: 00:02:06.620
+2026-05-20 00:34:13,047 - INFO - Epoch 128 - Train Loss: 2919.3386765391815, Validation MRR: 0.00801007729023695, Learning Rate: 0.00019045302534508314
+2026-05-20 00:34:17,429 - INFO - Memory cleaned.
+2026-05-20 00:34:18,145 - INFO - Epoch[128] Complete. Time taken: 00:02:04.632
+2026-05-20 00:36:17,425 - INFO - Epoch 129 - Train Loss: 2899.282112709487, Validation MRR: 0.00801007729023695, Learning Rate: 0.00017527597583490823
+2026-05-20 00:36:21,627 - INFO - Memory cleaned.
+2026-05-20 00:36:22,416 - INFO - Epoch[129] Complete. Time taken: 00:02:04.271
+2026-05-20 00:38:21,602 - INFO - Epoch 130 - Train Loss: 2896.8687330812913, Validation MRR: 0.00801007729023695, Learning Rate: 0.00016059962723352923
+2026-05-20 00:38:25,761 - INFO - Memory cleaned.
+2026-05-20 00:38:26,534 - INFO - Epoch[130] Complete. Time taken: 00:02:04.118
+2026-05-20 00:40:25,690 - INFO - Epoch 131 - Train Loss: 2904.7102453026782, Validation MRR: 0.00801007729023695, Learning Rate: 0.00014644660940672628
+2026-05-20 00:40:29,851 - INFO - Memory cleaned.
+2026-05-20 00:40:30,643 - INFO - Epoch[131] Complete. Time taken: 00:02:04.109
+2026-05-20 00:42:29,350 - INFO - Epoch 132 - Train Loss: 2908.1639468684634, Validation MRR: 0.00801007729023695, Learning Rate: 0.00013283874528215717
+2026-05-20 00:42:33,512 - INFO - Memory cleaned.
+2026-05-20 00:42:34,279 - INFO - Epoch[132] Complete. Time taken: 00:02:03.636
+2026-05-20 00:44:33,042 - INFO - Epoch 133 - Train Loss: 2892.4246679702983, Validation MRR: 0.00801007729023695, Learning Rate: 0.00011979701719998454
+2026-05-20 00:44:37,204 - INFO - Memory cleaned.
+2026-05-20 00:44:37,988 - INFO - Epoch[133] Complete. Time taken: 00:02:03.710
+2026-05-20 00:46:37,092 - INFO - Epoch 134 - Train Loss: 2898.9110221919636, Validation MRR: 0.00801007729023695, Learning Rate: 0.00010734153455962748
+2026-05-20 00:46:41,251 - INFO - Memory cleaned.
+2026-05-20 00:46:42,007 - INFO - Epoch[134] Complete. Time taken: 00:02:04.018
+2026-05-20 00:48:41,163 - INFO - Epoch 135 - Train Loss: 2894.5450540306947, Validation MRR: 0.00801007729023695, Learning Rate: 9.549150281252633e-05
+2026-05-20 00:48:45,322 - INFO - Memory cleaned.
+2026-05-20 00:48:46,106 - INFO - Epoch[135] Complete. Time taken: 00:02:04.100
+2026-05-20 00:50:45,282 - INFO - Epoch 136 - Train Loss: 2882.4145479348736, Validation MRR: 0.00801007729023695, Learning Rate: 8.42651938487275e-05
+2026-05-20 00:50:49,444 - INFO - Memory cleaned.
+2026-05-20 00:50:50,226 - INFO - Epoch[136] Complete. Time taken: 00:02:04.120
+2026-05-20 00:52:49,520 - INFO - Epoch 137 - Train Loss: 2893.6868780113878, Validation MRR: 0.00801007729023695, Learning Rate: 7.367991782295391e-05
+2026-05-20 00:52:53,690 - INFO - Memory cleaned.
+2026-05-20 00:52:54,456 - INFO - Epoch[137] Complete. Time taken: 00:02:04.229
+2026-05-20 00:54:53,792 - INFO - Epoch 138 - Train Loss: 2896.541897325242, Validation MRR: 0.00801007729023695, Learning Rate: 6.375199646360153e-05
+2026-05-20 00:54:57,959 - INFO - Memory cleaned.
+2026-05-20 00:54:58,754 - INFO - Epoch[138] Complete. Time taken: 00:02:04.297
+2026-05-20 00:56:57,747 - INFO - Epoch 139 - Train Loss: 2896.1757680876035, Validation MRR: 0.00801007729023695, Learning Rate: 5.449673790581611e-05
+2026-05-20 00:57:01,909 - INFO - Memory cleaned.
+2026-05-20 00:57:02,674 - INFO - Epoch[139] Complete. Time taken: 00:02:03.920
+2026-05-20 00:59:01,401 - INFO - Epoch 140 - Train Loss: 2881.3283489141663, Validation MRR: 0.00801007729023695, Learning Rate: 4.592841308745932e-05
+2026-05-20 00:59:05,565 - INFO - Memory cleaned.
+2026-05-20 00:59:05,565 - INFO - Evaluating on validation set at epoch 140...
+Link prediction evaluation:   0%|          | 0/81 [00:00<?, ?batch/s]Link prediction evaluation:   1%|          | 1/81 [00:00<00:09,  8.42batch/s]Link prediction evaluation:   2%|▏         | 2/81 [00:00<00:08,  8.88batch/s]Link prediction evaluation:   4%|▎         | 3/81 [00:00<00:08,  8.97batch/s]Link prediction evaluation:   5%|▍         | 4/81 [00:00<00:08,  9.08batch/s]Link prediction evaluation:   6%|▌         | 5/81 [00:00<00:08,  9.10batch/s]Link prediction evaluation:   7%|▋         | 6/81 [00:00<00:08,  9.15batch/s]Link prediction evaluation:   9%|▊         | 7/81 [00:00<00:08,  9.17batch/s]Link prediction evaluation:  10%|▉         | 8/81 [00:00<00:07,  9.19batch/s]Link prediction evaluation:  11%|█         | 9/81 [00:00<00:07,  9.19batch/s]Link prediction evaluation:  12%|█▏        | 10/81 [00:01<00:07,  9.20batch/s]Link prediction evaluation:  14%|█▎        | 11/81 [00:01<00:07,  9.21batch/s]Link prediction evaluation:  15%|█▍        | 12/81 [00:01<00:07,  9.23batch/s]Link prediction evaluation:  16%|█▌        | 13/81 [00:01<00:07,  9.23batch/s]Link prediction evaluation:  17%|█▋        | 14/81 [00:01<00:07,  9.23batch/s]Link prediction evaluation:  19%|█▊        | 15/81 [00:01<00:07,  9.24batch/s]Link prediction evaluation:  20%|█▉        | 16/81 [00:01<00:07,  9.23batch/s]Link prediction evaluation:  21%|██        | 17/81 [00:01<00:06,  9.22batch/s]Link prediction evaluation:  22%|██▏       | 18/81 [00:01<00:06,  9.23batch/s]Link prediction evaluation:  23%|██▎       | 19/81 [00:02<00:06,  9.22batch/s]Link prediction evaluation:  25%|██▍       | 20/81 [00:02<00:06,  9.22batch/s]Link prediction evaluation:  26%|██▌       | 21/81 [00:02<00:06,  9.23batch/s]Link prediction evaluation:  27%|██▋       | 22/81 [00:02<00:06,  9.22batch/s]Link prediction evaluation:  28%|██▊       | 23/81 [00:02<00:06,  9.23batch/s]Link prediction evaluation:  30%|██▉       | 24/81 [00:02<00:06,  9.22batch/s]Link prediction evaluation:  31%|███       | 25/81 [00:02<00:06,  9.22batch/s]Link prediction evaluation:  32%|███▏      | 26/81 [00:02<00:05,  9.22batch/s]Link prediction evaluation:  33%|███▎      | 27/81 [00:02<00:05,  9.23batch/s]Link prediction evaluation:  35%|███▍      | 28/81 [00:03<00:05,  9.24batch/s]Link prediction evaluation:  36%|███▌      | 29/81 [00:03<00:05,  9.23batch/s]Link prediction evaluation:  37%|███▋      | 30/81 [00:03<00:05,  9.22batch/s]Link prediction evaluation:  38%|███▊      | 31/81 [00:03<00:05,  9.23batch/s]Link prediction evaluation:  40%|███▉      | 32/81 [00:03<00:05,  9.23batch/s]Link prediction evaluation:  41%|████      | 33/81 [00:03<00:05,  9.23batch/s]Link prediction evaluation:  42%|████▏     | 34/81 [00:03<00:05,  9.24batch/s]Link prediction evaluation:  43%|████▎     | 35/81 [00:03<00:04,  9.25batch/s]Link prediction evaluation:  44%|████▍     | 36/81 [00:03<00:04,  9.25batch/s]Link prediction evaluation:  46%|████▌     | 37/81 [00:04<00:04,  9.26batch/s]Link prediction evaluation:  47%|████▋     | 38/81 [00:04<00:04,  9.26batch/s]Link prediction evaluation:  48%|████▊     | 39/81 [00:04<00:04,  9.27batch/s]Link prediction evaluation:  49%|████▉     | 40/81 [00:04<00:04,  9.24batch/s]Link prediction evaluation:  51%|█████     | 41/81 [00:04<00:04,  9.25batch/s]Link prediction evaluation:  52%|█████▏    | 42/81 [00:04<00:04,  9.25batch/s]Link prediction evaluation:  53%|█████▎    | 43/81 [00:04<00:04,  9.25batch/s]Link prediction evaluation:  54%|█████▍    | 44/81 [00:04<00:04,  9.25batch/s]Link prediction evaluation:  56%|█████▌    | 45/81 [00:04<00:03,  9.24batch/s]Link prediction evaluation:  57%|█████▋    | 46/81 [00:04<00:03,  9.22batch/s]Link prediction evaluation:  58%|█████▊    | 47/81 [00:05<00:03,  9.23batch/s]Link prediction evaluation:  59%|█████▉    | 48/81 [00:05<00:03,  9.22batch/s]Link prediction evaluation:  60%|██████    | 49/81 [00:05<00:03,  9.22batch/s]Link prediction evaluation:  62%|██████▏   | 50/81 [00:05<00:03,  9.23batch/s]Link prediction evaluation:  63%|██████▎   | 51/81 [00:05<00:03,  9.23batch/s]Link prediction evaluation:  64%|██████▍   | 52/81 [00:05<00:03,  9.22batch/s]Link prediction evaluation:  65%|██████▌   | 53/81 [00:05<00:03,  9.22batch/s]Link prediction evaluation:  67%|██████▋   | 54/81 [00:05<00:02,  9.23batch/s]Link prediction evaluation:  68%|██████▊   | 55/81 [00:05<00:02,  9.24batch/s]Link prediction evaluation:  69%|██████▉   | 56/81 [00:06<00:02,  9.23batch/s]Link prediction evaluation:  70%|███████   | 57/81 [00:06<00:02,  9.22batch/s]Link prediction evaluation:  72%|███████▏  | 58/81 [00:06<00:02,  9.22batch/s]Link prediction evaluation:  73%|███████▎  | 59/81 [00:06<00:02,  9.23batch/s]Link prediction evaluation:  74%|███████▍  | 60/81 [00:06<00:02,  9.23batch/s]Link prediction evaluation:  75%|███████▌  | 61/81 [00:06<00:02,  9.24batch/s]Link prediction evaluation:  77%|███████▋  | 62/81 [00:06<00:02,  9.25batch/s]Link prediction evaluation:  78%|███████▊  | 63/81 [00:06<00:01,  9.24batch/s]Link prediction evaluation:  79%|███████▉  | 64/81 [00:06<00:01,  9.24batch/s]Link prediction evaluation:  80%|████████  | 65/81 [00:07<00:01,  9.23batch/s]Link prediction evaluation:  81%|████████▏ | 66/81 [00:07<00:01,  9.23batch/s]Link prediction evaluation:  83%|████████▎ | 67/81 [00:07<00:01,  9.23batch/s]Link prediction evaluation:  84%|████████▍ | 68/81 [00:07<00:01,  9.22batch/s]Link prediction evaluation:  85%|████████▌ | 69/81 [00:07<00:01,  9.22batch/s]Link prediction evaluation:  86%|████████▋ | 70/81 [00:07<00:01,  9.22batch/s]Link prediction evaluation:  88%|████████▊ | 71/81 [00:07<00:01,  9.22batch/s]Link prediction evaluation:  89%|████████▉ | 72/81 [00:07<00:00,  9.23batch/s]Link prediction evaluation:  90%|█████████ | 73/81 [00:07<00:00,  9.23batch/s]Link prediction evaluation:  91%|█████████▏| 74/81 [00:08<00:00,  9.23batch/s]Link prediction evaluation:  93%|█████████▎| 75/81 [00:08<00:00,  9.24batch/s]Link prediction evaluation:  94%|█████████▍| 76/81 [00:08<00:00,  9.23batch/s]Link prediction evaluation:  95%|█████████▌| 77/81 [00:08<00:00,  9.24batch/s]Link prediction evaluation:  96%|█████████▋| 78/81 [00:08<00:00,  9.25batch/s]Link prediction evaluation:  98%|█████████▊| 79/81 [00:08<00:00,  9.23batch/s]Link prediction evaluation:  99%|█████████▉| 80/81 [00:08<00:00,  9.23batch/s]Link prediction evaluation: 100%|██████████| 81/81 [00:08<00:00,  9.29batch/s]
+2026-05-20 00:59:14,338 - INFO - Validation MRR: 0.008256470784544945
+2026-05-20 00:59:15,094 - INFO - Epoch[140] Complete. Time taken: 00:02:12.420
+2026-05-20 01:01:14,235 - INFO - Epoch 141 - Train Loss: 2885.5192181195484, Validation MRR: 0.008256470784544945, Learning Rate: 3.806023374435663e-05
+2026-05-20 01:01:18,399 - INFO - Memory cleaned.
+2026-05-20 01:01:19,177 - INFO - Epoch[141] Complete. Time taken: 00:02:04.083
+2026-05-20 01:03:18,303 - INFO - Epoch 142 - Train Loss: 2874.0927688340325, Validation MRR: 0.008256470784544945, Learning Rate: 3.090433203875792e-05
+2026-05-20 01:03:22,463 - INFO - Memory cleaned.
+2026-05-20 01:03:23,223 - INFO - Epoch[142] Complete. Time taken: 00:02:04.047
+2026-05-20 01:05:22,393 - INFO - Epoch 143 - Train Loss: 2877.0979443575034, Validation MRR: 0.008256470784544945, Learning Rate: 2.4471741852423235e-05
+2026-05-20 01:05:26,556 - INFO - Memory cleaned.
+2026-05-20 01:05:27,333 - INFO - Epoch[143] Complete. Time taken: 00:02:04.110
+2026-05-20 01:07:26,404 - INFO - Epoch 144 - Train Loss: 2898.3342209597704, Validation MRR: 0.008256470784544945, Learning Rate: 1.8772381773176416e-05
+2026-05-20 01:07:30,568 - INFO - Memory cleaned.
+2026-05-20 01:07:31,329 - INFO - Epoch[144] Complete. Time taken: 00:02:03.995
+2026-05-20 01:09:30,479 - INFO - Epoch 145 - Train Loss: 2899.451454994918, Validation MRR: 0.008256470784544945, Learning Rate: 1.3815039801161721e-05
+2026-05-20 01:09:34,640 - INFO - Memory cleaned.
+2026-05-20 01:09:35,470 - INFO - Epoch[145] Complete. Time taken: 00:02:04.141
+2026-05-20 01:11:34,615 - INFO - Epoch 146 - Train Loss: 2887.86277691321, Validation MRR: 0.008256470784544945, Learning Rate: 9.607359798384786e-06
+2026-05-20 01:11:38,775 - INFO - Memory cleaned.
+2026-05-20 01:11:39,532 - INFO - Epoch[146] Complete. Time taken: 00:02:04.062
+2026-05-20 01:13:38,657 - INFO - Epoch 147 - Train Loss: 2879.281649253955, Validation MRR: 0.008256470784544945, Learning Rate: 6.15582970243117e-06
+2026-05-20 01:13:42,819 - INFO - Memory cleaned.
+2026-05-20 01:13:43,592 - INFO - Epoch[147] Complete. Time taken: 00:02:04.060
+2026-05-20 01:15:42,726 - INFO - Epoch 148 - Train Loss: 2897.6064550256165, Validation MRR: 0.008256470784544945, Learning Rate: 3.4657715225368535e-06
+2026-05-20 01:15:46,891 - INFO - Memory cleaned.
+2026-05-20 01:15:47,674 - INFO - Epoch[148] Complete. Time taken: 00:02:04.082
+2026-05-20 01:17:46,792 - INFO - Epoch 149 - Train Loss: 2880.542179089043, Validation MRR: 0.008256470784544945, Learning Rate: 1.541333133436018e-06
+2026-05-20 01:17:51,085 - INFO - Memory cleaned.
+2026-05-20 01:17:51,849 - INFO - Epoch[149] Complete. Time taken: 00:02:04.175
+2026-05-20 01:19:50,940 - INFO - Epoch 150 - Train Loss: 2879.7497674592787, Validation MRR: 0.008256470784544945, Learning Rate: 3.854818796385495e-07
+2026-05-20 01:19:55,106 - INFO - Memory cleaned.
+2026-05-20 01:19:55,875 - INFO - Epoch[150] Complete. Time taken: 00:02:04.025
+2026-05-20 01:21:54,990 - INFO - Epoch 151 - Train Loss: 3090.0471851320203, Validation MRR: 0.008256470784544945, Learning Rate: 0.001
+2026-05-20 01:21:59,153 - INFO - Memory cleaned.
+2026-05-20 01:21:59,954 - INFO - Epoch[151] Complete. Time taken: 00:02:04.080
+2026-05-20 01:23:59,103 - INFO - Epoch 152 - Train Loss: 3084.5542657391934, Validation MRR: 0.008256470784544945, Learning Rate: 0.0009999036202410325
+2026-05-20 01:24:03,263 - INFO - Memory cleaned.
+2026-05-20 01:24:04,026 - INFO - Epoch[152] Complete. Time taken: 00:02:04.072
+2026-05-20 01:26:03,182 - INFO - Epoch 153 - Train Loss: 3069.4310040415385, Validation MRR: 0.008256470784544945, Learning Rate: 0.0009996145181203615
+2026-05-20 01:26:07,342 - INFO - Memory cleaned.
+2026-05-20 01:26:08,108 - INFO - Epoch[153] Complete. Time taken: 00:02:04.082
+2026-05-20 01:28:07,196 - INFO - Epoch 154 - Train Loss: 3052.1523837825807, Validation MRR: 0.008256470784544945, Learning Rate: 0.000999132805092358
+2026-05-20 01:28:11,363 - INFO - Memory cleaned.
+2026-05-20 01:28:12,128 - INFO - Epoch[154] Complete. Time taken: 00:02:04.020
+2026-05-20 01:30:11,265 - INFO - Epoch 155 - Train Loss: 3061.1575634441992, Validation MRR: 0.008256470784544945, Learning Rate: 0.000998458666866564
+2026-05-20 01:30:15,431 - INFO - Memory cleaned.
+2026-05-20 01:30:16,199 - INFO - Epoch[155] Complete. Time taken: 00:02:04.070
+2026-05-20 01:32:15,547 - INFO - Epoch 156 - Train Loss: 3046.0599509462045, Validation MRR: 0.008256470784544945, Learning Rate: 0.0009975923633360985
+2026-05-20 01:32:19,717 - INFO - Memory cleaned.
+2026-05-20 01:32:20,474 - INFO - Epoch[156] Complete. Time taken: 00:02:04.275
+2026-05-20 01:34:19,717 - INFO - Epoch 157 - Train Loss: 3054.1033922757515, Validation MRR: 0.008256470784544945, Learning Rate: 0.0009965342284774632
+2026-05-20 01:34:23,884 - INFO - Memory cleaned.
+2026-05-20 01:34:24,679 - INFO - Epoch[157] Complete. Time taken: 00:02:04.204
+2026-05-20 01:36:23,868 - INFO - Epoch 158 - Train Loss: 3044.2830223357932, Validation MRR: 0.008256470784544945, Learning Rate: 0.0009952846702217886
+2026-05-20 01:36:28,037 - INFO - Memory cleaned.
+2026-05-20 01:36:28,799 - INFO - Epoch[158] Complete. Time taken: 00:02:04.120
+2026-05-20 01:38:27,903 - INFO - Epoch 159 - Train Loss: 3059.7304274004478, Validation MRR: 0.008256470784544945, Learning Rate: 0.0009938441702975688
+2026-05-20 01:38:32,091 - INFO - Memory cleaned.
+2026-05-20 01:38:32,905 - INFO - Epoch[159] Complete. Time taken: 00:02:04.105
+2026-05-20 01:40:32,281 - INFO - Epoch 160 - Train Loss: 3056.7654432564664, Validation MRR: 0.008256470784544945, Learning Rate: 0.0009922132840449458
+2026-05-20 01:40:36,453 - INFO - Memory cleaned.
+2026-05-20 01:40:36,453 - INFO - Evaluating on validation set at epoch 160...
+Link prediction evaluation:   0%|          | 0/81 [00:00<?, ?batch/s]Link prediction evaluation:   1%|          | 1/81 [00:00<00:12,  6.66batch/s]Link prediction evaluation:   2%|▏         | 2/81 [00:00<00:09,  7.94batch/s]Link prediction evaluation:   4%|▎         | 3/81 [00:00<00:09,  8.42batch/s]Link prediction evaluation:   5%|▍         | 4/81 [00:00<00:08,  8.72batch/s]Link prediction evaluation:   6%|▌         | 5/81 [00:00<00:08,  8.87batch/s]Link prediction evaluation:   7%|▋         | 6/81 [00:00<00:08,  8.99batch/s]Link prediction evaluation:   9%|▊         | 7/81 [00:00<00:08,  9.06batch/s]Link prediction evaluation:  10%|▉         | 8/81 [00:00<00:08,  9.10batch/s]Link prediction evaluation:  11%|█         | 9/81 [00:01<00:07,  9.14batch/s]Link prediction evaluation:  12%|█▏        | 10/81 [00:01<00:07,  9.16batch/s]Link prediction evaluation:  14%|█▎        | 11/81 [00:01<00:07,  9.18batch/s]Link prediction evaluation:  15%|█▍        | 12/81 [00:01<00:07,  9.20batch/s]Link prediction evaluation:  16%|█▌        | 13/81 [00:01<00:07,  9.21batch/s]Link prediction evaluation:  17%|█▋        | 14/81 [00:01<00:07,  9.21batch/s]Link prediction evaluation:  19%|█▊        | 15/81 [00:01<00:07,  9.22batch/s]Link prediction evaluation:  20%|█▉        | 16/81 [00:01<00:07,  9.21batch/s]Link prediction evaluation:  21%|██        | 17/81 [00:01<00:06,  9.20batch/s]Link prediction evaluation:  22%|██▏       | 18/81 [00:01<00:06,  9.22batch/s]Link prediction evaluation:  23%|██▎       | 19/81 [00:02<00:06,  9.21batch/s]Link prediction evaluation:  25%|██▍       | 20/81 [00:02<00:06,  9.21batch/s]Link prediction evaluation:  26%|██▌       | 21/81 [00:02<00:06,  9.22batch/s]Link prediction evaluation:  27%|██▋       | 22/81 [00:02<00:06,  9.21batch/s]Link prediction evaluation:  28%|██▊       | 23/81 [00:02<00:06,  9.22batch/s]Link prediction evaluation:  30%|██▉       | 24/81 [00:02<00:06,  9.20batch/s]Link prediction evaluation:  31%|███       | 25/81 [00:02<00:06,  9.21batch/s]Link prediction evaluation:  32%|███▏      | 26/81 [00:02<00:05,  9.21batch/s]Link prediction evaluation:  33%|███▎      | 27/81 [00:02<00:05,  9.22batch/s]Link prediction evaluation:  35%|███▍      | 28/81 [00:03<00:05,  9.23batch/s]Link prediction evaluation:  36%|███▌      | 29/81 [00:03<00:05,  9.22batch/s]Link prediction evaluation:  37%|███▋      | 30/81 [00:03<00:05,  9.20batch/s]Link prediction evaluation:  38%|███▊      | 31/81 [00:03<00:05,  9.22batch/s]Link prediction evaluation:  40%|███▉      | 32/81 [00:03<00:05,  9.22batch/s]Link prediction evaluation:  41%|████      | 33/81 [00:03<00:05,  9.22batch/s]Link prediction evaluation:  42%|████▏     | 34/81 [00:03<00:05,  9.24batch/s]Link prediction evaluation:  43%|████▎     | 35/81 [00:03<00:04,  9.25batch/s]Link prediction evaluation:  44%|████▍     | 36/81 [00:03<00:04,  9.25batch/s]Link prediction evaluation:  46%|████▌     | 37/81 [00:04<00:04,  9.25batch/s]Link prediction evaluation:  47%|████▋     | 38/81 [00:04<00:04,  9.25batch/s]Link prediction evaluation:  48%|████▊     | 39/81 [00:04<00:04,  9.26batch/s]Link prediction evaluation:  49%|████▉     | 40/81 [00:04<00:04,  9.24batch/s]Link prediction evaluation:  51%|█████     | 41/81 [00:04<00:04,  9.24batch/s]Link prediction evaluation:  52%|█████▏    | 42/81 [00:04<00:04,  9.24batch/s]Link prediction evaluation:  53%|█████▎    | 43/81 [00:04<00:04,  9.24batch/s]Link prediction evaluation:  54%|█████▍    | 44/81 [00:04<00:04,  9.24batch/s]Link prediction evaluation:  56%|█████▌    | 45/81 [00:04<00:03,  9.23batch/s]Link prediction evaluation:  57%|█████▋    | 46/81 [00:05<00:03,  9.21batch/s]Link prediction evaluation:  58%|█████▊    | 47/81 [00:05<00:03,  9.21batch/s]Link prediction evaluation:  59%|█████▉    | 48/81 [00:05<00:03,  9.21batch/s]Link prediction evaluation:  60%|██████    | 49/81 [00:05<00:03,  9.21batch/s]Link prediction evaluation:  62%|██████▏   | 50/81 [00:05<00:03,  9.22batch/s]Link prediction evaluation:  63%|██████▎   | 51/81 [00:05<00:03,  9.22batch/s]Link prediction evaluation:  64%|██████▍   | 52/81 [00:05<00:03,  9.21batch/s]Link prediction evaluation:  65%|██████▌   | 53/81 [00:05<00:03,  9.21batch/s]Link prediction evaluation:  67%|██████▋   | 54/81 [00:05<00:02,  9.22batch/s]Link prediction evaluation:  68%|██████▊   | 55/81 [00:06<00:02,  9.22batch/s]Link prediction evaluation:  69%|██████▉   | 56/81 [00:06<00:02,  9.21batch/s]Link prediction evaluation:  70%|███████   | 57/81 [00:06<00:02,  9.20batch/s]Link prediction evaluation:  72%|███████▏  | 58/81 [00:06<00:02,  9.20batch/s]Link prediction evaluation:  73%|███████▎  | 59/81 [00:06<00:02,  9.22batch/s]Link prediction evaluation:  74%|███████▍  | 60/81 [00:06<00:02,  9.21batch/s]Link prediction evaluation:  75%|███████▌  | 61/81 [00:06<00:02,  9.22batch/s]Link prediction evaluation:  77%|███████▋  | 62/81 [00:06<00:02,  9.23batch/s]Link prediction evaluation:  78%|███████▊  | 63/81 [00:06<00:01,  9.22batch/s]Link prediction evaluation:  79%|███████▉  | 64/81 [00:06<00:01,  9.22batch/s]Link prediction evaluation:  80%|████████  | 65/81 [00:07<00:01,  9.21batch/s]Link prediction evaluation:  81%|████████▏ | 66/81 [00:07<00:01,  9.21batch/s]Link prediction evaluation:  83%|████████▎ | 67/81 [00:07<00:01,  9.21batch/s]Link prediction evaluation:  84%|████████▍ | 68/81 [00:07<00:01,  9.21batch/s]Link prediction evaluation:  85%|████████▌ | 69/81 [00:07<00:01,  9.20batch/s]Link prediction evaluation:  86%|████████▋ | 70/81 [00:07<00:01,  9.21batch/s]Link prediction evaluation:  88%|████████▊ | 71/81 [00:07<00:01,  9.21batch/s]Link prediction evaluation:  89%|████████▉ | 72/81 [00:07<00:00,  9.22batch/s]Link prediction evaluation:  90%|█████████ | 73/81 [00:07<00:00,  9.22batch/s]Link prediction evaluation:  91%|█████████▏| 74/81 [00:08<00:00,  9.22batch/s]Link prediction evaluation:  93%|█████████▎| 75/81 [00:08<00:00,  9.23batch/s]Link prediction evaluation:  94%|█████████▍| 76/81 [00:08<00:00,  9.23batch/s]Link prediction evaluation:  95%|█████████▌| 77/81 [00:08<00:00,  9.23batch/s]Link prediction evaluation:  96%|█████████▋| 78/81 [00:08<00:00,  9.24batch/s]Link prediction evaluation:  98%|█████████▊| 79/81 [00:08<00:00,  9.23batch/s]Link prediction evaluation:  99%|█████████▉| 80/81 [00:08<00:00,  9.22batch/s]Link prediction evaluation: 100%|██████████| 81/81 [00:08<00:00,  9.24batch/s]
+2026-05-20 01:40:45,243 - INFO - Validation MRR: 0.0074270120821893215
+2026-05-20 01:40:45,941 - INFO - Epoch[160] Complete. Time taken: 00:02:13.036
+2026-05-20 01:42:44,806 - INFO - Epoch 161 - Train Loss: 3056.3184718985376, Validation MRR: 0.0074270120821893215, Learning Rate: 0.0009903926402016153
+2026-05-20 01:42:48,980 - INFO - Memory cleaned.
+2026-05-20 01:42:49,749 - INFO - Epoch[161] Complete. Time taken: 00:02:03.808
+2026-05-20 01:44:48,472 - INFO - Epoch 162 - Train Loss: 3039.3386498210493, Validation MRR: 0.0074270120821893215, Learning Rate: 0.0009883829406604362
+2026-05-20 01:44:52,635 - INFO - Memory cleaned.
+2026-05-20 01:44:53,394 - INFO - Epoch[162] Complete. Time taken: 00:02:03.645
+2026-05-20 01:46:52,306 - INFO - Epoch 163 - Train Loss: 3056.628693817363, Validation MRR: 0.0074270120821893215, Learning Rate: 0.0009861849601988384
+2026-05-20 01:46:56,473 - INFO - Memory cleaned.
+2026-05-20 01:46:57,267 - INFO - Epoch[163] Complete. Time taken: 00:02:03.872
+2026-05-20 01:48:56,374 - INFO - Epoch 164 - Train Loss: 3059.0587059020736, Validation MRR: 0.0074270120821893215, Learning Rate: 0.0009837995461801298
+2026-05-20 01:49:00,535 - INFO - Memory cleaned.
+2026-05-20 01:49:01,293 - INFO - Epoch[164] Complete. Time taken: 00:02:04.026
+2026-05-20 01:51:00,410 - INFO - Epoch 165 - Train Loss: 3042.2184166029692, Validation MRR: 0.0074270120821893215, Learning Rate: 0.0009812276182268236
+2026-05-20 01:51:04,572 - INFO - Memory cleaned.
+2026-05-20 01:51:05,449 - INFO - Epoch[165] Complete. Time taken: 00:02:04.156
+2026-05-20 01:53:04,533 - INFO - Epoch 166 - Train Loss: 3052.08658352482, Validation MRR: 0.0074270120821893215, Learning Rate: 0.0009784701678661044
+2026-05-20 01:53:08,695 - INFO - Memory cleaned.
+2026-05-20 01:53:09,484 - INFO - Epoch[166] Complete. Time taken: 00:02:04.034
+2026-05-20 01:55:08,592 - INFO - Epoch 167 - Train Loss: 3057.441097012063, Validation MRR: 0.0074270120821893215, Learning Rate: 0.0009755282581475768
+2026-05-20 01:55:12,757 - INFO - Memory cleaned.
+2026-05-20 01:55:13,524 - INFO - Epoch[167] Complete. Time taken: 00:02:04.041
+2026-05-20 01:57:12,664 - INFO - Epoch 168 - Train Loss: 3048.333240710873, Validation MRR: 0.0074270120821893215, Learning Rate: 0.0009724030232334391
+2026-05-20 01:57:16,826 - INFO - Memory cleaned.
+2026-05-20 01:57:17,658 - INFO - Epoch[168] Complete. Time taken: 00:02:04.133
+2026-05-20 01:59:16,715 - INFO - Epoch 169 - Train Loss: 3060.0982681112555, Validation MRR: 0.0074270120821893215, Learning Rate: 0.0009690956679612422
+2026-05-20 01:59:20,879 - INFO - Memory cleaned.
+2026-05-20 01:59:21,652 - INFO - Epoch[169] Complete. Time taken: 00:02:03.994
+2026-05-20 02:01:20,793 - INFO - Epoch 170 - Train Loss: 3040.3185668558513, Validation MRR: 0.0074270120821893215, Learning Rate: 0.0009656074673794017
+2026-05-20 02:01:24,959 - INFO - Memory cleaned.
+2026-05-20 02:01:25,721 - INFO - Epoch[170] Complete. Time taken: 00:02:04.069
+2026-05-20 02:03:24,978 - INFO - Epoch 171 - Train Loss: 3029.992641383495, Validation MRR: 0.0074270120821893215, Learning Rate: 0.0009619397662556434
+2026-05-20 02:03:29,168 - INFO - Memory cleaned.
+2026-05-20 02:03:29,943 - INFO - Epoch[171] Complete. Time taken: 00:02:04.221
+2026-05-20 02:05:29,186 - INFO - Epoch 172 - Train Loss: 3020.2654449576817, Validation MRR: 0.0074270120821893215, Learning Rate: 0.0009580939785585681
+2026-05-20 02:05:33,359 - INFO - Memory cleaned.
+2026-05-20 02:05:34,127 - INFO - Epoch[172] Complete. Time taken: 00:02:04.184
+2026-05-20 02:07:33,737 - INFO - Epoch 173 - Train Loss: 3051.364145161372, Validation MRR: 0.0074270120821893215, Learning Rate: 0.0009540715869125407
+2026-05-20 02:07:37,912 - INFO - Memory cleaned.
+2026-05-20 02:07:38,692 - INFO - Epoch[173] Complete. Time taken: 00:02:04.565
+2026-05-20 02:09:37,723 - INFO - Epoch 174 - Train Loss: 3033.37141972094, Validation MRR: 0.0074270120821893215, Learning Rate: 0.0009498741420261108
+2026-05-20 02:09:41,878 - INFO - Memory cleaned.
+2026-05-20 02:09:42,636 - INFO - Epoch[174] Complete. Time taken: 00:02:03.944
+2026-05-20 02:11:41,757 - INFO - Epoch 175 - Train Loss: 3018.1442904555843, Validation MRR: 0.0074270120821893215, Learning Rate: 0.0009455032620941839
+2026-05-20 02:11:45,912 - INFO - Memory cleaned.
+2026-05-20 02:11:46,677 - INFO - Epoch[175] Complete. Time taken: 00:02:04.041
+2026-05-20 02:13:45,811 - INFO - Epoch 176 - Train Loss: 3029.552221450025, Validation MRR: 0.0074270120821893215, Learning Rate: 0.0009409606321741775
+2026-05-20 02:13:49,966 - INFO - Memory cleaned.
+2026-05-20 02:13:50,729 - INFO - Epoch[176] Complete. Time taken: 00:02:04.051
+2026-05-20 02:15:49,868 - INFO - Epoch 177 - Train Loss: 3030.0461932730796, Validation MRR: 0.0074270120821893215, Learning Rate: 0.0009362480035363986
+2026-05-20 02:15:54,023 - INFO - Memory cleaned.
+2026-05-20 02:15:54,810 - INFO - Epoch[177] Complete. Time taken: 00:02:04.081
+2026-05-20 02:17:53,920 - INFO - Epoch 178 - Train Loss: 3019.7562827773754, Validation MRR: 0.0074270120821893215, Learning Rate: 0.0009313671929888959
+2026-05-20 02:17:58,074 - INFO - Memory cleaned.
+2026-05-20 02:17:58,845 - INFO - Epoch[178] Complete. Time taken: 00:02:04.034
+2026-05-20 02:19:58,040 - INFO - Epoch 179 - Train Loss: 3039.1414600489934, Validation MRR: 0.0074270120821893215, Learning Rate: 0.0009263200821770461
+2026-05-20 02:20:02,195 - INFO - Memory cleaned.
+2026-05-20 02:20:02,989 - INFO - Epoch[179] Complete. Time taken: 00:02:04.144
+2026-05-20 02:22:02,180 - INFO - Epoch 180 - Train Loss: 3015.5445666299725, Validation MRR: 0.0074270120821893215, Learning Rate: 0.0009211086168581433
+2026-05-20 02:22:06,345 - INFO - Memory cleaned.
+2026-05-20 02:22:06,345 - INFO - Evaluating on validation set at epoch 180...
+Link prediction evaluation:   0%|          | 0/81 [00:00<?, ?batch/s]Link prediction evaluation:   1%|          | 1/81 [00:00<00:08,  9.12batch/s]Link prediction evaluation:   2%|▏         | 2/81 [00:00<00:08,  9.19batch/s]Link prediction evaluation:   4%|▎         | 3/81 [00:00<00:08,  9.16batch/s]Link prediction evaluation:   5%|▍         | 4/81 [00:00<00:08,  9.19batch/s]Link prediction evaluation:   6%|▌         | 5/81 [00:00<00:08,  9.18batch/s]Link prediction evaluation:   7%|▋         | 6/81 [00:00<00:08,  9.20batch/s]Link prediction evaluation:   9%|▊         | 7/81 [00:00<00:08,  9.20batch/s]Link prediction evaluation:  10%|▉         | 8/81 [00:00<00:07,  9.21batch/s]Link prediction evaluation:  11%|█         | 9/81 [00:00<00:07,  9.21batch/s]Link prediction evaluation:  12%|█▏        | 10/81 [00:01<00:07,  9.21batch/s]Link prediction evaluation:  14%|█▎        | 11/81 [00:01<00:07,  9.22batch/s]Link prediction evaluation:  15%|█▍        | 12/81 [00:01<00:07,  9.23batch/s]Link prediction evaluation:  16%|█▌        | 13/81 [00:01<00:07,  9.23batch/s]Link prediction evaluation:  17%|█▋        | 14/81 [00:01<00:07,  9.23batch/s]Link prediction evaluation:  19%|█▊        | 15/81 [00:01<00:07,  9.24batch/s]Link prediction evaluation:  20%|█▉        | 16/81 [00:01<00:07,  9.23batch/s]Link prediction evaluation:  21%|██        | 17/81 [00:01<00:06,  9.22batch/s]Link prediction evaluation:  22%|██▏       | 18/81 [00:01<00:06,  9.23batch/s]Link prediction evaluation:  23%|██▎       | 19/81 [00:02<00:06,  9.22batch/s]Link prediction evaluation:  25%|██▍       | 20/81 [00:02<00:06,  9.22batch/s]Link prediction evaluation:  26%|██▌       | 21/81 [00:02<00:06,  9.23batch/s]Link prediction evaluation:  27%|██▋       | 22/81 [00:02<00:06,  9.21batch/s]Link prediction evaluation:  28%|██▊       | 23/81 [00:02<00:06,  9.22batch/s]Link prediction evaluation:  30%|██▉       | 24/81 [00:02<00:06,  9.21batch/s]Link prediction evaluation:  31%|███       | 25/81 [00:02<00:06,  9.21batch/s]Link prediction evaluation:  32%|███▏      | 26/81 [00:02<00:05,  9.22batch/s]Link prediction evaluation:  33%|███▎      | 27/81 [00:02<00:05,  9.22batch/s]Link prediction evaluation:  35%|███▍      | 28/81 [00:03<00:05,  9.23batch/s]Link prediction evaluation:  36%|███▌      | 29/81 [00:03<00:05,  9.22batch/s]Link prediction evaluation:  37%|███▋      | 30/81 [00:03<00:05,  9.21batch/s]Link prediction evaluation:  38%|███▊      | 31/81 [00:03<00:05,  9.22batch/s]Link prediction evaluation:  40%|███▉      | 32/81 [00:03<00:05,  9.22batch/s]Link prediction evaluation:  41%|████      | 33/81 [00:03<00:05,  9.22batch/s]Link prediction evaluation:  42%|████▏     | 34/81 [00:03<00:05,  9.25batch/s]Link prediction evaluation:  43%|████▎     | 35/81 [00:03<00:04,  9.25batch/s]Link prediction evaluation:  44%|████▍     | 36/81 [00:03<00:04,  9.25batch/s]Link prediction evaluation:  46%|████▌     | 37/81 [00:04<00:04,  9.25batch/s]Link prediction evaluation:  47%|████▋     | 38/81 [00:04<00:04,  9.26batch/s]Link prediction evaluation:  48%|████▊     | 39/81 [00:04<00:04,  9.26batch/s]Link prediction evaluation:  49%|████▉     | 40/81 [00:04<00:04,  9.24batch/s]Link prediction evaluation:  51%|█████     | 41/81 [00:04<00:04,  9.24batch/s]Link prediction evaluation:  52%|█████▏    | 42/81 [00:04<00:04,  9.24batch/s]Link prediction evaluation:  53%|█████▎    | 43/81 [00:04<00:04,  9.25batch/s]Link prediction evaluation:  54%|█████▍    | 44/81 [00:04<00:04,  9.24batch/s]Link prediction evaluation:  56%|█████▌    | 45/81 [00:04<00:03,  9.24batch/s]Link prediction evaluation:  57%|█████▋    | 46/81 [00:04<00:03,  9.22batch/s]Link prediction evaluation:  58%|█████▊    | 47/81 [00:05<00:03,  9.22batch/s]Link prediction evaluation:  59%|█████▉    | 48/81 [00:05<00:03,  9.22batch/s]Link prediction evaluation:  60%|██████    | 49/81 [00:05<00:03,  9.21batch/s]Link prediction evaluation:  62%|██████▏   | 50/81 [00:05<00:03,  9.22batch/s]Link prediction evaluation:  63%|██████▎   | 51/81 [00:05<00:03,  9.22batch/s]Link prediction evaluation:  64%|██████▍   | 52/81 [00:05<00:03,  9.21batch/s]Link prediction evaluation:  65%|██████▌   | 53/81 [00:05<00:03,  9.22batch/s]Link prediction evaluation:  67%|██████▋   | 54/81 [00:05<00:02,  9.23batch/s]Link prediction evaluation:  68%|██████▊   | 55/81 [00:05<00:02,  9.23batch/s]Link prediction evaluation:  69%|██████▉   | 56/81 [00:06<00:02,  9.22batch/s]Link prediction evaluation:  70%|███████   | 57/81 [00:06<00:02,  9.21batch/s]Link prediction evaluation:  72%|███████▏  | 58/81 [00:06<00:02,  9.21batch/s]Link prediction evaluation:  73%|███████▎  | 59/81 [00:06<00:02,  9.22batch/s]Link prediction evaluation:  74%|███████▍  | 60/81 [00:06<00:02,  9.22batch/s]Link prediction evaluation:  75%|███████▌  | 61/81 [00:06<00:02,  9.23batch/s]Link prediction evaluation:  77%|███████▋  | 62/81 [00:06<00:02,  9.24batch/s]Link prediction evaluation:  78%|███████▊  | 63/81 [00:06<00:01,  9.24batch/s]Link prediction evaluation:  79%|███████▉  | 64/81 [00:06<00:01,  9.23batch/s]Link prediction evaluation:  80%|████████  | 65/81 [00:07<00:01,  9.23batch/s]Link prediction evaluation:  81%|████████▏ | 66/81 [00:07<00:01,  9.22batch/s]Link prediction evaluation:  83%|████████▎ | 67/81 [00:07<00:01,  9.22batch/s]Link prediction evaluation:  84%|████████▍ | 68/81 [00:07<00:01,  9.22batch/s]Link prediction evaluation:  85%|████████▌ | 69/81 [00:07<00:01,  9.21batch/s]Link prediction evaluation:  86%|████████▋ | 70/81 [00:07<00:01,  9.21batch/s]Link prediction evaluation:  88%|████████▊ | 71/81 [00:07<00:01,  9.21batch/s]Link prediction evaluation:  89%|████████▉ | 72/81 [00:07<00:00,  9.22batch/s]Link prediction evaluation:  90%|█████████ | 73/81 [00:07<00:00,  9.22batch/s]Link prediction evaluation:  91%|█████████▏| 74/81 [00:08<00:00,  9.22batch/s]Link prediction evaluation:  93%|█████████▎| 75/81 [00:08<00:00,  9.23batch/s]Link prediction evaluation:  94%|█████████▍| 76/81 [00:08<00:00,  9.23batch/s]Link prediction evaluation:  95%|█████████▌| 77/81 [00:08<00:00,  9.24batch/s]Link prediction evaluation:  96%|█████████▋| 78/81 [00:08<00:00,  9.24batch/s]Link prediction evaluation:  98%|█████████▊| 79/81 [00:08<00:00,  9.23batch/s]Link prediction evaluation:  99%|█████████▉| 80/81 [00:08<00:00,  9.22batch/s]Link prediction evaluation: 100%|██████████| 81/81 [00:08<00:00,  9.29batch/s]
+2026-05-20 02:22:15,063 - INFO - Validation MRR: 0.006371668539941311
+2026-05-20 02:22:15,825 - INFO - Epoch[180] Complete. Time taken: 00:02:12.836
+2026-05-20 02:24:14,938 - INFO - Epoch 181 - Train Loss: 3011.293010611848, Validation MRR: 0.006371668539941311, Learning Rate: 0.0009157348061512727
+2026-05-20 02:24:19,104 - INFO - Memory cleaned.
+2026-05-20 02:24:19,883 - INFO - Epoch[181] Complete. Time taken: 00:02:04.058
+2026-05-20 02:26:18,950 - INFO - Epoch 182 - Train Loss: 3022.8332396731716, Validation MRR: 0.006371668539941311, Learning Rate: 0.0009102007217627568
+2026-05-20 02:26:23,110 - INFO - Memory cleaned.
+2026-05-20 02:26:23,872 - INFO - Epoch[182] Complete. Time taken: 00:02:03.989
+2026-05-20 02:28:22,930 - INFO - Epoch 183 - Train Loss: 3009.2419730826737, Validation MRR: 0.006371668539941311, Learning Rate: 0.0009045084971874737
+2026-05-20 02:28:27,087 - INFO - Memory cleaned.
+2026-05-20 02:28:27,850 - INFO - Epoch[183] Complete. Time taken: 00:02:03.978
+2026-05-20 02:30:26,901 - INFO - Epoch 184 - Train Loss: 3010.4822648311433, Validation MRR: 0.006371668539941311, Learning Rate: 0.0008986603268863536
+2026-05-20 02:30:31,058 - INFO - Memory cleaned.
+2026-05-20 02:30:31,813 - INFO - Epoch[184] Complete. Time taken: 00:02:03.963
+2026-05-20 02:32:31,114 - INFO - Epoch 185 - Train Loss: 3001.613294478134, Validation MRR: 0.006371668539941311, Learning Rate: 0.0008926584654403724
+2026-05-20 02:32:35,271 - INFO - Memory cleaned.
+2026-05-20 02:32:36,038 - INFO - Epoch[185] Complete. Time taken: 00:02:04.225
+2026-05-20 02:34:35,196 - INFO - Epoch 186 - Train Loss: 3011.6005594868784, Validation MRR: 0.006371668539941311, Learning Rate: 0.0008865052266813684
+2026-05-20 02:34:39,353 - INFO - Memory cleaned.
+2026-05-20 02:34:40,142 - INFO - Epoch[186] Complete. Time taken: 00:02:04.104
+2026-05-20 02:36:39,279 - INFO - Epoch 187 - Train Loss: 3006.962415420506, Validation MRR: 0.006371668539941311, Learning Rate: 0.0008802029828000156
+2026-05-20 02:36:43,479 - INFO - Memory cleaned.
+2026-05-20 02:36:44,255 - INFO - Epoch[187] Complete. Time taken: 00:02:04.113
+2026-05-20 02:38:43,396 - INFO - Epoch 188 - Train Loss: 3001.199559602196, Validation MRR: 0.006371668539941311, Learning Rate: 0.0008737541634312985
+2026-05-20 02:38:47,556 - INFO - Memory cleaned.
+2026-05-20 02:38:48,362 - INFO - Epoch[188] Complete. Time taken: 00:02:04.107
+2026-05-20 02:40:47,492 - INFO - Epoch 189 - Train Loss: 3009.309111378214, Validation MRR: 0.006371668539941311, Learning Rate: 0.0008671612547178428
+2026-05-20 02:40:51,650 - INFO - Memory cleaned.
+2026-05-20 02:40:52,432 - INFO - Epoch[189] Complete. Time taken: 00:02:04.069
+2026-05-20 02:42:50,958 - INFO - Epoch 190 - Train Loss: 2991.3200242717935, Validation MRR: 0.006371668539941311, Learning Rate: 0.0008604267983514594
+2026-05-20 02:42:55,122 - INFO - Memory cleaned.
+2026-05-20 02:42:55,885 - INFO - Epoch[190] Complete. Time taken: 00:02:03.453
+2026-05-20 02:44:54,780 - INFO - Epoch 191 - Train Loss: 2990.5711774976166, Validation MRR: 0.006371668539941311, Learning Rate: 0.0008535533905932737
+2026-05-20 02:44:58,981 - INFO - Memory cleaned.
+2026-05-20 02:44:59,760 - INFO - Epoch[191] Complete. Time taken: 00:02:03.875
+2026-05-20 02:46:58,692 - INFO - Epoch 192 - Train Loss: 3023.9732184903987, Validation MRR: 0.006371668539941311, Learning Rate: 0.000846543681272818
+2026-05-20 02:47:02,860 - INFO - Memory cleaned.
+2026-05-20 02:47:03,701 - INFO - Epoch[192] Complete. Time taken: 00:02:03.941
+2026-05-20 02:49:02,357 - INFO - Epoch 193 - Train Loss: 2998.9507193662284, Validation MRR: 0.006371668539941311, Learning Rate: 0.0008394003727664709
+2026-05-20 02:49:06,513 - INFO - Memory cleaned.
+2026-05-20 02:49:07,295 - INFO - Epoch[193] Complete. Time taken: 00:02:03.594
+2026-05-20 02:51:05,947 - INFO - Epoch 194 - Train Loss: 3011.263167338077, Validation MRR: 0.006371668539941311, Learning Rate: 0.0008321262189556409
+2026-05-20 02:51:10,111 - INFO - Memory cleaned.
+2026-05-20 02:51:10,885 - INFO - Epoch[194] Complete. Time taken: 00:02:03.590
+2026-05-20 02:53:10,021 - INFO - Epoch 195 - Train Loss: 2997.8490244406444, Validation MRR: 0.006371668539941311, Learning Rate: 0.000824724024165092
+2026-05-20 02:53:14,179 - INFO - Memory cleaned.
+2026-05-20 02:53:14,944 - INFO - Epoch[195] Complete. Time taken: 00:02:04.059
+2026-05-20 02:55:14,202 - INFO - Epoch 196 - Train Loss: 2985.716948344201, Validation MRR: 0.006371668539941311, Learning Rate: 0.0008171966420818228
+2026-05-20 02:55:18,357 - INFO - Memory cleaned.
+2026-05-20 02:55:19,135 - INFO - Epoch[196] Complete. Time taken: 00:02:04.191
+2026-05-20 02:57:18,308 - INFO - Epoch 197 - Train Loss: 2994.6120018211423, Validation MRR: 0.006371668539941311, Learning Rate: 0.000809546974654917
+2026-05-20 02:57:22,464 - INFO - Memory cleaned.
+2026-05-20 02:57:23,236 - INFO - Epoch[197] Complete. Time taken: 00:02:04.101
+2026-05-20 02:59:22,370 - INFO - Epoch 198 - Train Loss: 2977.863742584729, Validation MRR: 0.006371668539941311, Learning Rate: 0.0008017779709767857
+2026-05-20 02:59:26,527 - INFO - Memory cleaned.
+2026-05-20 02:59:27,291 - INFO - Epoch[198] Complete. Time taken: 00:02:04.055
+2026-05-20 03:01:26,367 - INFO - Epoch 199 - Train Loss: 2972.9192057308173, Validation MRR: 0.006371668539941311, Learning Rate: 0.0007938926261462366
+2026-05-20 03:01:30,567 - INFO - Memory cleaned.
+2026-05-20 03:01:31,338 - INFO - Epoch[199] Complete. Time taken: 00:02:04.047
+2026-05-20 03:03:30,107 - INFO - Epoch 200 - Train Loss: 2997.7036069314695, Validation MRR: 0.006371668539941311, Learning Rate: 0.0007858939801138062
+2026-05-20 03:03:34,267 - INFO - Memory cleaned.
+2026-05-20 03:03:34,268 - INFO - Evaluating on validation set at epoch 200...
+Link prediction evaluation:   0%|          | 0/81 [00:00<?, ?batch/s]Link prediction evaluation:   1%|          | 1/81 [00:00<00:11,  6.83batch/s]Link prediction evaluation:   2%|▏         | 2/81 [00:00<00:09,  8.04batch/s]Link prediction evaluation:   4%|▎         | 3/81 [00:00<00:09,  8.47batch/s]Link prediction evaluation:   5%|▍         | 4/81 [00:00<00:08,  8.75batch/s]Link prediction evaluation:   6%|▌         | 5/81 [00:00<00:08,  8.89batch/s]Link prediction evaluation:   7%|▋         | 6/81 [00:00<00:08,  9.00batch/s]Link prediction evaluation:   9%|▊         | 7/81 [00:00<00:08,  9.07batch/s]Link prediction evaluation:  10%|▉         | 8/81 [00:00<00:08,  9.11batch/s]Link prediction evaluation:  11%|█         | 9/81 [00:01<00:07,  9.14batch/s]Link prediction evaluation:  12%|█▏        | 10/81 [00:01<00:07,  9.16batch/s]Link prediction evaluation:  14%|█▎        | 11/81 [00:01<00:07,  9.19batch/s]Link prediction evaluation:  15%|█▍        | 12/81 [00:01<00:07,  9.21batch/s]Link prediction evaluation:  16%|█▌        | 13/81 [00:01<00:07,  9.21batch/s]Link prediction evaluation:  17%|█▋        | 14/81 [00:01<00:07,  9.22batch/s]Link prediction evaluation:  19%|█▊        | 15/81 [00:01<00:07,  9.22batch/s]Link prediction evaluation:  20%|█▉        | 16/81 [00:01<00:07,  9.22batch/s]Link prediction evaluation:  21%|██        | 17/81 [00:01<00:06,  9.21batch/s]Link prediction evaluation:  22%|██▏       | 18/81 [00:01<00:06,  9.22batch/s]Link prediction evaluation:  23%|██▎       | 19/81 [00:02<00:06,  9.21batch/s]Link prediction evaluation:  25%|██▍       | 20/81 [00:02<00:06,  9.21batch/s]Link prediction evaluation:  26%|██▌       | 21/81 [00:02<00:06,  9.23batch/s]Link prediction evaluation:  27%|██▋       | 22/81 [00:02<00:06,  9.21batch/s]Link prediction evaluation:  28%|██▊       | 23/81 [00:02<00:06,  9.22batch/s]Link prediction evaluation:  30%|██▉       | 24/81 [00:02<00:06,  9.21batch/s]Link prediction evaluation:  31%|███       | 25/81 [00:02<00:06,  9.21batch/s]Link prediction evaluation:  32%|███▏      | 26/81 [00:02<00:05,  9.21batch/s]Link prediction evaluation:  33%|███▎      | 27/81 [00:02<00:05,  9.22batch/s]Link prediction evaluation:  35%|███▍      | 28/81 [00:03<00:05,  9.23batch/s]Link prediction evaluation:  36%|███▌      | 29/81 [00:03<00:05,  9.22batch/s]Link prediction evaluation:  37%|███▋      | 30/81 [00:03<00:05,  9.20batch/s]Link prediction evaluation:  38%|███▊      | 31/81 [00:03<00:05,  9.22batch/s]Link prediction evaluation:  40%|███▉      | 32/81 [00:03<00:05,  9.22batch/s]Link prediction evaluation:  41%|████      | 33/81 [00:03<00:05,  9.22batch/s]Link prediction evaluation:  42%|████▏     | 34/81 [00:03<00:05,  9.24batch/s]Link prediction evaluation:  43%|████▎     | 35/81 [00:03<00:04,  9.25batch/s]Link prediction evaluation:  44%|████▍     | 36/81 [00:03<00:04,  9.25batch/s]Link prediction evaluation:  46%|████▌     | 37/81 [00:04<00:04,  9.25batch/s]Link prediction evaluation:  47%|████▋     | 38/81 [00:04<00:04,  9.26batch/s]Link prediction evaluation:  48%|████▊     | 39/81 [00:04<00:04,  9.26batch/s]Link prediction evaluation:  49%|████▉     | 40/81 [00:04<00:04,  9.24batch/s]Link prediction evaluation:  51%|█████     | 41/81 [00:04<00:04,  9.24batch/s]Link prediction evaluation:  52%|█████▏    | 42/81 [00:04<00:04,  9.24batch/s]Link prediction evaluation:  53%|█████▎    | 43/81 [00:04<00:04,  9.24batch/s]Link prediction evaluation:  54%|█████▍    | 44/81 [00:04<00:04,  9.24batch/s]Link prediction evaluation:  56%|█████▌    | 45/81 [00:04<00:03,  9.23batch/s]Link prediction evaluation:  57%|█████▋    | 46/81 [00:05<00:03,  9.21batch/s]Link prediction evaluation:  58%|█████▊    | 47/81 [00:05<00:03,  9.22batch/s]Link prediction evaluation:  59%|█████▉    | 48/81 [00:05<00:03,  9.21batch/s]Link prediction evaluation:  60%|██████    | 49/81 [00:05<00:03,  9.21batch/s]Link prediction evaluation:  62%|██████▏   | 50/81 [00:05<00:03,  9.22batch/s]Link prediction evaluation:  63%|██████▎   | 51/81 [00:05<00:03,  9.22batch/s]Link prediction evaluation:  64%|██████▍   | 52/81 [00:05<00:03,  9.20batch/s]Link prediction evaluation:  65%|██████▌   | 53/81 [00:05<00:03,  9.20batch/s]Link prediction evaluation:  67%|██████▋   | 54/81 [00:05<00:02,  9.21batch/s]Link prediction evaluation:  68%|██████▊   | 55/81 [00:06<00:02,  9.22batch/s]Link prediction evaluation:  69%|██████▉   | 56/81 [00:06<00:02,  9.21batch/s]Link prediction evaluation:  70%|███████   | 57/81 [00:06<00:02,  9.20batch/s]Link prediction evaluation:  72%|███████▏  | 58/81 [00:06<00:02,  9.18batch/s]Link prediction evaluation:  73%|███████▎  | 59/81 [00:06<00:02,  9.20batch/s]Link prediction evaluation:  74%|███████▍  | 60/81 [00:06<00:02,  9.20batch/s]Link prediction evaluation:  75%|███████▌  | 61/81 [00:06<00:02,  9.21batch/s]Link prediction evaluation:  77%|███████▋  | 62/81 [00:06<00:02,  9.22batch/s]Link prediction evaluation:  78%|███████▊  | 63/81 [00:06<00:01,  9.22batch/s]Link prediction evaluation:  79%|███████▉  | 64/81 [00:06<00:01,  9.22batch/s]Link prediction evaluation:  80%|████████  | 65/81 [00:07<00:01,  9.21batch/s]Link prediction evaluation:  81%|████████▏ | 66/81 [00:07<00:01,  9.21batch/s]Link prediction evaluation:  83%|████████▎ | 67/81 [00:07<00:01,  9.21batch/s]Link prediction evaluation:  84%|████████▍ | 68/81 [00:07<00:01,  9.21batch/s]Link prediction evaluation:  85%|████████▌ | 69/81 [00:07<00:01,  9.20batch/s]Link prediction evaluation:  86%|████████▋ | 70/81 [00:07<00:01,  9.21batch/s]Link prediction evaluation:  88%|████████▊ | 71/81 [00:07<00:01,  9.21batch/s]Link prediction evaluation:  89%|████████▉ | 72/81 [00:07<00:00,  9.22batch/s]Link prediction evaluation:  90%|█████████ | 73/81 [00:07<00:00,  9.22batch/s]Link prediction evaluation:  91%|█████████▏| 74/81 [00:08<00:00,  9.22batch/s]Link prediction evaluation:  93%|█████████▎| 75/81 [00:08<00:00,  9.23batch/s]Link prediction evaluation:  94%|█████████▍| 76/81 [00:08<00:00,  9.23batch/s]Link prediction evaluation:  95%|█████████▌| 77/81 [00:08<00:00,  9.24batch/s]Link prediction evaluation:  96%|█████████▋| 78/81 [00:08<00:00,  9.24batch/s]Link prediction evaluation:  98%|█████████▊| 79/81 [00:08<00:00,  9.22batch/s]Link prediction evaluation:  99%|█████████▉| 80/81 [00:08<00:00,  9.22batch/s]Link prediction evaluation: 100%|██████████| 81/81 [00:08<00:00,  9.25batch/s]
+2026-05-20 03:03:43,053 - INFO - Validation MRR: 0.006461751647293568
+2026-05-20 03:03:43,813 - INFO - Epoch[200] Complete. Time taken: 00:02:12.475
+2026-05-20 03:05:42,480 - INFO - Epoch 201 - Train Loss: 2977.5630965110845, Validation MRR: 0.006461751647293568, Learning Rate: 0.0007777851165098011
+2026-05-20 03:05:46,683 - INFO - Memory cleaned.
+2026-05-20 03:05:47,449 - INFO - Epoch[201] Complete. Time taken: 00:02:03.635
+2026-05-20 03:07:46,625 - INFO - Epoch 202 - Train Loss: 2970.307809947821, Validation MRR: 0.006461751647293568, Learning Rate: 0.0007695691614555002
+2026-05-20 03:07:50,782 - INFO - Memory cleaned.
+2026-05-20 03:07:51,543 - INFO - Epoch[202] Complete. Time taken: 00:02:04.094
+2026-05-20 03:09:50,993 - INFO - Epoch 203 - Train Loss: 2952.498752017853, Validation MRR: 0.006461751647293568, Learning Rate: 0.0007612492823579744
+2026-05-20 03:09:55,185 - INFO - Memory cleaned.
+2026-05-20 03:09:55,882 - INFO - Epoch[203] Complete. Time taken: 00:02:04.339
+2026-05-20 03:11:54,831 - INFO - Epoch 204 - Train Loss: 2975.8590938237235, Validation MRR: 0.006461751647293568, Learning Rate: 0.0007528286866889923
+2026-05-20 03:11:58,990 - INFO - Memory cleaned.
+2026-05-20 03:11:59,672 - INFO - Epoch[204] Complete. Time taken: 00:02:03.790
+2026-05-20 03:13:58,839 - INFO - Epoch 205 - Train Loss: 2950.5048168138137, Validation MRR: 0.006461751647293568, Learning Rate: 0.0007443106207484776
+2026-05-20 03:14:02,996 - INFO - Memory cleaned.
+2026-05-20 03:14:03,766 - INFO - Epoch[205] Complete. Time taken: 00:02:04.094
+2026-05-20 03:16:02,859 - INFO - Epoch 206 - Train Loss: 2955.790982317275, Validation MRR: 0.006461751647293568, Learning Rate: 0.0007356983684129988
+2026-05-20 03:16:07,023 - INFO - Memory cleaned.
+2026-05-20 03:16:07,818 - INFO - Epoch[206] Complete. Time taken: 00:02:04.052
+2026-05-20 03:18:06,599 - INFO - Epoch 207 - Train Loss: 2952.5056454448722, Validation MRR: 0.006461751647293568, Learning Rate: 0.0007269952498697733
+2026-05-20 03:18:10,758 - INFO - Memory cleaned.
+2026-05-20 03:18:11,544 - INFO - Epoch[207] Complete. Time taken: 00:02:03.725
+2026-05-20 03:20:10,121 - INFO - Epoch 208 - Train Loss: 2960.053471406891, Validation MRR: 0.006461751647293568, Learning Rate: 0.0007182046203366711
+2026-05-20 03:20:14,276 - INFO - Memory cleaned.
+2026-05-20 03:20:15,037 - INFO - Epoch[208] Complete. Time taken: 00:02:03.494
+2026-05-20 03:22:13,669 - INFO - Epoch 209 - Train Loss: 2945.4850229847943, Validation MRR: 0.006461751647293568, Learning Rate: 0.0007093298687687141
+2026-05-20 03:22:17,827 - INFO - Memory cleaned.
+2026-05-20 03:22:18,620 - INFO - Epoch[209] Complete. Time taken: 00:02:03.583
+2026-05-20 03:24:17,817 - INFO - Epoch 210 - Train Loss: 2962.5831347969547, Validation MRR: 0.006461751647293568, Learning Rate: 0.0007003744165515705
+2026-05-20 03:24:21,969 - INFO - Memory cleaned.
+2026-05-20 03:24:22,726 - INFO - Epoch[210] Complete. Time taken: 00:02:04.106
+2026-05-20 03:26:21,918 - INFO - Epoch 211 - Train Loss: 2961.619580544092, Validation MRR: 0.006461751647293568, Learning Rate: 0.000691341716182545
+2026-05-20 03:26:26,070 - INFO - Memory cleaned.
+2026-05-20 03:26:26,851 - INFO - Epoch[211] Complete. Time taken: 00:02:04.125
+2026-05-20 03:28:26,063 - INFO - Epoch 212 - Train Loss: 2954.727022772013, Validation MRR: 0.006461751647293568, Learning Rate: 0.0006822352499395748
+2026-05-20 03:28:30,225 - INFO - Memory cleaned.
+2026-05-20 03:28:30,996 - INFO - Epoch[212] Complete. Time taken: 00:02:04.145
+2026-05-20 03:30:30,211 - INFO - Epoch 213 - Train Loss: 2945.2389609550282, Validation MRR: 0.006461751647293568, Learning Rate: 0.0006730585285387465
+2026-05-20 03:30:34,365 - INFO - Memory cleaned.
+2026-05-20 03:30:35,135 - INFO - Epoch[213] Complete. Time taken: 00:02:04.139
+2026-05-20 03:32:34,342 - INFO - Epoch 214 - Train Loss: 2945.327146039851, Validation MRR: 0.006461751647293568, Learning Rate: 0.0006638150897808467
+2026-05-20 03:32:38,496 - INFO - Memory cleaned.
+2026-05-20 03:32:39,260 - INFO - Epoch[214] Complete. Time taken: 00:02:04.125
+2026-05-20 03:34:38,504 - INFO - Epoch 215 - Train Loss: 2956.92113296222, Validation MRR: 0.006461751647293568, Learning Rate: 0.0006545084971874737
+2026-05-20 03:34:42,663 - INFO - Memory cleaned.
+2026-05-20 03:34:43,435 - INFO - Epoch[215] Complete. Time taken: 00:02:04.175
+2026-05-20 03:36:42,668 - INFO - Epoch 216 - Train Loss: 2945.59060753559, Validation MRR: 0.006461751647293568, Learning Rate: 0.0006451423386272313
+2026-05-20 03:36:46,824 - INFO - Memory cleaned.
+2026-05-20 03:36:47,581 - INFO - Epoch[216] Complete. Time taken: 00:02:04.145
+2026-05-20 03:38:46,796 - INFO - Epoch 217 - Train Loss: 2961.593487757467, Validation MRR: 0.006461751647293568, Learning Rate: 0.0006357202249325371
+2026-05-20 03:38:50,950 - INFO - Memory cleaned.
+2026-05-20 03:38:51,715 - INFO - Epoch[217] Complete. Time taken: 00:02:04.134
+2026-05-20 03:40:50,927 - INFO - Epoch 218 - Train Loss: 2945.9571093577815, Validation MRR: 0.006461751647293568, Learning Rate: 0.0006262457885075791
+2026-05-20 03:40:55,081 - INFO - Memory cleaned.
+2026-05-20 03:40:55,854 - INFO - Epoch[218] Complete. Time taken: 00:02:04.138
+2026-05-20 03:42:54,695 - INFO - Epoch 219 - Train Loss: 2929.436801130801, Validation MRR: 0.006461751647293568, Learning Rate: 0.0006167226819279528
+2026-05-20 03:42:58,864 - INFO - Memory cleaned.
+2026-05-20 03:42:59,651 - INFO - Epoch[219] Complete. Time taken: 00:02:03.797
+2026-05-20 03:44:58,244 - INFO - Epoch 220 - Train Loss: 2927.2825080717157, Validation MRR: 0.006461751647293568, Learning Rate: 0.0006071545765325253
+2026-05-20 03:45:02,401 - INFO - Memory cleaned.
+2026-05-20 03:45:02,402 - INFO - Evaluating on validation set at epoch 220...
+Link prediction evaluation:   0%|          | 0/81 [00:00<?, ?batch/s]Link prediction evaluation:   1%|          | 1/81 [00:00<00:16,  4.88batch/s]Link prediction evaluation:   2%|▏         | 2/81 [00:00<00:11,  6.74batch/s]Link prediction evaluation:   4%|▎         | 3/81 [00:00<00:10,  7.63batch/s]Link prediction evaluation:   5%|▍         | 4/81 [00:00<00:09,  8.19batch/s]Link prediction evaluation:   6%|▌         | 5/81 [00:00<00:08,  8.51batch/s]Link prediction evaluation:   7%|▋         | 6/81 [00:00<00:08,  8.74batch/s]Link prediction evaluation:   9%|▊         | 7/81 [00:00<00:08,  8.89batch/s]Link prediction evaluation:  10%|▉         | 8/81 [00:00<00:08,  8.98batch/s]Link prediction evaluation:  11%|█         | 9/81 [00:01<00:07,  9.05batch/s]Link prediction evaluation:  12%|█▏        | 10/81 [00:01<00:07,  9.09batch/s]Link prediction evaluation:  14%|█▎        | 11/81 [00:01<00:07,  9.13batch/s]Link prediction evaluation:  15%|█▍        | 12/81 [00:01<00:07,  9.17batch/s]Link prediction evaluation:  16%|█▌        | 13/81 [00:01<00:07,  9.18batch/s]Link prediction evaluation:  17%|█▋        | 14/81 [00:01<00:07,  9.19batch/s]Link prediction evaluation:  19%|█▊        | 15/81 [00:01<00:07,  9.21batch/s]Link prediction evaluation:  20%|█▉        | 16/81 [00:01<00:07,  9.20batch/s]Link prediction evaluation:  21%|██        | 17/81 [00:01<00:06,  9.20batch/s]Link prediction evaluation:  22%|██▏       | 18/81 [00:02<00:06,  9.21batch/s]Link prediction evaluation:  23%|██▎       | 19/81 [00:02<00:06,  9.20batch/s]Link prediction evaluation:  25%|██▍       | 20/81 [00:02<00:06,  9.20batch/s]Link prediction evaluation:  26%|██▌       | 21/81 [00:02<00:06,  9.21batch/s]Link prediction evaluation:  27%|██▋       | 22/81 [00:02<00:06,  9.20batch/s]Link prediction evaluation:  28%|██▊       | 23/81 [00:02<00:06,  9.21batch/s]Link prediction evaluation:  30%|██▉       | 24/81 [00:02<00:06,  9.20batch/s]Link prediction evaluation:  31%|███       | 25/81 [00:02<00:06,  9.20batch/s]Link prediction evaluation:  32%|███▏      | 26/81 [00:02<00:05,  9.21batch/s]Link prediction evaluation:  33%|███▎      | 27/81 [00:03<00:05,  9.21batch/s]Link prediction evaluation:  35%|███▍      | 28/81 [00:03<00:05,  9.22batch/s]Link prediction evaluation:  36%|███▌      | 29/81 [00:03<00:05,  9.21batch/s]Link prediction evaluation:  37%|███▋      | 30/81 [00:03<00:05,  9.20batch/s]Link prediction evaluation:  38%|███▊      | 31/81 [00:03<00:05,  9.21batch/s]Link prediction evaluation:  40%|███▉      | 32/81 [00:03<00:05,  9.21batch/s]Link prediction evaluation:  41%|████      | 33/81 [00:03<00:05,  9.21batch/s]Link prediction evaluation:  42%|████▏     | 34/81 [00:03<00:05,  9.24batch/s]Link prediction evaluation:  43%|████▎     | 35/81 [00:03<00:04,  9.24batch/s]Link prediction evaluation:  44%|████▍     | 36/81 [00:04<00:04,  9.24batch/s]Link prediction evaluation:  46%|████▌     | 37/81 [00:04<00:04,  9.25batch/s]Link prediction evaluation:  47%|████▋     | 38/81 [00:04<00:04,  9.25batch/s]Link prediction evaluation:  48%|████▊     | 39/81 [00:04<00:04,  9.25batch/s]Link prediction evaluation:  49%|████▉     | 40/81 [00:04<00:04,  9.22batch/s]Link prediction evaluation:  51%|█████     | 41/81 [00:04<00:04,  9.23batch/s]Link prediction evaluation:  52%|█████▏    | 42/81 [00:04<00:04,  9.23batch/s]Link prediction evaluation:  53%|█████▎    | 43/81 [00:04<00:04,  9.23batch/s]Link prediction evaluation:  54%|█████▍    | 44/81 [00:04<00:04,  9.23batch/s]Link prediction evaluation:  56%|█████▌    | 45/81 [00:04<00:03,  9.22batch/s]Link prediction evaluation:  57%|█████▋    | 46/81 [00:05<00:03,  9.20batch/s]Link prediction evaluation:  58%|█████▊    | 47/81 [00:05<00:03,  9.21batch/s]Link prediction evaluation:  59%|█████▉    | 48/81 [00:05<00:03,  9.20batch/s]Link prediction evaluation:  60%|██████    | 49/81 [00:05<00:03,  9.20batch/s]Link prediction evaluation:  62%|██████▏   | 50/81 [00:05<00:03,  9.21batch/s]Link prediction evaluation:  63%|██████▎   | 51/81 [00:05<00:03,  9.21batch/s]Link prediction evaluation:  64%|██████▍   | 52/81 [00:05<00:03,  9.20batch/s]Link prediction evaluation:  65%|██████▌   | 53/81 [00:05<00:03,  9.20batch/s]Link prediction evaluation:  67%|██████▋   | 54/81 [00:05<00:02,  9.21batch/s]Link prediction evaluation:  68%|██████▊   | 55/81 [00:06<00:02,  9.22batch/s]Link prediction evaluation:  69%|██████▉   | 56/81 [00:06<00:02,  9.21batch/s]Link prediction evaluation:  70%|███████   | 57/81 [00:06<00:02,  9.20batch/s]Link prediction evaluation:  72%|███████▏  | 58/81 [00:06<00:02,  9.20batch/s]Link prediction evaluation:  73%|███████▎  | 59/81 [00:06<00:02,  9.22batch/s]Link prediction evaluation:  74%|███████▍  | 60/81 [00:06<00:02,  9.21batch/s]Link prediction evaluation:  75%|███████▌  | 61/81 [00:06<00:02,  9.22batch/s]Link prediction evaluation:  77%|███████▋  | 62/81 [00:06<00:02,  9.23batch/s]Link prediction evaluation:  78%|███████▊  | 63/81 [00:06<00:01,  9.23batch/s]Link prediction evaluation:  79%|███████▉  | 64/81 [00:07<00:01,  9.22batch/s]Link prediction evaluation:  80%|████████  | 65/81 [00:07<00:01,  9.22batch/s]Link prediction evaluation:  81%|████████▏ | 66/81 [00:07<00:01,  9.21batch/s]Link prediction evaluation:  83%|████████▎ | 67/81 [00:07<00:01,  9.21batch/s]Link prediction evaluation:  84%|████████▍ | 68/81 [00:07<00:01,  9.21batch/s]Link prediction evaluation:  85%|████████▌ | 69/81 [00:07<00:01,  9.20batch/s]Link prediction evaluation:  86%|████████▋ | 70/81 [00:07<00:01,  9.21batch/s]Link prediction evaluation:  88%|████████▊ | 71/81 [00:07<00:01,  9.21batch/s]Link prediction evaluation:  89%|████████▉ | 72/81 [00:07<00:00,  9.22batch/s]Link prediction evaluation:  90%|█████████ | 73/81 [00:08<00:00,  9.21batch/s]Link prediction evaluation:  91%|█████████▏| 74/81 [00:08<00:00,  9.22batch/s]Link prediction evaluation:  93%|█████████▎| 75/81 [00:08<00:00,  9.22batch/s]Link prediction evaluation:  94%|█████████▍| 76/81 [00:08<00:00,  9.22batch/s]Link prediction evaluation:  95%|█████████▌| 77/81 [00:08<00:00,  9.23batch/s]Link prediction evaluation:  96%|█████████▋| 78/81 [00:08<00:00,  9.24batch/s]Link prediction evaluation:  98%|█████████▊| 79/81 [00:08<00:00,  9.22batch/s]Link prediction evaluation:  99%|█████████▉| 80/81 [00:08<00:00,  9.21batch/s]Link prediction evaluation: 100%|██████████| 81/81 [00:08<00:00,  9.18batch/s]
+2026-05-20 03:45:11,229 - INFO - Validation MRR: 0.006271454971283674
+2026-05-20 03:45:11,229 ignite.handlers.early_stopping.EarlyStopping INFO: EarlyStopping: Stop training
+2026-05-20 03:45:11,229 - INFO - Terminate signaled. Engine will stop after current iteration is finished.
+2026-05-20 03:45:11,992 - INFO - Training completed after 220 epochs.
+2026-05-20 03:45:11,992 - INFO - Engine run complete. Time taken: 07:36:38.705
+2026-05-20 03:45:24,355 - WARNING - /lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/dev/run_training.py:186: UserWarning: The 'scalar_share' field is missing for model ANALOGY. Defaulting to 0.5.
+  warnings.warn(f"The 'scalar_share' field is missing for model {model_name}. Defaulting to 0.5.")
+
+2026-05-20 03:45:25,110 - INFO - Loading best model.
+2026-05-20 03:45:25,112 - INFO - Best model is ./checkpoints/best_model_checkpoint_val_mrr=0.0155.pt
+2026-05-20 03:45:25,112 - WARNING - /lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/dev/run_training.py:820: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  checkpoint = torch.load(os.path.join(checkpoint_dir, best_model), map_location=device)
+
+2026-05-20 03:45:26,621 - INFO - Best model successfully loaded.
+2026-05-20 03:45:26,621 - INFO - Evaluating on the test set with best model...
+DRUG_DISEASE_ASSOCIATION
+Link prediction evaluation:   0%|          | 0/88 [00:00<?, ?batch/s]Link prediction evaluation:   1%|          | 1/88 [00:00<00:21,  4.03batch/s]Link prediction evaluation:   2%|▏         | 2/88 [00:00<00:14,  5.97batch/s]Link prediction evaluation:   3%|▎         | 3/88 [00:00<00:12,  7.03batch/s]Link prediction evaluation:   5%|▍         | 4/88 [00:00<00:10,  7.68batch/s]Link prediction evaluation:   6%|▌         | 5/88 [00:00<00:10,  8.11batch/s]Link prediction evaluation:   7%|▋         | 6/88 [00:00<00:09,  8.38batch/s]Link prediction evaluation:   8%|▊         | 7/88 [00:00<00:09,  8.58batch/s]Link prediction evaluation:   9%|▉         | 8/88 [00:01<00:09,  8.70batch/s]Link prediction evaluation:  10%|█         | 9/88 [00:01<00:08,  8.80batch/s]Link prediction evaluation:  11%|█▏        | 10/88 [00:01<00:08,  8.88batch/s]Link prediction evaluation:  12%|█▎        | 11/88 [00:01<00:08,  8.92batch/s]Link prediction evaluation:  14%|█▎        | 12/88 [00:01<00:08,  8.93batch/s]Link prediction evaluation:  15%|█▍        | 13/88 [00:01<00:08,  8.96batch/s]Link prediction evaluation:  16%|█▌        | 14/88 [00:01<00:08,  8.97batch/s]Link prediction evaluation:  17%|█▋        | 15/88 [00:01<00:08,  8.97batch/s]Link prediction evaluation:  18%|█▊        | 16/88 [00:01<00:08,  8.98batch/s]Link prediction evaluation:  19%|█▉        | 17/88 [00:02<00:07,  8.98batch/s]Link prediction evaluation:  20%|██        | 18/88 [00:02<00:07,  8.98batch/s]Link prediction evaluation:  22%|██▏       | 19/88 [00:02<00:07,  8.98batch/s]Link prediction evaluation:  23%|██▎       | 20/88 [00:02<00:07,  8.99batch/s]Link prediction evaluation:  24%|██▍       | 21/88 [00:02<00:07,  8.98batch/s]Link prediction evaluation:  25%|██▌       | 22/88 [00:02<00:07,  8.97batch/s]Link prediction evaluation:  26%|██▌       | 23/88 [00:02<00:07,  8.97batch/s]Link prediction evaluation:  27%|██▋       | 24/88 [00:02<00:07,  8.96batch/s]Link prediction evaluation:  28%|██▊       | 25/88 [00:02<00:07,  8.96batch/s]Link prediction evaluation:  30%|██▉       | 26/88 [00:03<00:06,  8.96batch/s]Link prediction evaluation:  31%|███       | 27/88 [00:03<00:06,  8.96batch/s]Link prediction evaluation:  32%|███▏      | 28/88 [00:03<00:06,  8.95batch/s]Link prediction evaluation:  33%|███▎      | 29/88 [00:03<00:06,  8.96batch/s]Link prediction evaluation:  34%|███▍      | 30/88 [00:03<00:06,  8.96batch/s]Link prediction evaluation:  35%|███▌      | 31/88 [00:03<00:06,  8.96batch/s]Link prediction evaluation:  36%|███▋      | 32/88 [00:03<00:06,  8.98batch/s]Link prediction evaluation:  38%|███▊      | 33/88 [00:03<00:06,  8.98batch/s]Link prediction evaluation:  39%|███▊      | 34/88 [00:03<00:06,  8.98batch/s]Link prediction evaluation:  40%|███▉      | 35/88 [00:04<00:05,  8.98batch/s]Link prediction evaluation:  41%|████      | 36/88 [00:04<00:05,  8.99batch/s]Link prediction evaluation:  42%|████▏     | 37/88 [00:04<00:05,  8.99batch/s]Link prediction evaluation:  43%|████▎     | 38/88 [00:04<00:05,  8.99batch/s]Link prediction evaluation:  44%|████▍     | 39/88 [00:04<00:05,  8.99batch/s]Link prediction evaluation:  45%|████▌     | 40/88 [00:04<00:05,  9.00batch/s]Link prediction evaluation:  47%|████▋     | 41/88 [00:04<00:05,  8.99batch/s]Link prediction evaluation:  48%|████▊     | 42/88 [00:04<00:05,  9.01batch/s]Link prediction evaluation:  49%|████▉     | 43/88 [00:04<00:05,  8.99batch/s]Link prediction evaluation:  50%|█████     | 44/88 [00:05<00:04,  8.98batch/s]Link prediction evaluation:  51%|█████     | 45/88 [00:05<00:04,  9.00batch/s]Link prediction evaluation:  52%|█████▏    | 46/88 [00:05<00:04,  9.00batch/s]Link prediction evaluation:  53%|█████▎    | 47/88 [00:05<00:04,  8.99batch/s]Link prediction evaluation:  55%|█████▍    | 48/88 [00:05<00:04,  8.99batch/s]Link prediction evaluation:  56%|█████▌    | 49/88 [00:05<00:04,  8.98batch/s]Link prediction evaluation:  57%|█████▋    | 50/88 [00:05<00:04,  8.99batch/s]Link prediction evaluation:  58%|█████▊    | 51/88 [00:05<00:04,  8.98batch/s]Link prediction evaluation:  59%|█████▉    | 52/88 [00:05<00:04,  8.98batch/s]Link prediction evaluation:  60%|██████    | 53/88 [00:06<00:03,  9.00batch/s]Link prediction evaluation:  61%|██████▏   | 54/88 [00:06<00:03,  9.00batch/s]Link prediction evaluation:  62%|██████▎   | 55/88 [00:06<00:03,  9.00batch/s]Link prediction evaluation:  64%|██████▎   | 56/88 [00:06<00:03,  9.00batch/s]Link prediction evaluation:  65%|██████▍   | 57/88 [00:06<00:03,  8.99batch/s]Link prediction evaluation:  66%|██████▌   | 58/88 [00:06<00:03,  8.99batch/s]Link prediction evaluation:  67%|██████▋   | 59/88 [00:06<00:03,  8.99batch/s]Link prediction evaluation:  68%|██████▊   | 60/88 [00:06<00:03,  9.00batch/s]Link prediction evaluation:  69%|██████▉   | 61/88 [00:06<00:03,  9.00batch/s]Link prediction evaluation:  70%|███████   | 62/88 [00:07<00:02,  9.00batch/s]Link prediction evaluation:  72%|███████▏  | 63/88 [00:07<00:02,  9.00batch/s]Link prediction evaluation:  73%|███████▎  | 64/88 [00:07<00:02,  9.00batch/s]Link prediction evaluation:  74%|███████▍  | 65/88 [00:07<00:02,  9.01batch/s]Link prediction evaluation:  75%|███████▌  | 66/88 [00:07<00:02,  8.99batch/s]Link prediction evaluation:  76%|███████▌  | 67/88 [00:07<00:02,  8.99batch/s]Link prediction evaluation:  77%|███████▋  | 68/88 [00:07<00:02,  8.97batch/s]Link prediction evaluation:  78%|███████▊  | 69/88 [00:07<00:02,  8.98batch/s]Link prediction evaluation:  80%|███████▉  | 70/88 [00:07<00:02,  8.97batch/s]Link prediction evaluation:  81%|████████  | 71/88 [00:08<00:01,  8.97batch/s]Link prediction evaluation:  82%|████████▏ | 72/88 [00:08<00:01,  8.99batch/s]Link prediction evaluation:  83%|████████▎ | 73/88 [00:08<00:01,  8.96batch/s]Link prediction evaluation:  84%|████████▍ | 74/88 [00:08<00:01,  8.96batch/s]Link prediction evaluation:  85%|████████▌ | 75/88 [00:08<00:01,  8.95batch/s]Link prediction evaluation:  86%|████████▋ | 76/88 [00:08<00:01,  8.95batch/s]Link prediction evaluation:  88%|████████▊ | 77/88 [00:08<00:01,  8.96batch/s]Link prediction evaluation:  89%|████████▊ | 78/88 [00:08<00:01,  8.97batch/s]Link prediction evaluation:  90%|████████▉ | 79/88 [00:08<00:01,  8.99batch/s]Link prediction evaluation:  91%|█████████ | 80/88 [00:09<00:00,  8.99batch/s]Link prediction evaluation:  92%|█████████▏| 81/88 [00:09<00:00,  8.97batch/s]Link prediction evaluation:  93%|█████████▎| 82/88 [00:09<00:00,  8.97batch/s]Link prediction evaluation:  94%|█████████▍| 83/88 [00:09<00:00,  8.98batch/s]Link prediction evaluation:  95%|█████████▌| 84/88 [00:09<00:00,  8.96batch/s]Link prediction evaluation:  97%|█████████▋| 85/88 [00:09<00:00,  8.97batch/s]Link prediction evaluation:  98%|█████████▊| 86/88 [00:09<00:00,  8.98batch/s]Link prediction evaluation:  99%|█████████▉| 87/88 [00:09<00:00,  8.99batch/s]Link prediction evaluation: 100%|██████████| 88/88 [00:09<00:00,  8.90batch/s]
+2026-05-20 03:45:37,031 - INFO - Final Test MRR with best model: 0.015290491282939911
+2026-05-20 03:45:37,031 - INFO - Final Test Hits@10 with best model: 0.027857399079948664
+Link prediction evaluation:   0%|          | 0/84 [00:00<?, ?batch/s]Link prediction evaluation:   1%|          | 1/84 [00:00<00:09,  8.95batch/s]Link prediction evaluation:   2%|▏         | 2/84 [00:00<00:09,  8.97batch/s]Link prediction evaluation:   4%|▎         | 3/84 [00:00<00:09,  8.96batch/s]Link prediction evaluation:   5%|▍         | 4/84 [00:00<00:08,  8.94batch/s]Link prediction evaluation:   6%|▌         | 5/84 [00:00<00:08,  8.95batch/s]Link prediction evaluation:   7%|▋         | 6/84 [00:00<00:08,  8.97batch/s]Link prediction evaluation:   8%|▊         | 7/84 [00:00<00:08,  8.97batch/s]Link prediction evaluation:  10%|▉         | 8/84 [00:00<00:08,  8.98batch/s]Link prediction evaluation:  11%|█         | 9/84 [00:01<00:08,  8.99batch/s]Link prediction evaluation:  12%|█▏        | 10/84 [00:01<00:08,  8.99batch/s]Link prediction evaluation:  13%|█▎        | 11/84 [00:01<00:08,  8.99batch/s]Link prediction evaluation:  14%|█▍        | 12/84 [00:01<00:08,  8.98batch/s]Link prediction evaluation:  15%|█▌        | 13/84 [00:01<00:07,  8.99batch/s]Link prediction evaluation:  17%|█▋        | 14/84 [00:01<00:07,  8.99batch/s]Link prediction evaluation:  18%|█▊        | 15/84 [00:01<00:07,  8.99batch/s]Link prediction evaluation:  19%|█▉        | 16/84 [00:01<00:07,  8.98batch/s]Link prediction evaluation:  20%|██        | 17/84 [00:01<00:07,  8.98batch/s]Link prediction evaluation:  21%|██▏       | 18/84 [00:02<00:07,  8.98batch/s]Link prediction evaluation:  23%|██▎       | 19/84 [00:02<00:07,  8.98batch/s]Link prediction evaluation:  24%|██▍       | 20/84 [00:02<00:07,  8.97batch/s]Link prediction evaluation:  25%|██▌       | 21/84 [00:02<00:07,  8.96batch/s]Link prediction evaluation:  26%|██▌       | 22/84 [00:02<00:06,  8.96batch/s]Link prediction evaluation:  27%|██▋       | 23/84 [00:02<00:06,  8.94batch/s]Link prediction evaluation:  29%|██▊       | 24/84 [00:02<00:06,  8.95batch/s]Link prediction evaluation:  30%|██▉       | 25/84 [00:02<00:06,  8.95batch/s]Link prediction evaluation:  31%|███       | 26/84 [00:02<00:06,  8.95batch/s]Link prediction evaluation:  32%|███▏      | 27/84 [00:03<00:06,  8.94batch/s]Link prediction evaluation:  33%|███▎      | 28/84 [00:03<00:06,  8.95batch/s]Link prediction evaluation:  35%|███▍      | 29/84 [00:03<00:06,  8.96batch/s]Link prediction evaluation:  36%|███▌      | 30/84 [00:03<00:06,  8.95batch/s]Link prediction evaluation:  37%|███▋      | 31/84 [00:03<00:05,  8.97batch/s]Link prediction evaluation:  38%|███▊      | 32/84 [00:03<00:05,  8.98batch/s]Link prediction evaluation:  39%|███▉      | 33/84 [00:03<00:05,  8.97batch/s]Link prediction evaluation:  40%|████      | 34/84 [00:03<00:05,  8.97batch/s]Link prediction evaluation:  42%|████▏     | 35/84 [00:03<00:05,  8.98batch/s]Link prediction evaluation:  43%|████▎     | 36/84 [00:04<00:05,  8.97batch/s]Link prediction evaluation:  44%|████▍     | 37/84 [00:04<00:05,  8.98batch/s]Link prediction evaluation:  45%|████▌     | 38/84 [00:04<00:05,  8.97batch/s]Link prediction evaluation:  46%|████▋     | 39/84 [00:04<00:05,  8.97batch/s]Link prediction evaluation:  48%|████▊     | 40/84 [00:04<00:04,  8.98batch/s]Link prediction evaluation:  49%|████▉     | 41/84 [00:04<00:04,  8.97batch/s]Link prediction evaluation:  50%|█████     | 42/84 [00:04<00:04,  8.98batch/s]Link prediction evaluation:  51%|█████     | 43/84 [00:04<00:04,  8.99batch/s]Link prediction evaluation:  52%|█████▏    | 44/84 [00:04<00:04,  8.98batch/s]Link prediction evaluation:  54%|█████▎    | 45/84 [00:05<00:04,  8.97batch/s]Link prediction evaluation:  55%|█████▍    | 46/84 [00:05<00:04,  8.98batch/s]Link prediction evaluation:  56%|█████▌    | 47/84 [00:05<00:04,  8.98batch/s]Link prediction evaluation:  57%|█████▋    | 48/84 [00:05<00:04,  8.97batch/s]Link prediction evaluation:  58%|█████▊    | 49/84 [00:05<00:03,  8.98batch/s]Link prediction evaluation:  60%|█████▉    | 50/84 [00:05<00:03,  8.98batch/s]Link prediction evaluation:  61%|██████    | 51/84 [00:05<00:03,  8.98batch/s]Link prediction evaluation:  62%|██████▏   | 52/84 [00:05<00:03,  8.98batch/s]Link prediction evaluation:  63%|██████▎   | 53/84 [00:05<00:03,  8.98batch/s]Link prediction evaluation:  64%|██████▍   | 54/84 [00:06<00:03,  8.98batch/s]Link prediction evaluation:  65%|██████▌   | 55/84 [00:06<00:03,  8.98batch/s]Link prediction evaluation:  67%|██████▋   | 56/84 [00:06<00:03,  8.98batch/s]Link prediction evaluation:  68%|██████▊   | 57/84 [00:06<00:03,  8.99batch/s]Link prediction evaluation:  69%|██████▉   | 58/84 [00:06<00:02,  8.98batch/s]Link prediction evaluation:  70%|███████   | 59/84 [00:06<00:02,  8.99batch/s]Link prediction evaluation:  71%|███████▏  | 60/84 [00:06<00:02,  8.98batch/s]Link prediction evaluation:  73%|███████▎  | 61/84 [00:06<00:02,  8.98batch/s]Link prediction evaluation:  74%|███████▍  | 62/84 [00:06<00:02,  8.98batch/s]Link prediction evaluation:  75%|███████▌  | 63/84 [00:07<00:02,  8.97batch/s]Link prediction evaluation:  76%|███████▌  | 64/84 [00:07<00:02,  8.97batch/s]Link prediction evaluation:  77%|███████▋  | 65/84 [00:07<00:02,  8.96batch/s]Link prediction evaluation:  79%|███████▊  | 66/84 [00:07<00:02,  8.95batch/s]Link prediction evaluation:  80%|███████▉  | 67/84 [00:07<00:01,  8.96batch/s]Link prediction evaluation:  81%|████████  | 68/84 [00:07<00:01,  8.98batch/s]Link prediction evaluation:  82%|████████▏ | 69/84 [00:07<00:01,  8.96batch/s]Link prediction evaluation:  83%|████████▎ | 70/84 [00:07<00:01,  8.96batch/s]Link prediction evaluation:  85%|████████▍ | 71/84 [00:07<00:01,  8.94batch/s]Link prediction evaluation:  86%|████████▌ | 72/84 [00:08<00:01,  8.94batch/s]Link prediction evaluation:  87%|████████▋ | 73/84 [00:08<00:01,  8.95batch/s]Link prediction evaluation:  88%|████████▊ | 74/84 [00:08<00:01,  8.95batch/s]Link prediction evaluation:  89%|████████▉ | 75/84 [00:08<00:01,  8.98batch/s]Link prediction evaluation:  90%|█████████ | 76/84 [00:08<00:00,  8.98batch/s]Link prediction evaluation:  92%|█████████▏| 77/84 [00:08<00:00,  8.97batch/s]Link prediction evaluation:  93%|█████████▎| 78/84 [00:08<00:00,  8.96batch/s]Link prediction evaluation:  94%|█████████▍| 79/84 [00:08<00:00,  8.97batch/s]Link prediction evaluation:  95%|█████████▌| 80/84 [00:08<00:00,  8.95batch/s]Link prediction evaluation:  96%|█████████▋| 81/84 [00:09<00:00,  8.96batch/s]Link prediction evaluation:  98%|█████████▊| 82/84 [00:09<00:00,  8.97batch/s]Link prediction evaluation:  99%|█████████▉| 83/84 [00:09<00:00,  8.98batch/s]Link prediction evaluation: 100%|██████████| 84/84 [00:09<00:00,  9.08batch/s]
+Link prediction evaluation:   0%|          | 0/5 [00:00<?, ?batch/s]Link prediction evaluation:  20%|██        | 1/5 [00:00<00:00,  9.34batch/s]Link prediction evaluation:  40%|████      | 2/5 [00:00<00:00,  9.32batch/s]Link prediction evaluation:  60%|██████    | 3/5 [00:00<00:00,  9.32batch/s]Link prediction evaluation:  80%|████████  | 4/5 [00:00<00:00,  9.32batch/s]Link prediction evaluation: 100%|██████████| 5/5 [00:00<00:00, 11.06batch/s]
+2026-05-20 03:45:57,572 - INFO - MRR for frequent nodes (threshold=10) in relation DRUG_DISEASE_ASSOCIATION: 0.015474509447813034
+2026-05-20 03:45:57,572 - INFO - MRR for infrequent nodes (threshold=10) in relation DRUG_DISEASE_ASSOCIATION: 0.011655967682600021
+2026-05-20 03:45:57,572 - INFO - Hits@10 for frequent nodes (threshold=10) in relation DRUG_DISEASE_ASSOCIATION: 0.02832674654200673
+2026-05-20 03:45:57,572 - INFO - Hits@10 for infrequent nodes (threshold=10) in relation DRUG_DISEASE_ASSOCIATION: 0.018587360624223948
+2026-05-20 03:45:57,575 - INFO - MRR evaluation results stored in ./evaluation_metrics.yaml
+2026-05-20 03:45:57,578 - INFO - Hit@10 evaluation results stored in ./evaluation_hit@10.yaml
+Link prediction evaluation:   0%|          | 0/5 [00:00<?, ?batch/s]Link prediction evaluation:  20%|██        | 1/5 [00:00<00:00,  9.60batch/s]Link prediction evaluation:  40%|████      | 2/5 [00:00<00:00,  9.67batch/s]Link prediction evaluation:  60%|██████    | 3/5 [00:00<00:00,  9.67batch/s]Link prediction evaluation:  80%|████████  | 4/5 [00:00<00:00,  9.70batch/s]Link prediction evaluation: 100%|██████████| 5/5 [00:00<00:00, 10.60batch/s]
+Link prediction evaluation:   0%|          | 0/5 [00:00<?, ?batch/s]Link prediction evaluation:  20%|██        | 1/5 [00:00<00:00,  6.48batch/s]Link prediction evaluation:  60%|██████    | 3/5 [00:00<00:00, 11.85batch/s]Link prediction evaluation: 100%|██████████| 5/5 [00:00<00:00, 14.11batch/s]
+2026-05-20 03:45:58,802 - INFO - MRR on inference set: 0.010515929199755192
+2026-05-20 03:45:58,805 - INFO - Evaluation results stored in ./inference_metrics.yaml
