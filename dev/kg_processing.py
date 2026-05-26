@@ -294,6 +294,9 @@ def cold_start_by_head_frequency_bin(kg, target_rel, val_ratio=0.1, test_ratio=0
     - No leakage occurs through "only-target" entities (i.e., entities that only appear
       in the target relation): such entities are forced into train and their triples
       cannot appear in val/test.
+    - No leakage occurs through heads that share triples with only-target tails: such
+      heads are also excluded from the val/test pool (otherwise some of their target
+      triples would be forced into train via the only-target tail, breaking cold start).
 
     Args:
         kg: KnowledgeGraph object with attributes `head_idx`, `tail_idx`, `relations`, etc.
@@ -381,6 +384,19 @@ def cold_start_by_head_frequency_bin(kg, target_rel, val_ratio=0.1, test_ratio=0
     logging.info(f"Only-target heads (excluded from val/test pool): {len(only_target_heads)}")
     logging.info(f"Only-target tails (their triples forced to train): {len(only_target_tails)}")
 
+    # === 9b. Identify heads in conflict with only-target tails ===
+    # If a head shares a target triple with an only-target tail, that triple will be
+    # forced into train (to keep the tail in the KG). If this head were also selected
+    # as cold-start, some of its target triples would leak into train. So we exclude
+    # such heads from the val/test pool by adding them to only_target_heads.
+    conflicted_heads = set()
+    for t in only_target_tails:
+        tail_triple_mask = (kg.tail_idx == t) & is_target
+        conflicted_heads.update(kg.head_idx[tail_triple_mask].tolist())
+    conflicted_heads -= only_target_heads  # for logging clarity
+    only_target_heads.update(conflicted_heads)
+    logging.info(f"Heads conflicting with only-target tails (added to train-only pool): {len(conflicted_heads)}")
+
     # Force all triples involving only-target entities to train
     forced_to_train = torch.zeros_like(is_target)
     if only_target_heads:
@@ -432,6 +448,13 @@ def cold_start_by_head_frequency_bin(kg, target_rel, val_ratio=0.1, test_ratio=0
     assert (mask_train & mask_val).sum() == 0, "Train/val overlap detected"
     assert (mask_train & mask_test).sum() == 0, "Train/test overlap detected"
     assert (mask_val & mask_test).sum() == 0, "Val/test overlap detected"
+
+    # === 11c. Sanity check: no test/val head appears in train target triples ===
+    train_target_heads = set(kg.head_idx[mask_train & is_target].tolist())
+    val_heads_set = set(kg.head_idx[mask_val].tolist())
+    test_heads_set = set(kg.head_idx[mask_test].tolist())
+    assert len(val_heads_set & train_target_heads) == 0, "Cold-start violated: val heads in train target triples"
+    assert len(test_heads_set & train_target_heads) == 0, "Cold-start violated: test heads in train target triples"
 
     # 12. Create final KG splits
     train_kg = my_knowledge_graph.KnowledgeGraph(
@@ -486,7 +509,9 @@ def cold_start_by_tail_frequency_bin(kg, target_rel, val_ratio=0.1, test_ratio=0
 
     Same structure and logic as cold_start_by_head_frequency_bin, but flipped to cold start on tails.
 
-    Now also handles "only-target" entities to prevent leakage.
+    Now also handles "only-target" entities to prevent leakage, and tails in conflict with
+    only-target heads (which would otherwise force some target triples into train and break
+    the cold start guarantee).
 
     Returns:
         train_kg, val_kg, test_kg
@@ -553,6 +578,18 @@ def cold_start_by_tail_frequency_bin(kg, target_rel, val_ratio=0.1, test_ratio=0
     logging.info(f"Only-target tails (excluded from val/test pool): {len(only_target_tails)}")
     logging.info(f"Only-target heads (their triples forced to train): {len(only_target_heads)}")
 
+    # === Identify tails in conflict with only-target heads ===
+    # If a tail shares a target triple with an only-target head, that triple will be
+    # forced into train. If this tail were also selected as cold-start, some of its
+    # target triples would leak into train. So we exclude such tails from the val/test pool.
+    conflicted_tails = set()
+    for h in only_target_heads:
+        head_triple_mask = (kg.head_idx == h) & is_target
+        conflicted_tails.update(kg.tail_idx[head_triple_mask].tolist())
+    conflicted_tails -= only_target_tails  # for logging clarity
+    only_target_tails.update(conflicted_tails)
+    logging.info(f"Tails conflicting with only-target heads (added to train-only pool): {len(conflicted_tails)}")
+
     # Force triples involving only-target entities to train
     forced_to_train = torch.zeros_like(is_target)
     if only_target_heads:
@@ -601,6 +638,13 @@ def cold_start_by_tail_frequency_bin(kg, target_rel, val_ratio=0.1, test_ratio=0
     assert (mask_train & mask_val).sum() == 0, "Train/val overlap detected"
     assert (mask_train & mask_test).sum() == 0, "Train/test overlap detected"
     assert (mask_val & mask_test).sum() == 0, "Val/test overlap detected"
+
+    # Cold-start guarantee: val/test tails must not appear in train target triples
+    train_target_tails = set(kg.tail_idx[mask_train & is_target].tolist())
+    val_tails_set = set(kg.tail_idx[mask_val].tolist())
+    test_tails_set = set(kg.tail_idx[mask_test].tolist())
+    assert len(val_tails_set & train_target_tails) == 0, "Cold-start violated: val tails in train target triples"
+    assert len(test_tails_set & train_target_tails) == 0, "Cold-start violated: test tails in train target triples"
 
     # Create final KG splits
     train_kg = my_knowledge_graph.KnowledgeGraph(
