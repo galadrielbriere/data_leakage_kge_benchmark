@@ -157,7 +157,8 @@ def clean_knowledge_graph(kg, config):
         logging.info("Removing duplicated triplets...")
         kg = my_data_redundancy.remove_duplicates_triplets(kg, ix2rel=id_to_rel_name)
 
-    duplicated_relations_list = []
+    duplicated_relations_list = []   # vrais reverses (tail,head)
+    same_sense_duplicates_list = []  # duplicates même sens (head,tail)
 
     if config['clean_kg']['check_DL1']:
         logging.info("Checking for semantically redundant and Cartesian product relations...")
@@ -168,14 +169,12 @@ def clean_knowledge_graph(kg, config):
         if duplicates_relations:
             logging.info(f'Adding {len(duplicates_relations)} near-duplicate relations '
                  f'({[(id_to_rel_name[a], id_to_rel_name[b]) for a, b in duplicates_relations]}) '
-                 f'to the list of known redundant relations.')
-            # logging.info(f'Adding {len(duplicates_relations)} near-duplicate relations ({[id_to_rel_name[rel] for rel in duplicates_relations]}) to the list of known redundant relations.')
-            duplicated_relations_list.extend(duplicates_relations)
+                 f'to the list of known SAME-SENSE redundant relations.')
+            same_sense_duplicates_list.extend(duplicates_relations)
         if rev_duplicates_relations:
             logging.info(f'Adding {len(rev_duplicates_relations)} near-reverse-duplicate relations '
                  f'({[(id_to_rel_name[a], id_to_rel_name[b]) for a, b in rev_duplicates_relations]}) '
                  f'to the list of known redundant relations.')
-            # logging.info(f'Adding {len(rev_duplicates_relations)} near-reverse-duplicate relations ({[id_to_rel_name[rel] for rel in rev_duplicates_relations]}) to the list of known redundant relations.')
             duplicated_relations_list.extend(rev_duplicates_relations)
 
         theta = config.get("clean_kg", {}).get("check_DL1_params", {}).get("theta", 0.8)
@@ -196,7 +195,7 @@ def clean_knowledge_graph(kg, config):
         relation_names = ", ".join([rel for rel in undirected_relations_names])
         logging.info(f'Adding reverse triplets for relations {relation_names}...')
         kg, undirected_relations_list = my_data_redundancy.add_inverse_relations(kg, [kg.rel2ix[key] for key in undirected_relations_names])
-            
+
         if config['clean_kg']['check_DL1']:
             logging.info(f'Adding created reverses {[rel for rel in undirected_relations_names]} to the list of known redundant relations.')
             duplicated_relations_list.extend(undirected_relations_list)
@@ -221,12 +220,19 @@ def clean_knowledge_graph(kg, config):
     if config['clean_kg']['clean_train_set']:
         logging.info("Cleaning the train set to avoid data leakage...")
         logging.info("Step 1: with respect to validation set.")
-        kg_train = my_data_redundancy.clean_datasets(kg_train, kg_val, known_reverses=duplicated_relations_list)
+        kg_train = my_data_redundancy.clean_datasets(
+            kg_train, kg_val,
+            known_reverses=duplicated_relations_list,
+            known_duplicates=same_sense_duplicates_list,
+        )
         logging.info("Step 2: with respect to test set.")
-        kg_train = my_data_redundancy.clean_datasets(kg_train, kg_test, known_reverses=duplicated_relations_list)
+        kg_train = my_data_redundancy.clean_datasets(
+            kg_train, kg_test,
+            known_reverses=duplicated_relations_list,
+            known_duplicates=same_sense_duplicates_list,
+        )
         if cartesian_rels:
             kg_train, kg_test = my_data_redundancy.clean_cartesians(kg_train, kg_test, cartesian_rels)
-
 
     kg_train_ok, _ = verify_entity_coverage(kg_train, kg)
     if not kg_train_ok:

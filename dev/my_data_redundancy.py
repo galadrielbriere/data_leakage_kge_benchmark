@@ -396,42 +396,71 @@ def ensure_entity_coverage(kg_train, kg_val, kg_test):
 
     return kg_train, kg_val, kg_test
 
-def clean_datasets(kg1, kg2, known_reverses):
+def clean_datasets(kg1, kg2, known_reverses=None, known_duplicates=None):
+    """
+    Nettoie kg1 (train) en retirant les triplets qui fuitent depuis kg2 (val/test).
+    - known_reverses  : paires (r1, r2) où r2 est l'inverse de r1 → on compare (tail,head) de kg1 vs (head,tail) de kg2
+    - known_duplicates: paires (r1, r2) sémantiquement équivalentes même sens → on compare (head,tail) vs (head,tail)
+    """
+    if known_reverses is None:
+        known_reverses = []
+    if known_duplicates is None:
+        known_duplicates = []
+
     def encode_pairs(heads, tails, n_ent):
-        """Encode (h,t) pairs as single integers for exact matching."""
         return heads * n_ent + tails
 
+    n_ent = kg1.n_ent
+
+    # --- REVERSE : (tail,head)_kg1 == (head,tail)_kg2 ---
     for r1, r2 in known_reverses:
-        logging.info(f"Processing relation pair: ({r1}, {r2})")
-        n_ent = kg1.n_ent
+        logging.info(f"[reverse] Processing relation pair: ({r1}, {r2})")
 
-        # --- Sens 1 : cherche dans kg1 les triplets r2 dont (tail,head) = (h,t) d'un triplet r1 de kg2 ---
         mask_kg2_r1 = (kg2.relations == r1)
-        # Les paires (h,t) de kg2 pour r1, encodées
         kg2_pairs_r1 = encode_pairs(kg2.head_idx[mask_kg2_r1], kg2.tail_idx[mask_kg2_r1], n_ent)
-
         mask_kg1_r2 = (kg1.relations == r2)
-        # Dans kg1 pour r2, on cherche les triplets dont (tail,head) matche kg2_pairs_r1
-        kg1_reversed_pairs_r2 = encode_pairs(kg1.tail_idx[mask_kg1_r2], kg1.head_idx[mask_kg1_r2], n_ent)
-        match = torch.isin(kg1_reversed_pairs_r2, kg2_pairs_r1)
-        indices_to_remove = mask_kg1_r2.nonzero(as_tuple=True)[0][match]
+        kg1_rev_r2 = encode_pairs(kg1.tail_idx[mask_kg1_r2], kg1.head_idx[mask_kg1_r2], n_ent)
+        match = torch.isin(kg1_rev_r2, kg2_pairs_r1)
+        idx = mask_kg1_r2.nonzero(as_tuple=True)[0][match]
+        if len(idx) > 0:
+            kg1 = kg1.remove_triples(idx)
+        logging.info(f"Found {len(idx)} triplets to remove for relation {r2} with reverse {r1}.")
 
-        if len(indices_to_remove) > 0:
-            kg1 = kg1.remove_triples(indices_to_remove)
-        logging.info(f"Found {len(indices_to_remove)} triplets to remove for relation {r2} with reverse {r1}.")
-
-        # --- Sens 2 : cherche dans kg1 les triplets r1 dont (tail,head) = (h,t) d'un triplet r2 de kg2 ---
         mask_kg2_r2 = (kg2.relations == r2)
         kg2_pairs_r2 = encode_pairs(kg2.head_idx[mask_kg2_r2], kg2.tail_idx[mask_kg2_r2], n_ent)
-
         mask_kg1_r1 = (kg1.relations == r1)
-        kg1_reversed_pairs_r1 = encode_pairs(kg1.tail_idx[mask_kg1_r1], kg1.head_idx[mask_kg1_r1], n_ent)
-        match2 = torch.isin(kg1_reversed_pairs_r1, kg2_pairs_r2)
-        indices_to_remove2 = mask_kg1_r1.nonzero(as_tuple=True)[0][match2]
+        kg1_rev_r1 = encode_pairs(kg1.tail_idx[mask_kg1_r1], kg1.head_idx[mask_kg1_r1], n_ent)
+        match2 = torch.isin(kg1_rev_r1, kg2_pairs_r2)
+        idx2 = mask_kg1_r1.nonzero(as_tuple=True)[0][match2]
+        if len(idx2) > 0:
+            kg1 = kg1.remove_triples(idx2)
+        logging.info(f"Found {len(idx2)} reverse triplets to remove for relation {r1} with reverse {r2}.")
 
-        if len(indices_to_remove2) > 0:
-            kg1 = kg1.remove_triples(indices_to_remove2)
-        logging.info(f"Found {len(indices_to_remove2)} reverse triplets to remove for relation {r1} with reverse {r2}.")
+    # --- DUPLICATE same-sens : (head,tail)_kg1 == (head,tail)_kg2 ---
+    for r1, r2 in known_duplicates:
+        logging.info(f"[duplicate] Processing relation pair: ({r1}, {r2})")
+
+        # triplets r2 dans kg1 dont (h,t) apparaît sous r1 dans kg2
+        mask_kg2_r1 = (kg2.relations == r1)
+        kg2_pairs_r1 = encode_pairs(kg2.head_idx[mask_kg2_r1], kg2.tail_idx[mask_kg2_r1], n_ent)
+        mask_kg1_r2 = (kg1.relations == r2)
+        kg1_pairs_r2 = encode_pairs(kg1.head_idx[mask_kg1_r2], kg1.tail_idx[mask_kg1_r2], n_ent)
+        match = torch.isin(kg1_pairs_r2, kg2_pairs_r1)
+        idx = mask_kg1_r2.nonzero(as_tuple=True)[0][match]
+        if len(idx) > 0:
+            kg1 = kg1.remove_triples(idx)
+        logging.info(f"Found {len(idx)} duplicate triplets to remove for relation {r2} (dup of {r1}).")
+
+        # symétrique : triplets r1 dans kg1 dont (h,t) apparaît sous r2 dans kg2
+        mask_kg2_r2 = (kg2.relations == r2)
+        kg2_pairs_r2 = encode_pairs(kg2.head_idx[mask_kg2_r2], kg2.tail_idx[mask_kg2_r2], n_ent)
+        mask_kg1_r1 = (kg1.relations == r1)
+        kg1_pairs_r1 = encode_pairs(kg1.head_idx[mask_kg1_r1], kg1.tail_idx[mask_kg1_r1], n_ent)
+        match2 = torch.isin(kg1_pairs_r1, kg2_pairs_r2)
+        idx2 = mask_kg1_r1.nonzero(as_tuple=True)[0][match2]
+        if len(idx2) > 0:
+            kg1 = kg1.remove_triples(idx2)
+        logging.info(f"Found {len(idx2)} duplicate triplets to remove for relation {r1} (dup of {r2}).")
 
     return kg1
 
