@@ -5,7 +5,7 @@
 #SBATCH --time=20:00:00
 #SBATCH --output=shepkg_kgate_dl2_GAT_RESCAL_%j.log
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=5
+#SBATCH --cpus-per-task=6
 #SBATCH --hint=nomultithread
 #SBATCH -C a100
 #SBATCH --qos=qos_gpu_a100-t3
@@ -15,6 +15,7 @@ module load python/3.12.7
 source $WORK/KGATE/.venv/bin/activate
 
 cd $WORK/dr_benchmark/DL2experiment/models/run2/GAT_RESCAL/
+export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 srun python $WORK/dr_benchmark/dev/run_kgate.py \
-    --config params.toml
+    --config kgate_config.toml
 
