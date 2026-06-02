@@ -7,39 +7,39 @@ verbose = true
 run_kg_preprocessing = false
 
 [preprocessing]
-clean_train_set = true
 split = [
     0.8,
     0.1,
     0.1,
 ]
 make_directed_edges = []
+clean_train_set = true
 remove_duplicate_triplets = true
 make_directed = true
 flag_near_duplicate_edges = true
 
 [preprocessing.params]
 theta_second_edge_type = 0.8
-theta_first_edge_type = 0.8
 theta = 0.8
+theta_first_edge_type = 0.8
 
 [model]
-node_embedding_dimensions = 200
 edge_embedding_dimensions = -1
+node_embedding_dimensions = 200
 
 [model.decoder]
-dissimilarity = "L2"
 filter_count = 3
 name = "RESCAL"
+dissimilarity = "L2"
 margin = 1
 
 [model.encoder]
-gnn_layer_number = 1
 name = "GAT"
+gnn_layer_number = 1
 
 [sampler]
-negative_triplet_count = 5
 name = "Mixed"
+negative_triplet_count = 5
 
 [optimizer]
 name = "Adam"
@@ -52,17 +52,17 @@ weight_decay = 0.001
 type = "CosineAnnealingWarmRestarts"
 
 [learning_rate_scheduler.params]
-T_mult = 2
 T_0 = 10
+T_mult = 2
 
 [training]
-train_batch_size = 4096
-pretrained_embeddings = "auto"
-evaluation_batch_size = 516
-save_interval = 5
-evaluation_interval = 20
-max_epochs = 500
 patience = 10
+pretrained_embeddings = "auto"
+max_epochs = 500
+save_interval = 5
+evaluation_batch_size = 516
+train_batch_size = 4096
+evaluation_interval = 20
 
 [evaluation]
 made_directed_edges = [
@@ -76,12 +76,12 @@ made_directed_edges = [
 target_edges = [
     "indication",
 ]
-objective = "Link Prediction"
-inference_kg = "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/knowledge_graph/orphan_associations.tsv"
 thresholds = [
     10,
     5,
 ]
+objective = "Link Prediction"
+inference_kg = "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/knowledge_graph/orphan_associations.tsv"
 
 [data_leakage]
 permuted_edges = []

@@ -16,5 +16,5 @@ source $WORK/KGATE/.venv/bin/activate
 
 cd $WORK/dr_benchmark/DL3experiment/cold_start/models_disease/run2/GAT_RESCAL/
 srun python $WORK/dr_benchmark/dev/run_kgate.py \
-    --config params.toml
+    --config kgate_config.toml
 
