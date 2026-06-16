@@ -1,9 +1,9 @@
 #!/bin/bash
 #SBATCH -A rnk@a100
-#SBATCH --job-name=hetionet_kgate_dl3drug_GAT_RESCAL
+#SBATCH --job-name=hetionet_kgate_dl3dr_GAT_RESCAL
 #SBATCH --gres=gpu:1
 #SBATCH --time=20:00:00
-#SBATCH --output=hetionet_kgate_dl3drug_GAT_RESCAL_%j.log
+#SBATCH --output=hetionet_kgate_dl3dr_GAT_RESCAL_%j.log
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=5
 #SBATCH --hint=nomultithread
@@ -16,4 +16,5 @@ source $WORK/KGATE/.venv/bin/activate
 
 cd $WORK/dr_benchmark/DL3experiment/cold_start/models_drugs_hetionet/run1/GAT_RESCAL/
 srun python $WORK/dr_benchmark/dev/run_kgate.py \
-    --config params.toml
+	--config params.toml
+

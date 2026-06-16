@@ -17,3 +17,4 @@ source $WORK/KGATE/.venv/bin/activate
 cd $WORK/dr_benchmark/DL1experiment/withDL1/models_hetionet/run1/GAT_RESCAL/
 srun python $WORK/dr_benchmark/dev/run_kgate.py \
     --config params.toml
+
