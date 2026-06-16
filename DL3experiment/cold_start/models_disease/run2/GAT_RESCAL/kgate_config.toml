@@ -7,29 +7,29 @@ verbose = true
 run_kg_preprocessing = false
 
 [preprocessing]
-make_directed_edges = []
 flag_near_duplicate_edges = true
-clean_train_set = true
 split = [
     0.8,
     0.1,
     0.1,
 ]
-remove_duplicate_triplets = true
 make_directed = true
+clean_train_set = true
+remove_duplicate_triplets = true
+make_directed_edges = []
 
 [preprocessing.params]
-theta = 0.8
 theta_second_edge_type = 0.8
 theta_first_edge_type = 0.8
+theta = 0.8
 
 [model]
 edge_embedding_dimensions = -1
 node_embedding_dimensions = 200
 
 [model.decoder]
-name = "RESCAL"
 margin = 1
+name = "RESCAL"
 filter_count = 3
 dissimilarity = "L2"
 
@@ -56,16 +56,20 @@ T_mult = 2
 T_0 = 10
 
 [training]
-evaluation_batch_size = 516
-train_batch_size = 4096
-pretrained_embeddings = "auto"
-max_epochs = 500
-evaluation_interval = 20
 save_interval = 5
-patience = 10
+pretrained_embeddings = "auto"
+evaluation_interval = 10
+max_epochs = 250
+patience = 5
+evaluation_batch_size = 256
+train_batch_size = 4096
 
 [evaluation]
-inference_kg = "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/knowledge_graph/orphan_associations.tsv"
+objective = "Link Prediction"
+thresholds = [
+    10,
+    5,
+]
 made_directed_edges = [
     "drug_drug",
     "disease_disease",
@@ -74,11 +78,7 @@ made_directed_edges = [
     "disease_disease_inv",
     "protein_protein_inv",
 ]
-objective = "Link Prediction"
-thresholds = [
-    10,
-    5,
-]
+inference_kg = "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/knowledge_graph/orphan_associations.tsv"
 target_edges = [
     "indication",
 ]

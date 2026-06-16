@@ -15,7 +15,9 @@ module load python/3.12.7
 source $WORK/KGATE/.venv/bin/activate
 
 cd $WORK/dr_benchmark/DL2experiment/models/run2/GAT_RESCAL/
+
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
+
 srun python $WORK/dr_benchmark/dev/run_kgate.py \
     --config kgate_config.toml
 

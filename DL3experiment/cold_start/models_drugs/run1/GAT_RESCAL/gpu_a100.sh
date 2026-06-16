@@ -1,9 +1,9 @@
 #!/bin/bash
 #SBATCH -A rnk@a100
-#SBATCH --job-name=shepkg_kgate_dl3drugs_GAT_RESCAL
+#SBATCH --job-name=shepkg_kgate_dl3dr_GAT_RESCAL
 #SBATCH --gres=gpu:1
 #SBATCH --time=20:00:00
-#SBATCH --output=shepkg_kgate_dl3drugs_GAT_RESCAL_%j.log
+#SBATCH --output=shepkg_kgate_dl3dr_GAT_RESCAL_%j.log
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=5
 #SBATCH --hint=nomultithread
