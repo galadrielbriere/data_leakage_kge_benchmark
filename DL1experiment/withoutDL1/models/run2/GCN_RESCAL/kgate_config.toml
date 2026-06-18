@@ -7,11 +7,11 @@ verbose = true
 run_kg_preprocessing = false
 
 [preprocessing]
-remove_duplicate_triplets = true
-make_directed = true
-flag_near_duplicate_edges = true
-clean_train_set = true
 make_directed_edges = []
+flag_near_duplicate_edges = true
+make_directed = true
+remove_duplicate_triplets = true
+clean_train_set = true
 split = [
     0.8,
     0.1,
@@ -19,27 +19,27 @@ split = [
 ]
 
 [preprocessing.params]
-theta = 0.8
 theta_second_edge_type = 0.8
+theta = 0.8
 theta_first_edge_type = 0.8
 
 [model]
 edge_embedding_dimensions = -1
 node_embedding_dimensions = 200
 
-[model.decoder]
-name = "RESCAL"
-dissimilarity = "L2"
-margin = 1
-filter_count = 3
-
 [model.encoder]
-name = "GCN"
 gnn_layer_number = 1
+name = "GCN"
+
+[model.decoder]
+filter_count = 3
+dissimilarity = "L2"
+name = "RESCAL"
+margin = 1
 
 [sampler]
-name = "Mixed"
 negative_triplet_count = 5
+name = "Mixed"
 
 [optimizer]
 name = "Adam"
@@ -57,15 +57,17 @@ T_mult = 2
 
 [training]
 save_interval = 2
-max_epochs = 250
 pretrained_embeddings = "auto"
-train_batch_size = 4096
+evaluation_interval = 10
 evaluation_batch_size = 256
 patience = 5
-evaluation_interval = 10
+train_batch_size = 4096
+max_epochs = 250
 
 [evaluation]
-inference_kg = "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/knowledge_graph/orphan_associations.tsv"
+target_edges = [
+    "indication",
+]
 made_directed_edges = [
     "drug_drug",
     "disease_disease",
@@ -74,14 +76,12 @@ made_directed_edges = [
     "disease_disease_inv",
     "protein_protein_inv",
 ]
-objective = "Link Prediction"
-target_edges = [
-    "indication",
-]
 thresholds = [
     10,
     5,
 ]
+objective = "Link Prediction"
+inference_kg = "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/knowledge_graph/orphan_associations.tsv"
 
 [data_leakage]
 permuted_edges = []
