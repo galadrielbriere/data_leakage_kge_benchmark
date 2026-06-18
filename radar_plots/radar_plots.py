@@ -15,11 +15,12 @@ All KG-specific details are described by a ``KGConfig`` object (see
 
 Adding a model
 --------------
-Nothing needs to change here. As soon as a model directory exists on disk,
-it shows up on the radars. Models that are absent from ``model_order`` are no
-longer dropped silently: they are appended at the end of the radar (in
-alphabetical order) and a message reports them. To control their position,
-add their names to ``KGConfig.model_order``.
+Only the models listed in ``KGConfig.model_order`` are plotted (whitelist).
+To add a model, put its name in ``model_order`` once its results are complete.
+Model directories found on disk but absent from ``model_order`` are reported
+(never dropped silently) and skipped, so a half-finished or partially-pulled
+model does not sneak into the figures. Pass ``include_extra=True`` to the plot
+functions to also show those unlisted models, appended at the end.
 """
 
 from __future__ import annotations
@@ -46,6 +47,20 @@ BASE_METRICS = [
     "global_mrr", "made_directed_relations", "target_relations",
     "target_frequent", "target_infrequent", "inference_mrr", "validation_mrr",
 ]
+
+
+def _as_float(value):
+    """Return ``value`` as a float, or None if it isn't numeric.
+
+    Guards the parsing against stray non-numeric entries (e.g. a metric stored
+    as text in a YAML or CSV file), which would otherwise crash the max() over
+    runs with a float-vs-str comparison error.
+    """
+    try:
+        x = float(value)
+    except (TypeError, ValueError):
+        return None
+    return None if np.isnan(x) else x
 
 
 # ---------------------------------------------------------------------------
@@ -166,7 +181,12 @@ def _parse_one_model(eval_file, inference_file, cfg):
     csv_file = os.path.join(os.path.dirname(eval_file), "training_metrics.csv")
     if os.path.exists(csv_file):
         df = pd.read_csv(csv_file)
-        out["validation_mrr"] = df["Validation MRR"].max() if "Validation MRR" in df.columns else -1
+        if "Validation MRR" in df.columns:
+            # Coerce to numeric so a stray text value doesn't turn the whole
+            # column (and thus .max()) into a string.
+            out["validation_mrr"] = pd.to_numeric(df["Validation MRR"], errors="coerce").max()
+        else:
+            out["validation_mrr"] = -1
 
     return out
 
@@ -202,21 +222,36 @@ def parse_model_metrics(experiments, cfg, runs=("run1", "run2")):
             best = {}
             for metric in all_metrics:
                 vals = [models_data[key][run].get(model, {}).get(metric, 0) for run in runs]
-                best[metric] = max(vals) if vals else 0
+                # Keep only values that are actually numeric: a non-numeric
+                # entry (e.g. text in a YAML/CSV field) would otherwise break
+                # the comparison done by max().
+                nums = [x for x in (_as_float(v) for v in vals) if x is not None]
+                best[metric] = max(nums) if nums else 0
             models_data[key]["best"][model] = best
 
     return models_data
 
 
-def order_models(present, model_order=DEFAULT_MODEL_ORDER, verbose=True):
-    """Order the models present according to ``model_order``, APPENDING at the
-    end any model not listed (instead of dropping it silently)."""
+def order_models(present, model_order=DEFAULT_MODEL_ORDER, include_extra=False, verbose=True):
+    """Order the models for display.
+
+    By default only the models listed in ``model_order`` are kept (whitelist):
+    this avoids pulling in half-finished model directories that happen to be on
+    disk. Models discovered on disk but absent from ``model_order`` are reported
+    (never dropped silently) so nothing disappears without notice.
+
+    Set ``include_extra=True`` to also plot the discovered-but-unlisted models,
+    appended at the end in alphabetical order.
+    """
     present = list(present)
     ordered = [m for m in model_order if m in present]
     extra = sorted(m for m in present if m not in model_order)
     if extra and verbose:
-        print(f"[radar_plots] models not in model_order, appended at the end: {extra}")
-    return ordered + extra
+        if include_extra:
+            print(f"[radar_plots] models not in model_order, appended at the end: {extra}")
+        else:
+            print(f"[radar_plots] found on disk but NOT in model_order, skipped: {extra}")
+    return ordered + (extra if include_extra else [])
 
 
 # ---------------------------------------------------------------------------
@@ -228,7 +263,7 @@ def plot_radar(results, experiment1, run, metric1,
                colors=("red", "blue"), font_size=14,
                model_order=DEFAULT_MODEL_ORDER, rgrid=None, markers=False,
                savefile=None, savedir=None, saveformat="svg", show=True, ax=None,
-               panel_label=None, legend_ncol=2):
+               panel_label=None, legend_ncol=2, include_extra=False):
     """Plot one or two curves on a radar.
 
     - experiment comparison : pass ``experiment2`` (``metric2`` = ``metric1``)
@@ -250,7 +285,7 @@ def plot_radar(results, experiment1, run, metric1,
         if run not in results[exp]:
             raise ValueError(f"Run '{run}' not found in experiment '{exp}'.")
 
-    models = order_models(results[experiment1][run], model_order)
+    models = order_models(results[experiment1][run], model_order, include_extra=include_extra)
     N = len(models)
     theta = radar_factory(N, frame="polygon")
 
@@ -325,12 +360,12 @@ def plot_radar_3way(results, experiments, run, metric,
                     legend_labels, colors, linestyles=None,
                     model_order=DEFAULT_MODEL_ORDER,
                     y_lim=0.3, rgrid=None, title="", font_size=14,
-                    ax=None, panel_label=None):
+                    ax=None, panel_label=None, include_extra=False):
     """Plot N curves (typically 3) on a polygonal radar."""
     if linestyles is None:
         linestyles = ["-"] * len(experiments)
 
-    models = order_models(results[experiments[0]][run], model_order)
+    models = order_models(results[experiments[0]][run], model_order, include_extra=include_extra)
     N = len(models)
     theta = radar_factory(N, frame="polygon")
 
