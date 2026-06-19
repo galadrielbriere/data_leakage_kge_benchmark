@@ -1,0 +1,87 @@
+seed = 42
+kg_csv = ""
+kg_pkl = "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/DL3experiment/cold_start/biokg_processing_disease/kgate/"
+metadata_csv = ""
+output_directory = "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/DL3experiment/cold_start/models_diseases_biokg/run2/GAT_RESCAL/"
+verbose = true
+run_kg_preprocessing = false
+
+[preprocessing]
+flag_near_duplicate_edges = true
+split = [
+    0.8,
+    0.1,
+    0.1,
+]
+clean_train_set = true
+make_directed_edges = []
+make_directed = true
+remove_duplicate_triplets = true
+
+[preprocessing.params]
+theta_first_edge_type = 0.8
+theta_second_edge_type = 0.8
+theta = 0.8
+
+[model]
+edge_embedding_dimensions = -1
+node_embedding_dimensions = 200
+
+[model.encoder]
+gnn_layer_number = 1
+name = "GAT"
+
+[model.decoder]
+margin = 1
+dissimilarity = "L2"
+filter_count = 3
+name = "RESCAL"
+
+[sampler]
+negative_triplet_count = 5
+name = "Mixed"
+
+[optimizer]
+name = "Adam"
+
+[optimizer.params]
+weight_decay = 0.001
+lr = 0.001
+
+[learning_rate_scheduler]
+type = "CosineAnnealingWarmRestarts"
+
+[learning_rate_scheduler.params]
+T_mult = 2
+T_0 = 10
+
+[training]
+pretrained_embeddings = "auto"
+patience = 5
+max_epochs = 250
+evaluation_batch_size = 256
+save_interval = 5
+evaluation_interval = 10
+train_batch_size = 4096
+
+[evaluation]
+thresholds = [
+    10,
+    5,
+]
+made_directed_edges = [
+    "DDI",
+    "PPI",
+    "DDI_inv",
+    "PPI_inv",
+    "DPI",
+    "DRUG_TARGET",
+]
+inference_kg = "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/knowledge_graph/biokg_orphan_associations_only.tsv"
+objective = "Link Prediction"
+target_edges = [
+    "DRUG_DISEASE_ASSOCIATION",
+]
+
+[data_leakage]
+permuted_edges = []
