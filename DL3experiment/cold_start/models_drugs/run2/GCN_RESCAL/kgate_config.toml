@@ -1,26 +1,26 @@
 seed = 42
 kg_csv = ""
-kg_pkl = "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/DL1experiment/withDL1/kg_processing/kgate/"
+kg_pkl = "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/DL3experiment/cold_start/kg_processing_drugs/kgate/"
 metadata_csv = ""
-output_directory = "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/DL1experiment/withDL1/models/run1/GAT_RESCAL/"
+output_directory = "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/DL3experiment/cold_start/models_drugs/run2/GCN_RESCAL/"
 verbose = true
 run_kg_preprocessing = false
 
 [preprocessing]
+make_directed = true
+make_directed_edges = []
+clean_train_set = true
+flag_near_duplicate_edges = true
 split = [
     0.8,
     0.1,
     0.1,
 ]
-make_directed_edges = []
 remove_duplicate_triplets = true
-flag_near_duplicate_edges = true
-make_directed = true
-clean_train_set = true
 
 [preprocessing.params]
-theta = 0.8
 theta_first_edge_type = 0.8
+theta = 0.8
 theta_second_edge_type = 0.8
 
 [model]
@@ -28,49 +28,43 @@ edge_embedding_dimensions = -1
 node_embedding_dimensions = 200
 
 [model.decoder]
-filter_count = 3
 dissimilarity = "L2"
-name = "RESCAL"
 margin = 1
+name = "RESCAL"
+filter_count = 3
 
 [model.encoder]
-name = "GAT"
 gnn_layer_number = 1
+name = "GCN"
 
 [sampler]
-negative_triplet_count = 5
 name = "Mixed"
+negative_triplet_count = 5
 
 [optimizer]
 name = "Adam"
 
 [optimizer.params]
-weight_decay = 0.001
 lr = 0.001
+weight_decay = 0.001
 
 [learning_rate_scheduler]
-type = ""
+type = "CosineAnnealingWarmRestarts"
 
 [learning_rate_scheduler.params]
+T_mult = 2
+T_0 = 10
 
 [training]
-train_batch_size = 4096
-max_epochs = 250
-patience = 5
-save_interval = 2
-pretrained_embeddings = "auto"
 evaluation_interval = 10
+save_interval = 5
 evaluation_batch_size = 256
+max_epochs = 250
+pretrained_embeddings = "auto"
+patience = 5
+train_batch_size = 4096
 
 [evaluation]
-inference_kg = "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/knowledge_graph/orphan_associations.tsv"
-thresholds = [
-    10,
-    5,
-]
-target_edges = [
-    "indication",
-]
 objective = "Link Prediction"
 made_directed_edges = [
     "drug_drug",
@@ -79,6 +73,14 @@ made_directed_edges = [
     "drug_drug_inv",
     "disease_disease_inv",
     "protein_protein_inv",
+]
+thresholds = [
+    10,
+    5,
+]
+inference_kg = "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/knowledge_graph/orphan_associations.tsv"
+target_edges = [
+    "indication",
 ]
 
 [data_leakage]
