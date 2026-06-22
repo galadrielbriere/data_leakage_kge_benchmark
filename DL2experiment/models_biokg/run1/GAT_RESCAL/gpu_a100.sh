@@ -19,5 +19,5 @@ cd $WORK/dr_benchmark/DL2experiment/models_biokg/run1/GAT_RESCAL/
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 
 srun python $WORK/dr_benchmark/dev/run_kgate.py \
-    --config params.toml
+    --config kgate_config.toml
 
