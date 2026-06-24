@@ -1,0 +1,88 @@
+seed = 42
+kg_csv = ""
+kg_pkl = "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/DL1experiment/withDL1/hetionet_processing/kgate/"
+metadata_csv = ""
+output_directory = "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/DL1experiment/withDL1/models_hetionet/run1/GCN_RESCAL_maxIntra/"
+verbose = true
+run_kg_preprocessing = false
+
+[preprocessing]
+flag_near_duplicate_edges = true
+remove_duplicate_triplets = true
+clean_train_set = true
+make_directed = true
+make_directed_edges = []
+split = [
+    0.8,
+    0.1,
+    0.1,
+]
+
+[preprocessing.params]
+theta = 0.8
+theta_second_edge_type = 0.8
+theta_first_edge_type = 0.8
+
+[model]
+node_embedding_dimensions = 200
+edge_embedding_dimensions = -1
+
+[model.encoder]
+neighbor_aggregation = "max"
+gnn_layer_number = 1
+name = "GCN"
+
+[model.decoder]
+margin = 1
+filter_count = 3
+dissimilarity = "L2"
+name = "RESCAL"
+
+[sampler]
+negative_triplet_count = 5
+name = "Mixed"
+
+[optimizer]
+name = "Adam"
+
+[optimizer.params]
+weight_decay = 0.001
+lr = 0.001
+
+[learning_rate_scheduler]
+type = ""
+
+[learning_rate_scheduler.params]
+
+[training]
+evaluation_batch_size = 256
+patience = 5
+save_interval = 2
+max_epochs = 250
+pretrained_embeddings = "auto"
+evaluation_interval = 10
+train_batch_size = 4096
+
+[evaluation]
+made_directed_edges = [
+    "DrD",
+    "DrD_inv",
+    "CrC",
+    "CrC_inv",
+    "GiG",
+    "GiG_inv",
+    "GcG",
+    "GcG_inv",
+]
+objective = "Link Prediction"
+inference_kg = "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/knowledge_graph/hetionet_orphan_associations_only.tsv"
+target_edges = [
+    "CtD",
+]
+thresholds = [
+    10,
+    5,
+]
+
+[data_leakage]
+permuted_edges = []
