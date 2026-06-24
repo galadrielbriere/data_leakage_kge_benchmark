@@ -1,0 +1,88 @@
+seed = 42
+kg_csv = ""
+kg_pkl = "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/DL2experiment/biokg_processing/kgate/"
+metadata_csv = ""
+output_directory = "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/DL2experiment/models_biokg/run2/GCN_DistMult_maxIntra/"
+verbose = true
+run_kg_preprocessing = false
+
+[preprocessing]
+flag_near_duplicate_edges = true
+clean_train_set = true
+make_directed_edges = []
+remove_duplicate_triplets = true
+make_directed = true
+split = [
+    0.8,
+    0.1,
+    0.1,
+]
+
+[preprocessing.params]
+theta_second_edge_type = 0.8
+theta = 0.8
+theta_first_edge_type = 0.8
+
+[model]
+node_embedding_dimensions = 200
+edge_embedding_dimensions = -1
+
+[model.encoder]
+name = "GCN"
+gnn_layer_number = 1
+neighbor_aggregation = "max"
+
+[model.decoder]
+name = "DistMult"
+dissimilarity = "L2"
+filter_count = 3
+margin = 1
+
+[sampler]
+name = "Mixed"
+negative_triplet_count = 5
+
+[optimizer]
+name = "Adam"
+
+[optimizer.params]
+weight_decay = 0.001
+lr = 0.001
+
+[learning_rate_scheduler]
+type = "CosineAnnealingWarmRestarts"
+
+[learning_rate_scheduler.params]
+T_0 = 10
+T_mult = 2
+
+[training]
+save_interval = 5
+max_epochs = 250
+evaluation_interval = 10
+pretrained_embeddings = "auto"
+patience = 5
+train_batch_size = 4096
+evaluation_batch_size = 256
+
+[evaluation]
+made_directed_edges = [
+    "DDI",
+    "PPI",
+    "DDI_inv",
+    "PPI_inv",
+    "DPI",
+    "DRUG_TARGET",
+]
+inference_kg = "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/knowledge_graph/biokg_orphan_associations_only.tsv"
+target_edges = [
+    "DRUG_DISEASE_ASSOCIATION",
+]
+objective = "Link Prediction"
+thresholds = [
+    10,
+    5,
+]
+
+[data_leakage]
+permuted_edges = []
