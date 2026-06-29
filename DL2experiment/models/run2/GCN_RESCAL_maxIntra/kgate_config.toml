@@ -1,0 +1,88 @@
+seed = 42
+kg_csv = ""
+kg_pkl = "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/DL2experiment/kg_processing/kgate/"
+metadata_csv = ""
+output_directory = "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/DL2experiment/models/run2/GCN_RESCAL_maxIntra/"
+verbose = true
+run_kg_preprocessing = false
+
+[preprocessing]
+flag_near_duplicate_edges = true
+make_directed = true
+make_directed_edges = []
+split = [
+    0.8,
+    0.1,
+    0.1,
+]
+remove_duplicate_triplets = true
+clean_train_set = true
+
+[preprocessing.params]
+theta = 0.8
+theta_second_edge_type = 0.8
+theta_first_edge_type = 0.8
+
+[model]
+node_embedding_dimensions = 200
+edge_embedding_dimensions = -1
+
+[model.encoder]
+gnn_layer_number = 1
+name = "GCN"
+neighbor_aggregation = "max"
+
+[model.decoder]
+dissimilarity = "L2"
+name = "RESCAL"
+margin = 1
+filter_count = 3
+
+[sampler]
+name = "Mixed"
+negative_triplet_count = 5
+
+[optimizer]
+name = "Adam"
+
+[optimizer.params]
+lr = 0.001
+weight_decay = 0.001
+
+[learning_rate_scheduler]
+type = "CosineAnnealingWarmRestarts"
+
+[learning_rate_scheduler.params]
+T_mult = 2
+T_0 = 10
+
+[training]
+pretrained_embeddings = "auto"
+evaluation_interval = 10
+max_epochs = 250
+patience = 5
+evaluation_batch_size = 256
+train_batch_size = 4096
+save_interval = 5
+
+[evaluation]
+target_edges = [
+    "indication",
+]
+inference_kg = "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/knowledge_graph/orphan_associations.tsv"
+thresholds = [
+    10,
+    5,
+]
+made_directed_edges = [
+    "drug_drug",
+    "disease_disease",
+    "protein_protein",
+    "drug_drug_inv",
+    "disease_disease_inv",
+    "protein_protein_inv",
+]
+objective = "Link Prediction"
+
+[data_leakage]
+permuted_edges = []
