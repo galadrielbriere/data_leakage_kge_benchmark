@@ -27,7 +27,7 @@ included in this repository. The plotting code and notebooks live in the
 
 ```bash
    git clone https://github.com/galadrielbriere/drug_repurposing_kge_benchmark.git
-   cd /radar_plots
+   cd drug_repurposing_kge_benchmark/radar_plots
 ```
 
 2. **Set the configuration.** Open `kg_configs.py` and set `DATA_ROOT` to the
