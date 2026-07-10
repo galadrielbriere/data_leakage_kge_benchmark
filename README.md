@@ -35,19 +35,8 @@ included in this repository. The plotting code and notebooks live in the
    each knowledge graph are already defined there and don't normally need
    editing.
 
-3. **Run the notebooks.** Each notebook has a single `KG` switch at the top —
-   set it to `"biokg"`, `"hetionet"` or `"shepkg"`, then *Run All*:
-
-   - `make_radar_plots.ipynb` — DL1, DL2, DL3 figures and the made-directed
-     relations breakdown.
-   - `radar_random_vs_coldstart.ipynb` — random-split vs cold-start comparison.
-
-   Run each notebook once per knowledge graph. Figures are written to
-   `Figures/<KG>` (e.g. `Figures/BioKG`, `Figures/HetionetKG`,
-   `Figures/ShepherdKG`).
-
-The reusable plotting code lives in `radar_plots.py`; the per-KG settings live
-in `kg_configs.py`.
+3. **Run the notebook.** Open `make_radar_plots.ipynb`, set the `KG` switch at the top by
+   setting it to `"biokg"`, `"hetionetkg"` or `"shepherdkg"`, then *Run All*:
 
 
 ## Installation
