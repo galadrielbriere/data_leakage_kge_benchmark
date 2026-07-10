@@ -1,68 +1,0 @@
-2025-07-02 13:30:53,550 - WARNING - /home/galadriel/anaconda3/envs/benchmark/lib/python3.9/site-packages/torch/__config__.py:10: UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 11040). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver. (Triggered internally at ../c10/cuda/CUDAFunctions.cpp:108.)
-  return torch._C._show_config()
-
-2025-07-02 13:30:55,081 - WARNING - /home/galadriel/anaconda3/envs/benchmark/lib/python3.9/site-packages/ignite/handlers/checkpoint.py:16: DeprecationWarning: `TorchScript` support for functional optimizers is deprecated and will be removed in a future PyTorch release. Consider using the `torch.compile` optimizer instead.
-  from torch.distributed.optim import ZeroRedundancyOptimizer
-
-2025-07-02 13:30:55,106 - INFO - Configuration loaded:
-{
-    "common": {
-        "seed": 123,
-        "input_csv": "/home/galadriel/dr_benchmark/knowledge_graph/shep_kg_without_orphan_treatments.csv",
-        "out": "/home/galadriel/dr_benchmark/DL1experiment/withDL1/kg_processing_split2/",
-        "run_kg_prep": true,
-        "run_training": false,
-        "run_evaluation": false,
-        "plot_training_metrics": false
-    },
-    "clean_kg": {
-        "remove_duplicates_triplets": true,
-        "make_directed": true,
-        "make_directed_params": [
-            "disease_disease",
-            "drug_drug",
-            "protein_protein"
-        ],
-        "check_DL1": false,
-        "permute_kg": false,
-        "clean_train_set": false,
-        "cold_start_split": false
-    }
-}
-2025-07-02 13:30:55,106 - INFO - Setting number of threads to 20
-2025-07-02 13:30:55,106 - INFO - Loading parameters from /home/galadriel/dr_benchmark/DL1experiment/withDL1/kg_processing_split2/params.yaml
-2025-07-02 13:30:55,106 - INFO - Output folder: /home/galadriel/dr_benchmark/DL1experiment/withDL1/kg_processing_split2/
-2025-07-02 13:30:55,106 - INFO - Preparing KG...
-2025-07-02 13:31:03,401 - WARNING - /home/galadriel/dr_benchmark/dev/kg_processing.py:98: DtypeWarning: Columns (2,6) have mixed types. Specify dtype option on import or set low_memory=False.
-  kg_df = pd.read_csv(input_file, sep="\t")[["my_x_id", "my_y_id", "relation"]]
-
-2025-07-02 13:32:47,312 - INFO - Removing duplicated triplets...
-  0%|          | 0/30 [00:00<?, ?it/s]  7%|▋         | 2/30 [00:00<00:03,  7.95it/s] 13%|█▎        | 4/30 [00:00<00:02, 10.43it/s] 20%|██        | 6/30 [00:01<00:04,  5.00it/s] 23%|██▎       | 7/30 [00:01<00:06,  3.36it/s]2025-07-02 13:32:49,224 - INFO - 52 duplicates found. Keeping 86247 unique triplets for relation 7
- 27%|██▋       | 8/30 [00:01<00:06,  3.46it/s]2025-07-02 13:32:56,634 - INFO - 1336314 duplicates found. Keeping 1336314 unique triplets for relation 8
- 30%|███       | 9/30 [00:09<00:46,  2.22s/it] 33%|███▎      | 10/30 [00:09<00:33,  1.67s/it]2025-07-02 13:32:56,989 - INFO - 185 duplicates found. Keeping 25468 unique triplets for relation 10
- 40%|████      | 12/30 [00:09<00:17,  1.05it/s]2025-07-02 13:32:57,046 - INFO - 70 duplicates found. Keeping 2070 unique triplets for relation 14
- 60%|██████    | 18/30 [00:09<00:04,  2.93it/s]2025-07-02 13:32:57,285 - INFO - 16 duplicates found. Keeping 21909 unique triplets for relation 21
- 73%|███████▎  | 22/30 [00:09<00:01,  4.42it/s] 83%|████████▎ | 25/30 [00:10<00:01,  4.72it/s] 90%|█████████ | 27/30 [00:10<00:00,  4.61it/s] 97%|█████████▋| 29/30 [00:15<00:00,  1.39it/s]100%|██████████| 30/30 [00:16<00:00,  1.34it/s]100%|██████████| 30/30 [00:16<00:00,  1.81it/s]
-2025-07-02 13:34:17,897 - INFO - Adding reverse triplets for relations disease_disease, drug_drug, protein_protein...
-2025-07-02 13:34:56,855 - INFO - Splitting the dataset into train, validation and test sets...
-2025-07-02 13:35:24,290 - INFO - Entity coverage verified successfully.
-2025-07-02 13:35:25,316 - INFO - Entity coverage verified successfully.
-2025-07-02 13:35:25,741 - INFO - Total entities in full kg: 134026
-2025-07-02 13:35:25,741 - INFO - Entities present in kg_train: 134026
-2025-07-02 13:35:25,741 - INFO - Missing entities in kg_train: 0
-2025-07-02 13:35:26,825 - INFO - Entity coverage verified successfully.
-2025-07-02 13:35:26,825 - INFO - Computing triplet proportions...
-2025-07-02 13:35:26,886 - INFO - {0: {'train': 0.9593785632839225, 'test': 0.02016818700114025, 'val': 0.020453249714937286}, 1: {'train': 0.8232991718035019, 'test': 0.08905948644253678, 'val': 0.08764134175396135}, 2: {'train': 0.8722394220846234, 'test': 0.06377708978328174, 'val': 0.06398348813209494}, 3: {'train': 0.799993075751281, 'test': 0.10002077274615705, 'val': 0.09998615150256197}, 4: {'train': 0.8040999687242331, 'test': 0.0978931506070342, 'val': 0.09800688066873277}, 5: {'train': 0.8010788941335132, 'test': 0.09979770734996629, 'val': 0.09912339851652056}, 6: {'train': 0.8004160847015618, 'test': 0.09979195764921911, 'val': 0.09979195764921911}, 7: {'train': 0.8001785569353137, 'test': 0.09993391074472155, 'val': 0.09988753231996475}, 8: {'train': 0.800002843643036, 'test': 0.0999997006691541, 'val': 0.0999974556878099}, 9: {'train': 0.8000050545256959, 'test': 0.10000379089427196, 'val': 0.09999115458003209}, 10: {'train': 0.8214229621485786, 'test': 0.08932778388566044, 'val': 0.08924925396576096}, 11: {'train': 0.8043076923076923, 'test': 0.09723076923076923, 'val': 0.09846153846153846}, 12: {'train': 0.8, 'test': 0.1, 'val': 0.1}, 13: {'train': 0.807799442896936, 'test': 0.0958217270194986, 'val': 0.09637883008356546}, 14: {'train': 0.8106280193236715, 'test': 0.09613526570048309, 'val': 0.09323671497584542}, 15: {'train': 0.8, 'test': 0.1111111111111111, 'val': 0.08888888888888889}, 16: {'train': 0.801980198019802, 'test': 0.09818481848184818, 'val': 0.09983498349834984}, 17: {'train': 0.8011250439470292, 'test': 0.09961326614320871, 'val': 0.0992616899097621}, 18: {'train': 0.8876528657728009, 'test': 0.05761013702666863, 'val': 0.05473699720053043}, 19: {'train': 0.7997557997557998, 'test': 0.10012210012210013, 'val': 0.10012210012210013}, 20: {'train': 0.814595660749507, 'test': 0.09388560157790928, 'val': 0.09151873767258382}, 21: {'train': 0.8375096992103702, 'test': 0.0816102971381624, 'val': 0.08088000365146743}, 22: {'train': 0.8001521201749382, 'test': 0.09982886480319453, 'val': 0.10001901502186727}, 23: {'train': 0.80062352290441, 'test': 0.09976366470558656, 'val': 0.09961281239000352}, 24: {'train': 0.800497220399848, 'test': 0.0997686543972929, 'val': 0.09973412520285901}, 25: {'train': 0.8005323613342605, 'test': 0.09978177981343372, 'val': 0.0996858588523057}, 26: {'train': 0.8007622608945779, 'test': 0.09958291385013664, 'val': 0.09965482525528549}, 27: {'train': 0.8003329737841767, 'test': 0.09986868639497257, 'val': 0.09979833982085072}, 28: {'train': 0.800269133969568, 'test': 0.09987070240277486, 'val': 0.09986016362765716}, 29: {'train': 0.8000093436113058, 'test': 0.10000155726855096, 'val': 0.09998909912014327}, 30: {'train': 0.8040999687242331, 'test': 0.09814904324585597, 'val': 0.097750988029911}, 31: {'train': 0.800002843643036, 'test': 0.09999895234203937, 'val': 0.09999820401492464}, 32: {'train': 0.8000093436113058, 'test': 0.09999532819434712, 'val': 0.09999532819434712}}
-2025-07-02 13:35:26,893 - INFO - Saving results to /home/galadriel/dr_benchmark/DL1experiment/withDL1/kg_processing_split2/kg.pkl...
-2025-07-02 13:35:44,560 - INFO - Detected device: cpu
-2025-07-02 13:35:44,561 - INFO - Initializing model...
-Traceback (most recent call last):
-  File "/home/galadriel/dr_benchmark/dev/run_training.py", line 974, in <module>
-    main(args)
-  File "/home/galadriel/dr_benchmark/dev/run_training.py", line 89, in main
-    train_model(kg_train, kg_val, kg_test, config)
-  File "/home/galadriel/dr_benchmark/dev/run_training.py", line 540, in train_model
-    model, criterion = initialize_model(config, kg_train, device)
-  File "/home/galadriel/dr_benchmark/dev/run_training.py", line 122, in initialize_model
-    model_name = config['model'].get('name', 'TransE')
-KeyError: 'model'
