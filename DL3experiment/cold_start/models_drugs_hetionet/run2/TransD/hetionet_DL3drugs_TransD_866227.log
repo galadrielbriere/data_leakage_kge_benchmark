@@ -1,0 +1,1725 @@
+2026-05-19 11:58:20,777 - WARNING - /linkhome/rech/genuyp01/ufq76hz/.conda/envs/torch_pyg/lib/python3.10/site-packages/ignite/handlers/checkpoint.py:16: DeprecationWarning: `TorchScript` support for functional optimizers is deprecated and will be removed in a future PyTorch release. Consider using the `torch.compile` optimizer instead.
+  from torch.distributed.optim import ZeroRedundancyOptimizer
+
+2026-05-19 11:58:23,094 - INFO - Configuration loaded:
+{
+    "common": {
+        "seed": 42,
+        "input_pkl": "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/DL3experiment/cold_start/hetionet_processing_drug",
+        "out": "./",
+        "run_kg_prep": false,
+        "run_training": true,
+        "run_evaluation": true,
+        "plot_training_metrics": true,
+        "run_inference": "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/knowledge_graph/hetionet_orphan_associations_only.tsv"
+    },
+    "model": {
+        "name": "TransD",
+        "emb_dim": 200,
+        "margin": 1
+    },
+    "sampler": {
+        "name": "Mixed",
+        "n_neg": 5
+    },
+    "optimizer": {
+        "name": "Adam",
+        "params": {
+            "lr": 0.001,
+            "weight_decay": 0.001
+        }
+    },
+    "lr_scheduler": {
+        "type": "CosineAnnealingWarmRestarts",
+        "params": {
+            "T_0": 10,
+            "T_mult": 2
+        }
+    },
+    "training": {
+        "max_epochs": 500,
+        "batch_size": 4096,
+        "eval_interval": 20,
+        "eval_batch_size": 16,
+        "patience": 10
+    },
+    "evaluation": {
+        "made_directed_relations": [
+            "DrD",
+            "DrD_inv",
+            "CrC",
+            "CrC_inv",
+            "GiG",
+            "GiG_inv",
+            "GcG",
+            "GcG_inv"
+        ],
+        "target_relations": [
+            "CtD"
+        ],
+        "thresholds": [
+            10,
+            5
+        ]
+    }
+}
+2026-05-19 11:58:23,094 - INFO - Setting number of threads to 5
+2026-05-19 11:58:23,329 - INFO - Loading parameters from params.yaml
+2026-05-19 11:58:23,329 - INFO - Output folder: ./
+2026-05-19 11:58:23,329 - INFO - Loading KG...
+2026-05-19 11:59:19,305 - INFO - Done
+2026-05-19 11:59:19,381 - INFO - Detected device: cuda
+2026-05-19 11:59:19,390 - INFO - Initializing model...
+2026-05-19 11:59:19,390 - WARNING - /lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/dev/run_training.py:130: UserWarning: The 'rel_emb_dim' field is missing for model TransD. Defaulting to 200.
+  warnings.warn(f"The 'rel_emb_dim' field is missing for model {model_name}. Defaulting to {emb_dim}.")
+
+2026-05-19 11:59:20,161 - INFO - Optimizer 'Adam' initialized with parameters: {'lr': 0.001, 'weight_decay': 0.001}
+2026-05-19 11:59:20,161 - INFO - Initializing sampler...
+2026-05-19 11:59:50,825 - INFO - Scheduler 'CosineAnnealingWarmRestarts' initialized with parameters: {'T_0': 10, 'T_mult': 2}
+2026-05-19 11:59:50,839 - INFO - Number of training batches: 602
+2026-05-19 11:59:50,850 - INFO - Engine run starting with max_epochs=500.
+2026-05-19 12:01:28,039 - INFO - Epoch 1 - Train Loss: 13866.858921975718, Validation MRR: 0, Learning Rate: 0.001
+2026-05-19 12:01:31,414 - INFO - Memory cleaned.
+2026-05-19 12:01:33,556 - INFO - Epoch[1] Complete. Time taken: 00:01:42.706
+2026-05-19 12:03:03,505 - INFO - Epoch 2 - Train Loss: 8077.325308169357, Validation MRR: 0, Learning Rate: 0.0009755282581475768
+2026-05-19 12:03:06,742 - INFO - Memory cleaned.
+2026-05-19 12:03:08,879 - INFO - Epoch[2] Complete. Time taken: 00:01:35.322
+2026-05-19 12:04:38,583 - INFO - Epoch 3 - Train Loss: 6524.401132310523, Validation MRR: 0, Learning Rate: 0.0009045084971874737
+2026-05-19 12:04:41,776 - INFO - Memory cleaned.
+2026-05-19 12:04:44,166 - INFO - Epoch[3] Complete. Time taken: 00:01:35.287
+2026-05-19 12:06:13,873 - INFO - Epoch 4 - Train Loss: 5788.986367003996, Validation MRR: 0, Learning Rate: 0.0007938926261462366
+2026-05-19 12:06:17,156 - INFO - Memory cleaned.
+2026-05-19 12:06:19,528 - INFO - Epoch[4] Complete. Time taken: 00:01:35.363
+2026-05-19 12:07:49,070 - INFO - Epoch 5 - Train Loss: 5393.293612858082, Validation MRR: 0, Learning Rate: 0.0006545084971874737
+2026-05-19 12:07:52,303 - INFO - Memory cleaned.
+2026-05-19 12:07:54,685 - INFO - Epoch[5] Complete. Time taken: 00:01:35.157
+2026-05-19 12:09:24,248 - INFO - Epoch 6 - Train Loss: 5115.986937261611, Validation MRR: 0, Learning Rate: 0.0005
+2026-05-19 12:09:27,529 - INFO - Memory cleaned.
+2026-05-19 12:09:29,938 - INFO - Epoch[6] Complete. Time taken: 00:01:35.252
+2026-05-19 12:10:59,568 - INFO - Epoch 7 - Train Loss: 4925.3705567896695, Validation MRR: 0, Learning Rate: 0.00034549150281252633
+2026-05-19 12:11:02,760 - INFO - Memory cleaned.
+2026-05-19 12:11:05,151 - INFO - Epoch[7] Complete. Time taken: 00:01:35.213
+2026-05-19 12:12:35,108 - INFO - Epoch 8 - Train Loss: 4778.453065513251, Validation MRR: 0, Learning Rate: 0.00020610737385376348
+2026-05-19 12:12:38,653 - INFO - Memory cleaned.
+2026-05-19 12:12:41,044 - INFO - Epoch[8] Complete. Time taken: 00:01:35.893
+2026-05-19 12:14:10,706 - INFO - Epoch 9 - Train Loss: 4669.915434000815, Validation MRR: 0, Learning Rate: 9.549150281252633e-05
+2026-05-19 12:14:13,941 - INFO - Memory cleaned.
+2026-05-19 12:14:16,361 - INFO - Epoch[9] Complete. Time taken: 00:01:35.317
+2026-05-19 12:15:45,856 - INFO - Epoch 10 - Train Loss: 4624.2139227455955, Validation MRR: 0, Learning Rate: 2.4471741852423235e-05
+2026-05-19 12:15:49,086 - INFO - Memory cleaned.
+2026-05-19 12:15:51,494 - INFO - Epoch[10] Complete. Time taken: 00:01:35.133
+2026-05-19 12:17:21,052 - INFO - Epoch 11 - Train Loss: 5197.477335372699, Validation MRR: 0, Learning Rate: 0.001
+2026-05-19 12:17:24,469 - INFO - Memory cleaned.
+2026-05-19 12:17:27,267 - INFO - Epoch[11] Complete. Time taken: 00:01:35.772
+2026-05-19 12:18:57,021 - INFO - Epoch 12 - Train Loss: 5038.828403763512, Validation MRR: 0, Learning Rate: 0.0009938441702975688
+2026-05-19 12:19:00,320 - INFO - Memory cleaned.
+2026-05-19 12:19:02,744 - INFO - Epoch[12] Complete. Time taken: 00:01:35.477
+2026-05-19 12:20:32,460 - INFO - Epoch 13 - Train Loss: 4954.1537355238925, Validation MRR: 0, Learning Rate: 0.0009755282581475768
+2026-05-19 12:20:35,671 - INFO - Memory cleaned.
+2026-05-19 12:20:38,087 - INFO - Epoch[13] Complete. Time taken: 00:01:35.342
+2026-05-19 12:22:07,734 - INFO - Epoch 14 - Train Loss: 4855.026442359018, Validation MRR: 0, Learning Rate: 0.0009455032620941839
+2026-05-19 12:22:10,960 - INFO - Memory cleaned.
+2026-05-19 12:22:13,367 - INFO - Epoch[14] Complete. Time taken: 00:01:35.280
+2026-05-19 12:23:42,919 - INFO - Epoch 15 - Train Loss: 4772.190516358691, Validation MRR: 0, Learning Rate: 0.0009045084971874737
+2026-05-19 12:23:46,152 - INFO - Memory cleaned.
+2026-05-19 12:23:48,574 - INFO - Epoch[15] Complete. Time taken: 00:01:35.207
+2026-05-19 12:25:18,056 - INFO - Epoch 16 - Train Loss: 4708.528452382094, Validation MRR: 0, Learning Rate: 0.0008535533905932737
+2026-05-19 12:25:21,248 - INFO - Memory cleaned.
+2026-05-19 12:25:23,693 - INFO - Epoch[16] Complete. Time taken: 00:01:35.118
+2026-05-19 12:26:53,270 - INFO - Epoch 17 - Train Loss: 4662.859059304684, Validation MRR: 0, Learning Rate: 0.0007938926261462366
+2026-05-19 12:26:56,509 - INFO - Memory cleaned.
+2026-05-19 12:26:58,948 - INFO - Epoch[17] Complete. Time taken: 00:01:35.255
+2026-05-19 12:28:28,502 - INFO - Epoch 18 - Train Loss: 4574.200087430147, Validation MRR: 0, Learning Rate: 0.0007269952498697733
+2026-05-19 12:28:31,737 - INFO - Memory cleaned.
+2026-05-19 12:28:34,180 - INFO - Epoch[18] Complete. Time taken: 00:01:35.231
+2026-05-19 12:30:03,667 - INFO - Epoch 19 - Train Loss: 4515.991144588873, Validation MRR: 0, Learning Rate: 0.0006545084971874737
+2026-05-19 12:30:06,901 - INFO - Memory cleaned.
+2026-05-19 12:30:09,347 - INFO - Epoch[19] Complete. Time taken: 00:01:35.167
+2026-05-19 12:31:38,954 - INFO - Epoch 20 - Train Loss: 4442.958520938758, Validation MRR: 0, Learning Rate: 0.0005782172325201155
+2026-05-19 12:31:42,113 - INFO - Memory cleaned.
+2026-05-19 12:31:42,113 - INFO - Evaluating on validation set at epoch 20...
+Link prediction evaluation:   0%|          | 0/5 [00:00<?, ?batch/s]
+Projecting entities:   0%|          | 0/45158 [00:00<?, ?entities/s][A
+Projecting entities:   2%|▏         | 972/45158 [00:00<00:04, 9717.11entities/s][A
+Projecting entities:   4%|▍         | 1948/45158 [00:00<00:04, 9739.86entities/s][A
+Projecting entities:   6%|▋         | 2923/45158 [00:00<00:04, 9740.06entities/s][A
+Projecting entities:   9%|▊         | 3898/45158 [00:00<00:04, 9742.47entities/s][A
+Projecting entities:  11%|█         | 4873/45158 [00:00<00:04, 9650.71entities/s][A
+Projecting entities:  13%|█▎        | 5839/45158 [00:00<00:04, 9609.85entities/s][A
+Projecting entities:  15%|█▌        | 6801/45158 [00:00<00:04, 9564.85entities/s][A
+Projecting entities:  17%|█▋        | 7770/45158 [00:00<00:03, 9603.57entities/s][A
+Projecting entities:  19%|█▉        | 8731/45158 [00:00<00:03, 9566.06entities/s][A
+Projecting entities:  21%|██▏       | 9688/45158 [00:01<00:03, 9563.96entities/s][A
+Projecting entities:  24%|██▎       | 10645/45158 [00:01<00:03, 9544.24entities/s][A
+Projecting entities:  26%|██▌       | 11609/45158 [00:01<00:03, 9573.02entities/s][A
+Projecting entities:  28%|██▊       | 12567/45158 [00:01<00:03, 9573.62entities/s][A
+Projecting entities:  30%|██▉       | 13533/45158 [00:01<00:03, 9599.15entities/s][A
+Projecting entities:  32%|███▏      | 14493/45158 [00:01<00:03, 9594.60entities/s][A
+Projecting entities:  34%|███▍      | 15460/45158 [00:01<00:03, 9614.30entities/s][A
+Projecting entities:  36%|███▋      | 16422/45158 [00:01<00:02, 9597.51entities/s][A
+Projecting entities:  39%|███▊      | 17392/45158 [00:01<00:02, 9625.98entities/s][A
+Projecting entities:  41%|████      | 18355/45158 [00:01<00:02, 9616.15entities/s][A
+Projecting entities:  43%|████▎     | 19317/45158 [00:02<00:02, 9615.63entities/s][A
+Projecting entities:  45%|████▍     | 20285/45158 [00:02<00:02, 9632.28entities/s][A
+Projecting entities:  47%|████▋     | 21249/45158 [00:02<00:02, 9607.57entities/s][A
+Projecting entities:  49%|████▉     | 22219/45158 [00:02<00:02, 9632.69entities/s][A
+Projecting entities:  51%|█████▏    | 23183/45158 [00:02<00:02, 9618.32entities/s][A
+Projecting entities:  53%|█████▎    | 24152/45158 [00:02<00:02, 9636.43entities/s][A
+Projecting entities:  56%|█████▌    | 25117/45158 [00:02<00:02, 9639.29entities/s][A
+Projecting entities:  58%|█████▊    | 26087/45158 [00:02<00:01, 9654.97entities/s][A
+Projecting entities:  60%|█████▉    | 27053/45158 [00:02<00:01, 9651.98entities/s][A
+Projecting entities:  62%|██████▏   | 28026/45158 [00:02<00:01, 9674.26entities/s][A
+Projecting entities:  64%|██████▍   | 28994/45158 [00:03<00:01, 9659.53entities/s][A
+Projecting entities:  66%|██████▋   | 29965/45158 [00:03<00:01, 9673.30entities/s][A
+Projecting entities:  68%|██████▊   | 30933/45158 [00:03<00:01, 9656.22entities/s][A
+Projecting entities:  71%|███████   | 31906/45158 [00:03<00:01, 9676.51entities/s][A
+Projecting entities:  73%|███████▎  | 32874/45158 [00:03<00:01, 9666.72entities/s][A
+Projecting entities:  75%|███████▍  | 33845/45158 [00:03<00:01, 9679.31entities/s][A
+Projecting entities:  77%|███████▋  | 34813/45158 [00:03<00:01, 9660.07entities/s][A
+Projecting entities:  79%|███████▉  | 35782/45158 [00:03<00:00, 9666.70entities/s][A
+Projecting entities:  81%|████████▏ | 36749/45158 [00:03<00:00, 9637.91entities/s][A
+Projecting entities:  84%|████████▎ | 37719/45158 [00:03<00:00, 9654.39entities/s][A
+Projecting entities:  86%|████████▌ | 38685/45158 [00:04<00:00, 9649.13entities/s][A
+Projecting entities:  88%|████████▊ | 39656/45158 [00:04<00:00, 9664.48entities/s][A
+Projecting entities:  90%|████████▉ | 40623/45158 [00:04<00:00, 9653.71entities/s][A
+Projecting entities:  92%|█████████▏| 41593/45158 [00:04<00:00, 9664.91entities/s][A
+Projecting entities:  94%|█████████▍| 42560/45158 [00:04<00:00, 9654.23entities/s][A
+Projecting entities:  96%|█████████▋| 43533/45158 [00:04<00:00, 9676.66entities/s][A
+Projecting entities:  99%|█████████▊| 44501/45158 [00:04<00:00, 9659.98entities/s][AProjecting entities: 100%|██████████| 45158/45158 [00:04<00:00, 9638.63entities/s]
+Link prediction evaluation:  20%|██        | 1/5 [00:04<00:18,  4.71s/batch]Link prediction evaluation: 100%|██████████| 5/5 [00:04<00:00,  1.05batch/s]
+2026-05-19 12:31:46,935 - INFO - Validation MRR: 0.14407986402511597
+2026-05-19 12:31:51,309 - INFO - Epoch[20] Complete. Time taken: 00:01:41.962
+2026-05-19 12:33:20,923 - INFO - Epoch 21 - Train Loss: 4391.6235624239125, Validation MRR: 0.14407986402511597, Learning Rate: 0.0005
+2026-05-19 12:33:24,145 - INFO - Memory cleaned.
+2026-05-19 12:33:26,575 - INFO - Epoch[21] Complete. Time taken: 00:01:35.266
+2026-05-19 12:34:56,290 - INFO - Epoch 22 - Train Loss: 4339.221963702837, Validation MRR: 0.14407986402511597, Learning Rate: 0.0004217827674798847
+2026-05-19 12:34:59,507 - INFO - Memory cleaned.
+2026-05-19 12:35:02,005 - INFO - Epoch[22] Complete. Time taken: 00:01:35.430
+2026-05-19 12:36:31,292 - INFO - Epoch 23 - Train Loss: 4270.043076806951, Validation MRR: 0.14407986402511597, Learning Rate: 0.00034549150281252633
+2026-05-19 12:36:34,462 - INFO - Memory cleaned.
+2026-05-19 12:36:36,909 - INFO - Epoch[23] Complete. Time taken: 00:01:34.904
+2026-05-19 12:38:05,342 - INFO - Epoch 24 - Train Loss: 4202.792458289287, Validation MRR: 0.14407986402511597, Learning Rate: 0.00027300475013022663
+2026-05-19 12:38:08,466 - INFO - Memory cleaned.
+2026-05-19 12:38:10,855 - INFO - Epoch[24] Complete. Time taken: 00:01:33.946
+2026-05-19 12:39:39,231 - INFO - Epoch 25 - Train Loss: 4165.505000119554, Validation MRR: 0.14407986402511597, Learning Rate: 0.00020610737385376348
+2026-05-19 12:39:42,380 - INFO - Memory cleaned.
+2026-05-19 12:39:44,818 - INFO - Epoch[25] Complete. Time taken: 00:01:33.963
+2026-05-19 12:41:13,342 - INFO - Epoch 26 - Train Loss: 4128.639429346857, Validation MRR: 0.14407986402511597, Learning Rate: 0.00014644660940672628
+2026-05-19 12:41:16,604 - INFO - Memory cleaned.
+2026-05-19 12:41:19,004 - INFO - Epoch[26] Complete. Time taken: 00:01:34.185
+2026-05-19 12:42:47,576 - INFO - Epoch 27 - Train Loss: 4093.8234151449396, Validation MRR: 0.14407986402511597, Learning Rate: 9.549150281252633e-05
+2026-05-19 12:42:50,783 - INFO - Memory cleaned.
+2026-05-19 12:42:53,279 - INFO - Epoch[27] Complete. Time taken: 00:01:34.275
+2026-05-19 12:44:21,734 - INFO - Epoch 28 - Train Loss: 4064.3789899170606, Validation MRR: 0.14407986402511597, Learning Rate: 5.449673790581611e-05
+2026-05-19 12:44:24,965 - INFO - Memory cleaned.
+2026-05-19 12:44:27,362 - INFO - Epoch[28] Complete. Time taken: 00:01:34.083
+2026-05-19 12:45:55,804 - INFO - Epoch 29 - Train Loss: 4043.990291635254, Validation MRR: 0.14407986402511597, Learning Rate: 2.4471741852423235e-05
+2026-05-19 12:45:59,008 - INFO - Memory cleaned.
+2026-05-19 12:46:01,473 - INFO - Epoch[29] Complete. Time taken: 00:01:34.111
+2026-05-19 12:47:29,833 - INFO - Epoch 30 - Train Loss: 4017.850127750512, Validation MRR: 0.14407986402511597, Learning Rate: 6.15582970243117e-06
+2026-05-19 12:47:33,031 - INFO - Memory cleaned.
+2026-05-19 12:47:35,451 - INFO - Epoch[30] Complete. Time taken: 00:01:33.977
+2026-05-19 12:49:04,475 - INFO - Epoch 31 - Train Loss: 4731.356609619146, Validation MRR: 0.14407986402511597, Learning Rate: 0.001
+2026-05-19 12:49:07,835 - INFO - Memory cleaned.
+2026-05-19 12:49:10,323 - INFO - Epoch[31] Complete. Time taken: 00:01:34.872
+2026-05-19 12:50:38,885 - INFO - Epoch 32 - Train Loss: 4724.073485796121, Validation MRR: 0.14407986402511597, Learning Rate: 0.000998458666866564
+2026-05-19 12:50:42,063 - INFO - Memory cleaned.
+2026-05-19 12:50:44,469 - INFO - Epoch[32] Complete. Time taken: 00:01:34.147
+2026-05-19 12:52:12,892 - INFO - Epoch 33 - Train Loss: 4740.658505884412, Validation MRR: 0.14407986402511597, Learning Rate: 0.0009938441702975688
+2026-05-19 12:52:16,068 - INFO - Memory cleaned.
+2026-05-19 12:52:18,535 - INFO - Epoch[33] Complete. Time taken: 00:01:34.065
+2026-05-19 12:53:47,050 - INFO - Epoch 34 - Train Loss: 4715.766788405496, Validation MRR: 0.14407986402511597, Learning Rate: 0.0009861849601988384
+2026-05-19 12:53:50,225 - INFO - Memory cleaned.
+2026-05-19 12:53:52,665 - INFO - Epoch[34] Complete. Time taken: 00:01:34.131
+2026-05-19 12:55:21,229 - INFO - Epoch 35 - Train Loss: 4656.523419576166, Validation MRR: 0.14407986402511597, Learning Rate: 0.0009755282581475768
+2026-05-19 12:55:24,411 - INFO - Memory cleaned.
+2026-05-19 12:55:26,884 - INFO - Epoch[35] Complete. Time taken: 00:01:34.218
+2026-05-19 12:56:55,356 - INFO - Epoch 36 - Train Loss: 4619.792604162444, Validation MRR: 0.14407986402511597, Learning Rate: 0.0009619397662556434
+2026-05-19 12:56:58,534 - INFO - Memory cleaned.
+2026-05-19 12:57:00,946 - INFO - Epoch[36] Complete. Time taken: 00:01:34.062
+2026-05-19 12:58:29,416 - INFO - Epoch 37 - Train Loss: 4612.766329889323, Validation MRR: 0.14407986402511597, Learning Rate: 0.0009455032620941839
+2026-05-19 12:58:32,594 - INFO - Memory cleaned.
+2026-05-19 12:58:35,051 - INFO - Epoch[37] Complete. Time taken: 00:01:34.104
+2026-05-19 13:00:03,589 - INFO - Epoch 38 - Train Loss: 4602.1801773855295, Validation MRR: 0.14407986402511597, Learning Rate: 0.0009263200821770461
+2026-05-19 13:00:06,765 - INFO - Memory cleaned.
+2026-05-19 13:00:09,222 - INFO - Epoch[38] Complete. Time taken: 00:01:34.171
+2026-05-19 13:01:37,685 - INFO - Epoch 39 - Train Loss: 4586.156543559464, Validation MRR: 0.14407986402511597, Learning Rate: 0.0009045084971874737
+2026-05-19 13:01:40,980 - INFO - Memory cleaned.
+2026-05-19 13:01:43,456 - INFO - Epoch[39] Complete. Time taken: 00:01:34.234
+2026-05-19 13:03:11,929 - INFO - Epoch 40 - Train Loss: 4542.2657644412, Validation MRR: 0.14407986402511597, Learning Rate: 0.0008802029828000156
+2026-05-19 13:03:15,128 - INFO - Memory cleaned.
+2026-05-19 13:03:15,128 - INFO - Evaluating on validation set at epoch 40...
+Link prediction evaluation:   0%|          | 0/5 [00:00<?, ?batch/s]
+Projecting entities:   0%|          | 0/45158 [00:00<?, ?entities/s][A
+Projecting entities:   2%|▏         | 931/45158 [00:00<00:04, 9301.58entities/s][A
+Projecting entities:   4%|▍         | 1902/45158 [00:00<00:04, 9540.23entities/s][A
+Projecting entities:   6%|▋         | 2887/45158 [00:00<00:04, 9678.04entities/s][A
+Projecting entities:   9%|▊         | 3863/45158 [00:00<00:04, 9707.44entities/s][A
+Projecting entities:  11%|█         | 4852/45158 [00:00<00:04, 9769.84entities/s][A
+Projecting entities:  13%|█▎        | 5829/45158 [00:00<00:04, 9763.52entities/s][A
+Projecting entities:  15%|█▌        | 6811/45158 [00:00<00:03, 9780.19entities/s][A
+Projecting entities:  17%|█▋        | 7790/45158 [00:00<00:03, 9772.82entities/s][A
+Projecting entities:  19%|█▉        | 8774/45158 [00:00<00:03, 9793.51entities/s][A
+Projecting entities:  22%|██▏       | 9754/45158 [00:01<00:03, 9787.39entities/s][A
+Projecting entities:  24%|██▍       | 10733/45158 [00:01<00:03, 9770.06entities/s][A
+Projecting entities:  26%|██▌       | 11711/45158 [00:01<00:03, 9770.41entities/s][A
+Projecting entities:  28%|██▊       | 12689/45158 [00:01<00:03, 9766.51entities/s][A
+Projecting entities:  30%|███       | 13676/45158 [00:01<00:03, 9794.87entities/s][A
+Projecting entities:  32%|███▏      | 14656/45158 [00:01<00:03, 9750.61entities/s][A
+Projecting entities:  35%|███▍      | 15634/45158 [00:01<00:03, 9758.55entities/s][A
+Projecting entities:  37%|███▋      | 16610/45158 [00:01<00:02, 9754.98entities/s][A
+Projecting entities:  39%|███▉      | 17594/45158 [00:01<00:02, 9779.00entities/s][A
+Projecting entities:  41%|████      | 18572/45158 [00:01<00:02, 9764.04entities/s][A
+Projecting entities:  43%|████▎     | 19550/45158 [00:02<00:02, 9768.03entities/s][A
+Projecting entities:  45%|████▌     | 20527/45158 [00:02<00:02, 9758.13entities/s][A
+Projecting entities:  48%|████▊     | 21509/45158 [00:02<00:02, 9775.06entities/s][A
+Projecting entities:  50%|████▉     | 22487/45158 [00:02<00:02, 9768.28entities/s][A
+Projecting entities:  52%|█████▏    | 23468/45158 [00:02<00:02, 9777.95entities/s][A
+Projecting entities:  54%|█████▍    | 24446/45158 [00:02<00:02, 9757.38entities/s][A
+Projecting entities:  56%|█████▋    | 25426/45158 [00:02<00:02, 9767.56entities/s][A
+Projecting entities:  58%|█████▊    | 26403/45158 [00:02<00:01, 9749.02entities/s][A
+Projecting entities:  61%|██████    | 27386/45158 [00:02<00:01, 9772.46entities/s][A
+Projecting entities:  63%|██████▎   | 28364/45158 [00:02<00:01, 9753.67entities/s][A
+Projecting entities:  65%|██████▍   | 29343/45158 [00:03<00:01, 9762.75entities/s][A
+Projecting entities:  67%|██████▋   | 30320/45158 [00:03<00:01, 9749.77entities/s][A
+Projecting entities:  69%|██████▉   | 31303/45158 [00:03<00:01, 9771.80entities/s][A
+Projecting entities:  71%|███████▏  | 32281/45158 [00:03<00:01, 9762.15entities/s][A
+Projecting entities:  74%|███████▎  | 33265/45158 [00:03<00:01, 9783.28entities/s][A
+Projecting entities:  76%|███████▌  | 34244/45158 [00:03<00:01, 9772.68entities/s][A
+Projecting entities:  78%|███████▊  | 35229/45158 [00:03<00:01, 9794.09entities/s][A
+Projecting entities:  80%|████████  | 36209/45158 [00:03<00:00, 9770.25entities/s][A
+Projecting entities:  82%|████████▏ | 37187/45158 [00:03<00:00, 9772.56entities/s][A
+Projecting entities:  85%|████████▍ | 38165/45158 [00:03<00:00, 9753.92entities/s][A
+Projecting entities:  87%|████████▋ | 39146/45158 [00:04<00:00, 9770.05entities/s][A
+Projecting entities:  89%|████████▉ | 40124/45158 [00:04<00:00, 9760.36entities/s][A
+Projecting entities:  91%|█████████ | 41103/45158 [00:04<00:00, 9769.11entities/s][A
+Projecting entities:  93%|█████████▎| 42080/45158 [00:04<00:00, 9697.04entities/s][A
+Projecting entities:  95%|█████████▌| 43050/45158 [00:04<00:00, 9687.90entities/s][A
+Projecting entities:  97%|█████████▋| 44025/45158 [00:04<00:00, 9705.74entities/s][A
+Projecting entities: 100%|█████████▉| 45004/45158 [00:04<00:00, 9729.58entities/s][AProjecting entities: 100%|██████████| 45158/45158 [00:04<00:00, 9750.96entities/s]
+Link prediction evaluation:  20%|██        | 1/5 [00:04<00:18,  4.69s/batch]Link prediction evaluation: 100%|██████████| 5/5 [00:04<00:00,  1.06batch/s]
+2026-05-19 13:03:20,063 - INFO - Validation MRR: 0.14983399212360382
+2026-05-19 13:03:24,750 - INFO - Epoch[40] Complete. Time taken: 00:01:41.294
+2026-05-19 13:04:53,524 - INFO - Epoch 41 - Train Loss: 4523.646076633311, Validation MRR: 0.14983399212360382, Learning Rate: 0.0008535533905932737
+2026-05-19 13:04:56,712 - INFO - Memory cleaned.
+2026-05-19 13:04:59,199 - INFO - Epoch[41] Complete. Time taken: 00:01:34.449
+2026-05-19 13:06:27,614 - INFO - Epoch 42 - Train Loss: 4495.6279431557, Validation MRR: 0.14983399212360382, Learning Rate: 0.000824724024165092
+2026-05-19 13:06:30,792 - INFO - Memory cleaned.
+2026-05-19 13:06:33,215 - INFO - Epoch[42] Complete. Time taken: 00:01:34.015
+2026-05-19 13:08:01,684 - INFO - Epoch 43 - Train Loss: 4504.220066506799, Validation MRR: 0.14983399212360382, Learning Rate: 0.0007938926261462366
+2026-05-19 13:08:04,868 - INFO - Memory cleaned.
+2026-05-19 13:08:07,333 - INFO - Epoch[43] Complete. Time taken: 00:01:34.118
+2026-05-19 13:09:35,787 - INFO - Epoch 44 - Train Loss: 4483.842901840407, Validation MRR: 0.14983399212360382, Learning Rate: 0.0007612492823579744
+2026-05-19 13:09:38,927 - INFO - Memory cleaned.
+2026-05-19 13:09:41,334 - INFO - Epoch[44] Complete. Time taken: 00:01:34.001
+2026-05-19 13:11:09,936 - INFO - Epoch 45 - Train Loss: 4451.354350531549, Validation MRR: 0.14983399212360382, Learning Rate: 0.0007269952498697733
+2026-05-19 13:11:13,096 - INFO - Memory cleaned.
+2026-05-19 13:11:15,568 - INFO - Epoch[45] Complete. Time taken: 00:01:34.234
+2026-05-19 13:12:44,074 - INFO - Epoch 46 - Train Loss: 4415.20034359202, Validation MRR: 0.14983399212360382, Learning Rate: 0.000691341716182545
+2026-05-19 13:12:47,274 - INFO - Memory cleaned.
+2026-05-19 13:12:49,707 - INFO - Epoch[46] Complete. Time taken: 00:01:34.138
+2026-05-19 13:14:18,256 - INFO - Epoch 47 - Train Loss: 4394.449346461809, Validation MRR: 0.14983399212360382, Learning Rate: 0.0006545084971874737
+2026-05-19 13:14:21,414 - INFO - Memory cleaned.
+2026-05-19 13:14:23,893 - INFO - Epoch[47] Complete. Time taken: 00:01:34.186
+2026-05-19 13:15:52,500 - INFO - Epoch 48 - Train Loss: 4362.958004059657, Validation MRR: 0.14983399212360382, Learning Rate: 0.0006167226819279528
+2026-05-19 13:15:55,656 - INFO - Memory cleaned.
+2026-05-19 13:15:58,074 - INFO - Epoch[48] Complete. Time taken: 00:01:34.180
+2026-05-19 13:17:26,699 - INFO - Epoch 49 - Train Loss: 4334.3650414797285, Validation MRR: 0.14983399212360382, Learning Rate: 0.0005782172325201155
+2026-05-19 13:17:29,860 - INFO - Memory cleaned.
+2026-05-19 13:17:32,348 - INFO - Epoch[49] Complete. Time taken: 00:01:34.274
+2026-05-19 13:19:00,796 - INFO - Epoch 50 - Train Loss: 4318.028363997103, Validation MRR: 0.14983399212360382, Learning Rate: 0.0005392295478639225
+2026-05-19 13:19:03,975 - INFO - Memory cleaned.
+2026-05-19 13:19:06,399 - INFO - Epoch[50] Complete. Time taken: 00:01:34.051
+2026-05-19 13:20:34,899 - INFO - Epoch 51 - Train Loss: 4295.998091683191, Validation MRR: 0.14983399212360382, Learning Rate: 0.0005
+2026-05-19 13:20:38,079 - INFO - Memory cleaned.
+2026-05-19 13:20:40,556 - INFO - Epoch[51] Complete. Time taken: 00:01:34.157
+2026-05-19 13:22:09,034 - INFO - Epoch 52 - Train Loss: 4259.369405973374, Validation MRR: 0.14983399212360382, Learning Rate: 0.0004607704521360776
+2026-05-19 13:22:12,213 - INFO - Memory cleaned.
+2026-05-19 13:22:14,613 - INFO - Epoch[52] Complete. Time taken: 00:01:34.057
+2026-05-19 13:23:43,076 - INFO - Epoch 53 - Train Loss: 4228.366990082072, Validation MRR: 0.14983399212360382, Learning Rate: 0.0004217827674798847
+2026-05-19 13:23:46,251 - INFO - Memory cleaned.
+2026-05-19 13:23:48,718 - INFO - Epoch[53] Complete. Time taken: 00:01:34.104
+2026-05-19 13:25:17,239 - INFO - Epoch 54 - Train Loss: 4199.395469911778, Validation MRR: 0.14983399212360382, Learning Rate: 0.00038327731807204733
+2026-05-19 13:25:20,442 - INFO - Memory cleaned.
+2026-05-19 13:25:23,794 - INFO - Epoch[54] Complete. Time taken: 00:01:35.076
+2026-05-19 13:26:57,531 - INFO - Epoch 55 - Train Loss: 4178.41001845293, Validation MRR: 0.14983399212360382, Learning Rate: 0.00034549150281252633
+2026-05-19 13:27:00,753 - INFO - Memory cleaned.
+2026-05-19 13:27:03,228 - INFO - Epoch[55] Complete. Time taken: 00:01:39.434
+2026-05-19 13:28:31,652 - INFO - Epoch 56 - Train Loss: 4149.492575892118, Validation MRR: 0.14983399212360382, Learning Rate: 0.0003086582838174551
+2026-05-19 13:28:34,854 - INFO - Memory cleaned.
+2026-05-19 13:28:37,282 - INFO - Epoch[56] Complete. Time taken: 00:01:34.054
+2026-05-19 13:30:05,727 - INFO - Epoch 57 - Train Loss: 4125.423167874979, Validation MRR: 0.14983399212360382, Learning Rate: 0.00027300475013022663
+2026-05-19 13:30:08,899 - INFO - Memory cleaned.
+2026-05-19 13:30:11,351 - INFO - Epoch[57] Complete. Time taken: 00:01:34.069
+2026-05-19 13:31:39,671 - INFO - Epoch 58 - Train Loss: 4106.844585283962, Validation MRR: 0.14983399212360382, Learning Rate: 0.00023875071764202561
+2026-05-19 13:31:42,843 - INFO - Memory cleaned.
+2026-05-19 13:31:45,275 - INFO - Epoch[58] Complete. Time taken: 00:01:33.924
+2026-05-19 13:33:13,623 - INFO - Epoch 59 - Train Loss: 4079.6878335862502, Validation MRR: 0.14983399212360382, Learning Rate: 0.00020610737385376348
+2026-05-19 13:33:16,791 - INFO - Memory cleaned.
+2026-05-19 13:33:19,214 - INFO - Epoch[59] Complete. Time taken: 00:01:33.939
+2026-05-19 13:34:47,565 - INFO - Epoch 60 - Train Loss: 4059.5430138132488, Validation MRR: 0.14983399212360382, Learning Rate: 0.00017527597583490823
+2026-05-19 13:34:50,791 - INFO - Memory cleaned.
+2026-05-19 13:34:50,791 - INFO - Evaluating on validation set at epoch 60...
+Link prediction evaluation:   0%|          | 0/5 [00:00<?, ?batch/s]
+Projecting entities:   0%|          | 0/45158 [00:00<?, ?entities/s][A
+Projecting entities:   2%|▏         | 975/45158 [00:00<00:04, 9740.86entities/s][A
+Projecting entities:   4%|▍         | 1950/45158 [00:00<00:04, 9685.72entities/s][A
+Projecting entities:   6%|▋         | 2919/45158 [00:00<00:04, 9664.29entities/s][A
+Projecting entities:   9%|▊         | 3886/45158 [00:00<00:04, 9655.10entities/s][A
+Projecting entities:  11%|█         | 4864/45158 [00:00<00:04, 9699.34entities/s][A
+Projecting entities:  13%|█▎        | 5837/45158 [00:00<00:04, 9709.21entities/s][A
+Projecting entities:  15%|█▌        | 6818/45158 [00:00<00:03, 9741.09entities/s][A
+Projecting entities:  17%|█▋        | 7793/45158 [00:00<00:03, 9730.66entities/s][A
+Projecting entities:  19%|█▉        | 8774/45158 [00:00<00:03, 9754.15entities/s][A
+Projecting entities:  22%|██▏       | 9750/45158 [00:01<00:03, 9744.92entities/s][A
+Projecting entities:  24%|██▎       | 10725/45158 [00:01<00:03, 9723.26entities/s][A
+Projecting entities:  26%|██▌       | 11698/45158 [00:01<00:03, 9725.05entities/s][A
+Projecting entities:  28%|██▊       | 12672/45158 [00:01<00:03, 9722.90entities/s][A
+Projecting entities:  30%|███       | 13651/45158 [00:01<00:03, 9742.22entities/s][A
+Projecting entities:  32%|███▏      | 14626/45158 [00:01<00:03, 9735.41entities/s][A
+Projecting entities:  35%|███▍      | 15604/45158 [00:01<00:03, 9748.28entities/s][A
+Projecting entities:  37%|███▋      | 16579/45158 [00:01<00:02, 9745.60entities/s][A
+Projecting entities:  39%|███▉      | 17561/45158 [00:01<00:02, 9766.10entities/s][A
+Projecting entities:  41%|████      | 18538/45158 [00:01<00:02, 9751.16entities/s][A
+Projecting entities:  43%|████▎     | 19520/45158 [00:02<00:02, 9768.80entities/s][A
+Projecting entities:  45%|████▌     | 20497/45158 [00:02<00:02, 9768.86entities/s][A
+Projecting entities:  48%|████▊     | 21477/45158 [00:02<00:02, 9775.65entities/s][A
+Projecting entities:  50%|████▉     | 22455/45158 [00:02<00:02, 9750.47entities/s][A
+Projecting entities:  52%|█████▏    | 23437/45158 [00:02<00:02, 9769.10entities/s][A
+Projecting entities:  54%|█████▍    | 24414/45158 [00:02<00:02, 9760.09entities/s][A
+Projecting entities:  56%|█████▌    | 25395/45158 [00:02<00:02, 9772.48entities/s][A
+Projecting entities:  58%|█████▊    | 26373/45158 [00:02<00:01, 9763.40entities/s][A
+Projecting entities:  61%|██████    | 27352/45158 [00:02<00:01, 9771.15entities/s][A
+Projecting entities:  63%|██████▎   | 28330/45158 [00:02<00:01, 9752.68entities/s][A
+Projecting entities:  65%|██████▍   | 29310/45158 [00:03<00:01, 9764.80entities/s][A
+Projecting entities:  67%|██████▋   | 30287/45158 [00:03<00:01, 9731.57entities/s][A
+Projecting entities:  69%|██████▉   | 31268/45158 [00:03<00:01, 9751.80entities/s][A
+Projecting entities:  71%|███████▏  | 32244/45158 [00:03<00:01, 9697.86entities/s][A
+Projecting entities:  74%|███████▎  | 33222/45158 [00:03<00:01, 9720.31entities/s][A
+Projecting entities:  76%|███████▌  | 34195/45158 [00:03<00:01, 9716.65entities/s][A
+Projecting entities:  78%|███████▊  | 35172/45158 [00:03<00:01, 9732.40entities/s][A
+Projecting entities:  80%|████████  | 36146/45158 [00:03<00:00, 9679.86entities/s][A
+Projecting entities:  82%|████████▏ | 37128/45158 [00:03<00:00, 9720.44entities/s][A
+Projecting entities:  84%|████████▍ | 38101/45158 [00:03<00:00, 9716.69entities/s][A
+Projecting entities:  87%|████████▋ | 39079/45158 [00:04<00:00, 9732.97entities/s][A
+Projecting entities:  89%|████████▊ | 40053/45158 [00:04<00:00, 9734.62entities/s][A
+Projecting entities:  91%|█████████ | 41034/45158 [00:04<00:00, 9754.28entities/s][A
+Projecting entities:  93%|█████████▎| 42010/45158 [00:04<00:00, 9742.42entities/s][A
+Projecting entities:  95%|█████████▌| 42988/45158 [00:04<00:00, 9753.21entities/s][A
+Projecting entities:  97%|█████████▋| 43964/45158 [00:04<00:00, 9739.14entities/s][A
+Projecting entities: 100%|█████████▉| 44945/45158 [00:04<00:00, 9758.19entities/s][AProjecting entities: 100%|██████████| 45158/45158 [00:04<00:00, 9739.02entities/s]
+Link prediction evaluation:  20%|██        | 1/5 [00:04<00:18,  4.67s/batch]Link prediction evaluation: 100%|██████████| 5/5 [00:04<00:00,  1.06batch/s]
+2026-05-19 13:34:55,509 - INFO - Validation MRR: 0.17265284061431885
+2026-05-19 13:34:59,941 - INFO - Epoch[60] Complete. Time taken: 00:01:40.727
+2026-05-19 13:36:28,285 - INFO - Epoch 61 - Train Loss: 4041.3220181953166, Validation MRR: 0.17265284061431885, Learning Rate: 0.00014644660940672628
+2026-05-19 13:36:31,463 - INFO - Memory cleaned.
+2026-05-19 13:36:34,064 - INFO - Epoch[61] Complete. Time taken: 00:01:34.122
+2026-05-19 13:38:02,809 - INFO - Epoch 62 - Train Loss: 4030.725187404923, Validation MRR: 0.17265284061431885, Learning Rate: 0.00011979701719998454
+2026-05-19 13:38:05,986 - INFO - Memory cleaned.
+2026-05-19 13:38:08,438 - INFO - Epoch[62] Complete. Time taken: 00:01:34.374
+2026-05-19 13:39:36,764 - INFO - Epoch 63 - Train Loss: 4006.1709424189653, Validation MRR: 0.17265284061431885, Learning Rate: 9.549150281252633e-05
+2026-05-19 13:39:39,979 - INFO - Memory cleaned.
+2026-05-19 13:39:42,384 - INFO - Epoch[63] Complete. Time taken: 00:01:33.946
+2026-05-19 13:41:10,806 - INFO - Epoch 64 - Train Loss: 3999.2883669108346, Validation MRR: 0.17265284061431885, Learning Rate: 7.367991782295391e-05
+2026-05-19 13:41:13,941 - INFO - Memory cleaned.
+2026-05-19 13:41:16,369 - INFO - Epoch[64] Complete. Time taken: 00:01:33.985
+2026-05-19 13:42:44,714 - INFO - Epoch 65 - Train Loss: 3984.5929282207967, Validation MRR: 0.17265284061431885, Learning Rate: 5.449673790581611e-05
+2026-05-19 13:42:47,996 - INFO - Memory cleaned.
+2026-05-19 13:42:50,434 - INFO - Epoch[65] Complete. Time taken: 00:01:34.065
+2026-05-19 13:44:18,764 - INFO - Epoch 66 - Train Loss: 3971.8242604289635, Validation MRR: 0.17265284061431885, Learning Rate: 3.806023374435663e-05
+2026-05-19 13:44:21,943 - INFO - Memory cleaned.
+2026-05-19 13:44:24,409 - INFO - Epoch[66] Complete. Time taken: 00:01:33.974
+2026-05-19 13:45:52,770 - INFO - Epoch 67 - Train Loss: 3964.178948430594, Validation MRR: 0.17265284061431885, Learning Rate: 2.4471741852423235e-05
+2026-05-19 13:45:55,950 - INFO - Memory cleaned.
+2026-05-19 13:45:58,385 - INFO - Epoch[67] Complete. Time taken: 00:01:33.974
+2026-05-19 13:47:26,775 - INFO - Epoch 68 - Train Loss: 3963.4331132032453, Validation MRR: 0.17265284061431885, Learning Rate: 1.3815039801161721e-05
+2026-05-19 13:47:30,032 - INFO - Memory cleaned.
+2026-05-19 13:47:32,450 - INFO - Epoch[68] Complete. Time taken: 00:01:34.065
+2026-05-19 13:49:00,832 - INFO - Epoch 69 - Train Loss: 3954.647798208328, Validation MRR: 0.17265284061431885, Learning Rate: 6.15582970243117e-06
+2026-05-19 13:49:04,089 - INFO - Memory cleaned.
+2026-05-19 13:49:06,541 - INFO - Epoch[69] Complete. Time taken: 00:01:34.091
+2026-05-19 13:50:34,885 - INFO - Epoch 70 - Train Loss: 3950.6831393401008, Validation MRR: 0.17265284061431885, Learning Rate: 1.541333133436018e-06
+2026-05-19 13:50:38,061 - INFO - Memory cleaned.
+2026-05-19 13:50:40,524 - INFO - Epoch[70] Complete. Time taken: 00:01:33.982
+2026-05-19 13:52:08,877 - INFO - Epoch 71 - Train Loss: 4652.02413474873, Validation MRR: 0.17265284061431885, Learning Rate: 0.001
+2026-05-19 13:52:12,057 - INFO - Memory cleaned.
+2026-05-19 13:52:14,523 - INFO - Epoch[71] Complete. Time taken: 00:01:33.997
+2026-05-19 13:53:43,110 - INFO - Epoch 72 - Train Loss: 4631.747569801447, Validation MRR: 0.17265284061431885, Learning Rate: 0.0009996145181203615
+2026-05-19 13:53:46,423 - INFO - Memory cleaned.
+2026-05-19 13:53:49,029 - INFO - Epoch[72] Complete. Time taken: 00:01:34.506
+2026-05-19 13:55:17,365 - INFO - Epoch 73 - Train Loss: 4626.722687943251, Validation MRR: 0.17265284061431885, Learning Rate: 0.000998458666866564
+2026-05-19 13:55:20,542 - INFO - Memory cleaned.
+2026-05-19 13:55:22,983 - INFO - Epoch[73] Complete. Time taken: 00:01:33.954
+2026-05-19 13:56:51,426 - INFO - Epoch 74 - Train Loss: 4617.153317427904, Validation MRR: 0.17265284061431885, Learning Rate: 0.0009965342284774632
+2026-05-19 13:56:54,564 - INFO - Memory cleaned.
+2026-05-19 13:56:57,581 - INFO - Epoch[74] Complete. Time taken: 00:01:34.598
+2026-05-19 13:58:28,550 - INFO - Epoch 75 - Train Loss: 4609.459678527331, Validation MRR: 0.17265284061431885, Learning Rate: 0.0009938441702975688
+2026-05-19 13:58:31,846 - INFO - Memory cleaned.
+2026-05-19 13:58:34,301 - INFO - Epoch[75] Complete. Time taken: 00:01:36.720
+2026-05-19 14:00:02,672 - INFO - Epoch 76 - Train Loss: 4598.445330988707, Validation MRR: 0.17265284061431885, Learning Rate: 0.0009903926402016153
+2026-05-19 14:00:05,865 - INFO - Memory cleaned.
+2026-05-19 14:00:08,272 - INFO - Epoch[76] Complete. Time taken: 00:01:33.971
+2026-05-19 14:01:36,797 - INFO - Epoch 77 - Train Loss: 4580.361854313284, Validation MRR: 0.17265284061431885, Learning Rate: 0.0009861849601988384
+2026-05-19 14:01:39,990 - INFO - Memory cleaned.
+2026-05-19 14:01:42,438 - INFO - Epoch[77] Complete. Time taken: 00:01:34.166
+2026-05-19 14:03:10,879 - INFO - Epoch 78 - Train Loss: 4574.064250343296, Validation MRR: 0.17265284061431885, Learning Rate: 0.0009812276182268236
+2026-05-19 14:03:14,068 - INFO - Memory cleaned.
+2026-05-19 14:03:16,470 - INFO - Epoch[78] Complete. Time taken: 00:01:34.031
+2026-05-19 14:04:44,928 - INFO - Epoch 79 - Train Loss: 4567.464960440691, Validation MRR: 0.17265284061431885, Learning Rate: 0.0009755282581475768
+2026-05-19 14:04:48,123 - INFO - Memory cleaned.
+2026-05-19 14:04:50,576 - INFO - Epoch[79] Complete. Time taken: 00:01:34.106
+2026-05-19 14:06:19,037 - INFO - Epoch 80 - Train Loss: 4570.351310104137, Validation MRR: 0.17265284061431885, Learning Rate: 0.0009690956679612422
+2026-05-19 14:06:22,176 - INFO - Memory cleaned.
+2026-05-19 14:06:22,176 - INFO - Evaluating on validation set at epoch 80...
+Link prediction evaluation:   0%|          | 0/5 [00:00<?, ?batch/s]
+Projecting entities:   0%|          | 0/45158 [00:00<?, ?entities/s][A
+Projecting entities:   2%|▏         | 975/45158 [00:00<00:04, 9748.99entities/s][A
+Projecting entities:   4%|▍         | 1950/45158 [00:00<00:04, 9672.67entities/s][A
+Projecting entities:   6%|▋         | 2933/45158 [00:00<00:04, 9742.40entities/s][A
+Projecting entities:   9%|▊         | 3908/45158 [00:00<00:04, 9732.43entities/s][A
+Projecting entities:  11%|█         | 4892/45158 [00:00<00:04, 9770.20entities/s][A
+Projecting entities:  13%|█▎        | 5870/45158 [00:00<00:04, 9765.64entities/s][A
+Projecting entities:  15%|█▌        | 6850/45158 [00:00<00:03, 9775.48entities/s][A
+Projecting entities:  17%|█▋        | 7828/45158 [00:00<00:03, 9760.91entities/s][A
+Projecting entities:  20%|█▉        | 8813/45158 [00:00<00:03, 9787.23entities/s][A
+Projecting entities:  22%|██▏       | 9792/45158 [00:01<00:03, 9766.11entities/s][A
+Projecting entities:  24%|██▍       | 10779/45158 [00:01<00:03, 9795.91entities/s][A
+Projecting entities:  26%|██▌       | 11759/45158 [00:01<00:03, 9779.51entities/s][A
+Projecting entities:  28%|██▊       | 12742/45158 [00:01<00:03, 9792.82entities/s][A
+Projecting entities:  30%|███       | 13722/45158 [00:01<00:03, 9778.14entities/s][A
+Projecting entities:  33%|███▎      | 14700/45158 [00:01<00:03, 9774.29entities/s][A
+Projecting entities:  35%|███▍      | 15684/45158 [00:01<00:03, 9793.03entities/s][A
+Projecting entities:  37%|███▋      | 16664/45158 [00:01<00:02, 9763.84entities/s][A
+Projecting entities:  39%|███▉      | 17648/45158 [00:01<00:02, 9784.06entities/s][A
+Projecting entities:  41%|████      | 18627/45158 [00:01<00:02, 9741.66entities/s][A
+Projecting entities:  43%|████▎     | 19608/45158 [00:02<00:02, 9759.27entities/s][A
+Projecting entities:  46%|████▌     | 20584/45158 [00:02<00:02, 9744.47entities/s][A
+Projecting entities:  48%|████▊     | 21562/45158 [00:02<00:02, 9754.80entities/s][A
+Projecting entities:  50%|████▉     | 22538/45158 [00:02<00:02, 9744.40entities/s][A
+Projecting entities:  52%|█████▏    | 23516/45158 [00:02<00:02, 9754.34entities/s][A
+Projecting entities:  54%|█████▍    | 24492/45158 [00:02<00:02, 9750.24entities/s][A
+Projecting entities:  56%|█████▋    | 25472/45158 [00:02<00:02, 9764.35entities/s][A
+Projecting entities:  59%|█████▊    | 26449/45158 [00:02<00:01, 9743.25entities/s][A
+Projecting entities:  61%|██████    | 27428/45158 [00:02<00:01, 9755.50entities/s][A
+Projecting entities:  63%|██████▎   | 28404/45158 [00:02<00:01, 9732.18entities/s][A
+Projecting entities:  65%|██████▌   | 29381/45158 [00:03<00:01, 9741.91entities/s][A
+Projecting entities:  67%|██████▋   | 30356/45158 [00:03<00:01, 9727.72entities/s][A
+Projecting entities:  69%|██████▉   | 31334/45158 [00:03<00:01, 9741.32entities/s][A
+Projecting entities:  72%|███████▏  | 32309/45158 [00:03<00:01, 9729.50entities/s][A
+Projecting entities:  74%|███████▎  | 33288/45158 [00:03<00:01, 9746.65entities/s][A
+Projecting entities:  76%|███████▌  | 34263/45158 [00:03<00:01, 9727.34entities/s][A
+Projecting entities:  78%|███████▊  | 35244/45158 [00:03<00:01, 9751.49entities/s][A
+Projecting entities:  80%|████████  | 36220/45158 [00:03<00:00, 9716.83entities/s][A
+Projecting entities:  82%|████████▏ | 37199/45158 [00:03<00:00, 9737.41entities/s][A
+Projecting entities:  85%|████████▍ | 38173/45158 [00:03<00:00, 9722.80entities/s][A
+Projecting entities:  87%|████████▋ | 39153/45158 [00:04<00:00, 9743.59entities/s][A
+Projecting entities:  89%|████████▉ | 40128/45158 [00:04<00:00, 9726.04entities/s][A
+Projecting entities:  91%|█████████ | 41111/45158 [00:04<00:00, 9754.03entities/s][A
+Projecting entities:  93%|█████████▎| 42087/45158 [00:04<00:00, 9739.58entities/s][A
+Projecting entities:  95%|█████████▌| 43067/45158 [00:04<00:00, 9757.48entities/s][A
+Projecting entities:  98%|█████████▊| 44043/45158 [00:04<00:00, 9740.46entities/s][A
+Projecting entities: 100%|█████████▉| 45018/45158 [00:04<00:00, 9739.98entities/s][AProjecting entities: 100%|██████████| 45158/45158 [00:04<00:00, 9750.79entities/s]
+Link prediction evaluation:  20%|██        | 1/5 [00:04<00:18,  4.65s/batch]Link prediction evaluation: 100%|██████████| 5/5 [00:04<00:00,  1.06batch/s]
+2026-05-19 14:06:26,914 - INFO - Validation MRR: 0.20361819863319397
+2026-05-19 14:06:31,173 - INFO - Epoch[80] Complete. Time taken: 00:01:40.597
+2026-05-19 14:07:59,646 - INFO - Epoch 81 - Train Loss: 4567.088482661697, Validation MRR: 0.20361819863319397, Learning Rate: 0.0009619397662556434
+2026-05-19 14:08:02,791 - INFO - Memory cleaned.
+2026-05-19 14:08:05,204 - INFO - Epoch[81] Complete. Time taken: 00:01:34.031
+2026-05-19 14:09:33,667 - INFO - Epoch 82 - Train Loss: 4560.980229098949, Validation MRR: 0.20361819863319397, Learning Rate: 0.0009540715869125407
+2026-05-19 14:09:36,920 - INFO - Memory cleaned.
+2026-05-19 14:09:39,374 - INFO - Epoch[82] Complete. Time taken: 00:01:34.170
+2026-05-19 14:11:08,080 - INFO - Epoch 83 - Train Loss: 4560.546493575084, Validation MRR: 0.20361819863319397, Learning Rate: 0.0009455032620941839
+2026-05-19 14:11:11,245 - INFO - Memory cleaned.
+2026-05-19 14:11:13,675 - INFO - Epoch[83] Complete. Time taken: 00:01:34.301
+2026-05-19 14:12:42,260 - INFO - Epoch 84 - Train Loss: 4549.016492349206, Validation MRR: 0.20361819863319397, Learning Rate: 0.0009362480035363986
+2026-05-19 14:12:45,456 - INFO - Memory cleaned.
+2026-05-19 14:12:47,886 - INFO - Epoch[84] Complete. Time taken: 00:01:34.211
+2026-05-19 14:14:16,386 - INFO - Epoch 85 - Train Loss: 4551.229299123038, Validation MRR: 0.20361819863319397, Learning Rate: 0.0009263200821770461
+2026-05-19 14:14:19,569 - INFO - Memory cleaned.
+2026-05-19 14:14:22,013 - INFO - Epoch[85] Complete. Time taken: 00:01:34.127
+2026-05-19 14:15:50,403 - INFO - Epoch 86 - Train Loss: 4538.37472766604, Validation MRR: 0.20361819863319397, Learning Rate: 0.0009157348061512727
+2026-05-19 14:15:53,685 - INFO - Memory cleaned.
+2026-05-19 14:15:56,093 - INFO - Epoch[86] Complete. Time taken: 00:01:34.080
+2026-05-19 14:17:24,569 - INFO - Epoch 87 - Train Loss: 4524.281935138186, Validation MRR: 0.20361819863319397, Learning Rate: 0.0009045084971874737
+2026-05-19 14:17:27,732 - INFO - Memory cleaned.
+2026-05-19 14:17:30,142 - INFO - Epoch[87] Complete. Time taken: 00:01:34.049
+2026-05-19 14:18:58,756 - INFO - Epoch 88 - Train Loss: 4519.872745679881, Validation MRR: 0.20361819863319397, Learning Rate: 0.0008926584654403724
+2026-05-19 14:19:01,901 - INFO - Memory cleaned.
+2026-05-19 14:19:06,999 - INFO - Epoch[88] Complete. Time taken: 00:01:36.857
+2026-05-19 14:20:41,185 - INFO - Epoch 89 - Train Loss: 4507.457589318354, Validation MRR: 0.20361819863319397, Learning Rate: 0.0008802029828000156
+2026-05-19 14:20:44,442 - INFO - Memory cleaned.
+2026-05-19 14:20:46,889 - INFO - Epoch[89] Complete. Time taken: 00:01:39.889
+2026-05-19 14:22:15,310 - INFO - Epoch 90 - Train Loss: 4500.556071590749, Validation MRR: 0.20361819863319397, Learning Rate: 0.0008671612547178428
+2026-05-19 14:22:18,519 - INFO - Memory cleaned.
+2026-05-19 14:22:20,949 - INFO - Epoch[90] Complete. Time taken: 00:01:34.061
+2026-05-19 14:23:49,488 - INFO - Epoch 91 - Train Loss: 4487.776020842419, Validation MRR: 0.20361819863319397, Learning Rate: 0.0008535533905932737
+2026-05-19 14:23:52,725 - INFO - Memory cleaned.
+2026-05-19 14:23:55,186 - INFO - Epoch[91] Complete. Time taken: 00:01:34.237
+2026-05-19 14:25:23,622 - INFO - Epoch 92 - Train Loss: 4481.625192787803, Validation MRR: 0.20361819863319397, Learning Rate: 0.0008394003727664709
+2026-05-19 14:25:26,926 - INFO - Memory cleaned.
+2026-05-19 14:25:29,372 - INFO - Epoch[92] Complete. Time taken: 00:01:34.186
+2026-05-19 14:26:57,898 - INFO - Epoch 93 - Train Loss: 4471.686656126032, Validation MRR: 0.20361819863319397, Learning Rate: 0.000824724024165092
+2026-05-19 14:27:01,105 - INFO - Memory cleaned.
+2026-05-19 14:27:03,533 - INFO - Epoch[93] Complete. Time taken: 00:01:34.161
+2026-05-19 14:28:32,019 - INFO - Epoch 94 - Train Loss: 4467.553476915204, Validation MRR: 0.20361819863319397, Learning Rate: 0.000809546974654917
+2026-05-19 14:28:35,207 - INFO - Memory cleaned.
+2026-05-19 14:28:37,726 - INFO - Epoch[94] Complete. Time taken: 00:01:34.192
+2026-05-19 14:30:06,221 - INFO - Epoch 95 - Train Loss: 4456.0330283169005, Validation MRR: 0.20361819863319397, Learning Rate: 0.0007938926261462366
+2026-05-19 14:30:09,426 - INFO - Memory cleaned.
+2026-05-19 14:30:11,881 - INFO - Epoch[95] Complete. Time taken: 00:01:34.155
+2026-05-19 14:31:40,322 - INFO - Epoch 96 - Train Loss: 4424.314644810144, Validation MRR: 0.20361819863319397, Learning Rate: 0.0007777851165098011
+2026-05-19 14:31:43,917 - INFO - Memory cleaned.
+2026-05-19 14:31:46,333 - INFO - Epoch[96] Complete. Time taken: 00:01:34.451
+2026-05-19 14:33:14,742 - INFO - Epoch 97 - Train Loss: 4431.067579292925, Validation MRR: 0.20361819863319397, Learning Rate: 0.0007612492823579744
+2026-05-19 14:33:17,900 - INFO - Memory cleaned.
+2026-05-19 14:33:20,317 - INFO - Epoch[97] Complete. Time taken: 00:01:33.984
+2026-05-19 14:34:48,779 - INFO - Epoch 98 - Train Loss: 4407.297541961185, Validation MRR: 0.20361819863319397, Learning Rate: 0.0007443106207484776
+2026-05-19 14:34:51,963 - INFO - Memory cleaned.
+2026-05-19 14:34:54,380 - INFO - Epoch[98] Complete. Time taken: 00:01:34.063
+2026-05-19 14:36:22,944 - INFO - Epoch 99 - Train Loss: 4413.464413446292, Validation MRR: 0.20361819863319397, Learning Rate: 0.0007269952498697733
+2026-05-19 14:36:26,119 - INFO - Memory cleaned.
+2026-05-19 14:36:28,529 - INFO - Epoch[99] Complete. Time taken: 00:01:34.148
+2026-05-19 14:37:57,032 - INFO - Epoch 100 - Train Loss: 4384.198087239411, Validation MRR: 0.20361819863319397, Learning Rate: 0.0007093298687687141
+2026-05-19 14:38:00,177 - INFO - Memory cleaned.
+2026-05-19 14:38:00,177 - INFO - Evaluating on validation set at epoch 100...
+Link prediction evaluation:   0%|          | 0/5 [00:00<?, ?batch/s]
+Projecting entities:   0%|          | 0/45158 [00:00<?, ?entities/s][A
+Projecting entities:   2%|▏         | 973/45158 [00:00<00:04, 9722.48entities/s][A
+Projecting entities:   4%|▍         | 1960/45158 [00:00<00:04, 9806.48entities/s][A
+Projecting entities:   7%|▋         | 2941/45158 [00:00<00:04, 9785.88entities/s][A
+Projecting entities:   9%|▊         | 3928/45158 [00:00<00:04, 9817.48entities/s][A
+Projecting entities:  11%|█         | 4910/45158 [00:00<00:04, 9777.82entities/s][A
+Projecting entities:  13%|█▎        | 5894/45158 [00:00<00:04, 9797.18entities/s][A
+Projecting entities:  15%|█▌        | 6874/45158 [00:00<00:03, 9794.49entities/s][A
+Projecting entities:  17%|█▋        | 7861/45158 [00:00<00:03, 9816.77entities/s][A
+Projecting entities:  20%|█▉        | 8845/45158 [00:00<00:03, 9823.69entities/s][A
+Projecting entities:  22%|██▏       | 9835/45158 [00:01<00:03, 9844.21entities/s][A
+Projecting entities:  24%|██▍       | 10820/45158 [00:01<00:03, 9822.14entities/s][A
+Projecting entities:  26%|██▌       | 11808/45158 [00:01<00:03, 9838.85entities/s][A
+Projecting entities:  28%|██▊       | 12792/45158 [00:01<00:03, 9826.67entities/s][A
+Projecting entities:  31%|███       | 13778/45158 [00:01<00:03, 9836.39entities/s][A
+Projecting entities:  33%|███▎      | 14762/45158 [00:01<00:03, 9808.91entities/s][A
+Projecting entities:  35%|███▍      | 15747/45158 [00:01<00:02, 9819.32entities/s][A
+Projecting entities:  37%|███▋      | 16729/45158 [00:01<00:02, 9811.86entities/s][A
+Projecting entities:  39%|███▉      | 17718/45158 [00:01<00:02, 9833.59entities/s][A
+Projecting entities:  41%|████▏     | 18702/45158 [00:01<00:02, 9807.22entities/s][A
+Projecting entities:  44%|████▎     | 19685/45158 [00:02<00:02, 9813.08entities/s][A
+Projecting entities:  46%|████▌     | 20667/45158 [00:02<00:02, 9786.96entities/s][A
+Projecting entities:  48%|████▊     | 21652/45158 [00:02<00:02, 9805.63entities/s][A
+Projecting entities:  50%|█████     | 22633/45158 [00:02<00:02, 9787.83entities/s][A
+Projecting entities:  52%|█████▏    | 23612/45158 [00:02<00:02, 9770.66entities/s][A
+Projecting entities:  54%|█████▍    | 24600/45158 [00:02<00:02, 9800.53entities/s][A
+Projecting entities:  57%|█████▋    | 25581/45158 [00:02<00:02, 9784.18entities/s][A
+Projecting entities:  59%|█████▉    | 26569/45158 [00:02<00:01, 9810.25entities/s][A
+Projecting entities:  61%|██████    | 27551/45158 [00:02<00:01, 9794.51entities/s][A
+Projecting entities:  63%|██████▎   | 28536/45158 [00:02<00:01, 9808.14entities/s][A
+Projecting entities:  65%|██████▌   | 29517/45158 [00:03<00:01, 9787.41entities/s][A
+Projecting entities:  68%|██████▊   | 30501/45158 [00:03<00:01, 9801.30entities/s][A
+Projecting entities:  70%|██████▉   | 31482/45158 [00:03<00:01, 9784.39entities/s][A
+Projecting entities:  72%|███████▏  | 32468/45158 [00:03<00:01, 9805.00entities/s][A
+Projecting entities:  74%|███████▍  | 33449/45158 [00:03<00:01, 9781.69entities/s][A
+Projecting entities:  76%|███████▋  | 34435/45158 [00:03<00:01, 9802.45entities/s][A
+Projecting entities:  78%|███████▊  | 35416/45158 [00:03<00:00, 9786.13entities/s][A
+Projecting entities:  81%|████████  | 36395/45158 [00:03<00:00, 9774.77entities/s][A
+Projecting entities:  83%|████████▎ | 37373/45158 [00:03<00:00, 9728.35entities/s][A
+Projecting entities:  85%|████████▍ | 38356/45158 [00:03<00:00, 9757.86entities/s][A
+Projecting entities:  87%|████████▋ | 39335/45158 [00:04<00:00, 9764.87entities/s][A
+Projecting entities:  89%|████████▉ | 40321/45158 [00:04<00:00, 9790.42entities/s][A
+Projecting entities:  91%|█████████▏| 41301/45158 [00:04<00:00, 9786.69entities/s][A
+Projecting entities:  94%|█████████▎| 42291/45158 [00:04<00:00, 9817.71entities/s][A
+Projecting entities:  96%|█████████▌| 43273/45158 [00:04<00:00, 9809.04entities/s][A
+Projecting entities:  98%|█████████▊| 44261/45158 [00:04<00:00, 9829.33entities/s][AProjecting entities: 100%|██████████| 45158/45158 [00:04<00:00, 9800.60entities/s]
+Link prediction evaluation:  20%|██        | 1/5 [00:04<00:19,  4.77s/batch]Link prediction evaluation: 100%|██████████| 5/5 [00:04<00:00,  1.04batch/s]
+2026-05-19 14:38:05,124 - INFO - Validation MRR: 0.18188366293907166
+2026-05-19 14:38:07,553 - INFO - Epoch[100] Complete. Time taken: 00:01:39.024
+2026-05-19 14:39:36,112 - INFO - Epoch 101 - Train Loss: 4381.082075380945, Validation MRR: 0.18188366293907166, Learning Rate: 0.000691341716182545
+2026-05-19 14:39:39,299 - INFO - Memory cleaned.
+2026-05-19 14:39:41,716 - INFO - Epoch[101] Complete. Time taken: 00:01:34.163
+2026-05-19 14:41:10,159 - INFO - Epoch 102 - Train Loss: 4367.8090222584715, Validation MRR: 0.18188366293907166, Learning Rate: 0.0006730585285387465
+2026-05-19 14:41:13,433 - INFO - Memory cleaned.
+2026-05-19 14:41:15,856 - INFO - Epoch[102] Complete. Time taken: 00:01:34.140
+2026-05-19 14:42:44,278 - INFO - Epoch 103 - Train Loss: 4350.901041973651, Validation MRR: 0.18188366293907166, Learning Rate: 0.0006545084971874737
+2026-05-19 14:42:47,463 - INFO - Memory cleaned.
+2026-05-19 14:42:49,914 - INFO - Epoch[103] Complete. Time taken: 00:01:34.058
+2026-05-19 14:44:18,380 - INFO - Epoch 104 - Train Loss: 4354.889085239864, Validation MRR: 0.18188366293907166, Learning Rate: 0.0006357202249325371
+2026-05-19 14:44:21,567 - INFO - Memory cleaned.
+2026-05-19 14:44:24,011 - INFO - Epoch[104] Complete. Time taken: 00:01:34.096
+2026-05-19 14:45:52,396 - INFO - Epoch 105 - Train Loss: 4337.521974306101, Validation MRR: 0.18188366293907166, Learning Rate: 0.0006167226819279528
+2026-05-19 14:45:55,571 - INFO - Memory cleaned.
+2026-05-19 14:45:57,999 - INFO - Epoch[105] Complete. Time taken: 00:01:33.988
+2026-05-19 14:47:26,616 - INFO - Epoch 106 - Train Loss: 4309.868357158017, Validation MRR: 0.18188366293907166, Learning Rate: 0.0005975451610080642
+2026-05-19 14:47:29,785 - INFO - Memory cleaned.
+2026-05-19 14:47:32,220 - INFO - Epoch[106] Complete. Time taken: 00:01:34.221
+2026-05-19 14:49:00,642 - INFO - Epoch 107 - Train Loss: 4296.970539331632, Validation MRR: 0.18188366293907166, Learning Rate: 0.0005782172325201155
+2026-05-19 14:49:03,880 - INFO - Memory cleaned.
+2026-05-19 14:49:06,324 - INFO - Epoch[107] Complete. Time taken: 00:01:34.104
+2026-05-19 14:50:35,182 - INFO - Epoch 108 - Train Loss: 4286.199390468425, Validation MRR: 0.18188366293907166, Learning Rate: 0.0005587686987289189
+2026-05-19 14:50:38,335 - INFO - Memory cleaned.
+2026-05-19 14:50:40,797 - INFO - Epoch[108] Complete. Time taken: 00:01:34.473
+2026-05-19 14:52:09,451 - INFO - Epoch 109 - Train Loss: 4271.055179801453, Validation MRR: 0.18188366293907166, Learning Rate: 0.0005392295478639225
+2026-05-19 14:52:12,674 - INFO - Memory cleaned.
+2026-05-19 14:52:15,114 - INFO - Epoch[109] Complete. Time taken: 00:01:34.317
+2026-05-19 14:53:43,966 - INFO - Epoch 110 - Train Loss: 4274.328498014019, Validation MRR: 0.18188366293907166, Learning Rate: 0.0005196299078795343
+2026-05-19 14:53:47,179 - INFO - Memory cleaned.
+2026-05-19 14:53:49,642 - INFO - Epoch[110] Complete. Time taken: 00:01:34.527
+2026-05-19 14:55:17,928 - INFO - Epoch 111 - Train Loss: 4249.194116324253, Validation MRR: 0.18188366293907166, Learning Rate: 0.0005
+2026-05-19 14:55:21,098 - INFO - Memory cleaned.
+2026-05-19 14:55:23,522 - INFO - Epoch[111] Complete. Time taken: 00:01:33.880
+2026-05-19 14:56:52,039 - INFO - Epoch 112 - Train Loss: 4242.806320948079, Validation MRR: 0.18188366293907166, Learning Rate: 0.00048037009212046586
+2026-05-19 14:56:55,264 - INFO - Memory cleaned.
+2026-05-19 14:56:57,754 - INFO - Epoch[112] Complete. Time taken: 00:01:34.232
+2026-05-19 14:58:26,375 - INFO - Epoch 113 - Train Loss: 4223.142983852641, Validation MRR: 0.18188366293907166, Learning Rate: 0.0004607704521360776
+2026-05-19 14:58:29,544 - INFO - Memory cleaned.
+2026-05-19 14:58:31,978 - INFO - Epoch[113] Complete. Time taken: 00:01:34.224
+2026-05-19 15:00:00,288 - INFO - Epoch 114 - Train Loss: 4205.718676605139, Validation MRR: 0.18188366293907166, Learning Rate: 0.00044123130127108126
+2026-05-19 15:00:03,436 - INFO - Memory cleaned.
+2026-05-19 15:00:05,906 - INFO - Epoch[114] Complete. Time taken: 00:01:33.927
+2026-05-19 15:01:34,245 - INFO - Epoch 115 - Train Loss: 4202.060078010434, Validation MRR: 0.18188366293907166, Learning Rate: 0.0004217827674798847
+2026-05-19 15:01:37,403 - INFO - Memory cleaned.
+2026-05-19 15:01:39,855 - INFO - Epoch[115] Complete. Time taken: 00:01:33.949
+2026-05-19 15:03:08,196 - INFO - Epoch 116 - Train Loss: 4191.3508281189415, Validation MRR: 0.18188366293907166, Learning Rate: 0.00040245483899193594
+2026-05-19 15:03:11,342 - INFO - Memory cleaned.
+2026-05-19 15:03:13,894 - INFO - Epoch[116] Complete. Time taken: 00:01:34.039
+2026-05-19 15:04:42,138 - INFO - Epoch 117 - Train Loss: 4177.519332157884, Validation MRR: 0.18188366293907166, Learning Rate: 0.00038327731807204733
+2026-05-19 15:04:45,283 - INFO - Memory cleaned.
+2026-05-19 15:04:47,738 - INFO - Epoch[117] Complete. Time taken: 00:01:33.843
+2026-05-19 15:06:18,538 - INFO - Epoch 118 - Train Loss: 4164.122691246716, Validation MRR: 0.18188366293907166, Learning Rate: 0.0003642797750674628
+2026-05-19 15:06:21,929 - INFO - Memory cleaned.
+2026-05-19 15:06:24,571 - INFO - Epoch[118] Complete. Time taken: 00:01:36.833
+2026-05-19 15:07:52,710 - INFO - Epoch 119 - Train Loss: 4159.600285621367, Validation MRR: 0.18188366293907166, Learning Rate: 0.00034549150281252633
+2026-05-19 15:07:55,761 - INFO - Memory cleaned.
+2026-05-19 15:07:58,236 - INFO - Epoch[119] Complete. Time taken: 00:01:33.665
+2026-05-19 15:09:26,380 - INFO - Epoch 120 - Train Loss: 4137.367905157774, Validation MRR: 0.18188366293907166, Learning Rate: 0.00032694147146125364
+2026-05-19 15:09:29,428 - INFO - Memory cleaned.
+2026-05-19 15:09:29,428 - INFO - Evaluating on validation set at epoch 120...
+Link prediction evaluation:   0%|          | 0/5 [00:00<?, ?batch/s]
+Projecting entities:   0%|          | 0/45158 [00:00<?, ?entities/s][A
+Projecting entities:   2%|▏         | 976/45158 [00:00<00:04, 9753.17entities/s][A
+Projecting entities:   4%|▍         | 1952/45158 [00:00<00:04, 9742.84entities/s][A
+Projecting entities:   7%|▋         | 2946/45158 [00:00<00:04, 9829.36entities/s][A
+Projecting entities:   9%|▊         | 3929/45158 [00:00<00:04, 9802.92entities/s][A
+Projecting entities:  11%|█         | 4921/45158 [00:00<00:04, 9844.47entities/s][A
+Projecting entities:  13%|█▎        | 5912/45158 [00:00<00:03, 9863.34entities/s][A
+Projecting entities:  15%|█▌        | 6904/45158 [00:00<00:03, 9879.54entities/s][A
+Projecting entities:  17%|█▋        | 7892/45158 [00:00<00:03, 9863.25entities/s][A
+Projecting entities:  20%|█▉        | 8885/45158 [00:00<00:03, 9879.97entities/s][A
+Projecting entities:  22%|██▏       | 9881/45158 [00:01<00:03, 9901.71entities/s][A
+Projecting entities:  24%|██▍       | 10872/45158 [00:01<00:03, 9880.53entities/s][A
+Projecting entities:  26%|██▋       | 11862/45158 [00:01<00:03, 9883.73entities/s][A
+Projecting entities:  28%|██▊       | 12851/45158 [00:01<00:03, 9865.54entities/s][A
+Projecting entities:  31%|███       | 13845/45158 [00:01<00:03, 9885.76entities/s][A
+Projecting entities:  33%|███▎      | 14834/45158 [00:01<00:03, 9882.96entities/s][A
+Projecting entities:  35%|███▌      | 15826/45158 [00:01<00:02, 9892.05entities/s][A
+Projecting entities:  37%|███▋      | 16816/45158 [00:01<00:02, 9866.41entities/s][A
+Projecting entities:  39%|███▉      | 17809/45158 [00:01<00:02, 9884.10entities/s][A
+Projecting entities:  42%|████▏     | 18798/45158 [00:01<00:02, 9869.10entities/s][A
+Projecting entities:  44%|████▍     | 19789/45158 [00:02<00:02, 9880.35entities/s][A
+Projecting entities:  46%|████▌     | 20778/45158 [00:02<00:02, 9869.41entities/s][A
+Projecting entities:  48%|████▊     | 21767/45158 [00:02<00:02, 9875.12entities/s][A
+Projecting entities:  50%|█████     | 22755/45158 [00:02<00:02, 9866.34entities/s][A
+Projecting entities:  53%|█████▎    | 23745/45158 [00:02<00:02, 9875.29entities/s][A
+Projecting entities:  55%|█████▍    | 24733/45158 [00:02<00:02, 9866.35entities/s][A
+Projecting entities:  57%|█████▋    | 25721/45158 [00:02<00:01, 9869.12entities/s][A
+Projecting entities:  59%|█████▉    | 26708/45158 [00:02<00:01, 9846.09entities/s][A
+Projecting entities:  61%|██████▏   | 27703/45158 [00:02<00:01, 9875.99entities/s][A
+Projecting entities:  64%|██████▎   | 28691/45158 [00:02<00:01, 9863.70entities/s][A
+Projecting entities:  66%|██████▌   | 29683/45158 [00:03<00:01, 9879.06entities/s][A
+Projecting entities:  68%|██████▊   | 30671/45158 [00:03<00:01, 9873.24entities/s][A
+Projecting entities:  70%|███████   | 31663/45158 [00:03<00:01, 9886.33entities/s][A
+Projecting entities:  72%|███████▏  | 32652/45158 [00:03<00:01, 9882.10entities/s][A
+Projecting entities:  74%|███████▍  | 33642/45158 [00:03<00:01, 9887.07entities/s][A
+Projecting entities:  77%|███████▋  | 34631/45158 [00:03<00:01, 9882.67entities/s][A
+Projecting entities:  79%|███████▉  | 35625/45158 [00:03<00:00, 9898.14entities/s][A
+Projecting entities:  81%|████████  | 36615/45158 [00:03<00:00, 9882.48entities/s][A
+Projecting entities:  83%|████████▎ | 37611/45158 [00:03<00:00, 9902.47entities/s][A
+Projecting entities:  85%|████████▌ | 38602/45158 [00:03<00:00, 9902.25entities/s][A
+Projecting entities:  88%|████████▊ | 39599/45158 [00:04<00:00, 9921.98entities/s][A
+Projecting entities:  90%|████████▉ | 40592/45158 [00:04<00:00, 9902.33entities/s][A
+Projecting entities:  92%|█████████▏| 41583/45158 [00:04<00:00, 9902.47entities/s][A
+Projecting entities:  94%|█████████▍| 42574/45158 [00:04<00:00, 9882.03entities/s][A
+Projecting entities:  96%|█████████▋| 43569/45158 [00:04<00:00, 9901.93entities/s][A
+Projecting entities:  99%|█████████▊| 44560/45158 [00:04<00:00, 9885.99entities/s][AProjecting entities: 100%|██████████| 45158/45158 [00:04<00:00, 9877.17entities/s]
+Link prediction evaluation:  20%|██        | 1/5 [00:04<00:18,  4.67s/batch]Link prediction evaluation: 100%|██████████| 5/5 [00:04<00:00,  1.06batch/s]
+2026-05-19 15:09:34,567 - INFO - Validation MRR: 0.20051471889019012
+2026-05-19 15:09:37,078 - INFO - Epoch[120] Complete. Time taken: 00:01:38.842
+2026-05-19 15:11:05,232 - INFO - Epoch 121 - Train Loss: 4124.073461780304, Validation MRR: 0.20051471889019012, Learning Rate: 0.0003086582838174551
+2026-05-19 15:11:08,260 - INFO - Memory cleaned.
+2026-05-19 15:11:10,719 - INFO - Epoch[121] Complete. Time taken: 00:01:33.640
+2026-05-19 15:12:38,992 - INFO - Epoch 122 - Train Loss: 4115.487042235844, Validation MRR: 0.20051471889019012, Learning Rate: 0.0002906701312312861
+2026-05-19 15:12:42,023 - INFO - Memory cleaned.
+2026-05-19 15:12:44,506 - INFO - Epoch[122] Complete. Time taken: 00:01:33.787
+2026-05-19 15:14:12,743 - INFO - Epoch 123 - Train Loss: 4098.092773741279, Validation MRR: 0.20051471889019012, Learning Rate: 0.00027300475013022663
+2026-05-19 15:14:15,764 - INFO - Memory cleaned.
+2026-05-19 15:14:18,225 - INFO - Epoch[123] Complete. Time taken: 00:01:33.719
+2026-05-19 15:15:46,496 - INFO - Epoch 124 - Train Loss: 4092.0700068124675, Validation MRR: 0.20051471889019012, Learning Rate: 0.00025568937925152246
+2026-05-19 15:15:49,517 - INFO - Memory cleaned.
+2026-05-19 15:15:51,976 - INFO - Epoch[124] Complete. Time taken: 00:01:33.750
+2026-05-19 15:17:20,635 - INFO - Epoch 125 - Train Loss: 4078.1939489945744, Validation MRR: 0.20051471889019012, Learning Rate: 0.00023875071764202561
+2026-05-19 15:17:23,718 - INFO - Memory cleaned.
+2026-05-19 15:17:26,177 - INFO - Epoch[125] Complete. Time taken: 00:01:34.202
+2026-05-19 15:18:54,299 - INFO - Epoch 126 - Train Loss: 4061.8783841626077, Validation MRR: 0.20051471889019012, Learning Rate: 0.00022221488349019887
+2026-05-19 15:18:57,335 - INFO - Memory cleaned.
+2026-05-19 15:18:59,893 - INFO - Epoch[126] Complete. Time taken: 00:01:33.715
+2026-05-19 15:20:27,924 - INFO - Epoch 127 - Train Loss: 4058.225180545105, Validation MRR: 0.20051471889019012, Learning Rate: 0.00020610737385376348
+2026-05-19 15:20:30,974 - INFO - Memory cleaned.
+2026-05-19 15:20:33,428 - INFO - Epoch[127] Complete. Time taken: 00:01:33.535
+2026-05-19 15:22:01,545 - INFO - Epoch 128 - Train Loss: 4052.8122985168125, Validation MRR: 0.20051471889019012, Learning Rate: 0.00019045302534508314
+2026-05-19 15:22:04,590 - INFO - Memory cleaned.
+2026-05-19 15:22:07,020 - INFO - Epoch[128] Complete. Time taken: 00:01:33.592
+2026-05-19 15:23:35,026 - INFO - Epoch 129 - Train Loss: 4036.43201445687, Validation MRR: 0.20051471889019012, Learning Rate: 0.00017527597583490823
+2026-05-19 15:23:38,071 - INFO - Memory cleaned.
+2026-05-19 15:23:40,515 - INFO - Epoch[129] Complete. Time taken: 00:01:33.494
+2026-05-19 15:25:08,769 - INFO - Epoch 130 - Train Loss: 4032.9549677144, Validation MRR: 0.20051471889019012, Learning Rate: 0.00016059962723352923
+2026-05-19 15:25:11,948 - INFO - Memory cleaned.
+2026-05-19 15:25:14,414 - INFO - Epoch[130] Complete. Time taken: 00:01:33.899
+2026-05-19 15:26:42,575 - INFO - Epoch 131 - Train Loss: 4016.511942310593, Validation MRR: 0.20051471889019012, Learning Rate: 0.00014644660940672628
+2026-05-19 15:26:45,694 - INFO - Memory cleaned.
+2026-05-19 15:26:48,175 - INFO - Epoch[131] Complete. Time taken: 00:01:33.761
+2026-05-19 15:28:16,300 - INFO - Epoch 132 - Train Loss: 4003.386569749579, Validation MRR: 0.20051471889019012, Learning Rate: 0.00013283874528215717
+2026-05-19 15:28:19,383 - INFO - Memory cleaned.
+2026-05-19 15:28:21,857 - INFO - Epoch[132] Complete. Time taken: 00:01:33.681
+2026-05-19 15:29:49,825 - INFO - Epoch 133 - Train Loss: 4009.8742374391327, Validation MRR: 0.20051471889019012, Learning Rate: 0.00011979701719998454
+2026-05-19 15:29:53,013 - INFO - Memory cleaned.
+2026-05-19 15:29:55,491 - INFO - Epoch[133] Complete. Time taken: 00:01:33.634
+2026-05-19 15:31:23,543 - INFO - Epoch 134 - Train Loss: 3999.2443375451912, Validation MRR: 0.20051471889019012, Learning Rate: 0.00010734153455962748
+2026-05-19 15:31:26,631 - INFO - Memory cleaned.
+2026-05-19 15:31:29,108 - INFO - Epoch[134] Complete. Time taken: 00:01:33.617
+2026-05-19 15:32:57,282 - INFO - Epoch 135 - Train Loss: 3982.8411485125107, Validation MRR: 0.20051471889019012, Learning Rate: 9.549150281252633e-05
+2026-05-19 15:33:00,384 - INFO - Memory cleaned.
+2026-05-19 15:33:02,858 - INFO - Epoch[135] Complete. Time taken: 00:01:33.750
+2026-05-19 15:34:30,990 - INFO - Epoch 136 - Train Loss: 3979.675155433175, Validation MRR: 0.20051471889019012, Learning Rate: 8.42651938487275e-05
+2026-05-19 15:34:34,034 - INFO - Memory cleaned.
+2026-05-19 15:34:36,561 - INFO - Epoch[136] Complete. Time taken: 00:01:33.703
+2026-05-19 15:36:04,663 - INFO - Epoch 137 - Train Loss: 3969.6240374078584, Validation MRR: 0.20051471889019012, Learning Rate: 7.367991782295391e-05
+2026-05-19 15:36:07,784 - INFO - Memory cleaned.
+2026-05-19 15:36:10,275 - INFO - Epoch[137] Complete. Time taken: 00:01:33.714
+2026-05-19 15:37:38,350 - INFO - Epoch 138 - Train Loss: 3968.779291728768, Validation MRR: 0.20051471889019012, Learning Rate: 6.375199646360153e-05
+2026-05-19 15:37:41,502 - INFO - Memory cleaned.
+2026-05-19 15:37:44,008 - INFO - Epoch[138] Complete. Time taken: 00:01:33.732
+2026-05-19 15:39:12,090 - INFO - Epoch 139 - Train Loss: 3963.82726383014, Validation MRR: 0.20051471889019012, Learning Rate: 5.449673790581611e-05
+2026-05-19 15:39:15,128 - INFO - Memory cleaned.
+2026-05-19 15:39:17,612 - INFO - Epoch[139] Complete. Time taken: 00:01:33.604
+2026-05-19 15:40:45,707 - INFO - Epoch 140 - Train Loss: 3957.5611539757047, Validation MRR: 0.20051471889019012, Learning Rate: 4.592841308745932e-05
+2026-05-19 15:40:48,725 - INFO - Memory cleaned.
+2026-05-19 15:40:48,725 - INFO - Evaluating on validation set at epoch 140...
+Link prediction evaluation:   0%|          | 0/5 [00:00<?, ?batch/s]
+Projecting entities:   0%|          | 0/45158 [00:00<?, ?entities/s][A
+Projecting entities:   2%|▏         | 971/45158 [00:00<00:04, 9701.13entities/s][A
+Projecting entities:   4%|▍         | 1948/45158 [00:00<00:04, 9736.50entities/s][A
+Projecting entities:   7%|▋         | 2943/45158 [00:00<00:04, 9831.33entities/s][A
+Projecting entities:   9%|▊         | 3927/45158 [00:00<00:04, 9820.26entities/s][A
+Projecting entities:  11%|█         | 4920/45158 [00:00<00:04, 9857.34entities/s][A
+Projecting entities:  13%|█▎        | 5906/45158 [00:00<00:03, 9854.66entities/s][A
+Projecting entities:  15%|█▌        | 6901/45158 [00:00<00:03, 9883.96entities/s][A
+Projecting entities:  17%|█▋        | 7890/45158 [00:00<00:03, 9880.24entities/s][A
+Projecting entities:  20%|█▉        | 8888/45158 [00:00<00:03, 9908.54entities/s][A
+Projecting entities:  22%|██▏       | 9879/45158 [00:01<00:03, 9890.87entities/s][A
+Projecting entities:  24%|██▍       | 10873/45158 [00:01<00:03, 9902.70entities/s][A
+Projecting entities:  26%|██▋       | 11864/45158 [00:01<00:03, 9873.01entities/s][A
+Projecting entities:  28%|██▊       | 12857/45158 [00:01<00:03, 9890.12entities/s][A
+Projecting entities:  31%|███       | 13847/45158 [00:01<00:03, 9884.61entities/s][A
+Projecting entities:  33%|███▎      | 14845/45158 [00:01<00:03, 9911.00entities/s][A
+Projecting entities:  35%|███▌      | 15837/45158 [00:01<00:02, 9904.80entities/s][A
+Projecting entities:  37%|███▋      | 16831/45158 [00:01<00:02, 9912.51entities/s][A
+Projecting entities:  39%|███▉      | 17823/45158 [00:01<00:02, 9889.56entities/s][A
+Projecting entities:  42%|████▏     | 18820/45158 [00:01<00:02, 9911.03entities/s][A
+Projecting entities:  44%|████▍     | 19812/45158 [00:02<00:02, 9899.50entities/s][A
+Projecting entities:  46%|████▌     | 20808/45158 [00:02<00:02, 9916.71entities/s][A
+Projecting entities:  48%|████▊     | 21800/45158 [00:02<00:02, 9905.32entities/s][A
+Projecting entities:  50%|█████     | 22797/45158 [00:02<00:02, 9923.35entities/s][A
+Projecting entities:  53%|█████▎    | 23790/45158 [00:02<00:02, 9914.91entities/s][A
+Projecting entities:  55%|█████▍    | 24790/45158 [00:02<00:02, 9939.67entities/s][A
+Projecting entities:  57%|█████▋    | 25784/45158 [00:02<00:01, 9923.17entities/s][A
+Projecting entities:  59%|█████▉    | 26784/45158 [00:02<00:01, 9945.39entities/s][A
+Projecting entities:  62%|██████▏   | 27779/45158 [00:02<00:01, 9889.33entities/s][A
+Projecting entities:  64%|██████▎   | 28774/45158 [00:02<00:01, 9906.24entities/s][A
+Projecting entities:  66%|██████▌   | 29765/45158 [00:03<00:01, 9895.79entities/s][A
+Projecting entities:  68%|██████▊   | 30755/45158 [00:03<00:01, 9892.71entities/s][A
+Projecting entities:  70%|███████   | 31752/45158 [00:03<00:01, 9913.86entities/s][A
+Projecting entities:  73%|███████▎  | 32744/45158 [00:03<00:01, 9907.04entities/s][A
+Projecting entities:  75%|███████▍  | 33743/45158 [00:03<00:01, 9930.22entities/s][A
+Projecting entities:  77%|███████▋  | 34737/45158 [00:03<00:01, 9917.04entities/s][A
+Projecting entities:  79%|███████▉  | 35736/45158 [00:03<00:00, 9938.78entities/s][A
+Projecting entities:  81%|████████▏ | 36730/45158 [00:03<00:00, 9921.62entities/s][A
+Projecting entities:  84%|████████▎ | 37724/45158 [00:03<00:00, 9925.65entities/s][A
+Projecting entities:  86%|████████▌ | 38717/45158 [00:03<00:00, 9913.02entities/s][A
+Projecting entities:  88%|████████▊ | 39711/45158 [00:04<00:00, 9918.56entities/s][A
+Projecting entities:  90%|█████████ | 40703/45158 [00:04<00:00, 9904.95entities/s][A
+Projecting entities:  92%|█████████▏| 41701/45158 [00:04<00:00, 9926.80entities/s][A
+Projecting entities:  95%|█████████▍| 42694/45158 [00:04<00:00, 9920.19entities/s][A
+Projecting entities:  97%|█████████▋| 43691/45158 [00:04<00:00, 9932.95entities/s][A
+Projecting entities:  99%|█████████▉| 44685/45158 [00:04<00:00, 9913.96entities/s][AProjecting entities: 100%|██████████| 45158/45158 [00:04<00:00, 9902.05entities/s]
+Link prediction evaluation:  20%|██        | 1/5 [00:04<00:18,  4.59s/batch]Link prediction evaluation: 100%|██████████| 5/5 [00:04<00:00,  1.08batch/s]
+2026-05-19 15:40:53,570 - INFO - Validation MRR: 0.1668848991394043
+2026-05-19 15:40:56,041 - INFO - Epoch[140] Complete. Time taken: 00:01:38.429
+2026-05-19 15:42:24,090 - INFO - Epoch 141 - Train Loss: 3953.804145426041, Validation MRR: 0.1668848991394043, Learning Rate: 3.806023374435663e-05
+2026-05-19 15:42:27,058 - INFO - Memory cleaned.
+2026-05-19 15:42:29,547 - INFO - Epoch[141] Complete. Time taken: 00:01:33.506
+2026-05-19 15:43:57,594 - INFO - Epoch 142 - Train Loss: 3945.8546638413827, Validation MRR: 0.1668848991394043, Learning Rate: 3.090433203875792e-05
+2026-05-19 15:44:00,513 - INFO - Memory cleaned.
+2026-05-19 15:44:02,990 - INFO - Epoch[142] Complete. Time taken: 00:01:33.443
+2026-05-19 15:45:30,850 - INFO - Epoch 143 - Train Loss: 3951.439765809465, Validation MRR: 0.1668848991394043, Learning Rate: 2.4471741852423235e-05
+2026-05-19 15:45:33,801 - INFO - Memory cleaned.
+2026-05-19 15:45:36,263 - INFO - Epoch[143] Complete. Time taken: 00:01:33.273
+2026-05-19 15:47:04,296 - INFO - Epoch 144 - Train Loss: 3942.9781491389913, Validation MRR: 0.1668848991394043, Learning Rate: 1.8772381773176416e-05
+2026-05-19 15:47:07,183 - INFO - Memory cleaned.
+2026-05-19 15:47:10,992 - INFO - Epoch[144] Complete. Time taken: 00:01:34.728
+2026-05-19 15:48:40,291 - INFO - Epoch 145 - Train Loss: 3935.5902987402233, Validation MRR: 0.1668848991394043, Learning Rate: 1.3815039801161721e-05
+2026-05-19 15:48:43,322 - INFO - Memory cleaned.
+2026-05-19 15:48:45,785 - INFO - Epoch[145] Complete. Time taken: 00:01:34.793
+2026-05-19 15:50:13,785 - INFO - Epoch 146 - Train Loss: 3944.4698095193708, Validation MRR: 0.1668848991394043, Learning Rate: 9.607359798384786e-06
+2026-05-19 15:50:16,712 - INFO - Memory cleaned.
+2026-05-19 15:50:19,888 - INFO - Epoch[146] Complete. Time taken: 00:01:34.103
+2026-05-19 15:51:51,563 - INFO - Epoch 147 - Train Loss: 3926.4094101979476, Validation MRR: 0.1668848991394043, Learning Rate: 6.15582970243117e-06
+2026-05-19 15:51:54,654 - INFO - Memory cleaned.
+2026-05-19 15:51:57,106 - INFO - Epoch[147] Complete. Time taken: 00:01:37.218
+2026-05-19 15:53:25,163 - INFO - Epoch 148 - Train Loss: 3927.2787993318307, Validation MRR: 0.1668848991394043, Learning Rate: 3.4657715225368535e-06
+2026-05-19 15:53:28,114 - INFO - Memory cleaned.
+2026-05-19 15:53:30,560 - INFO - Epoch[148] Complete. Time taken: 00:01:33.454
+2026-05-19 15:54:58,827 - INFO - Epoch 149 - Train Loss: 3925.7684835112423, Validation MRR: 0.1668848991394043, Learning Rate: 1.541333133436018e-06
+2026-05-19 15:55:01,772 - INFO - Memory cleaned.
+2026-05-19 15:55:04,229 - INFO - Epoch[149] Complete. Time taken: 00:01:33.668
+2026-05-19 15:56:32,529 - INFO - Epoch 150 - Train Loss: 3923.7108439368512, Validation MRR: 0.1668848991394043, Learning Rate: 3.854818796385495e-07
+2026-05-19 15:56:35,424 - INFO - Memory cleaned.
+2026-05-19 15:56:37,851 - INFO - Epoch[150] Complete. Time taken: 00:01:33.622
+2026-05-19 15:58:06,070 - INFO - Epoch 151 - Train Loss: 4618.6004063940545, Validation MRR: 0.1668848991394043, Learning Rate: 0.001
+2026-05-19 15:58:09,114 - INFO - Memory cleaned.
+2026-05-19 15:58:11,522 - INFO - Epoch[151] Complete. Time taken: 00:01:33.671
+2026-05-19 15:59:39,871 - INFO - Epoch 152 - Train Loss: 4617.4438136494155, Validation MRR: 0.1668848991394043, Learning Rate: 0.0009999036202410325
+2026-05-19 15:59:42,787 - INFO - Memory cleaned.
+2026-05-19 15:59:45,261 - INFO - Epoch[152] Complete. Time taken: 00:01:33.739
+2026-05-19 16:01:13,556 - INFO - Epoch 153 - Train Loss: 4611.0867256214215, Validation MRR: 0.1668848991394043, Learning Rate: 0.0009996145181203615
+2026-05-19 16:01:16,554 - INFO - Memory cleaned.
+2026-05-19 16:01:19,005 - INFO - Epoch[153] Complete. Time taken: 00:01:33.744
+2026-05-19 16:02:47,436 - INFO - Epoch 154 - Train Loss: 4586.256694383333, Validation MRR: 0.1668848991394043, Learning Rate: 0.000999132805092358
+2026-05-19 16:02:50,356 - INFO - Memory cleaned.
+2026-05-19 16:02:52,821 - INFO - Epoch[154] Complete. Time taken: 00:01:33.816
+2026-05-19 16:04:21,149 - INFO - Epoch 155 - Train Loss: 4567.651879568666, Validation MRR: 0.1668848991394043, Learning Rate: 0.000998458666866564
+2026-05-19 16:04:24,119 - INFO - Memory cleaned.
+2026-05-19 16:04:26,576 - INFO - Epoch[155] Complete. Time taken: 00:01:33.755
+2026-05-19 16:05:55,365 - INFO - Epoch 156 - Train Loss: 4565.223519464992, Validation MRR: 0.1668848991394043, Learning Rate: 0.0009975923633360985
+2026-05-19 16:05:58,389 - INFO - Memory cleaned.
+2026-05-19 16:06:00,800 - INFO - Epoch[156] Complete. Time taken: 00:01:34.224
+2026-05-19 16:07:29,269 - INFO - Epoch 157 - Train Loss: 4569.650201249005, Validation MRR: 0.1668848991394043, Learning Rate: 0.0009965342284774632
+2026-05-19 16:07:32,192 - INFO - Memory cleaned.
+2026-05-19 16:07:34,686 - INFO - Epoch[157] Complete. Time taken: 00:01:33.885
+2026-05-19 16:09:03,017 - INFO - Epoch 158 - Train Loss: 4588.5934041278815, Validation MRR: 0.1668848991394043, Learning Rate: 0.0009952846702217886
+2026-05-19 16:09:05,959 - INFO - Memory cleaned.
+2026-05-19 16:09:08,452 - INFO - Epoch[158] Complete. Time taken: 00:01:33.766
+2026-05-19 16:10:36,816 - INFO - Epoch 159 - Train Loss: 4563.108867648516, Validation MRR: 0.1668848991394043, Learning Rate: 0.0009938441702975688
+2026-05-19 16:10:39,760 - INFO - Memory cleaned.
+2026-05-19 16:10:42,231 - INFO - Epoch[159] Complete. Time taken: 00:01:33.779
+2026-05-19 16:12:10,480 - INFO - Epoch 160 - Train Loss: 4567.822986918049, Validation MRR: 0.1668848991394043, Learning Rate: 0.0009922132840449458
+2026-05-19 16:12:13,422 - INFO - Memory cleaned.
+2026-05-19 16:12:13,422 - INFO - Evaluating on validation set at epoch 160...
+Link prediction evaluation:   0%|          | 0/5 [00:00<?, ?batch/s]
+Projecting entities:   0%|          | 0/45158 [00:00<?, ?entities/s][A
+Projecting entities:   2%|▏         | 984/45158 [00:00<00:04, 9835.13entities/s][A
+Projecting entities:   4%|▍         | 1968/45158 [00:00<00:04, 9105.53entities/s][A
+Projecting entities:   7%|▋         | 2962/45158 [00:00<00:04, 9467.55entities/s][A
+Projecting entities:   9%|▊         | 3945/45158 [00:00<00:04, 9605.80entities/s][A
+Projecting entities:  11%|█         | 4939/45158 [00:00<00:04, 9722.63entities/s][A
+Projecting entities:  13%|█▎        | 5924/45158 [00:00<00:04, 9762.63entities/s][A
+Projecting entities:  15%|█▌        | 6910/45158 [00:00<00:03, 9791.89entities/s][A
+Projecting entities:  17%|█▋        | 7900/45158 [00:00<00:03, 9824.69entities/s][A
+Projecting entities:  20%|█▉        | 8884/45158 [00:00<00:03, 9825.40entities/s][A
+Projecting entities:  22%|██▏       | 9875/45158 [00:01<00:03, 9848.96entities/s][A
+Projecting entities:  24%|██▍       | 10861/45158 [00:01<00:03, 9839.99entities/s][A
+Projecting entities:  26%|██▌       | 11853/45158 [00:01<00:03, 9863.77entities/s][A
+Projecting entities:  28%|██▊       | 12840/45158 [00:01<00:03, 9846.63entities/s][A
+Projecting entities:  31%|███       | 13832/45158 [00:01<00:03, 9866.10entities/s][A
+Projecting entities:  33%|███▎      | 14819/45158 [00:01<00:03, 9857.44entities/s][A
+Projecting entities:  35%|███▌      | 15813/45158 [00:01<00:02, 9881.48entities/s][A
+Projecting entities:  37%|███▋      | 16802/45158 [00:01<00:02, 9865.89entities/s][A
+Projecting entities:  39%|███▉      | 17793/45158 [00:01<00:02, 9877.33entities/s][A
+Projecting entities:  42%|████▏     | 18781/45158 [00:01<00:02, 9859.48entities/s][A
+Projecting entities:  44%|████▍     | 19773/45158 [00:02<00:02, 9876.38entities/s][A
+Projecting entities:  46%|████▌     | 20761/45158 [00:02<00:02, 9843.67entities/s][A
+Projecting entities:  48%|████▊     | 21755/45158 [00:02<00:02, 9870.69entities/s][A
+Projecting entities:  50%|█████     | 22743/45158 [00:02<00:02, 9863.34entities/s][A
+Projecting entities:  53%|█████▎    | 23740/45158 [00:02<00:02, 9893.48entities/s][A
+Projecting entities:  55%|█████▍    | 24730/45158 [00:02<00:02, 9885.15entities/s][A
+Projecting entities:  57%|█████▋    | 25725/45158 [00:02<00:01, 9904.22entities/s][A
+Projecting entities:  59%|█████▉    | 26716/45158 [00:02<00:01, 9864.23entities/s][A
+Projecting entities:  61%|██████▏   | 27714/45158 [00:02<00:01, 9896.00entities/s][A
+Projecting entities:  64%|██████▎   | 28704/45158 [00:02<00:01, 9887.81entities/s][A
+Projecting entities:  66%|██████▌   | 29697/45158 [00:03<00:01, 9899.51entities/s][A
+Projecting entities:  68%|██████▊   | 30687/45158 [00:03<00:01, 9876.90entities/s][A
+Projecting entities:  70%|███████   | 31680/45158 [00:03<00:01, 9891.91entities/s][A
+Projecting entities:  72%|███████▏  | 32670/45158 [00:03<00:01, 9873.61entities/s][A
+Projecting entities:  75%|███████▍  | 33664/45158 [00:03<00:01, 9890.85entities/s][A
+Projecting entities:  77%|███████▋  | 34654/45158 [00:03<00:01, 9855.17entities/s][A
+Projecting entities:  79%|███████▉  | 35650/45158 [00:03<00:00, 9884.70entities/s][A
+Projecting entities:  81%|████████  | 36639/45158 [00:03<00:00, 9861.81entities/s][A
+Projecting entities:  83%|████████▎ | 37633/45158 [00:03<00:00, 9883.66entities/s][A
+Projecting entities:  86%|████████▌ | 38622/45158 [00:03<00:00, 9871.55entities/s][A
+Projecting entities:  88%|████████▊ | 39612/45158 [00:04<00:00, 9879.62entities/s][A
+Projecting entities:  90%|████████▉ | 40600/45158 [00:04<00:00, 9861.65entities/s][A
+Projecting entities:  92%|█████████▏| 41593/45158 [00:04<00:00, 9880.27entities/s][A
+Projecting entities:  94%|█████████▍| 42582/45158 [00:04<00:00, 9858.82entities/s][A
+Projecting entities:  96%|█████████▋| 43572/45158 [00:04<00:00, 9870.84entities/s][A
+Projecting entities:  99%|█████████▊| 44560/45158 [00:04<00:00, 9864.19entities/s][AProjecting entities: 100%|██████████| 45158/45158 [00:04<00:00, 9843.36entities/s]
+Link prediction evaluation:  20%|██        | 1/5 [00:04<00:19,  4.78s/batch]Link prediction evaluation: 100%|██████████| 5/5 [00:04<00:00,  1.04batch/s]
+2026-05-19 16:12:18,733 - INFO - Validation MRR: 0.1706191748380661
+2026-05-19 16:12:21,177 - INFO - Epoch[160] Complete. Time taken: 00:01:38.946
+2026-05-19 16:13:49,479 - INFO - Epoch 161 - Train Loss: 4555.799810910697, Validation MRR: 0.1706191748380661, Learning Rate: 0.0009903926402016153
+2026-05-19 16:13:52,417 - INFO - Memory cleaned.
+2026-05-19 16:13:54,839 - INFO - Epoch[161] Complete. Time taken: 00:01:33.662
+2026-05-19 16:15:23,161 - INFO - Epoch 162 - Train Loss: 4564.883894487329, Validation MRR: 0.1706191748380661, Learning Rate: 0.0009883829406604362
+2026-05-19 16:15:26,059 - INFO - Memory cleaned.
+2026-05-19 16:15:29,054 - INFO - Epoch[162] Complete. Time taken: 00:01:34.215
+2026-05-19 16:16:59,612 - INFO - Epoch 163 - Train Loss: 4565.7939027658795, Validation MRR: 0.1706191748380661, Learning Rate: 0.0009861849601988384
+2026-05-19 16:17:02,515 - INFO - Memory cleaned.
+2026-05-19 16:17:04,958 - INFO - Epoch[163] Complete. Time taken: 00:01:35.903
+2026-05-19 16:18:32,941 - INFO - Epoch 164 - Train Loss: 4562.560279188806, Validation MRR: 0.1706191748380661, Learning Rate: 0.0009837995461801298
+2026-05-19 16:18:35,846 - INFO - Memory cleaned.
+2026-05-19 16:18:38,284 - INFO - Epoch[164] Complete. Time taken: 00:01:33.326
+2026-05-19 16:20:06,298 - INFO - Epoch 165 - Train Loss: 4559.1099833746575, Validation MRR: 0.1706191748380661, Learning Rate: 0.0009812276182268236
+2026-05-19 16:20:09,199 - INFO - Memory cleaned.
+2026-05-19 16:20:11,614 - INFO - Epoch[165] Complete. Time taken: 00:01:33.330
+2026-05-19 16:21:39,815 - INFO - Epoch 166 - Train Loss: 4555.098211128775, Validation MRR: 0.1706191748380661, Learning Rate: 0.0009784701678661044
+2026-05-19 16:21:42,712 - INFO - Memory cleaned.
+2026-05-19 16:21:45,147 - INFO - Epoch[166] Complete. Time taken: 00:01:33.532
+2026-05-19 16:23:13,489 - INFO - Epoch 167 - Train Loss: 4556.316336744814, Validation MRR: 0.1706191748380661, Learning Rate: 0.0009755282581475768
+2026-05-19 16:23:16,390 - INFO - Memory cleaned.
+2026-05-19 16:23:18,830 - INFO - Epoch[167] Complete. Time taken: 00:01:33.683
+2026-05-19 16:24:47,178 - INFO - Epoch 168 - Train Loss: 4546.398810165446, Validation MRR: 0.1706191748380661, Learning Rate: 0.0009724030232334391
+2026-05-19 16:24:50,077 - INFO - Memory cleaned.
+2026-05-19 16:24:52,521 - INFO - Epoch[168] Complete. Time taken: 00:01:33.691
+2026-05-19 16:26:20,897 - INFO - Epoch 169 - Train Loss: 4546.85405682584, Validation MRR: 0.1706191748380661, Learning Rate: 0.0009690956679612422
+2026-05-19 16:26:23,793 - INFO - Memory cleaned.
+2026-05-19 16:26:26,227 - INFO - Epoch[169] Complete. Time taken: 00:01:33.706
+2026-05-19 16:27:54,571 - INFO - Epoch 170 - Train Loss: 4553.239942197959, Validation MRR: 0.1706191748380661, Learning Rate: 0.0009656074673794017
+2026-05-19 16:27:57,503 - INFO - Memory cleaned.
+2026-05-19 16:27:59,997 - INFO - Epoch[170] Complete. Time taken: 00:01:33.769
+2026-05-19 16:29:28,412 - INFO - Epoch 171 - Train Loss: 4538.073611701053, Validation MRR: 0.1706191748380661, Learning Rate: 0.0009619397662556434
+2026-05-19 16:29:31,393 - INFO - Memory cleaned.
+2026-05-19 16:29:33,999 - INFO - Epoch[171] Complete. Time taken: 00:01:34.001
+2026-05-19 16:31:05,354 - INFO - Epoch 172 - Train Loss: 4542.847954481114, Validation MRR: 0.1706191748380661, Learning Rate: 0.0009580939785585681
+2026-05-19 16:31:08,675 - INFO - Memory cleaned.
+2026-05-19 16:31:10,920 - INFO - Epoch[172] Complete. Time taken: 00:01:36.920
+2026-05-19 16:32:39,250 - INFO - Epoch 173 - Train Loss: 4525.754844908468, Validation MRR: 0.1706191748380661, Learning Rate: 0.0009540715869125407
+2026-05-19 16:32:42,188 - INFO - Memory cleaned.
+2026-05-19 16:32:44,658 - INFO - Epoch[173] Complete. Time taken: 00:01:33.737
+2026-05-19 16:34:12,960 - INFO - Epoch 174 - Train Loss: 4531.5239270910015, Validation MRR: 0.1706191748380661, Learning Rate: 0.0009498741420261108
+2026-05-19 16:34:15,900 - INFO - Memory cleaned.
+2026-05-19 16:34:18,682 - INFO - Epoch[174] Complete. Time taken: 00:01:34.024
+2026-05-19 16:35:47,462 - INFO - Epoch 175 - Train Loss: 4532.379823744712, Validation MRR: 0.1706191748380661, Learning Rate: 0.0009455032620941839
+2026-05-19 16:35:50,407 - INFO - Memory cleaned.
+2026-05-19 16:35:52,870 - INFO - Epoch[175] Complete. Time taken: 00:01:34.188
+2026-05-19 16:37:21,214 - INFO - Epoch 176 - Train Loss: 4516.769493217537, Validation MRR: 0.1706191748380661, Learning Rate: 0.0009409606321741775
+2026-05-19 16:37:24,219 - INFO - Memory cleaned.
+2026-05-19 16:37:26,656 - INFO - Epoch[176] Complete. Time taken: 00:01:33.786
+2026-05-19 16:38:54,999 - INFO - Epoch 177 - Train Loss: 4540.443451459832, Validation MRR: 0.1706191748380661, Learning Rate: 0.0009362480035363986
+2026-05-19 16:38:57,939 - INFO - Memory cleaned.
+2026-05-19 16:39:00,364 - INFO - Epoch[177] Complete. Time taken: 00:01:33.708
+2026-05-19 16:40:28,688 - INFO - Epoch 178 - Train Loss: 4527.807979501113, Validation MRR: 0.1706191748380661, Learning Rate: 0.0009313671929888959
+2026-05-19 16:40:31,629 - INFO - Memory cleaned.
+2026-05-19 16:40:34,096 - INFO - Epoch[178] Complete. Time taken: 00:01:33.732
+2026-05-19 16:42:02,449 - INFO - Epoch 179 - Train Loss: 4526.022608404976, Validation MRR: 0.1706191748380661, Learning Rate: 0.0009263200821770461
+2026-05-19 16:42:05,424 - INFO - Memory cleaned.
+2026-05-19 16:42:07,863 - INFO - Epoch[179] Complete. Time taken: 00:01:33.766
+2026-05-19 16:43:36,216 - INFO - Epoch 180 - Train Loss: 4514.2695961680565, Validation MRR: 0.1706191748380661, Learning Rate: 0.0009211086168581433
+2026-05-19 16:43:39,195 - INFO - Memory cleaned.
+2026-05-19 16:43:39,195 - INFO - Evaluating on validation set at epoch 180...
+Link prediction evaluation:   0%|          | 0/5 [00:00<?, ?batch/s]
+Projecting entities:   0%|          | 0/45158 [00:00<?, ?entities/s][A
+Projecting entities:   2%|▏         | 978/45158 [00:00<00:04, 9778.05entities/s][A
+Projecting entities:   4%|▍         | 1958/45158 [00:00<00:04, 9787.71entities/s][A
+Projecting entities:   7%|▋         | 2938/45158 [00:00<00:04, 9792.32entities/s][A
+Projecting entities:   9%|▊         | 3928/45158 [00:00<00:04, 9831.93entities/s][A
+Projecting entities:  11%|█         | 4912/45158 [00:00<00:04, 9815.69entities/s][A
+Projecting entities:  13%|█▎        | 5894/45158 [00:00<00:04, 9810.50entities/s][A
+Projecting entities:  15%|█▌        | 6883/45158 [00:00<00:03, 9835.54entities/s][A
+Projecting entities:  17%|█▋        | 7867/45158 [00:00<00:03, 9820.57entities/s][A
+Projecting entities:  20%|█▉        | 8856/45158 [00:00<00:03, 9841.44entities/s][A
+Projecting entities:  22%|██▏       | 9841/45158 [00:01<00:03, 9816.59entities/s][A
+Projecting entities:  24%|██▍       | 10833/45158 [00:01<00:03, 9846.16entities/s][A
+Projecting entities:  26%|██▌       | 11818/45158 [00:01<00:03, 9833.22entities/s][A
+Projecting entities:  28%|██▊       | 12805/45158 [00:01<00:03, 9842.98entities/s][A
+Projecting entities:  31%|███       | 13790/45158 [00:01<00:03, 9831.96entities/s][A
+Projecting entities:  33%|███▎      | 14780/45158 [00:01<00:03, 9849.61entities/s][A
+Projecting entities:  35%|███▍      | 15765/45158 [00:01<00:02, 9828.36entities/s][A
+Projecting entities:  37%|███▋      | 16756/45158 [00:01<00:02, 9852.60entities/s][A
+Projecting entities:  39%|███▉      | 17742/45158 [00:01<00:02, 9835.28entities/s][A
+Projecting entities:  41%|████▏     | 18732/45158 [00:01<00:02, 9852.68entities/s][A
+Projecting entities:  44%|████▎     | 19718/45158 [00:02<00:02, 9833.87entities/s][A
+Projecting entities:  46%|████▌     | 20707/45158 [00:02<00:02, 9849.30entities/s][A
+Projecting entities:  48%|████▊     | 21692/45158 [00:02<00:02, 9805.35entities/s][A
+Projecting entities:  50%|█████     | 22681/45158 [00:02<00:02, 9830.34entities/s][A
+Projecting entities:  52%|█████▏    | 23665/45158 [00:02<00:02, 9808.86entities/s][A
+Projecting entities:  55%|█████▍    | 24654/45158 [00:02<00:02, 9830.36entities/s][A
+Projecting entities:  57%|█████▋    | 25638/45158 [00:02<00:01, 9821.62entities/s][A
+Projecting entities:  59%|█████▉    | 26628/45158 [00:02<00:01, 9842.70entities/s][A
+Projecting entities:  61%|██████    | 27613/45158 [00:02<00:01, 9831.95entities/s][A
+Projecting entities:  63%|██████▎   | 28601/45158 [00:02<00:01, 9843.16entities/s][A
+Projecting entities:  66%|██████▌   | 29586/45158 [00:03<00:01, 9820.53entities/s][A
+Projecting entities:  68%|██████▊   | 30574/45158 [00:03<00:01, 9836.50entities/s][A
+Projecting entities:  70%|██████▉   | 31558/45158 [00:03<00:01, 9831.45entities/s][A
+Projecting entities:  72%|███████▏  | 32547/45158 [00:03<00:01, 9847.84entities/s][A
+Projecting entities:  74%|███████▍  | 33532/45158 [00:03<00:01, 9839.64entities/s][A
+Projecting entities:  76%|███████▋  | 34521/45158 [00:03<00:01, 9852.00entities/s][A
+Projecting entities:  79%|███████▊  | 35507/45158 [00:03<00:00, 9835.11entities/s][A
+Projecting entities:  81%|████████  | 36497/45158 [00:03<00:00, 9852.61entities/s][A
+Projecting entities:  83%|████████▎ | 37483/45158 [00:03<00:00, 9836.72entities/s][A
+Projecting entities:  85%|████████▌ | 38473/45158 [00:03<00:00, 9852.51entities/s][A
+Projecting entities:  87%|████████▋ | 39459/45158 [00:04<00:00, 9825.38entities/s][A
+Projecting entities:  90%|████████▉ | 40452/45158 [00:04<00:00, 9853.94entities/s][A
+Projecting entities:  92%|█████████▏| 41438/45158 [00:04<00:00, 9852.21entities/s][A
+Projecting entities:  94%|█████████▍| 42424/45158 [00:04<00:00, 9833.26entities/s][A
+Projecting entities:  96%|█████████▌| 43416/45158 [00:04<00:00, 9855.94entities/s][A
+Projecting entities:  98%|█████████▊| 44402/45158 [00:04<00:00, 9850.44entities/s][AProjecting entities: 100%|██████████| 45158/45158 [00:04<00:00, 9835.87entities/s]
+Link prediction evaluation:  20%|██        | 1/5 [00:04<00:18,  4.63s/batch]Link prediction evaluation: 100%|██████████| 5/5 [00:04<00:00,  1.07batch/s]
+2026-05-19 16:43:43,969 - INFO - Validation MRR: 0.17114950716495514
+2026-05-19 16:43:46,391 - INFO - Epoch[180] Complete. Time taken: 00:01:38.528
+2026-05-19 16:45:14,690 - INFO - Epoch 181 - Train Loss: 4513.471646494752, Validation MRR: 0.17114950716495514, Learning Rate: 0.0009157348061512727
+2026-05-19 16:45:17,630 - INFO - Memory cleaned.
+2026-05-19 16:45:20,069 - INFO - Epoch[181] Complete. Time taken: 00:01:33.677
+2026-05-19 16:46:48,371 - INFO - Epoch 182 - Train Loss: 4507.331604615519, Validation MRR: 0.17114950716495514, Learning Rate: 0.0009102007217627568
+2026-05-19 16:46:51,269 - INFO - Memory cleaned.
+2026-05-19 16:46:53,694 - INFO - Epoch[182] Complete. Time taken: 00:01:33.625
+2026-05-19 16:48:22,067 - INFO - Epoch 183 - Train Loss: 4503.8666442063995, Validation MRR: 0.17114950716495514, Learning Rate: 0.0009045084971874737
+2026-05-19 16:48:24,964 - INFO - Memory cleaned.
+2026-05-19 16:48:27,429 - INFO - Epoch[183] Complete. Time taken: 00:01:33.735
+2026-05-19 16:49:55,772 - INFO - Epoch 184 - Train Loss: 4492.887907130656, Validation MRR: 0.17114950716495514, Learning Rate: 0.0008986603268863536
+2026-05-19 16:49:58,709 - INFO - Memory cleaned.
+2026-05-19 16:50:01,146 - INFO - Epoch[184] Complete. Time taken: 00:01:33.716
+2026-05-19 16:51:29,612 - INFO - Epoch 185 - Train Loss: 4492.682960947779, Validation MRR: 0.17114950716495514, Learning Rate: 0.0008926584654403724
+2026-05-19 16:51:32,564 - INFO - Memory cleaned.
+2026-05-19 16:51:34,990 - INFO - Epoch[185] Complete. Time taken: 00:01:33.844
+2026-05-19 16:53:03,429 - INFO - Epoch 186 - Train Loss: 4494.094698236978, Validation MRR: 0.17114950716495514, Learning Rate: 0.0008865052266813684
+2026-05-19 16:53:06,446 - INFO - Memory cleaned.
+2026-05-19 16:53:08,901 - INFO - Epoch[186] Complete. Time taken: 00:01:33.911
+2026-05-19 16:54:37,346 - INFO - Epoch 187 - Train Loss: 4495.32034980498, Validation MRR: 0.17114950716495514, Learning Rate: 0.0008802029828000156
+2026-05-19 16:54:40,267 - INFO - Memory cleaned.
+2026-05-19 16:54:42,744 - INFO - Epoch[187] Complete. Time taken: 00:01:33.842
+2026-05-19 16:56:11,191 - INFO - Epoch 188 - Train Loss: 4482.866457308078, Validation MRR: 0.17114950716495514, Learning Rate: 0.0008737541634312985
+2026-05-19 16:56:14,118 - INFO - Memory cleaned.
+2026-05-19 16:56:16,560 - INFO - Epoch[188] Complete. Time taken: 00:01:33.816
+2026-05-19 16:57:45,040 - INFO - Epoch 189 - Train Loss: 4477.378293985611, Validation MRR: 0.17114950716495514, Learning Rate: 0.0008671612547178428
+2026-05-19 16:57:47,940 - INFO - Memory cleaned.
+2026-05-19 16:57:50,399 - INFO - Epoch[189] Complete. Time taken: 00:01:33.839
+2026-05-19 16:59:18,601 - INFO - Epoch 190 - Train Loss: 4471.111121575551, Validation MRR: 0.17114950716495514, Learning Rate: 0.0008604267983514594
+2026-05-19 16:59:21,504 - INFO - Memory cleaned.
+2026-05-19 16:59:23,959 - INFO - Epoch[190] Complete. Time taken: 00:01:33.560
+2026-05-19 17:00:52,165 - INFO - Epoch 191 - Train Loss: 4462.507064685806, Validation MRR: 0.17114950716495514, Learning Rate: 0.0008535533905932737
+2026-05-19 17:00:55,071 - INFO - Memory cleaned.
+2026-05-19 17:00:57,547 - INFO - Epoch[191] Complete. Time taken: 00:01:33.588
+2026-05-19 17:02:25,770 - INFO - Epoch 192 - Train Loss: 4460.574868499267, Validation MRR: 0.17114950716495514, Learning Rate: 0.000846543681272818
+2026-05-19 17:02:28,765 - INFO - Memory cleaned.
+2026-05-19 17:02:33,414 - INFO - Epoch[192] Complete. Time taken: 00:01:35.867
+2026-05-19 17:04:05,934 - INFO - Epoch 193 - Train Loss: 4466.855110425494, Validation MRR: 0.17114950716495514, Learning Rate: 0.0008394003727664709
+2026-05-19 17:04:09,019 - INFO - Memory cleaned.
+2026-05-19 17:04:11,492 - INFO - Epoch[193] Complete. Time taken: 00:01:38.078
+2026-05-19 17:05:39,728 - INFO - Epoch 194 - Train Loss: 4456.807000586149, Validation MRR: 0.17114950716495514, Learning Rate: 0.0008321262189556409
+2026-05-19 17:05:42,706 - INFO - Memory cleaned.
+2026-05-19 17:05:45,197 - INFO - Epoch[194] Complete. Time taken: 00:01:33.705
+2026-05-19 17:07:14,050 - INFO - Epoch 195 - Train Loss: 4448.245866577495, Validation MRR: 0.17114950716495514, Learning Rate: 0.000824724024165092
+2026-05-19 17:07:17,070 - INFO - Memory cleaned.
+2026-05-19 17:07:19,655 - INFO - Epoch[195] Complete. Time taken: 00:01:34.457
+2026-05-19 17:08:48,697 - INFO - Epoch 196 - Train Loss: 4459.867078137177, Validation MRR: 0.17114950716495514, Learning Rate: 0.0008171966420818228
+2026-05-19 17:08:51,692 - INFO - Memory cleaned.
+2026-05-19 17:08:54,176 - INFO - Epoch[196] Complete. Time taken: 00:01:34.521
+2026-05-19 17:10:22,293 - INFO - Epoch 197 - Train Loss: 4439.276775570891, Validation MRR: 0.17114950716495514, Learning Rate: 0.000809546974654917
+2026-05-19 17:10:25,298 - INFO - Memory cleaned.
+2026-05-19 17:10:27,791 - INFO - Epoch[197] Complete. Time taken: 00:01:33.615
+2026-05-19 17:11:55,907 - INFO - Epoch 198 - Train Loss: 4432.931047719204, Validation MRR: 0.17114950716495514, Learning Rate: 0.0008017779709767857
+2026-05-19 17:11:58,870 - INFO - Memory cleaned.
+2026-05-19 17:12:01,315 - INFO - Epoch[198] Complete. Time taken: 00:01:33.523
+2026-05-19 17:13:29,410 - INFO - Epoch 199 - Train Loss: 4428.778426462616, Validation MRR: 0.17114950716495514, Learning Rate: 0.0007938926261462366
+2026-05-19 17:13:32,370 - INFO - Memory cleaned.
+2026-05-19 17:13:34,824 - INFO - Epoch[199] Complete. Time taken: 00:01:33.509
+2026-05-19 17:15:02,966 - INFO - Epoch 200 - Train Loss: 4427.8333096602155, Validation MRR: 0.17114950716495514, Learning Rate: 0.0007858939801138062
+2026-05-19 17:15:05,925 - INFO - Memory cleaned.
+2026-05-19 17:15:05,925 - INFO - Evaluating on validation set at epoch 200...
+Link prediction evaluation:   0%|          | 0/5 [00:00<?, ?batch/s]
+Projecting entities:   0%|          | 0/45158 [00:00<?, ?entities/s][A
+Projecting entities:   2%|▏         | 973/45158 [00:00<00:04, 9729.29entities/s][A
+Projecting entities:   4%|▍         | 1961/45158 [00:00<00:04, 9816.91entities/s][A
+Projecting entities:   7%|▋         | 2962/45158 [00:00<00:04, 9903.48entities/s][A
+Projecting entities:   9%|▉         | 3953/45158 [00:00<00:04, 9865.11entities/s][A
+Projecting entities:  11%|█         | 4953/45158 [00:00<00:04, 9912.09entities/s][A
+Projecting entities:  13%|█▎        | 5945/45158 [00:00<00:03, 9900.80entities/s][A
+Projecting entities:  15%|█▌        | 6945/45158 [00:00<00:03, 9931.42entities/s][A
+Projecting entities:  18%|█▊        | 7939/45158 [00:00<00:03, 9918.16entities/s][A
+Projecting entities:  20%|█▉        | 8939/45158 [00:00<00:03, 9941.82entities/s][A
+Projecting entities:  22%|██▏       | 9934/45158 [00:01<00:03, 9923.02entities/s][A
+Projecting entities:  24%|██▍       | 10935/45158 [00:01<00:03, 9946.87entities/s][A
+Projecting entities:  26%|██▋       | 11930/45158 [00:01<00:03, 9919.27entities/s][A
+Projecting entities:  29%|██▊       | 12928/45158 [00:01<00:03, 9936.58entities/s][A
+Projecting entities:  31%|███       | 13922/45158 [00:01<00:03, 9920.43entities/s][A
+Projecting entities:  33%|███▎      | 14921/45158 [00:01<00:03, 9939.40entities/s][A
+Projecting entities:  35%|███▌      | 15915/45158 [00:01<00:02, 9916.73entities/s][A
+Projecting entities:  37%|███▋      | 16913/45158 [00:01<00:02, 9933.29entities/s][A
+Projecting entities:  40%|███▉      | 17907/45158 [00:01<00:02, 9919.44entities/s][A
+Projecting entities:  42%|████▏     | 18907/45158 [00:01<00:02, 9943.09entities/s][A
+Projecting entities:  44%|████▍     | 19902/45158 [00:02<00:02, 9925.96entities/s][A
+Projecting entities:  46%|████▋     | 20895/45158 [00:02<00:02, 9922.49entities/s][A
+Projecting entities:  48%|████▊     | 21890/45158 [00:02<00:02, 9929.12entities/s][A
+Projecting entities:  51%|█████     | 22883/45158 [00:02<00:02, 9920.87entities/s][A
+Projecting entities:  53%|█████▎    | 23882/45158 [00:02<00:02, 9938.88entities/s][A
+Projecting entities:  55%|█████▌    | 24876/45158 [00:02<00:02, 9929.56entities/s][A
+Projecting entities:  57%|█████▋    | 25878/45158 [00:02<00:01, 9954.55entities/s][A
+Projecting entities:  60%|█████▉    | 26874/45158 [00:02<00:01, 9935.16entities/s][A
+Projecting entities:  62%|██████▏   | 27870/45158 [00:02<00:01, 9939.89entities/s][A
+Projecting entities:  64%|██████▍   | 28864/45158 [00:02<00:01, 9911.51entities/s][A
+Projecting entities:  66%|██████▌   | 29858/45158 [00:03<00:01, 9919.44entities/s][A
+Projecting entities:  68%|██████▊   | 30850/45158 [00:03<00:01, 9880.14entities/s][A
+Projecting entities:  71%|███████   | 31845/45158 [00:03<00:01, 9899.15entities/s][A
+Projecting entities:  73%|███████▎  | 32835/45158 [00:03<00:01, 9888.70entities/s][A
+Projecting entities:  75%|███████▍  | 33830/45158 [00:03<00:01, 9904.84entities/s][A
+Projecting entities:  77%|███████▋  | 34821/45158 [00:03<00:01, 9883.00entities/s][A
+Projecting entities:  79%|███████▉  | 35815/45158 [00:03<00:00, 9897.48entities/s][A
+Projecting entities:  82%|████████▏ | 36805/45158 [00:03<00:00, 9895.05entities/s][A
+Projecting entities:  84%|████████▎ | 37803/45158 [00:03<00:00, 9919.89entities/s][A
+Projecting entities:  86%|████████▌ | 38796/45158 [00:03<00:00, 9893.12entities/s][A
+Projecting entities:  88%|████████▊ | 39794/45158 [00:04<00:00, 9917.24entities/s][A
+Projecting entities:  90%|█████████ | 40786/45158 [00:04<00:00, 9901.30entities/s][A
+Projecting entities:  93%|█████████▎| 41784/45158 [00:04<00:00, 9922.89entities/s][A
+Projecting entities:  95%|█████████▍| 42777/45158 [00:04<00:00, 9908.65entities/s][A
+Projecting entities:  97%|█████████▋| 43776/45158 [00:04<00:00, 9930.08entities/s][A
+Projecting entities:  99%|█████████▉| 44770/45158 [00:04<00:00, 9911.03entities/s][AProjecting entities: 100%|██████████| 45158/45158 [00:04<00:00, 9915.21entities/s]
+Link prediction evaluation:  20%|██        | 1/5 [00:04<00:18,  4.72s/batch]Link prediction evaluation: 100%|██████████| 5/5 [00:04<00:00,  1.05batch/s]
+2026-05-19 17:15:11,366 - INFO - Validation MRR: 0.1668778955936432
+2026-05-19 17:15:13,822 - INFO - Epoch[200] Complete. Time taken: 00:01:38.998
+2026-05-19 17:16:42,227 - INFO - Epoch 201 - Train Loss: 4411.876827635075, Validation MRR: 0.1668778955936432, Learning Rate: 0.0007777851165098011
+2026-05-19 17:16:45,338 - INFO - Memory cleaned.
+2026-05-19 17:16:47,812 - INFO - Epoch[201] Complete. Time taken: 00:01:33.989
+2026-05-19 17:18:15,611 - INFO - Epoch 202 - Train Loss: 4416.892762041484, Validation MRR: 0.1668778955936432, Learning Rate: 0.0007695691614555002
+2026-05-19 17:18:18,752 - INFO - Memory cleaned.
+2026-05-19 17:18:21,202 - INFO - Epoch[202] Complete. Time taken: 00:01:33.390
+2026-05-19 17:19:49,439 - INFO - Epoch 203 - Train Loss: 4406.801050733522, Validation MRR: 0.1668778955936432, Learning Rate: 0.0007612492823579744
+2026-05-19 17:19:52,561 - INFO - Memory cleaned.
+2026-05-19 17:19:55,019 - INFO - Epoch[203] Complete. Time taken: 00:01:33.817
+2026-05-19 17:21:23,039 - INFO - Epoch 204 - Train Loss: 4410.4144880637, Validation MRR: 0.1668778955936432, Learning Rate: 0.0007528286866889923
+2026-05-19 17:21:26,129 - INFO - Memory cleaned.
+2026-05-19 17:21:28,582 - INFO - Epoch[204] Complete. Time taken: 00:01:33.563
+2026-05-19 17:22:56,605 - INFO - Epoch 205 - Train Loss: 4403.611535338716, Validation MRR: 0.1668778955936432, Learning Rate: 0.0007443106207484776
+2026-05-19 17:22:59,674 - INFO - Memory cleaned.
+2026-05-19 17:23:02,151 - INFO - Epoch[205] Complete. Time taken: 00:01:33.569
+2026-05-19 17:24:30,399 - INFO - Epoch 206 - Train Loss: 4397.023778066837, Validation MRR: 0.1668778955936432, Learning Rate: 0.0007356983684129988
+2026-05-19 17:24:33,529 - INFO - Memory cleaned.
+2026-05-19 17:24:35,983 - INFO - Epoch[206] Complete. Time taken: 00:01:33.832
+2026-05-19 17:26:04,064 - INFO - Epoch 207 - Train Loss: 4385.348740799168, Validation MRR: 0.1668778955936432, Learning Rate: 0.0007269952498697733
+2026-05-19 17:26:07,130 - INFO - Memory cleaned.
+2026-05-19 17:26:09,603 - INFO - Epoch[207] Complete. Time taken: 00:01:33.620
+2026-05-19 17:27:37,657 - INFO - Epoch 208 - Train Loss: 4376.838061062263, Validation MRR: 0.1668778955936432, Learning Rate: 0.0007182046203366711
+2026-05-19 17:27:40,720 - INFO - Memory cleaned.
+2026-05-19 17:27:43,168 - INFO - Epoch[208] Complete. Time taken: 00:01:33.564
+2026-05-19 17:29:11,147 - INFO - Epoch 209 - Train Loss: 4375.137571963819, Validation MRR: 0.1668778955936432, Learning Rate: 0.0007093298687687141
+2026-05-19 17:29:14,215 - INFO - Memory cleaned.
+2026-05-19 17:29:16,647 - INFO - Epoch[209] Complete. Time taken: 00:01:33.479
+2026-05-19 17:30:44,735 - INFO - Epoch 210 - Train Loss: 4369.646678324258, Validation MRR: 0.1668778955936432, Learning Rate: 0.0007003744165515705
+2026-05-19 17:30:47,803 - INFO - Memory cleaned.
+2026-05-19 17:30:50,234 - INFO - Epoch[210] Complete. Time taken: 00:01:33.588
+2026-05-19 17:32:18,358 - INFO - Epoch 211 - Train Loss: 4367.066599841646, Validation MRR: 0.1668778955936432, Learning Rate: 0.000691341716182545
+2026-05-19 17:32:21,416 - INFO - Memory cleaned.
+2026-05-19 17:32:23,880 - INFO - Epoch[211] Complete. Time taken: 00:01:33.645
+2026-05-19 17:33:52,010 - INFO - Epoch 212 - Train Loss: 4360.8818051195185, Validation MRR: 0.1668778955936432, Learning Rate: 0.0006822352499395748
+2026-05-19 17:33:55,099 - INFO - Memory cleaned.
+2026-05-19 17:33:57,529 - INFO - Epoch[212] Complete. Time taken: 00:01:33.649
+2026-05-19 17:35:25,694 - INFO - Epoch 213 - Train Loss: 4353.424706154587, Validation MRR: 0.1668778955936432, Learning Rate: 0.0006730585285387465
+2026-05-19 17:35:28,800 - INFO - Memory cleaned.
+2026-05-19 17:35:31,308 - INFO - Epoch[213] Complete. Time taken: 00:01:33.780
+2026-05-19 17:36:59,311 - INFO - Epoch 214 - Train Loss: 4342.377177162755, Validation MRR: 0.1668778955936432, Learning Rate: 0.0006638150897808467
+2026-05-19 17:37:02,420 - INFO - Memory cleaned.
+2026-05-19 17:37:04,847 - INFO - Epoch[214] Complete. Time taken: 00:01:33.538
+2026-05-19 17:38:32,854 - INFO - Epoch 215 - Train Loss: 4333.754149562528, Validation MRR: 0.1668778955936432, Learning Rate: 0.0006545084971874737
+2026-05-19 17:38:35,947 - INFO - Memory cleaned.
+2026-05-19 17:38:38,425 - INFO - Epoch[215] Complete. Time taken: 00:01:33.578
+2026-05-19 17:40:06,445 - INFO - Epoch 216 - Train Loss: 4333.093122622346, Validation MRR: 0.1668778955936432, Learning Rate: 0.0006451423386272313
+2026-05-19 17:40:09,532 - INFO - Memory cleaned.
+2026-05-19 17:40:11,974 - INFO - Epoch[216] Complete. Time taken: 00:01:33.548
+2026-05-19 17:41:40,006 - INFO - Epoch 217 - Train Loss: 4319.660621334698, Validation MRR: 0.1668778955936432, Learning Rate: 0.0006357202249325371
+2026-05-19 17:41:43,066 - INFO - Memory cleaned.
+2026-05-19 17:41:45,471 - INFO - Epoch[217] Complete. Time taken: 00:01:33.497
+2026-05-19 17:43:13,511 - INFO - Epoch 218 - Train Loss: 4326.902175763569, Validation MRR: 0.1668778955936432, Learning Rate: 0.0006262457885075791
+2026-05-19 17:43:16,600 - INFO - Memory cleaned.
+2026-05-19 17:43:19,031 - INFO - Epoch[218] Complete. Time taken: 00:01:33.559
+2026-05-19 17:44:47,096 - INFO - Epoch 219 - Train Loss: 4314.203002355357, Validation MRR: 0.1668778955936432, Learning Rate: 0.0006167226819279528
+2026-05-19 17:44:50,171 - INFO - Memory cleaned.
+2026-05-19 17:44:52,596 - INFO - Epoch[219] Complete. Time taken: 00:01:33.565
+2026-05-19 17:46:20,879 - INFO - Epoch 220 - Train Loss: 4304.880987888735, Validation MRR: 0.1668778955936432, Learning Rate: 0.0006071545765325253
+2026-05-19 17:46:24,121 - INFO - Memory cleaned.
+2026-05-19 17:46:24,121 - INFO - Evaluating on validation set at epoch 220...
+Link prediction evaluation:   0%|          | 0/5 [00:00<?, ?batch/s]
+Projecting entities:   0%|          | 0/45158 [00:00<?, ?entities/s][A
+Projecting entities:   2%|▏         | 965/45158 [00:00<00:04, 9644.12entities/s][A
+Projecting entities:   4%|▍         | 1930/45158 [00:00<00:04, 9606.10entities/s][A
+Projecting entities:   6%|▋         | 2892/45158 [00:00<00:04, 9611.35entities/s][A
+Projecting entities:   9%|▊         | 3861/45158 [00:00<00:04, 9641.09entities/s][A
+Projecting entities:  11%|█         | 4826/45158 [00:00<00:04, 9605.21entities/s][A
+Projecting entities:  13%|█▎        | 5796/45158 [00:00<00:04, 9635.91entities/s][A
+Projecting entities:  15%|█▍        | 6760/45158 [00:00<00:03, 9608.98entities/s][A
+Projecting entities:  17%|█▋        | 7721/45158 [00:00<00:03, 9593.62entities/s][A
+Projecting entities:  19%|█▉        | 8681/45158 [00:00<00:03, 9550.10entities/s][A
+Projecting entities:  21%|██▏       | 9644/45158 [00:01<00:03, 9573.64entities/s][A
+Projecting entities:  23%|██▎       | 10602/45158 [00:01<00:03, 9557.93entities/s][A
+Projecting entities:  26%|██▌       | 11562/45158 [00:01<00:03, 9569.40entities/s][A
+Projecting entities:  28%|██▊       | 12519/45158 [00:01<00:03, 9563.32entities/s][A
+Projecting entities:  30%|██▉       | 13491/45158 [00:01<00:03, 9607.45entities/s][A
+Projecting entities:  32%|███▏      | 14452/45158 [00:01<00:03, 9579.76entities/s][A
+Projecting entities:  34%|███▍      | 15418/45158 [00:01<00:03, 9600.67entities/s][A
+Projecting entities:  36%|███▋      | 16379/45158 [00:01<00:02, 9593.95entities/s][A
+Projecting entities:  38%|███▊      | 17339/45158 [00:01<00:02, 9588.67entities/s][A
+Projecting entities:  41%|████      | 18298/45158 [00:01<00:02, 9585.17entities/s][A
+Projecting entities:  43%|████▎     | 19283/45158 [00:02<00:02, 9664.05entities/s][A
+Projecting entities:  45%|████▍     | 20265/45158 [00:02<00:02, 9710.44entities/s][A
+Projecting entities:  47%|████▋     | 21258/45158 [00:02<00:02, 9774.15entities/s][A
+Projecting entities:  49%|████▉     | 22242/45158 [00:02<00:02, 9792.79entities/s][A
+Projecting entities:  51%|█████▏    | 23235/45158 [00:02<00:02, 9831.93entities/s][A
+Projecting entities:  54%|█████▎    | 24219/45158 [00:02<00:02, 9820.94entities/s][A
+Projecting entities:  56%|█████▌    | 25209/45158 [00:02<00:02, 9842.75entities/s][A
+Projecting entities:  58%|█████▊    | 26194/45158 [00:02<00:01, 9838.26entities/s][A
+Projecting entities:  60%|██████    | 27185/45158 [00:02<00:01, 9857.13entities/s][A
+Projecting entities:  62%|██████▏   | 28171/45158 [00:02<00:01, 9843.01entities/s][A
+Projecting entities:  65%|██████▍   | 29161/45158 [00:03<00:01, 9858.85entities/s][A
+Projecting entities:  67%|██████▋   | 30147/45158 [00:03<00:01, 9853.45entities/s][A
+Projecting entities:  69%|██████▉   | 31139/45158 [00:03<00:01, 9871.50entities/s][A
+Projecting entities:  71%|███████   | 32127/45158 [00:03<00:01, 9830.29entities/s][A
+Projecting entities:  73%|███████▎  | 33111/45158 [00:03<00:01, 9830.65entities/s][A
+Projecting entities:  76%|███████▌  | 34095/45158 [00:03<00:01, 9791.56entities/s][A
+Projecting entities:  78%|███████▊  | 35077/45158 [00:03<00:01, 9798.13entities/s][A
+Projecting entities:  80%|███████▉  | 36057/45158 [00:03<00:00, 9766.05entities/s][A
+Projecting entities:  82%|████████▏ | 37034/45158 [00:03<00:00, 9745.20entities/s][A
+Projecting entities:  84%|████████▍ | 38009/45158 [00:03<00:00, 9689.29entities/s][A
+Projecting entities:  86%|████████▋ | 38978/45158 [00:04<00:00, 9648.12entities/s][A
+Projecting entities:  88%|████████▊ | 39943/45158 [00:04<00:00, 9631.75entities/s][A
+Projecting entities:  91%|█████████ | 40907/45158 [00:04<00:00, 9616.49entities/s][A
+Projecting entities:  93%|█████████▎| 41869/45158 [00:04<00:00, 9616.88entities/s][A
+Projecting entities:  95%|█████████▍| 42831/45158 [00:04<00:00, 9590.55entities/s][A
+Projecting entities:  97%|█████████▋| 43793/45158 [00:04<00:00, 9596.56entities/s][A
+Projecting entities:  99%|█████████▉| 44753/45158 [00:04<00:00, 9569.66entities/s][AProjecting entities: 100%|██████████| 45158/45158 [00:04<00:00, 9682.57entities/s]
+Link prediction evaluation:  20%|██        | 1/5 [00:04<00:18,  4.68s/batch]Link prediction evaluation: 100%|██████████| 5/5 [00:04<00:00,  1.06batch/s]
+2026-05-19 17:46:28,851 - INFO - Validation MRR: 0.13442018628120422
+2026-05-19 17:46:31,340 - INFO - Epoch[220] Complete. Time taken: 00:01:38.744
+2026-05-19 17:48:01,671 - INFO - Epoch 221 - Train Loss: 4299.000561964728, Validation MRR: 0.13442018628120422, Learning Rate: 0.0005975451610080642
+2026-05-19 17:48:04,815 - INFO - Memory cleaned.
+2026-05-19 17:48:07,284 - INFO - Epoch[221] Complete. Time taken: 00:01:35.944
+2026-05-19 17:49:36,311 - INFO - Epoch 222 - Train Loss: 4295.113617608507, Validation MRR: 0.13442018628120422, Learning Rate: 0.0005878981399671772
+2026-05-19 17:49:39,401 - INFO - Memory cleaned.
+2026-05-19 17:49:41,787 - INFO - Epoch[222] Complete. Time taken: 00:01:34.502
+2026-05-19 17:51:10,371 - INFO - Epoch 223 - Train Loss: 4287.588803416566, Validation MRR: 0.13442018628120422, Learning Rate: 0.0005782172325201155
+2026-05-19 17:51:13,480 - INFO - Memory cleaned.
+2026-05-19 17:51:15,924 - INFO - Epoch[223] Complete. Time taken: 00:01:34.137
+2026-05-19 17:52:44,463 - INFO - Epoch 224 - Train Loss: 4275.423635604381, Validation MRR: 0.13442018628120422, Learning Rate: 0.0005685061708409841
+2026-05-19 17:52:47,586 - INFO - Memory cleaned.
+2026-05-19 17:52:49,980 - INFO - Epoch[224] Complete. Time taken: 00:01:34.056
+2026-05-19 17:54:18,981 - INFO - Epoch 225 - Train Loss: 4278.587937218287, Validation MRR: 0.13442018628120422, Learning Rate: 0.0005587686987289189
+2026-05-19 17:54:22,148 - INFO - Memory cleaned.
+2026-05-19 17:54:24,523 - INFO - Epoch[225] Complete. Time taken: 00:01:34.542
+2026-05-19 17:55:53,060 - INFO - Epoch 226 - Train Loss: 4263.905264120246, Validation MRR: 0.13442018628120422, Learning Rate: 0.0005490085701647804
+2026-05-19 17:55:56,183 - INFO - Memory cleaned.
+2026-05-19 17:55:58,575 - INFO - Epoch[226] Complete. Time taken: 00:01:34.052
+2026-05-19 17:57:27,132 - INFO - Epoch 227 - Train Loss: 4264.0614831808025, Validation MRR: 0.13442018628120422, Learning Rate: 0.0005392295478639225
+2026-05-19 17:57:30,248 - INFO - Memory cleaned.
+2026-05-19 17:57:32,667 - INFO - Epoch[227] Complete. Time taken: 00:01:34.092
+2026-05-19 17:59:01,441 - INFO - Epoch 228 - Train Loss: 4257.033542886418, Validation MRR: 0.13442018628120422, Learning Rate: 0.0005294354018255945
+2026-05-19 17:59:04,673 - INFO - Memory cleaned.
+2026-05-19 17:59:07,129 - INFO - Epoch[228] Complete. Time taken: 00:01:34.462
+2026-05-19 18:00:37,517 - INFO - Epoch 229 - Train Loss: 4244.99927810995, Validation MRR: 0.13442018628120422, Learning Rate: 0.0005196299078795343
+2026-05-19 18:00:40,727 - INFO - Memory cleaned.
+2026-05-19 18:00:43,200 - INFO - Epoch[229] Complete. Time taken: 00:01:36.071
+2026-05-19 18:02:13,306 - INFO - Epoch 230 - Train Loss: 4242.531882002098, Validation MRR: 0.13442018628120422, Learning Rate: 0.0005098168462303141
+2026-05-19 18:02:16,507 - INFO - Memory cleaned.
+2026-05-19 18:02:18,995 - INFO - Epoch[230] Complete. Time taken: 00:01:35.795
+2026-05-19 18:03:49,241 - INFO - Epoch 231 - Train Loss: 4233.664501946347, Validation MRR: 0.13442018628120422, Learning Rate: 0.0005
+2026-05-19 18:03:52,405 - INFO - Memory cleaned.
+2026-05-19 18:03:54,926 - INFO - Epoch[231] Complete. Time taken: 00:01:35.930
+2026-05-19 18:05:25,164 - INFO - Epoch 232 - Train Loss: 4232.29591951161, Validation MRR: 0.13442018628120422, Learning Rate: 0.0004901831537696859
+2026-05-19 18:05:28,367 - INFO - Memory cleaned.
+2026-05-19 18:05:30,900 - INFO - Epoch[232] Complete. Time taken: 00:01:35.974
+2026-05-19 18:07:01,070 - INFO - Epoch 233 - Train Loss: 4226.819345045068, Validation MRR: 0.13442018628120422, Learning Rate: 0.00048037009212046586
+2026-05-19 18:07:04,306 - INFO - Memory cleaned.
+2026-05-19 18:07:06,784 - INFO - Epoch[233] Complete. Time taken: 00:01:35.884
+2026-05-19 18:08:37,043 - INFO - Epoch 234 - Train Loss: 4211.419705437389, Validation MRR: 0.13442018628120422, Learning Rate: 0.00047056459817440544
+2026-05-19 18:08:40,186 - INFO - Memory cleaned.
+2026-05-19 18:08:42,679 - INFO - Epoch[234] Complete. Time taken: 00:01:35.895
+2026-05-19 18:10:16,721 - INFO - Epoch 235 - Train Loss: 4208.90062816492, Validation MRR: 0.13442018628120422, Learning Rate: 0.0004607704521360776
+2026-05-19 18:10:19,900 - INFO - Memory cleaned.
+2026-05-19 18:10:22,648 - INFO - Epoch[235] Complete. Time taken: 00:01:39.969
+2026-05-19 18:11:52,896 - INFO - Epoch 236 - Train Loss: 4205.760973902107, Validation MRR: 0.13442018628120422, Learning Rate: 0.0004509914298352197
+2026-05-19 18:11:56,116 - INFO - Memory cleaned.
+2026-05-19 18:11:58,614 - INFO - Epoch[236] Complete. Time taken: 00:01:35.965
+2026-05-19 18:13:28,909 - INFO - Epoch 237 - Train Loss: 4199.980053321948, Validation MRR: 0.13442018628120422, Learning Rate: 0.00044123130127108126
+2026-05-19 18:13:32,211 - INFO - Memory cleaned.
+2026-05-19 18:13:34,720 - INFO - Epoch[237] Complete. Time taken: 00:01:36.106
+2026-05-19 18:15:05,572 - INFO - Epoch 238 - Train Loss: 4191.630894170025, Validation MRR: 0.13442018628120422, Learning Rate: 0.0004314938291590161
+2026-05-19 18:15:08,817 - INFO - Memory cleaned.
+2026-05-19 18:15:11,339 - INFO - Epoch[238] Complete. Time taken: 00:01:36.618
+2026-05-19 18:16:41,644 - INFO - Epoch 239 - Train Loss: 4192.984883223581, Validation MRR: 0.13442018628120422, Learning Rate: 0.0004217827674798847
+2026-05-19 18:16:44,849 - INFO - Memory cleaned.
+2026-05-19 18:16:47,334 - INFO - Epoch[239] Complete. Time taken: 00:01:35.995
+2026-05-19 18:18:17,627 - INFO - Epoch 240 - Train Loss: 4172.189802218902, Validation MRR: 0.13442018628120422, Learning Rate: 0.00041210186003282274
+2026-05-19 18:18:20,848 - INFO - Memory cleaned.
+2026-05-19 18:18:20,848 - INFO - Evaluating on validation set at epoch 240...
+Link prediction evaluation:   0%|          | 0/5 [00:00<?, ?batch/s]
+Projecting entities:   0%|          | 0/45158 [00:00<?, ?entities/s][A
+Projecting entities:   2%|▏         | 974/45158 [00:00<00:04, 9738.92entities/s][A
+Projecting entities:   4%|▍         | 1963/45158 [00:00<00:04, 9824.46entities/s][A
+Projecting entities:   7%|▋         | 2947/45158 [00:00<00:04, 9827.58entities/s][A
+Projecting entities:   9%|▊         | 3936/45158 [00:00<00:04, 9850.98entities/s][A
+Projecting entities:  11%|█         | 4922/45158 [00:00<00:04, 9837.89entities/s][A
+Projecting entities:  13%|█▎        | 5912/45158 [00:00<00:03, 9858.30entities/s][A
+Projecting entities:  15%|█▌        | 6898/45158 [00:00<00:03, 9822.68entities/s][A
+Projecting entities:  17%|█▋        | 7884/45158 [00:00<00:03, 9831.88entities/s][A
+Projecting entities:  20%|█▉        | 8868/45158 [00:00<00:03, 9813.44entities/s][A
+Projecting entities:  22%|██▏       | 9851/45158 [00:01<00:03, 9816.38entities/s][A
+Projecting entities:  24%|██▍       | 10833/45158 [00:01<00:03, 9816.95entities/s][A
+Projecting entities:  26%|██▌       | 11825/45158 [00:01<00:03, 9845.89entities/s][A
+Projecting entities:  28%|██▊       | 12810/45158 [00:01<00:03, 9841.83entities/s][A
+Projecting entities:  31%|███       | 13801/45158 [00:01<00:03, 9862.03entities/s][A
+Projecting entities:  33%|███▎      | 14788/45158 [00:01<00:03, 9859.37entities/s][A
+Projecting entities:  35%|███▍      | 15783/45158 [00:01<00:02, 9884.41entities/s][A
+Projecting entities:  37%|███▋      | 16772/45158 [00:01<00:02, 9874.67entities/s][A
+Projecting entities:  39%|███▉      | 17766/45158 [00:01<00:02, 9893.50entities/s][A
+Projecting entities:  42%|████▏     | 18756/45158 [00:01<00:02, 9885.17entities/s][A
+Projecting entities:  44%|████▎     | 19749/45158 [00:02<00:02, 9898.12entities/s][A
+Projecting entities:  46%|████▌     | 20739/45158 [00:02<00:02, 9874.31entities/s][A
+Projecting entities:  48%|████▊     | 21734/45158 [00:02<00:02, 9893.95entities/s][A
+Projecting entities:  50%|█████     | 22724/45158 [00:02<00:02, 9883.39entities/s][A
+Projecting entities:  53%|█████▎    | 23713/45158 [00:02<00:02, 9874.81entities/s][A
+Projecting entities:  55%|█████▍    | 24701/45158 [00:02<00:02, 9758.04entities/s][A
+Projecting entities:  57%|█████▋    | 25678/45158 [00:02<00:01, 9745.24entities/s][A
+Projecting entities:  59%|█████▉    | 26653/45158 [00:02<00:01, 9705.97entities/s][A
+Projecting entities:  61%|██████    | 27624/45158 [00:02<00:01, 9650.75entities/s][A
+Projecting entities:  63%|██████▎   | 28590/45158 [00:02<00:01, 9602.81entities/s][A
+Projecting entities:  65%|██████▌   | 29551/45158 [00:03<00:01, 9589.28entities/s][A
+Projecting entities:  68%|██████▊   | 30510/45158 [00:03<00:01, 9578.06entities/s][A
+Projecting entities:  70%|██████▉   | 31498/45158 [00:03<00:01, 9667.82entities/s][A
+Projecting entities:  72%|███████▏  | 32485/45158 [00:03<00:01, 9725.98entities/s][A
+Projecting entities:  74%|███████▍  | 33465/45158 [00:03<00:01, 9744.77entities/s][A
+Projecting entities:  76%|███████▋  | 34440/45158 [00:03<00:01, 9712.51entities/s][A
+Projecting entities:  78%|███████▊  | 35412/45158 [00:03<00:01, 9690.89entities/s][A
+Projecting entities:  81%|████████  | 36382/45158 [00:03<00:00, 9688.44entities/s][A
+Projecting entities:  83%|████████▎ | 37351/45158 [00:03<00:00, 9649.14entities/s][A
+Projecting entities:  85%|████████▍ | 38319/45158 [00:03<00:00, 9656.55entities/s][A
+Projecting entities:  87%|████████▋ | 39285/45158 [00:04<00:00, 9638.85entities/s][A
+Projecting entities:  89%|████████▉ | 40255/45158 [00:04<00:00, 9654.23entities/s][A
+Projecting entities:  91%|█████████▏| 41221/45158 [00:04<00:00, 9635.88entities/s][A
+Projecting entities:  93%|█████████▎| 42185/45158 [00:04<00:00, 9612.58entities/s][A
+Projecting entities:  96%|█████████▌| 43147/45158 [00:04<00:00, 9556.46entities/s][A
+Projecting entities:  98%|█████████▊| 44103/45158 [00:04<00:00, 9538.89entities/s][A
+Projecting entities: 100%|█████████▉| 45057/45158 [00:04<00:00, 9519.59entities/s][AProjecting entities: 100%|██████████| 45158/45158 [00:04<00:00, 9738.63entities/s]
+Link prediction evaluation:  20%|██        | 1/5 [00:04<00:19,  4.75s/batch]Link prediction evaluation: 100%|██████████| 5/5 [00:04<00:00,  1.04batch/s]
+2026-05-19 18:18:25,758 - INFO - Validation MRR: 0.1590675413608551
+2026-05-19 18:18:28,308 - INFO - Epoch[240] Complete. Time taken: 00:01:40.973
+2026-05-19 18:19:58,597 - INFO - Epoch 241 - Train Loss: 4167.814947398787, Validation MRR: 0.1590675413608551, Learning Rate: 0.00040245483899193594
+2026-05-19 18:20:01,839 - INFO - Memory cleaned.
+2026-05-19 18:20:04,360 - INFO - Epoch[241] Complete. Time taken: 00:01:36.052
+2026-05-19 18:21:34,518 - INFO - Epoch 242 - Train Loss: 4170.866019218703, Validation MRR: 0.1590675413608551, Learning Rate: 0.0003928454234674747
+2026-05-19 18:21:37,675 - INFO - Memory cleaned.
+2026-05-19 18:21:40,198 - INFO - Epoch[242] Complete. Time taken: 00:01:35.839
+2026-05-19 18:23:10,422 - INFO - Epoch 243 - Train Loss: 4164.931573583823, Validation MRR: 0.1590675413608551, Learning Rate: 0.00038327731807204733
+2026-05-19 18:23:13,618 - INFO - Memory cleaned.
+2026-05-19 18:23:16,207 - INFO - Epoch[243] Complete. Time taken: 00:01:36.009
+2026-05-19 18:24:46,579 - INFO - Epoch 244 - Train Loss: 4155.876097962931, Validation MRR: 0.1590675413608551, Learning Rate: 0.00037375421149242114
+2026-05-19 18:24:49,830 - INFO - Memory cleaned.
+2026-05-19 18:24:52,311 - INFO - Epoch[244] Complete. Time taken: 00:01:36.104
+2026-05-19 18:26:22,652 - INFO - Epoch 245 - Train Loss: 4152.919383734974, Validation MRR: 0.1590675413608551, Learning Rate: 0.0003642797750674628
+2026-05-19 18:26:25,815 - INFO - Memory cleaned.
+2026-05-19 18:26:28,312 - INFO - Epoch[245] Complete. Time taken: 00:01:36.000
+2026-05-19 18:27:58,845 - INFO - Epoch 246 - Train Loss: 4143.443699581572, Validation MRR: 0.1590675413608551, Learning Rate: 0.0003548576613727688
+2026-05-19 18:28:01,981 - INFO - Memory cleaned.
+2026-05-19 18:28:04,489 - INFO - Epoch[246] Complete. Time taken: 00:01:36.177
+2026-05-19 18:29:34,952 - INFO - Epoch 247 - Train Loss: 4134.550618852101, Validation MRR: 0.1590675413608551, Learning Rate: 0.00034549150281252633
+2026-05-19 18:29:38,171 - INFO - Memory cleaned.
+2026-05-19 18:29:40,675 - INFO - Epoch[247] Complete. Time taken: 00:01:36.186
+2026-05-19 18:31:10,954 - INFO - Epoch 248 - Train Loss: 4135.014410695624, Validation MRR: 0.1590675413608551, Learning Rate: 0.0003361849102191533
+2026-05-19 18:31:14,109 - INFO - Memory cleaned.
+2026-05-19 18:31:16,626 - INFO - Epoch[248] Complete. Time taken: 00:01:35.950
+2026-05-19 18:32:46,822 - INFO - Epoch 249 - Train Loss: 4135.9317560411855, Validation MRR: 0.1590675413608551, Learning Rate: 0.00032694147146125364
+2026-05-19 18:32:50,029 - INFO - Memory cleaned.
+2026-05-19 18:32:52,510 - INFO - Epoch[249] Complete. Time taken: 00:01:35.883
+2026-05-19 18:34:22,615 - INFO - Epoch 250 - Train Loss: 4123.482285690688, Validation MRR: 0.1590675413608551, Learning Rate: 0.0003177647500604252
+2026-05-19 18:34:25,780 - INFO - Memory cleaned.
+2026-05-19 18:34:28,464 - INFO - Epoch[250] Complete. Time taken: 00:01:35.954
+2026-05-19 18:35:59,177 - INFO - Epoch 251 - Train Loss: 4116.225270302831, Validation MRR: 0.1590675413608551, Learning Rate: 0.0003086582838174551
+2026-05-19 18:36:02,428 - INFO - Memory cleaned.
+2026-05-19 18:36:04,914 - INFO - Epoch[251] Complete. Time taken: 00:01:36.450
+2026-05-19 18:37:35,257 - INFO - Epoch 252 - Train Loss: 4111.674250736415, Validation MRR: 0.1590675413608551, Learning Rate: 0.0002996255834484295
+2026-05-19 18:37:38,475 - INFO - Memory cleaned.
+2026-05-19 18:37:40,942 - INFO - Epoch[252] Complete. Time taken: 00:01:36.027
+2026-05-19 18:39:11,208 - INFO - Epoch 253 - Train Loss: 4104.155816594231, Validation MRR: 0.1590675413608551, Learning Rate: 0.0002906701312312861
+2026-05-19 18:39:14,422 - INFO - Memory cleaned.
+2026-05-19 18:39:16,975 - INFO - Epoch[253] Complete. Time taken: 00:01:36.033
+2026-05-19 18:40:47,250 - INFO - Epoch 254 - Train Loss: 4100.649405968879, Validation MRR: 0.1590675413608551, Learning Rate: 0.00028179537966332904
+2026-05-19 18:40:50,434 - INFO - Memory cleaned.
+2026-05-19 18:40:52,954 - INFO - Epoch[254] Complete. Time taken: 00:01:35.979
+2026-05-19 18:42:23,197 - INFO - Epoch 255 - Train Loss: 4087.8770903631384, Validation MRR: 0.1590675413608551, Learning Rate: 0.00027300475013022663
+2026-05-19 18:42:26,394 - INFO - Memory cleaned.
+2026-05-19 18:42:28,913 - INFO - Epoch[255] Complete. Time taken: 00:01:35.958
+2026-05-19 18:43:59,272 - INFO - Epoch 256 - Train Loss: 4088.759042355725, Validation MRR: 0.1590675413608551, Learning Rate: 0.00026430163158700117
+2026-05-19 18:44:02,446 - INFO - Memory cleaned.
+2026-05-19 18:44:04,903 - INFO - Epoch[256] Complete. Time taken: 00:01:35.990
+2026-05-19 18:45:35,305 - INFO - Epoch 257 - Train Loss: 4088.2882308547178, Validation MRR: 0.1590675413608551, Learning Rate: 0.00025568937925152246
+2026-05-19 18:45:38,472 - INFO - Memory cleaned.
+2026-05-19 18:45:40,973 - INFO - Epoch[257] Complete. Time taken: 00:01:36.070
+2026-05-19 18:47:11,366 - INFO - Epoch 258 - Train Loss: 4069.1246525542474, Validation MRR: 0.1590675413608551, Learning Rate: 0.0002471713133110078
+2026-05-19 18:47:14,594 - INFO - Memory cleaned.
+2026-05-19 18:47:17,094 - INFO - Epoch[258] Complete. Time taken: 00:01:36.121
+2026-05-19 18:48:47,228 - INFO - Epoch 259 - Train Loss: 4071.9469145825424, Validation MRR: 0.1590675413608551, Learning Rate: 0.00023875071764202561
+2026-05-19 18:48:50,454 - INFO - Memory cleaned.
+2026-05-19 18:48:52,950 - INFO - Epoch[259] Complete. Time taken: 00:01:35.856
+2026-05-19 18:50:23,199 - INFO - Epoch 260 - Train Loss: 4065.564060299352, Validation MRR: 0.1590675413608551, Learning Rate: 0.0002304308385445001
+2026-05-19 18:50:26,355 - INFO - Memory cleaned.
+2026-05-19 18:50:26,356 - INFO - Evaluating on validation set at epoch 260...
+Link prediction evaluation:   0%|          | 0/5 [00:00<?, ?batch/s]
+Projecting entities:   0%|          | 0/45158 [00:00<?, ?entities/s][A
+Projecting entities:   2%|▏         | 956/45158 [00:00<00:04, 9551.65entities/s][A
+Projecting entities:   4%|▍         | 1928/45158 [00:00<00:04, 9648.50entities/s][A
+Projecting entities:   6%|▋         | 2893/45158 [00:00<00:04, 9585.65entities/s][A
+Projecting entities:   9%|▊         | 3862/45158 [00:00<00:04, 9623.36entities/s][A
+Projecting entities:  11%|█         | 4829/45158 [00:00<00:04, 9638.89entities/s][A
+Projecting entities:  13%|█▎        | 5804/45158 [00:00<00:04, 9673.22entities/s][A
+Projecting entities:  15%|█▌        | 6787/45158 [00:00<00:03, 9722.07entities/s][A
+Projecting entities:  17%|█▋        | 7767/45158 [00:00<00:03, 9745.30entities/s][A
+Projecting entities:  19%|█▉        | 8742/45158 [00:00<00:03, 9738.39entities/s][A
+Projecting entities:  22%|██▏       | 9719/45158 [00:01<00:03, 9747.87entities/s][A
+Projecting entities:  24%|██▎       | 10694/45158 [00:01<00:03, 9721.95entities/s][A
+Projecting entities:  26%|██▌       | 11668/45158 [00:01<00:03, 9726.24entities/s][A
+Projecting entities:  28%|██▊       | 12641/45158 [00:01<00:03, 9698.55entities/s][A
+Projecting entities:  30%|███       | 13617/45158 [00:01<00:03, 9714.50entities/s][A
+Projecting entities:  32%|███▏      | 14591/45158 [00:01<00:03, 9721.65entities/s][A
+Projecting entities:  34%|███▍      | 15575/45158 [00:01<00:03, 9755.02entities/s][A
+Projecting entities:  37%|███▋      | 16553/45158 [00:01<00:02, 9759.90entities/s][A
+Projecting entities:  39%|███▉      | 17548/45158 [00:01<00:02, 9816.63entities/s][A
+Projecting entities:  41%|████      | 18539/45158 [00:01<00:02, 9844.32entities/s][A
+Projecting entities:  43%|████▎     | 19524/45158 [00:02<00:02, 9818.99entities/s][A
+Projecting entities:  45%|████▌     | 20506/45158 [00:02<00:02, 9780.56entities/s][A
+Projecting entities:  48%|████▊     | 21487/45158 [00:02<00:02, 9787.24entities/s][A
+Projecting entities:  50%|████▉     | 22466/45158 [00:02<00:02, 9759.81entities/s][A
+Projecting entities:  52%|█████▏    | 23449/45158 [00:02<00:02, 9777.97entities/s][A
+Projecting entities:  54%|█████▍    | 24427/45158 [00:02<00:02, 9760.27entities/s][A
+Projecting entities:  56%|█████▋    | 25410/45158 [00:02<00:02, 9779.01entities/s][A
+Projecting entities:  58%|█████▊    | 26388/45158 [00:02<00:01, 9713.31entities/s][A
+Projecting entities:  61%|██████    | 27360/45158 [00:02<00:01, 9663.34entities/s][A
+Projecting entities:  63%|██████▎   | 28327/45158 [00:02<00:01, 9664.92entities/s][A
+Projecting entities:  65%|██████▍   | 29294/45158 [00:03<00:01, 9656.88entities/s][A
+Projecting entities:  67%|██████▋   | 30269/45158 [00:03<00:01, 9682.55entities/s][A
+Projecting entities:  69%|██████▉   | 31247/45158 [00:03<00:01, 9710.58entities/s][A
+Projecting entities:  71%|███████▏  | 32219/45158 [00:03<00:01, 9682.65entities/s][A
+Projecting entities:  73%|███████▎  | 33188/45158 [00:03<00:01, 9679.38entities/s][A
+Projecting entities:  76%|███████▌  | 34156/45158 [00:03<00:01, 9648.37entities/s][A
+Projecting entities:  78%|███████▊  | 35127/45158 [00:03<00:01, 9665.49entities/s][A
+Projecting entities:  80%|███████▉  | 36094/45158 [00:03<00:00, 9644.98entities/s][A
+Projecting entities:  82%|████████▏ | 37059/45158 [00:03<00:00, 9637.02entities/s][A
+Projecting entities:  84%|████████▍ | 38023/45158 [00:03<00:00, 9621.84entities/s][A
+Projecting entities:  86%|████████▋ | 38986/45158 [00:04<00:00, 9608.50entities/s][A
+Projecting entities:  88%|████████▊ | 39962/45158 [00:04<00:00, 9651.32entities/s][A
+Projecting entities:  91%|█████████ | 40928/45158 [00:04<00:00, 9201.06entities/s][A
+Projecting entities:  93%|█████████▎| 41883/45158 [00:04<00:00, 9300.42entities/s][A
+Projecting entities:  95%|█████████▍| 42830/45158 [00:04<00:00, 9348.94entities/s][A
+Projecting entities:  97%|█████████▋| 43796/45158 [00:04<00:00, 9438.28entities/s][A
+Projecting entities:  99%|█████████▉| 44760/45158 [00:04<00:00, 9497.36entities/s][AProjecting entities: 100%|██████████| 45158/45158 [00:04<00:00, 9656.74entities/s]
+Link prediction evaluation:  20%|██        | 1/5 [00:04<00:18,  4.72s/batch]Link prediction evaluation: 100%|██████████| 5/5 [00:04<00:00,  1.05batch/s]
+2026-05-19 18:50:31,139 - INFO - Validation MRR: 0.1743081510066986
+2026-05-19 18:50:33,633 - INFO - Epoch[260] Complete. Time taken: 00:01:40.683
+2026-05-19 18:52:04,445 - INFO - Epoch 261 - Train Loss: 4056.9847578029153, Validation MRR: 0.1743081510066986, Learning Rate: 0.00022221488349019887
+2026-05-19 18:52:07,729 - INFO - Memory cleaned.
+2026-05-19 18:52:10,354 - INFO - Epoch[261] Complete. Time taken: 00:01:36.720
+2026-05-19 18:53:40,205 - INFO - Epoch 262 - Train Loss: 4048.8326101730636, Validation MRR: 0.1743081510066986, Learning Rate: 0.00021410601988619394
+2026-05-19 18:53:43,379 - INFO - Memory cleaned.
+2026-05-19 18:53:45,577 - INFO - Epoch[262] Complete. Time taken: 00:01:35.223
+2026-05-19 18:55:16,019 - INFO - Epoch 263 - Train Loss: 4035.772508305821, Validation MRR: 0.1743081510066986, Learning Rate: 0.00020610737385376348
+2026-05-19 18:55:19,257 - INFO - Memory cleaned.
+2026-05-19 18:55:21,746 - INFO - Epoch[263] Complete. Time taken: 00:01:36.169
+2026-05-19 18:56:52,069 - INFO - Epoch 264 - Train Loss: 4044.535448500146, Validation MRR: 0.1743081510066986, Learning Rate: 0.0001982220290232143
+2026-05-19 18:56:55,327 - INFO - Memory cleaned.
+2026-05-19 18:56:57,851 - INFO - Epoch[264] Complete. Time taken: 00:01:36.104
+2026-05-19 18:58:28,165 - INFO - Epoch 265 - Train Loss: 4049.686229082189, Validation MRR: 0.1743081510066986, Learning Rate: 0.00019045302534508314
+2026-05-19 18:58:31,375 - INFO - Memory cleaned.
+2026-05-19 18:58:33,897 - INFO - Epoch[265] Complete. Time taken: 00:01:36.046
+2026-05-19 19:00:04,091 - INFO - Epoch 266 - Train Loss: 4039.9794875403772, Validation MRR: 0.1743081510066986, Learning Rate: 0.00018280335791817716
+2026-05-19 19:00:07,279 - INFO - Memory cleaned.
+2026-05-19 19:00:09,887 - INFO - Epoch[266] Complete. Time taken: 00:01:35.989
+2026-05-19 19:01:40,465 - INFO - Epoch 267 - Train Loss: 4022.167125471307, Validation MRR: 0.1743081510066986, Learning Rate: 0.00017527597583490823
+2026-05-19 19:01:43,665 - INFO - Memory cleaned.
+2026-05-19 19:01:46,173 - INFO - Epoch[267] Complete. Time taken: 00:01:36.285
+2026-05-19 19:03:16,740 - INFO - Epoch 268 - Train Loss: 4028.9227213426807, Validation MRR: 0.1743081510066986, Learning Rate: 0.00016787378104435912
+2026-05-19 19:03:20,018 - INFO - Memory cleaned.
+2026-05-19 19:03:22,563 - INFO - Epoch[268] Complete. Time taken: 00:01:36.390
+2026-05-19 19:04:52,791 - INFO - Epoch 269 - Train Loss: 4019.042202150196, Validation MRR: 0.1743081510066986, Learning Rate: 0.00016059962723352923
+2026-05-19 19:04:55,973 - INFO - Memory cleaned.
+2026-05-19 19:04:58,214 - INFO - Epoch[269] Complete. Time taken: 00:01:35.651
+2026-05-19 19:06:28,463 - INFO - Epoch 270 - Train Loss: 4014.563838237966, Validation MRR: 0.1743081510066986, Learning Rate: 0.00015345631872718213
+2026-05-19 19:06:31,704 - INFO - Memory cleaned.
+2026-05-19 19:06:34,214 - INFO - Epoch[270] Complete. Time taken: 00:01:36.000
+2026-05-19 19:08:04,505 - INFO - Epoch 271 - Train Loss: 4008.762293564833, Validation MRR: 0.1743081510066986, Learning Rate: 0.00014644660940672628
+2026-05-19 19:08:07,711 - INFO - Memory cleaned.
+2026-05-19 19:08:10,235 - INFO - Epoch[271] Complete. Time taken: 00:01:36.021
+2026-05-19 19:09:40,319 - INFO - Epoch 272 - Train Loss: 4011.4466372727743, Validation MRR: 0.1743081510066986, Learning Rate: 0.0001395732016485406
+2026-05-19 19:09:43,553 - INFO - Memory cleaned.
+2026-05-19 19:09:46,030 - INFO - Epoch[272] Complete. Time taken: 00:01:35.795
+2026-05-19 19:11:16,363 - INFO - Epoch 273 - Train Loss: 3992.5322954948488, Validation MRR: 0.1743081510066986, Learning Rate: 0.00013283874528215717
+2026-05-19 19:11:19,518 - INFO - Memory cleaned.
+2026-05-19 19:11:22,042 - INFO - Epoch[273] Complete. Time taken: 00:01:36.011
+2026-05-19 19:12:52,141 - INFO - Epoch 274 - Train Loss: 3994.033731739455, Validation MRR: 0.1743081510066986, Learning Rate: 0.0001262458365687017
+2026-05-19 19:12:55,374 - INFO - Memory cleaned.
+2026-05-19 19:12:57,871 - INFO - Epoch[274] Complete. Time taken: 00:01:35.829
+2026-05-19 19:14:28,104 - INFO - Epoch 275 - Train Loss: 4002.561847456028, Validation MRR: 0.1743081510066986, Learning Rate: 0.00011979701719998454
+2026-05-19 19:14:31,278 - INFO - Memory cleaned.
+2026-05-19 19:14:33,793 - INFO - Epoch[275] Complete. Time taken: 00:01:35.922
+2026-05-19 19:16:04,024 - INFO - Epoch 276 - Train Loss: 3987.5129479321517, Validation MRR: 0.1743081510066986, Learning Rate: 0.00011349477331863167
+2026-05-19 19:16:07,207 - INFO - Memory cleaned.
+2026-05-19 19:16:09,731 - INFO - Epoch[276] Complete. Time taken: 00:01:35.938
+2026-05-19 19:17:39,988 - INFO - Epoch 277 - Train Loss: 3988.725819652765, Validation MRR: 0.1743081510066986, Learning Rate: 0.00010734153455962748
+2026-05-19 19:17:43,195 - INFO - Memory cleaned.
+2026-05-19 19:17:45,614 - INFO - Epoch[277] Complete. Time taken: 00:01:35.883
+2026-05-19 19:19:15,899 - INFO - Epoch 278 - Train Loss: 3988.7525641777393, Validation MRR: 0.1743081510066986, Learning Rate: 0.0001013396731136465
+2026-05-19 19:19:19,081 - INFO - Memory cleaned.
+2026-05-19 19:19:21,650 - INFO - Epoch[278] Complete. Time taken: 00:01:36.036
+2026-05-19 19:20:51,816 - INFO - Epoch 279 - Train Loss: 3978.5535203556783, Validation MRR: 0.1743081510066986, Learning Rate: 9.549150281252633e-05
+2026-05-19 19:20:55,047 - INFO - Memory cleaned.
+2026-05-19 19:20:57,526 - INFO - Epoch[279] Complete. Time taken: 00:01:35.876
+2026-05-19 19:22:27,663 - INFO - Epoch 280 - Train Loss: 3971.0607383737997, Validation MRR: 0.1743081510066986, Learning Rate: 8.979927823724321e-05
+2026-05-19 19:22:30,978 - INFO - Memory cleaned.
+2026-05-19 19:22:30,978 - INFO - Evaluating on validation set at epoch 280...
+Link prediction evaluation:   0%|          | 0/5 [00:00<?, ?batch/s]
+Projecting entities:   0%|          | 0/45158 [00:00<?, ?entities/s][A
+Projecting entities:   2%|▏         | 960/45158 [00:00<00:04, 9599.41entities/s][A
+Projecting entities:   4%|▍         | 1927/45158 [00:00<00:04, 9635.17entities/s][A
+Projecting entities:   6%|▋         | 2897/45158 [00:00<00:04, 9662.75entities/s][A
+Projecting entities:   9%|▊         | 3874/45158 [00:00<00:04, 9704.48entities/s][A
+Projecting entities:  11%|█         | 4845/45158 [00:00<00:04, 9702.97entities/s][A
+Projecting entities:  13%|█▎        | 5817/45158 [00:00<00:04, 9707.04entities/s][A
+Projecting entities:  15%|█▌        | 6788/45158 [00:00<00:03, 9699.71entities/s][A
+Projecting entities:  17%|█▋        | 7762/45158 [00:00<00:03, 9709.23entities/s][A
+Projecting entities:  19%|█▉        | 8733/45158 [00:00<00:03, 9696.41entities/s][A
+Projecting entities:  21%|██▏       | 9708/45158 [00:01<00:03, 9712.13entities/s][A
+Projecting entities:  24%|██▎       | 10681/45158 [00:01<00:03, 9716.21entities/s][A
+Projecting entities:  26%|██▌       | 11659/45158 [00:01<00:03, 9735.01entities/s][A
+Projecting entities:  28%|██▊       | 12633/45158 [00:01<00:03, 9729.48entities/s][A
+Projecting entities:  30%|███       | 13609/45158 [00:01<00:03, 9735.89entities/s][A
+Projecting entities:  32%|███▏      | 14583/45158 [00:01<00:03, 9705.98entities/s][A
+Projecting entities:  34%|███▍      | 15560/45158 [00:01<00:03, 9724.75entities/s][A
+Projecting entities:  37%|███▋      | 16533/45158 [00:01<00:02, 9702.29entities/s][A
+Projecting entities:  39%|███▉      | 17510/45158 [00:01<00:02, 9720.60entities/s][A
+Projecting entities:  41%|████      | 18483/45158 [00:01<00:02, 9699.04entities/s][A
+Projecting entities:  43%|████▎     | 19458/45158 [00:02<00:02, 9711.27entities/s][A
+Projecting entities:  45%|████▌     | 20430/45158 [00:02<00:02, 9702.94entities/s][A
+Projecting entities:  47%|████▋     | 21401/45158 [00:02<00:02, 9697.05entities/s][A
+Projecting entities:  50%|████▉     | 22377/45158 [00:02<00:02, 9714.04entities/s][A
+Projecting entities:  52%|█████▏    | 23349/45158 [00:02<00:02, 9685.41entities/s][A
+Projecting entities:  54%|█████▍    | 24318/45158 [00:02<00:02, 9667.74entities/s][A
+Projecting entities:  56%|█████▌    | 25285/45158 [00:02<00:02, 9667.34entities/s][A
+Projecting entities:  58%|█████▊    | 26262/45158 [00:02<00:01, 9695.91entities/s][A
+Projecting entities:  60%|██████    | 27232/45158 [00:02<00:01, 9679.78entities/s][A
+Projecting entities:  62%|██████▏   | 28205/45158 [00:02<00:01, 9693.13entities/s][A
+Projecting entities:  65%|██████▍   | 29175/45158 [00:03<00:01, 9676.71entities/s][A
+Projecting entities:  67%|██████▋   | 30147/45158 [00:03<00:01, 9687.65entities/s][A
+Projecting entities:  69%|██████▉   | 31116/45158 [00:03<00:01, 9675.72entities/s][A
+Projecting entities:  71%|███████   | 32084/45158 [00:03<00:01, 9670.61entities/s][A
+Projecting entities:  73%|███████▎  | 33052/45158 [00:03<00:01, 9631.00entities/s][A
+Projecting entities:  75%|███████▌  | 34021/45158 [00:03<00:01, 9645.43entities/s][A
+Projecting entities:  77%|███████▋  | 34986/45158 [00:03<00:01, 9643.34entities/s][A
+Projecting entities:  80%|███████▉  | 35957/45158 [00:03<00:00, 9662.16entities/s][A
+Projecting entities:  82%|████████▏ | 36924/45158 [00:03<00:00, 9637.94entities/s][A
+Projecting entities:  84%|████████▍ | 37893/45158 [00:03<00:00, 9650.71entities/s][A
+Projecting entities:  86%|████████▌ | 38859/45158 [00:04<00:00, 9623.06entities/s][A
+Projecting entities:  88%|████████▊ | 39824/45158 [00:04<00:00, 9630.86entities/s][A
+Projecting entities:  90%|█████████ | 40788/45158 [00:04<00:00, 9611.30entities/s][A
+Projecting entities:  92%|█████████▏| 41759/45158 [00:04<00:00, 9640.67entities/s][A
+Projecting entities:  95%|█████████▍| 42726/45158 [00:04<00:00, 9647.69entities/s][A
+Projecting entities:  97%|█████████▋| 43703/45158 [00:04<00:00, 9683.79entities/s][A
+Projecting entities:  99%|█████████▉| 44674/45158 [00:04<00:00, 9690.78entities/s][AProjecting entities: 100%|██████████| 45158/45158 [00:04<00:00, 9682.37entities/s]
+Link prediction evaluation:  20%|██        | 1/5 [00:04<00:18,  4.69s/batch]Link prediction evaluation: 100%|██████████| 5/5 [00:04<00:00,  1.06batch/s]
+2026-05-19 19:22:35,733 - INFO - Validation MRR: 0.17545509338378906
+2026-05-19 19:22:35,733 ignite.handlers.early_stopping.EarlyStopping INFO: EarlyStopping: Stop training
+2026-05-19 19:22:35,733 - INFO - Terminate signaled. Engine will stop after current iteration is finished.
+2026-05-19 19:22:38,270 - INFO - Training completed after 280 epochs.
+2026-05-19 19:22:38,270 - INFO - Engine run complete. Time taken: 07:22:47.419
+2026-05-19 19:22:47,487 - WARNING - /lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/dev/run_training.py:130: UserWarning: The 'rel_emb_dim' field is missing for model TransD. Defaulting to 200.
+  warnings.warn(f"The 'rel_emb_dim' field is missing for model {model_name}. Defaulting to {emb_dim}.")
+
+2026-05-19 19:22:48,340 - INFO - Loading best model.
+2026-05-19 19:22:48,341 - INFO - Best model is ./checkpoints/best_model_checkpoint_val_mrr=0.2036.pt
+2026-05-19 19:22:48,341 - WARNING - /lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/dev/run_training.py:820: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  checkpoint = torch.load(os.path.join(checkpoint_dir, best_model), map_location=device)
+
+2026-05-19 19:22:50,932 - INFO - Best model successfully loaded.
+2026-05-19 19:22:50,932 - INFO - Evaluating on the test set with best model...
+CtD
+Link prediction evaluation:   0%|          | 0/5 [00:00<?, ?batch/s]
+Projecting entities:   0%|          | 0/45158 [00:00<?, ?entities/s][A
+Projecting entities:   1%|          | 279/45158 [00:00<00:16, 2684.76entities/s][A
+Projecting entities:   2%|▏         | 990/45158 [00:00<00:08, 5245.88entities/s][A
+Projecting entities:   4%|▎         | 1680/45158 [00:00<00:07, 5991.14entities/s][A
+Projecting entities:   5%|▌         | 2365/45158 [00:00<00:06, 6327.84entities/s][A
+Projecting entities:   7%|▋         | 3048/45158 [00:00<00:06, 6506.73entities/s][A
+Projecting entities:   8%|▊         | 3727/45158 [00:00<00:06, 6600.59entities/s][A
+Projecting entities:  10%|▉         | 4411/45158 [00:00<00:06, 6677.64entities/s][A
+Projecting entities:  11%|█▏        | 5093/45158 [00:00<00:05, 6720.94entities/s][A
+Projecting entities:  13%|█▎        | 5777/45158 [00:00<00:05, 6757.77entities/s][A
+Projecting entities:  14%|█▍        | 6454/45158 [00:01<00:05, 6758.10entities/s][A
+Projecting entities:  16%|█▌        | 7134/45158 [00:01<00:05, 6770.34entities/s][A
+Projecting entities:  17%|█▋        | 7812/45158 [00:01<00:05, 6760.90entities/s][A
+Projecting entities:  19%|█▉        | 8490/45158 [00:01<00:05, 6764.00entities/s][A
+Projecting entities:  20%|██        | 9167/45158 [00:01<00:05, 6756.80entities/s][A
+Projecting entities:  22%|██▏       | 9849/45158 [00:01<00:05, 6773.64entities/s][A
+Projecting entities:  23%|██▎       | 10531/45158 [00:01<00:05, 6784.76entities/s][A
+Projecting entities:  25%|██▍       | 11214/45158 [00:01<00:04, 6795.85entities/s][A
+Projecting entities:  26%|██▋       | 11895/45158 [00:01<00:04, 6798.37entities/s][A
+Projecting entities:  28%|██▊       | 12586/45158 [00:01<00:04, 6831.03entities/s][A
+Projecting entities:  29%|██▉       | 13271/45158 [00:02<00:04, 6834.54entities/s][A
+Projecting entities:  31%|███       | 13959/45158 [00:02<00:04, 6845.32entities/s][A
+Projecting entities:  32%|███▏      | 14644/45158 [00:02<00:04, 6834.52entities/s][A
+Projecting entities:  34%|███▍      | 15331/45158 [00:02<00:04, 6844.02entities/s][A
+Projecting entities:  35%|███▌      | 16016/45158 [00:02<00:04, 6837.87entities/s][A
+Projecting entities:  37%|███▋      | 16703/45158 [00:02<00:04, 6844.16entities/s][A
+Projecting entities:  39%|███▊      | 17388/45158 [00:02<00:04, 6843.34entities/s][A
+Projecting entities:  40%|████      | 18073/45158 [00:02<00:03, 6842.30entities/s][A
+Projecting entities:  42%|████▏     | 18758/45158 [00:02<00:03, 6799.56entities/s][A
+Projecting entities:  43%|████▎     | 19439/45158 [00:02<00:03, 6788.35entities/s][A
+Projecting entities:  45%|████▍     | 20122/45158 [00:03<00:03, 6800.35entities/s][A
+Projecting entities:  46%|████▌     | 20819/45158 [00:03<00:03, 6850.79entities/s][A
+Projecting entities:  48%|████▊     | 21505/45158 [00:03<00:03, 6841.44entities/s][A
+Projecting entities:  49%|████▉     | 22190/45158 [00:03<00:03, 6826.45entities/s][A
+Projecting entities:  51%|█████     | 22881/45158 [00:03<00:03, 6849.45entities/s][A
+Projecting entities:  52%|█████▏    | 23567/45158 [00:03<00:03, 6850.88entities/s][A
+Projecting entities:  54%|█████▎    | 24259/45158 [00:03<00:03, 6868.50entities/s][A
+Projecting entities:  55%|█████▌    | 24946/45158 [00:03<00:02, 6860.35entities/s][A
+Projecting entities:  57%|█████▋    | 25633/45158 [00:03<00:02, 6822.91entities/s][A
+Projecting entities:  58%|█████▊    | 26316/45158 [00:03<00:02, 6821.89entities/s][A
+Projecting entities:  60%|█████▉    | 27002/45158 [00:04<00:02, 6830.86entities/s][A
+Projecting entities:  61%|██████▏   | 27686/45158 [00:04<00:02, 6831.66entities/s][A
+Projecting entities:  63%|██████▎   | 28370/45158 [00:04<00:02, 6821.88entities/s][A
+Projecting entities:  64%|██████▍   | 29053/45158 [00:04<00:02, 6803.15entities/s][A
+Projecting entities:  66%|██████▌   | 29736/45158 [00:04<00:02, 6808.42entities/s][A
+Projecting entities:  67%|██████▋   | 30417/45158 [00:04<00:02, 6804.85entities/s][A
+Projecting entities:  69%|██████▉   | 31098/45158 [00:04<00:02, 6784.13entities/s][A
+Projecting entities:  70%|███████   | 31777/45158 [00:04<00:01, 6779.05entities/s][A
+Projecting entities:  72%|███████▏  | 32455/45158 [00:04<00:01, 6772.94entities/s][A
+Projecting entities:  73%|███████▎  | 33138/45158 [00:04<00:01, 6787.30entities/s][A
+Projecting entities:  75%|███████▍  | 33822/45158 [00:05<00:01, 6800.22entities/s][A
+Projecting entities:  76%|███████▋  | 34503/45158 [00:05<00:01, 6797.76entities/s][A
+Projecting entities:  78%|███████▊  | 35186/45158 [00:05<00:01, 6805.86entities/s][A
+Projecting entities:  79%|███████▉  | 35867/45158 [00:05<00:01, 6788.87entities/s][A
+Projecting entities:  81%|████████  | 36548/45158 [00:05<00:01, 6793.86entities/s][A
+Projecting entities:  82%|████████▏ | 37228/45158 [00:05<00:01, 6776.69entities/s][A
+Projecting entities:  84%|████████▍ | 37907/45158 [00:05<00:01, 6778.11entities/s][A
+Projecting entities:  85%|████████▌ | 38588/45158 [00:05<00:00, 6784.94entities/s][A
+Projecting entities:  87%|████████▋ | 39273/45158 [00:05<00:00, 6801.56entities/s][A
+Projecting entities:  88%|████████▊ | 39959/45158 [00:05<00:00, 6817.29entities/s][A
+Projecting entities:  90%|█████████ | 40651/45158 [00:06<00:00, 6845.71entities/s][A
+Projecting entities:  92%|█████████▏| 41336/45158 [00:06<00:00, 6817.98entities/s][A
+Projecting entities:  93%|█████████▎| 42019/45158 [00:06<00:00, 6821.35entities/s][A
+Projecting entities:  95%|█████████▍| 42704/45158 [00:06<00:00, 6829.71entities/s][A
+Projecting entities:  96%|█████████▌| 43387/45158 [00:06<00:00, 6826.71entities/s][A
+Projecting entities:  98%|█████████▊| 44070/45158 [00:06<00:00, 6799.10entities/s][A
+Projecting entities:  99%|█████████▉| 44750/45158 [00:06<00:00, 6790.42entities/s][AProjecting entities: 100%|██████████| 45158/45158 [00:06<00:00, 6753.41entities/s]
+Link prediction evaluation:  20%|██        | 1/5 [00:06<00:27,  6.76s/batch]Link prediction evaluation: 100%|██████████| 5/5 [00:06<00:00,  1.36s/batch]
+2026-05-19 19:22:58,094 - INFO - Final Test MRR with best model: 0.15466755628585815
+2026-05-19 19:22:58,094 - INFO - Final Test Hits@10 with best model: 0.3059701472520828
+Link prediction evaluation:   0%|          | 0/3 [00:00<?, ?batch/s]Link prediction evaluation: 100%|██████████| 3/3 [00:00<00:00, 92.52batch/s]
+Link prediction evaluation:   0%|          | 0/2 [00:00<?, ?batch/s]Link prediction evaluation: 100%|██████████| 2/2 [00:00<00:00, 92.38batch/s]
+2026-05-19 19:23:05,454 - INFO - MRR for frequent nodes (threshold=10) in relation CtD: 0.21361911296844482
+2026-05-19 19:23:05,454 - INFO - MRR for infrequent nodes (threshold=10) in relation CtD: 0.06733192503452301
+2026-05-19 19:23:05,454 - INFO - Hits@10 for frequent nodes (threshold=10) in relation CtD: 0.42500001192092896
+2026-05-19 19:23:05,454 - INFO - Hits@10 for infrequent nodes (threshold=10) in relation CtD: 0.12962963059544563
+2026-05-19 19:23:05,458 - INFO - MRR evaluation results stored in ./evaluation_metrics.yaml
+2026-05-19 19:23:05,460 - INFO - Hit@10 evaluation results stored in ./evaluation_hit@10.yaml
+Link prediction evaluation:   0%|          | 0/1 [00:00<?, ?batch/s]Link prediction evaluation: 100%|██████████| 1/1 [00:00<00:00, 93.19batch/s]
+Link prediction evaluation:   0%|          | 0/1 [00:00<?, ?batch/s]Link prediction evaluation: 100%|██████████| 1/1 [00:00<00:00,  6.99batch/s]Link prediction evaluation: 100%|██████████| 1/1 [00:00<00:00,  6.98batch/s]
+2026-05-19 19:23:05,971 - INFO - MRR on inference set: 0.012277266010642052
+2026-05-19 19:23:05,974 - INFO - Evaluation results stored in ./inference_metrics.yaml

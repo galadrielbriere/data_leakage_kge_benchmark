@@ -1,4 +1,4 @@
-# Benchmarking Data Leakage on Link Prediction in Biomedical Knowledge Graph Embeddings
+# Benchmarking the Impact of Data Leakage on the Performance of Knowledge Graph Embedding Models for Biomedical Link Prediction
 
 ### Authors and paper
 - **Galadriel Brière** (Aix Marseille Univ, INSERM, MMG, Marseille, France) 
@@ -6,7 +6,7 @@
 - **Benjamin Loire** (Aix Marseille Univ, INSERM, MMG, Marseille, France) 
 - **Anaïs Baudot** (Aix Marseille Univ, INSERM, MMG, Marseille, France; Barcelona Supercomputing Center, Barcelona, Spain)
 
-📄 Brière, G., Stosskopf, T., Loire, B., & Baudot, A. (2025). *Benchmarking Data Leakage on Link Prediction in Biomedical Knowledge Graph Embeddings*. [bioRxiv](https://doi.org/10.1101/2025.01.23.634511)
+📄 Brière, G., Stosskopf, T., Loire, B., & Baudot, A. (2025). *Benchmarking the Impact of Data Leakage on the Performance of Knowledge Graph Embedding Models for Biomedical Link Prediction*. [bioRxiv](https://doi.org/10.1101/2025.01.23.634511)
 
 
 ## 🚧 **Note**
@@ -15,15 +15,40 @@ We are currently improving this implementation to create a standalone library an
 
 ## Introduction
 
-This repository implements a systematic approach to assess and reduce data leakage in knowledge graph embedding-based link prediction over biomedical knowledge graphs. It offers a configurable pipeline for preprocessing, training, and evaluating popular knowledge graph embedding (KGE) models, with a particular focus on data leakage-aware benchmarking. The project relies on models implemented in TorchKGE, and training is handled via PyTorch and PyTorch-Ignite.
+This repository implements a systematic approach to detect and control for data leakage in knowledge graph embedding-based link prediction over biomedical knowledge graphs. It offers a configurable pipeline for preprocessing, training, and evaluating popular knowledge graph embedding (KGE) models, with a particular focus on data leakage-aware benchmarking. Shallow models (KGE models without GNN encoders) are implemented by TorchKGE, and training is handled via PyTorch and PyTorch-Ignite. GNN-based models were trained using KGATE : [Knowledge Graph Autoencoder Training Environment (KGATE)](https://github.com/BAUDOTlab/KGATE/tree/main). 
 
-## Features
+## Reproducing Paper Results
 
-- Knowledge graph preprocessing with data leakage control.
-  - Automatic detection and removal of semantical redundancy within training/test splits
-  - Cold-start splits (head-based or tail-based)
-- Customizable training and evaluation pipelines using configuration files.
-- Supports KGE models from TorchKGE.
+All radar-plot figures in the paper can be regenerated from the results
+included in this repository. The plotting code and notebooks live in the
+`radar_plots` folder.
+
+1. **Clone the repository** (it ships with the experiment results):
+
+```bash
+   git clone https://github.com/galadrielbriere/drug_repurposing_kge_benchmark.git
+   cd /radar_plots
+```
+
+2. **Set the configuration.** Open `kg_configs.py` and set `DATA_ROOT` to the
+   local path of the results directory. Paths, target-relation keys and per-figure `y_lim` values for
+   each knowledge graph are already defined there and don't normally need
+   editing.
+
+3. **Run the notebooks.** Each notebook has a single `KG` switch at the top —
+   set it to `"biokg"`, `"hetionet"` or `"shepkg"`, then *Run All*:
+
+   - `make_radar_plots.ipynb` — DL1, DL2, DL3 figures and the made-directed
+     relations breakdown.
+   - `radar_random_vs_coldstart.ipynb` — random-split vs cold-start comparison.
+
+   Run each notebook once per knowledge graph. Figures are written to
+   `Figures/<KG>` (e.g. `Figures/BioKG`, `Figures/HetionetKG`,
+   `Figures/ShepherdKG`).
+
+The reusable plotting code lives in `radar_plots.py`; the per-KG settings live
+in `kg_configs.py`.
+
 
 ## Installation
 
@@ -51,6 +76,7 @@ This repository implements a systematic approach to assess and reduce data leaka
    pip install pandas matplotlib numpy pyyaml tqdm ignite pytorch-ignite
    ```
 
+3. For GNN-based models based on KGATE, follow KGATE's documentation.
 
 ## Usage
 
@@ -151,11 +177,19 @@ evaluation:  # Evaluation settings – always computes filtered MRR and Hit@10
 python dev/run_training.py --config config.yaml 
 ```
 
-## Reproducing Paper Results
+### Knowledge Graphs Availability
 
-### Knowledge Graph Availability
+#### ShepherdKG
 
-The Knowledge Graph used in our study is available on [Zenodo](https://zenodo.org/records/15791540?token=eyJhbGciOiJIUzUxMiJ9.eyJpZCI6IjMwNWJiMDcwLWUzODMtNDg3Mi04ZGRmLWRjYzQwZGYwNGU5ZiIsImRhdGEiOnt9LCJyYW5kb20iOiJmNzEwMGY0OGY1MTg0MTQ3MDEzMmU3MDEyYThjMTdhZCJ9.JRxTSjM7C1-j0XwUi39IDGgYMXtUsDI3goNddf5lxGZnfYv2zXLTS4mKhSb8_d51uTdfsl4iycO2M3DO7CkUhw). This Knowledge Graph is derived directly from the [Shepherd Knowledge Graph](https://zitniklab.hms.harvard.edu/projects/SHEPHERD/), with updated node identifiers to include node type.
+The ShepherdKG Graph used in our study is available on [Zenodo](https://zenodo.org/records/15791540?token=eyJhbGciOiJIUzUxMiJ9.eyJpZCI6IjMwNWJiMDcwLWUzODMtNDg3Mi04ZGRmLWRjYzQwZGYwNGU5ZiIsImRhdGEiOnt9LCJyYW5kb20iOiJmNzEwMGY0OGY1MTg0MTQ3MDEzMmU3MDEyYThjMTdhZCJ9.JRxTSjM7C1-j0XwUi39IDGgYMXtUsDI3goNddf5lxGZnfYv2zXLTS4mKhSb8_d51uTdfsl4iycO2M3DO7CkUhw). This Knowledge Graph is derived directly from the [Shepherd Knowledge Graph](https://zitniklab.hms.harvard.edu/projects/SHEPHERD/), with updated node identifiers to include node type.
+
+#### BioKG
+
+The BioKG Knowledge graph can be downloaded [here](https://github.com/dsi-bdi/biokg/releases/tag/v1.0.0).
+
+#### HetionetKG
+
+The HetionetKG Knowledge graph can be downloaded [here](https://github.com/hetio/hetionet).
 
 ### Configuration and Results 
 

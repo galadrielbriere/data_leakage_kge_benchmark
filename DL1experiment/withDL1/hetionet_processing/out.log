@@ -1,0 +1,63 @@
+2026-05-06 16:25:32,838 - WARNING - /home/galadriel/anaconda3/envs/benchmark/lib/python3.9/site-packages/ignite/handlers/checkpoint.py:16: DeprecationWarning: `TorchScript` support for functional optimizers is deprecated and will be removed in a future PyTorch release. Consider using the `torch.compile` optimizer instead.
+  from torch.distributed.optim import ZeroRedundancyOptimizer
+
+2026-05-06 16:25:32,861 - INFO - Configuration loaded:
+{
+    "common": {
+        "seed": 42,
+        "input_csv": "knowledge_graph/hetionet_without_orphan_associations.tsv",
+        "out": "DL1experiment/withDL1/hetionet_processing/",
+        "run_kg_prep": true,
+        "run_training": false,
+        "run_evaluation": false
+    },
+    "clean_kg": {
+        "remove_duplicates_triplets": true,
+        "make_directed": true,
+        "make_directed_params": [
+            "DrD",
+            "CrC",
+            "GiG",
+            "GcG"
+        ],
+        "check_DL1": false,
+        "permute_kg": false,
+        "clean_train_set": false,
+        "cold_start_split": false
+    }
+}
+2026-05-06 16:25:32,862 - INFO - Setting number of threads to 20
+2026-05-06 16:25:32,896 - INFO - Loading parameters from /home/galadriel/dr_benchmark/DL1experiment/withDL1/hetionet_processing/params.yaml
+2026-05-06 16:25:32,896 - INFO - Output folder: DL1experiment/withDL1/hetionet_processing/
+2026-05-06 16:25:32,896 - INFO - Preparing KG...
+2026-05-06 16:26:18,607 - INFO - KG with 45158 entities
+2026-05-06 16:26:18,607 - INFO - Removing duplicated triplets...
+  0%|          | 0/24 [00:00<?, ?it/s]  4%|▍         | 1/24 [00:00<00:07,  3.04it/s]  8%|▊         | 2/24 [00:01<00:23,  1.09s/it] 12%|█▎        | 3/24 [00:02<00:15,  1.40it/s] 21%|██        | 5/24 [00:02<00:08,  2.32it/s] 33%|███▎      | 8/24 [00:02<00:03,  4.65it/s] 46%|████▌     | 11/24 [00:02<00:01,  7.28it/s] 54%|█████▍    | 13/24 [00:03<00:01,  8.04it/s] 62%|██████▎   | 15/24 [00:03<00:01,  7.30it/s] 71%|███████   | 17/24 [00:03<00:00,  7.74it/s] 79%|███████▉  | 19/24 [00:05<00:01,  2.56it/s] 83%|████████▎ | 20/24 [00:05<00:01,  2.79it/s] 88%|████████▊ | 21/24 [00:06<00:01,  2.91it/s] 92%|█████████▏| 22/24 [00:06<00:00,  3.11it/s]2026-05-06 16:26:25,709 - INFO - 1689 duplicates found. Keeping 263983 unique triplets for relation 22 (Gr>G)
+ 96%|█████████▌| 23/24 [00:07<00:00,  2.37it/s]100%|██████████| 24/24 [00:07<00:00,  3.38it/s]
+2026-05-06 16:27:08,947 - INFO - Adding reverse triplets for relations DrD, CrC, GiG, GcG...
+2026-05-06 16:27:27,631 - INFO - Splitting the dataset into train, validation and test sets...
+2026-05-06 16:27:28,452 - INFO - Entity coverage verified successfully.
+2026-05-06 16:27:28,904 - INFO - Entity coverage verified successfully.
+2026-05-06 16:27:29,089 - INFO - Total entities in full kg: 45158
+2026-05-06 16:27:29,089 - INFO - Entities present in kg_train: 45158
+2026-05-06 16:27:29,090 - INFO - Missing entities in kg_train: 0
+2026-05-06 16:27:29,541 - INFO - Entity coverage verified successfully.
+2026-05-06 16:27:29,541 - INFO - Computing triplet proportions...
+2026-05-06 16:27:29,561 - INFO - {0: {'train': 0.8, 'test': 0.1, 'val': 0.1}, 1: {'train': 0.800006458880676, 'test': 0.09999677055966201, 'val': 0.09999677055966201}, 2: {'train': 0.8000061319597743, 'test': 0.0999918240536342, 'val': 0.10000204398659145}, 3: {'train': 0.8001037075447239, 'test': 0.09999135770460635, 'val': 0.09990493475066978}, 4: {'train': 0.803208486872409, 'test': 0.09855049516351912, 'val': 0.09824101796407185}, 5: {'train': 0.7999715666761444, 'test': 0.10003791109847408, 'val': 0.09999052222538148}, 6: {'train': 0.7994858611825193, 'test': 0.10025706940874037, 'val': 0.10025706940874037}, 7: {'train': 0.7998766574159729, 'test': 0.10006167129201357, 'val': 0.10006167129201357}, 8: {'train': 0.799468791500664, 'test': 0.10092961487383798, 'val': 0.099601593625498}, 9: {'train': 0.799957346982299, 'test': 0.1000213265088505, 'val': 0.1000213265088505}, 10: {'train': 0.8000475322823417, 'test': 0.10005545432939872, 'val': 0.09989701338825953}, 11: {'train': 0.800734618916437, 'test': 0.0998294634658271, 'val': 0.0994359176177358}, 12: {'train': 0.8003886729594669, 'test': 0.10022209883398112, 'val': 0.09938922820655191}, 13: {'train': 0.805183199285076, 'test': 0.09740840035746202, 'val': 0.09740840035746202}, 14: {'train': 0.7992633517495396, 'test': 0.10128913443830571, 'val': 0.09944751381215469}, 15: {'train': 0.8017074117190531, 'test': 0.0992109688268012, 'val': 0.09908161945414565}, 16: {'train': 0.8000162100826714, 'test': 0.09998378991732858, 'val': 0.1}, 17: {'train': 0.7999986409719768, 'test': 0.10000407708406947, 'val': 0.09999728194395369}, 18: {'train': 0.8003356544367869, 'test': 0.09982591724098487, 'val': 0.09983842832222826}, 19: {'train': 0.8004648886713971, 'test': 0.09976075904629857, 'val': 0.09977435228230433}, 20: {'train': 0.8005492583983049, 'test': 0.09975108514533748, 'val': 0.09969965645635762}, 21: {'train': 0.8001469681884985, 'test': 0.09992651590575072, 'val': 0.09992651590575072}, 22: {'train': 0.799998484750912, 'test': 0.10000265168590401, 'val': 0.09999886356318399}, 23: {'train': 0.8425655976676385, 'test': 0.08649173955296405, 'val': 0.07094266277939747}, 24: {'train': 0.7992633517495396, 'test': 0.10128913443830571, 'val': 0.09944751381215469}, 25: {'train': 0.7998766574159729, 'test': 0.10006167129201357, 'val': 0.10006167129201357}, 26: {'train': 0.7999986409719768, 'test': 0.10000407708406947, 'val': 0.09999728194395369}, 27: {'train': 0.8000162100826714, 'test': 0.1, 'val': 0.09998378991732858}}
+2026-05-06 16:27:29,561 - INFO - Saving results to DL1experiment/withDL1/hetionet_processing/...
+2026-05-06 16:28:21,957 - WARNING - /home/galadriel/anaconda3/envs/benchmark/lib/python3.9/site-packages/torch/cuda/__init__.py:128: UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 11040). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver. (Triggered internally at ../c10/cuda/CUDAFunctions.cpp:108.)
+  return torch._C._cuda_getDeviceCount() > 0
+
+2026-05-06 16:28:21,957 - INFO - Detected device: cpu
+2026-05-06 16:28:21,958 - INFO - Initializing model...
+missing_entities=604
+Traceback (most recent call last):
+  File "/home/galadriel/dr_benchmark/dev/run_training.py", line 964, in <module>
+    main(args)
+  File "/home/galadriel/dr_benchmark/dev/run_training.py", line 87, in main
+    train_model(kg_train, kg_val, kg_test, config)
+  File "/home/galadriel/dr_benchmark/dev/run_training.py", line 530, in train_model
+    model, criterion = initialize_model(config, kg_train, device)
+  File "/home/galadriel/dr_benchmark/dev/run_training.py", line 120, in initialize_model
+    model_name = config['model'].get('name', 'TransE')
+KeyError: 'model'

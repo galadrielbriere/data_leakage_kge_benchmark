@@ -82,14 +82,22 @@ def set_random_seeds(seed):
     torch.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
 
+# def save_knowledge_graph(config, kg_train, kg_val, kg_test):
+#     """Save the knowledge graph to files."""
+#     pickle_filename = os.path.join(config['common']['out'], 'kg.pkl')
+#     logging.info(f"Saving results to {pickle_filename}...")
+#     with open(pickle_filename, 'wb') as file:
+#         pickle.dump(kg_train, file)
+#         pickle.dump(kg_val, file)
+#         pickle.dump(kg_test, file)
+
 def save_knowledge_graph(config, kg_train, kg_val, kg_test):
     """Save the knowledge graph to files."""
-    pickle_filename = os.path.join(config['common']['out'], 'kg.pkl')
-    logging.info(f"Saving results to {pickle_filename}...")
-    with open(pickle_filename, 'wb') as file:
-        pickle.dump(kg_train, file)
-        pickle.dump(kg_val, file)
-        pickle.dump(kg_test, file)
+    out = config['common']['out']
+    logging.info(f"Saving results to {out}...")
+    torch.save(kg_train, os.path.join(out, 'kg_train.pt'))
+    torch.save(kg_val,   os.path.join(out, 'kg_val.pt'))
+    torch.save(kg_test,  os.path.join(out, 'kg_test.pt'))
 
 def prepare_knowledge_graph(config):
     """Prepare and clean the knowledge graph."""
@@ -111,14 +119,29 @@ def prepare_knowledge_graph(config):
 
     return kg_train, kg_val, kg_test
 
+# def load_knowledge_graph(config):
+#     """Load the knowledge graph from pickle files."""
+#     pickle_filename = config["common"]['input_pkl']
+#     logging.info(f'Will not run the preparation step. Using KG stored in: {pickle_filename}')
+#     with open(pickle_filename, 'rb') as file:
+#         kg_train = pickle.load(file)
+#         kg_val = pickle.load(file)
+#         kg_test = pickle.load(file)
+#     return kg_train, kg_val, kg_test
+
 def load_knowledge_graph(config):
-    """Load the knowledge graph from pickle files."""
-    pickle_filename = config["common"]['input_pkl']
-    logging.info(f'Will not run the preparation step. Using KG stored in: {pickle_filename}')
-    with open(pickle_filename, 'rb') as file:
-        kg_train = pickle.load(file)
-        kg_val = pickle.load(file)
-        kg_test = pickle.load(file)
+    input_path = config["common"]['input_pkl']
+    if input_path.endswith('.pkl'):
+        # legacy
+        with open(input_path, 'rb') as f:
+            kg_train = pickle.load(f)
+            kg_val   = pickle.load(f)
+            kg_test  = pickle.load(f)
+    else:
+        # nouveau format .pt
+        kg_train = torch.load(os.path.join(input_path, 'kg_train.pt'), weights_only=False)
+        kg_val   = torch.load(os.path.join(input_path, 'kg_val.pt'),   weights_only=False)
+        kg_test  = torch.load(os.path.join(input_path, 'kg_test.pt'),  weights_only=False)
     return kg_train, kg_val, kg_test
 
 def clean_knowledge_graph(kg, config):
@@ -128,11 +151,14 @@ def clean_knowledge_graph(kg, config):
 
     id_to_rel_name = {v: k for k, v in kg.rel2ix.items()}
 
+    logging.info(f'KG with {len(kg.ent2ix)} entities')
+
     if config["clean_kg"]['remove_duplicates_triplets']:
         logging.info("Removing duplicated triplets...")
-        kg = my_data_redundancy.remove_duplicates_triplets(kg)
+        kg = my_data_redundancy.remove_duplicates_triplets(kg, ix2rel=id_to_rel_name)
 
-    duplicated_relations_list = []
+    duplicated_relations_list = []   # vrais reverses (tail,head)
+    same_sense_duplicates_list = []  # duplicates même sens (head,tail)
 
     if config['clean_kg']['check_DL1']:
         logging.info("Checking for semantically redundant and Cartesian product relations...")
@@ -141,10 +167,14 @@ def clean_knowledge_graph(kg, config):
 
         duplicates_relations, rev_duplicates_relations = my_data_redundancy.duplicates(kg, theta1=theta1, theta2=theta2)
         if duplicates_relations:
-            logging.info(f'Adding {len(duplicates_relations)} near-duplicate relations ({[id_to_rel_name[rel] for rel in duplicates_relations]}) to the list of known redundant relations.')
-            duplicated_relations_list.extend(duplicates_relations)
+            logging.info(f'Adding {len(duplicates_relations)} near-duplicate relations '
+                 f'({[(id_to_rel_name[a], id_to_rel_name[b]) for a, b in duplicates_relations]}) '
+                 f'to the list of known SAME-SENSE redundant relations.')
+            same_sense_duplicates_list.extend(duplicates_relations)
         if rev_duplicates_relations:
-            logging.info(f'Adding {len(rev_duplicates_relations)} near-reverse-duplicate relations ({[id_to_rel_name[rel] for rel in rev_duplicates_relations]}) to the list of known redundant relations.')
+            logging.info(f'Adding {len(rev_duplicates_relations)} near-reverse-duplicate relations '
+                 f'({[(id_to_rel_name[a], id_to_rel_name[b]) for a, b in rev_duplicates_relations]}) '
+                 f'to the list of known redundant relations.')
             duplicated_relations_list.extend(rev_duplicates_relations)
 
         theta = config.get("clean_kg", {}).get("check_DL1_params", {}).get("theta", 0.8)
@@ -165,7 +195,7 @@ def clean_knowledge_graph(kg, config):
         relation_names = ", ".join([rel for rel in undirected_relations_names])
         logging.info(f'Adding reverse triplets for relations {relation_names}...')
         kg, undirected_relations_list = my_data_redundancy.add_inverse_relations(kg, [kg.rel2ix[key] for key in undirected_relations_names])
-            
+
         if config['clean_kg']['check_DL1']:
             logging.info(f'Adding created reverses {[rel for rel in undirected_relations_names]} to the list of known redundant relations.')
             duplicated_relations_list.extend(undirected_relations_list)
@@ -190,12 +220,19 @@ def clean_knowledge_graph(kg, config):
     if config['clean_kg']['clean_train_set']:
         logging.info("Cleaning the train set to avoid data leakage...")
         logging.info("Step 1: with respect to validation set.")
-        kg_train = my_data_redundancy.clean_datasets(kg_train, kg_val, known_reverses=duplicated_relations_list)
+        kg_train = my_data_redundancy.clean_datasets(
+            kg_train, kg_val,
+            known_reverses=duplicated_relations_list,
+            known_duplicates=same_sense_duplicates_list,
+        )
         logging.info("Step 2: with respect to test set.")
-        kg_train = my_data_redundancy.clean_datasets(kg_train, kg_test, known_reverses=duplicated_relations_list)
+        kg_train = my_data_redundancy.clean_datasets(
+            kg_train, kg_test,
+            known_reverses=duplicated_relations_list,
+            known_duplicates=same_sense_duplicates_list,
+        )
         if cartesian_rels:
             kg_train, kg_test = my_data_redundancy.clean_cartesians(kg_train, kg_test, cartesian_rels)
-
 
     kg_train_ok, _ = verify_entity_coverage(kg_train, kg)
     if not kg_train_ok:
@@ -260,29 +297,24 @@ def cold_start_by_head_frequency_bin(kg, target_rel, val_ratio=0.1, test_ratio=0
     - Heads in val/test are exclusive (cold start) with respect to the target relation.
     - Distribution of heads in val/test is stratified by frequency bin.
     - All entities appear at least once in the train split.
+    - No leakage occurs through "only-target" entities (i.e., entities that only appear
+      in the target relation): such entities are forced into train and their triples
+      cannot appear in val/test.
+    - No leakage occurs through heads that share triples with only-target tails: such
+      heads are also excluded from the val/test pool (otherwise some of their target
+      triples would be forced into train via the only-target tail, breaking cold start).
 
     Args:
         kg: KnowledgeGraph object with attributes `head_idx`, `tail_idx`, `relations`, etc.
         target_rel (str): Name of the target relation.
         val_ratio (float): Ratio of unique heads (per bin) to assign to the validation set.
         test_ratio (float): Ratio of unique heads (per bin) to assign to the test set.
-        bins (dict, optional): Dictionary defining frequency bins. 
-            Keys are bin IDs, values are (min_count, max_count) tuples.
-            Default bins:
-                {
-                    0: (1, 1),
-                    1: (2, 2),
-                    2: (3, 5),
-                    3: (6, 10),
-                    4: (11, 50),
-                    5: (51, 100),
-                    6: (101, float('inf'))
-                }
+        bins (dict, optional): Dictionary defining frequency bins.
 
     Returns:
         train_kg, val_kg, test_kg: Splits of the original KnowledgeGraph.
     """
-    
+
     # Default bins if not provided
     if bins is None:
         bins = {
@@ -329,23 +361,68 @@ def cold_start_by_head_frequency_bin(kg, target_rel, val_ratio=0.1, test_ratio=0
     # 7. Prepare split masks
     mask_val = torch.zeros_like(is_target)
     mask_test = torch.zeros_like(is_target)
-    mask_train_target = torch.zeros_like(is_target)
 
     # 8. Add all non-target triples to train
     mask_train = ~is_target.clone()
 
-    # 9. Ensure entities appearing only in target relation are in train
-    unique_target_entities = torch.unique(torch.cat([kg.head_idx[target_indices], kg.tail_idx[target_indices]]))
-    only_target_entities = []
-    for entity in unique_target_entities.tolist():
+    # === 9. Identify "only-target" entities (heads AND tails) ===
+    # An entity is "only-target" if it appears exclusively in the target relation.
+    # Such entities MUST be kept in train (otherwise they disappear from the KG),
+    # so we must:
+    #   - exclude only-target heads from the val/test splitting pool
+    #   - prevent any triple involving an only-target tail from being assigned to val/test
+
+    unique_target_heads = torch.unique(kg.head_idx[target_indices])
+    unique_target_tails = torch.unique(kg.tail_idx[target_indices])
+
+    only_target_heads = set()
+    for entity in unique_target_heads.tolist():
         entity_mask = (kg.head_idx == entity) | (kg.tail_idx == entity)
         if ((entity_mask & ~is_target).sum() == 0):
-            only_target_entities.append(entity)
-            mask_train_target |= entity_mask
-    mask_train |= mask_train_target
+            only_target_heads.add(entity)
 
-    # 10. Allocate val/test sets per bin
+    only_target_tails = set()
+    for entity in unique_target_tails.tolist():
+        entity_mask = (kg.head_idx == entity) | (kg.tail_idx == entity)
+        if ((entity_mask & ~is_target).sum() == 0):
+            only_target_tails.add(entity)
+
+    logging.info(f"Only-target heads (excluded from val/test pool): {len(only_target_heads)}")
+    logging.info(f"Only-target tails (their triples forced to train): {len(only_target_tails)}")
+
+    # === 9b. Identify heads in conflict with only-target tails ===
+    # If a head shares a target triple with an only-target tail, that triple will be
+    # forced into train (to keep the tail in the KG). If this head were also selected
+    # as cold-start, some of its target triples would leak into train. So we exclude
+    # such heads from the val/test pool by adding them to only_target_heads.
+    conflicted_heads = set()
+    for t in only_target_tails:
+        tail_triple_mask = (kg.tail_idx == t) & is_target
+        conflicted_heads.update(kg.head_idx[tail_triple_mask].tolist())
+    conflicted_heads -= only_target_heads  # for logging clarity
+    only_target_heads.update(conflicted_heads)
+    logging.info(f"Heads conflicting with only-target tails (added to train-only pool): {len(conflicted_heads)}")
+
+    # Force all triples involving only-target entities to train
+    forced_to_train = torch.zeros_like(is_target)
+    if only_target_heads:
+        head_mask = torch.zeros_like(is_target)
+        for h in only_target_heads:
+            head_mask |= (kg.head_idx == h)
+        forced_to_train |= (head_mask & is_target)
+    if only_target_tails:
+        tail_mask = torch.zeros_like(is_target)
+        for t in only_target_tails:
+            tail_mask |= (kg.tail_idx == t)
+        forced_to_train |= (tail_mask & is_target)
+
+    mask_train |= forced_to_train
+
+    # 10. Allocate val/test sets per bin (excluding only-target heads from pool,
+    # and skipping triples whose tail is only-target)
     for b, heads in bin_to_heads.items():
+        # Exclude only-target heads
+        heads = [h for h in heads if h not in only_target_heads]
         random.shuffle(heads)
         n_total = len(heads)
         n_val = int(val_ratio * n_total)
@@ -359,15 +436,33 @@ def cold_start_by_head_frequency_bin(kg, target_rel, val_ratio=0.1, test_ratio=0
         val_heads = heads[:n_val]
         test_heads = heads[n_val:n_val + n_test]
 
+        # For each selected head, assign its triples to val/test ONLY if the tail
+        # is not only-target (otherwise we'd lose the tail from the KG)
         for h in val_heads:
-            mask_val[head_to_indices[h]] = True
+            for idx in head_to_indices[h]:
+                if kg.tail_idx[idx].item() not in only_target_tails:
+                    mask_val[idx] = True
         for h in test_heads:
-            mask_test[head_to_indices[h]] = True
+            for idx in head_to_indices[h]:
+                if kg.tail_idx[idx].item() not in only_target_tails:
+                    mask_test[idx] = True
 
-    # 11. Remaining target triples go to train
+    # 11. Remaining target triples (those not assigned to val/test) go to train
     mask_train |= (is_target & ~(mask_val | mask_test))
 
-    # 12. Create final KG splits (kept identical to your original version)
+    # === 11b. Sanity checks: enforce mutual exclusion of splits ===
+    assert (mask_train & mask_val).sum() == 0, "Train/val overlap detected"
+    assert (mask_train & mask_test).sum() == 0, "Train/test overlap detected"
+    assert (mask_val & mask_test).sum() == 0, "Val/test overlap detected"
+
+    # === 11c. Sanity check: no test/val head appears in train target triples ===
+    train_target_heads = set(kg.head_idx[mask_train & is_target].tolist())
+    val_heads_set = set(kg.head_idx[mask_val].tolist())
+    test_heads_set = set(kg.head_idx[mask_test].tolist())
+    assert len(val_heads_set & train_target_heads) == 0, "Cold-start violated: val heads in train target triples"
+    assert len(test_heads_set & train_target_heads) == 0, "Cold-start violated: test heads in train target triples"
+
+    # 12. Create final KG splits
     train_kg = my_knowledge_graph.KnowledgeGraph(
         kg={'heads': kg.head_idx[mask_train],
             'tails': kg.tail_idx[mask_train],
@@ -403,37 +498,40 @@ def cold_start_by_head_frequency_bin(kg, target_rel, val_ratio=0.1, test_ratio=0
         split_heads = torch.unique(kg.head_idx[split_target_idxs])
         logging.info(f"{split_name} : {len(split_target_idxs)} target triplets, {len(split_heads)} unique heads")
 
-    entity_stats(train_kg, target_rel=target_rel, split_name="Train", position="head")  
-    entity_stats(val_kg, target_rel=target_rel, split_name="Validation", position="head")  
-    entity_stats(test_kg, target_rel=target_rel, split_name="Test", position="head")  
+    entity_stats(train_kg, target_rel=target_rel, split_name="Train", position="head")
+    entity_stats(val_kg, target_rel=target_rel, split_name="Validation", position="head")
+    entity_stats(test_kg, target_rel=target_rel, split_name="Test", position="head")
 
-    entity_stats(train_kg, target_rel=target_rel, split_name="Train", position="tail")  
-    entity_stats(val_kg, target_rel=target_rel, split_name="Validation", position="tail")  
-    entity_stats(test_kg, target_rel=target_rel, split_name="Test", position="tail")  
+    entity_stats(train_kg, target_rel=target_rel, split_name="Train", position="tail")
+    entity_stats(val_kg, target_rel=target_rel, split_name="Validation", position="tail")
+    entity_stats(test_kg, target_rel=target_rel, split_name="Test", position="tail")
 
     return train_kg, val_kg, test_kg
 
 def cold_start_by_tail_frequency_bin(kg, target_rel, val_ratio=0.1, test_ratio=0.1, bins=None):
     """
     Split a Knowledge Graph for cold start learning based on the frequency of *tails* (diseases)
-    in a target relation (e.g. drug -indication-> disease). 
+    in a target relation (e.g. drug -indication-> disease).
 
     Same structure and logic as cold_start_by_head_frequency_bin, but flipped to cold start on tails.
+
+    Now also handles "only-target" entities to prevent leakage, and tails in conflict with
+    only-target heads (which would otherwise force some target triples into train and break
+    the cold start guarantee).
 
     Returns:
         train_kg, val_kg, test_kg
     """
     if bins is None:
         bins = {
-            0: (1, 1),       
-            1: (2, 3),       
-            2: (4, 7),       
-            3: (8, 15),      
-            4: (16, 30),     
-            5: (31, 60),     
-            6: (61, float('inf'))  
+            0: (1, 1),
+            1: (2, 3),
+            2: (4, 7),
+            3: (8, 15),
+            4: (16, 30),
+            5: (31, 60),
+            6: (61, float('inf'))
         }
-
 
     target_rel_ix = kg.rel2ix[target_rel]
     is_target = (kg.relations == target_rel_ix)
@@ -465,21 +563,58 @@ def cold_start_by_tail_frequency_bin(kg, target_rel, val_ratio=0.1, test_ratio=0
     # Prepare split masks
     mask_val = torch.zeros_like(is_target)
     mask_test = torch.zeros_like(is_target)
-    mask_train_target = torch.zeros_like(is_target)
     mask_train = ~is_target.clone()
 
-    # Ensure all entities are seen at least once
-    unique_target_entities = torch.unique(torch.cat([kg.head_idx[target_indices], kg.tail_idx[target_indices]]))
-    only_target_entities = []
-    for entity in unique_target_entities.tolist():
+    # === Identify "only-target" entities ===
+    unique_target_heads = torch.unique(kg.head_idx[target_indices])
+    unique_target_tails = torch.unique(kg.tail_idx[target_indices])
+
+    only_target_heads = set()
+    for entity in unique_target_heads.tolist():
         entity_mask = (kg.head_idx == entity) | (kg.tail_idx == entity)
         if ((entity_mask & ~is_target).sum() == 0):
-            only_target_entities.append(entity)
-            mask_train_target |= entity_mask
-    mask_train |= mask_train_target
+            only_target_heads.add(entity)
 
-    # Allocate val/test sets per bin
+    only_target_tails = set()
+    for entity in unique_target_tails.tolist():
+        entity_mask = (kg.head_idx == entity) | (kg.tail_idx == entity)
+        if ((entity_mask & ~is_target).sum() == 0):
+            only_target_tails.add(entity)
+
+    logging.info(f"Only-target tails (excluded from val/test pool): {len(only_target_tails)}")
+    logging.info(f"Only-target heads (their triples forced to train): {len(only_target_heads)}")
+
+    # === Identify tails in conflict with only-target heads ===
+    # If a tail shares a target triple with an only-target head, that triple will be
+    # forced into train. If this tail were also selected as cold-start, some of its
+    # target triples would leak into train. So we exclude such tails from the val/test pool.
+    conflicted_tails = set()
+    for h in only_target_heads:
+        head_triple_mask = (kg.head_idx == h) & is_target
+        conflicted_tails.update(kg.tail_idx[head_triple_mask].tolist())
+    conflicted_tails -= only_target_tails  # for logging clarity
+    only_target_tails.update(conflicted_tails)
+    logging.info(f"Tails conflicting with only-target heads (added to train-only pool): {len(conflicted_tails)}")
+
+    # Force triples involving only-target entities to train
+    forced_to_train = torch.zeros_like(is_target)
+    if only_target_heads:
+        head_mask = torch.zeros_like(is_target)
+        for h in only_target_heads:
+            head_mask |= (kg.head_idx == h)
+        forced_to_train |= (head_mask & is_target)
+    if only_target_tails:
+        tail_mask = torch.zeros_like(is_target)
+        for t in only_target_tails:
+            tail_mask |= (kg.tail_idx == t)
+        forced_to_train |= (tail_mask & is_target)
+
+    mask_train |= forced_to_train
+
+    # Allocate val/test sets per bin (excluding only-target tails from pool,
+    # and skipping triples whose head is only-target)
     for b, tails in bin_to_tails.items():
+        tails = [t for t in tails if t not in only_target_tails]
         random.shuffle(tails)
         n_total = len(tails)
         n_val = int(val_ratio * n_total)
@@ -494,12 +629,28 @@ def cold_start_by_tail_frequency_bin(kg, target_rel, val_ratio=0.1, test_ratio=0
         test_tails = tails[n_val:n_val + n_test]
 
         for t in val_tails:
-            mask_val[tail_to_indices[t]] = True
+            for idx in tail_to_indices[t]:
+                if kg.head_idx[idx].item() not in only_target_heads:
+                    mask_val[idx] = True
         for t in test_tails:
-            mask_test[tail_to_indices[t]] = True
+            for idx in tail_to_indices[t]:
+                if kg.head_idx[idx].item() not in only_target_heads:
+                    mask_test[idx] = True
 
     # Remaining target triples go to train
     mask_train |= (is_target & ~(mask_val | mask_test))
+
+    # Sanity checks
+    assert (mask_train & mask_val).sum() == 0, "Train/val overlap detected"
+    assert (mask_train & mask_test).sum() == 0, "Train/test overlap detected"
+    assert (mask_val & mask_test).sum() == 0, "Val/test overlap detected"
+
+    # Cold-start guarantee: val/test tails must not appear in train target triples
+    train_target_tails = set(kg.tail_idx[mask_train & is_target].tolist())
+    val_tails_set = set(kg.tail_idx[mask_val].tolist())
+    test_tails_set = set(kg.tail_idx[mask_test].tolist())
+    assert len(val_tails_set & train_target_tails) == 0, "Cold-start violated: val tails in train target triples"
+    assert len(test_tails_set & train_target_tails) == 0, "Cold-start violated: test tails in train target triples"
 
     # Create final KG splits
     train_kg = my_knowledge_graph.KnowledgeGraph(
@@ -537,16 +688,15 @@ def cold_start_by_tail_frequency_bin(kg, target_rel, val_ratio=0.1, test_ratio=0
         split_tails = torch.unique(kg.tail_idx[split_target_idxs])
         logging.info(f"{split_name} : {len(split_target_idxs)} target triplets, {len(split_tails)} unique tails")
 
-    entity_stats(train_kg, target_rel=target_rel, split_name="Train", position="tail")  
-    entity_stats(val_kg, target_rel=target_rel, split_name="Validation", position="tail")  
-    entity_stats(test_kg, target_rel=target_rel, split_name="Test", position="tail")  
+    entity_stats(train_kg, target_rel=target_rel, split_name="Train", position="tail")
+    entity_stats(val_kg, target_rel=target_rel, split_name="Validation", position="tail")
+    entity_stats(test_kg, target_rel=target_rel, split_name="Test", position="tail")
 
-    entity_stats(train_kg, target_rel=target_rel, split_name="Train", position="head")  
-    entity_stats(val_kg, target_rel=target_rel, split_name="Validation", position="head")  
-    entity_stats(test_kg, target_rel=target_rel, split_name="Test", position="head")  
+    entity_stats(train_kg, target_rel=target_rel, split_name="Train", position="head")
+    entity_stats(val_kg, target_rel=target_rel, split_name="Validation", position="head")
+    entity_stats(test_kg, target_rel=target_rel, split_name="Test", position="head")
 
     return train_kg, val_kg, test_kg
-
 
 def cold_start_split(kg, target_rel, val_ratio=0.1, test_ratio=0.1):
     # Create a mask for the target relation

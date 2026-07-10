@@ -1,0 +1,109 @@
+2026-05-06 16:47:44,645 - WARNING - /home/galadriel/anaconda3/envs/benchmark/lib/python3.9/site-packages/ignite/handlers/checkpoint.py:16: DeprecationWarning: `TorchScript` support for functional optimizers is deprecated and will be removed in a future PyTorch release. Consider using the `torch.compile` optimizer instead.
+  from torch.distributed.optim import ZeroRedundancyOptimizer
+
+2026-05-06 16:47:44,669 - INFO - Configuration loaded:
+{
+    "common": {
+        "seed": 42,
+        "input_csv": "knowledge_graph/hetionet_without_orphan_associations.tsv",
+        "out": "DL2experiment/hetionet_processing/",
+        "run_kg_prep": true,
+        "run_training": false,
+        "run_evaluation": false
+    },
+    "clean_kg": {
+        "remove_duplicates_triplets": true,
+        "make_directed": true,
+        "make_directed_params": [
+            "DrD",
+            "CrC",
+            "GiG",
+            "GcG"
+        ],
+        "check_DL1": true,
+        "check_DL1_params": {
+            "theta1": 0.5,
+            "theta2": 0.5,
+            "theta": 0.5
+        },
+        "permute_kg": true,
+        "permute_kg_params": [
+            "CtD"
+        ],
+        "clean_train_set": true,
+        "cold_start_split": false
+    }
+}
+2026-05-06 16:47:44,669 - INFO - Setting number of threads to 20
+2026-05-06 16:47:44,689 - INFO - Loading parameters from /home/galadriel/dr_benchmark/DL2experiment/hetionet_processing/params.yaml
+2026-05-06 16:47:44,690 - INFO - Output folder: DL2experiment/hetionet_processing/
+2026-05-06 16:47:44,690 - INFO - Preparing KG...
+2026-05-06 16:48:30,295 - INFO - KG with 45158 entities
+2026-05-06 16:48:30,295 - INFO - Removing duplicated triplets...
+  0%|          | 0/24 [00:00<?, ?it/s]  4%|▍         | 1/24 [00:00<00:06,  3.34it/s]  8%|▊         | 2/24 [00:01<00:23,  1.08s/it] 12%|█▎        | 3/24 [00:02<00:14,  1.41it/s] 21%|██        | 5/24 [00:02<00:08,  2.31it/s] 33%|███▎      | 8/24 [00:02<00:03,  4.65it/s] 46%|████▌     | 11/24 [00:02<00:01,  7.30it/s] 67%|██████▋   | 16/24 [00:02<00:00, 12.75it/s] 79%|███████▉  | 19/24 [00:05<00:01,  3.59it/s] 88%|████████▊ | 21/24 [00:05<00:00,  3.70it/s]2026-05-06 16:48:36,933 - INFO - 1689 duplicates found. Keeping 263983 unique triplets for relation 22 (Gr>G)
+ 96%|█████████▌| 23/24 [00:06<00:00,  3.09it/s]100%|██████████| 24/24 [00:06<00:00,  3.61it/s]
+2026-05-06 16:49:19,758 - INFO - Checking for semantically redundant and Cartesian product relations...
+  0%|          | 0/24 [00:00<?, ?it/s]  4%|▍         | 1/24 [00:01<00:24,  1.08s/it]  8%|▊         | 2/24 [00:08<01:41,  4.62s/it] 12%|█▎        | 3/24 [00:09<01:03,  3.00s/it] 17%|█▋        | 4/24 [00:09<00:37,  1.87s/it] 21%|██        | 5/24 [00:10<00:32,  1.73s/it] 25%|██▌       | 6/24 [00:11<00:22,  1.22s/it] 38%|███▊      | 9/24 [00:11<00:07,  1.93it/s] 46%|████▌     | 11/24 [00:11<00:05,  2.55it/s] 54%|█████▍    | 13/24 [00:11<00:03,  3.54it/s] 67%|██████▋   | 16/24 [00:11<00:01,  5.42it/s] 75%|███████▌  | 18/24 [00:15<00:03,  1.51it/s] 79%|███████▉  | 19/24 [00:21<00:07,  1.56s/it] 83%|████████▎ | 20/24 [00:23<00:06,  1.72s/it] 88%|████████▊ | 21/24 [00:24<00:04,  1.57s/it] 92%|█████████▏| 22/24 [00:25<00:02,  1.41s/it] 96%|█████████▌| 23/24 [00:28<00:01,  1.76s/it]100%|██████████| 24/24 [00:28<00:00,  1.19s/it]
+2026-05-06 16:49:48,388 - INFO - Finding duplicate relations
+  0%|          | 0/276 [00:00<?, ?it/s]  6%|▌         | 17/276 [00:00<00:01, 148.39it/s] 12%|█▏        | 32/276 [00:00<00:02, 109.68it/s] 16%|█▌        | 44/276 [00:00<00:02, 78.53it/s]  23%|██▎       | 64/276 [00:00<00:01, 107.97it/s] 36%|███▌      | 100/276 [00:00<00:01, 168.94it/s] 44%|████▍     | 122/276 [00:00<00:00, 181.55it/s] 87%|████████▋ | 241/276 [00:00<00:00, 459.93it/s]100%|██████████| 276/276 [00:01<00:00, 218.27it/s]
+2026-05-06 16:49:49,653 - INFO - Duplicate relations: 0
+2026-05-06 16:49:49,653 - INFO - Reverse duplicate relations: 0
+
+  0%|          | 0/24 [00:00<?, ?it/s]  4%|▍         | 1/24 [00:00<00:06,  3.49it/s]  8%|▊         | 2/24 [00:03<00:39,  1.78s/it] 12%|█▎        | 3/24 [00:03<00:22,  1.09s/it] 21%|██        | 5/24 [00:05<00:18,  1.01it/s] 33%|███▎      | 8/24 [00:05<00:07,  2.13it/s] 46%|████▌     | 11/24 [00:05<00:03,  3.56it/s] 54%|█████▍    | 13/24 [00:05<00:02,  4.65it/s] 67%|██████▋   | 16/24 [00:05<00:01,  6.84it/s] 75%|███████▌  | 18/24 [00:06<00:01,  4.62it/s] 83%|████████▎ | 20/24 [00:09<00:02,  1.70it/s] 92%|█████████▏| 22/24 [00:10<00:00,  2.03it/s] 96%|█████████▌| 23/24 [00:12<00:00,  1.30it/s]100%|██████████| 24/24 [00:12<00:00,  1.96it/s]
+2026-05-06 16:50:02,451 - INFO - Making permutations for relation CtD with id 8.
+2026-05-06 16:50:02,975 - WARNING - 58/753 triplets permutés correspondent à des triplets existants.
+2026-05-06 16:50:44,157 - INFO - Adding reverse triplets for relations DrD, CrC, GiG, GcG...
+2026-05-06 16:51:04,416 - INFO - Adding created reverses ['DrD', 'CrC', 'GiG', 'GcG'] to the list of known redundant relations.
+2026-05-06 16:51:04,416 - INFO - Splitting the dataset into train, validation and test sets...
+2026-05-06 16:51:05,260 - INFO - Entity coverage verified successfully.
+2026-05-06 16:51:05,260 - INFO - Cleaning the train set to avoid data leakage...
+2026-05-06 16:51:05,260 - INFO - Step 1: with respect to validation set.
+2026-05-06 16:51:05,260 - INFO - Processing relation pair: (14, 24)
+2026-05-06 16:51:05,276 - INFO - Found 46 triplets to remove for relation 24 with reverse 14.
+2026-05-06 16:51:05,283 - INFO - Found 41 reverse triplets to remove for relation 14 with reverse 24.
+2026-05-06 16:51:05,284 - INFO - Processing relation pair: (7, 25)
+2026-05-06 16:51:05,299 - INFO - Found 529 triplets to remove for relation 25 with reverse 7.
+2026-05-06 16:51:05,311 - INFO - Found 510 reverse triplets to remove for relation 7 with reverse 25.
+2026-05-06 16:51:05,311 - INFO - Processing relation pair: (17, 26)
+2026-05-06 16:51:05,333 - INFO - Found 11863 triplets to remove for relation 26 with reverse 17.
+2026-05-06 16:51:05,349 - INFO - Found 11813 reverse triplets to remove for relation 17 with reverse 26.
+2026-05-06 16:51:05,349 - INFO - Processing relation pair: (16, 27)
+2026-05-06 16:51:05,368 - INFO - Found 4929 triplets to remove for relation 27 with reverse 16.
+2026-05-06 16:51:05,378 - INFO - Found 4906 reverse triplets to remove for relation 16 with reverse 27.
+2026-05-06 16:51:05,379 - INFO - Step 2: with respect to test set.
+2026-05-06 16:51:05,379 - INFO - Processing relation pair: (14, 24)
+2026-05-06 16:51:05,394 - INFO - Found 39 triplets to remove for relation 24 with reverse 14.
+2026-05-06 16:51:05,401 - INFO - Found 44 reverse triplets to remove for relation 14 with reverse 24.
+2026-05-06 16:51:05,401 - INFO - Processing relation pair: (7, 25)
+2026-05-06 16:51:05,409 - INFO - Found 515 triplets to remove for relation 25 with reverse 7.
+2026-05-06 16:51:05,421 - INFO - Found 534 reverse triplets to remove for relation 7 with reverse 25.
+2026-05-06 16:51:05,422 - INFO - Processing relation pair: (17, 26)
+2026-05-06 16:51:05,439 - INFO - Found 11750 triplets to remove for relation 26 with reverse 17.
+2026-05-06 16:51:05,459 - INFO - Found 11800 reverse triplets to remove for relation 17 with reverse 26.
+2026-05-06 16:51:05,459 - INFO - Processing relation pair: (16, 27)
+2026-05-06 16:51:05,470 - INFO - Found 4919 triplets to remove for relation 27 with reverse 16.
+2026-05-06 16:51:05,485 - INFO - Found 4942 reverse triplets to remove for relation 16 with reverse 27.
+2026-05-06 16:51:05,941 - INFO - Entity coverage verification failed...
+2026-05-06 16:51:06,119 - INFO - Total entities in full kg: 45158
+2026-05-06 16:51:06,120 - INFO - Entities present in kg_train: 45139
+2026-05-06 16:51:06,120 - INFO - Missing entities in kg_train: 19
+2026-05-06 16:51:06,808 - INFO - Entity coverage verified successfully.
+2026-05-06 16:51:06,808 - INFO - Computing triplet proportions...
+2026-05-06 16:51:06,830 - INFO - {0: {'train': 0.8, 'test': 0.1, 'val': 0.1}, 1: {'train': 0.800006458880676, 'test': 0.09999677055966201, 'val': 0.09999677055966201}, 2: {'train': 0.8000061319597743, 'test': 0.0999918240536342, 'val': 0.10000204398659145}, 3: {'train': 0.8001037075447239, 'test': 0.09999135770460635, 'val': 0.09990493475066978}, 4: {'train': 0.803208486872409, 'test': 0.09855049516351912, 'val': 0.09824101796407185}, 5: {'train': 0.7999715666761444, 'test': 0.10003791109847408, 'val': 0.09999052222538148}, 6: {'train': 0.7994858611825193, 'test': 0.10025706940874037, 'val': 0.10025706940874037}, 7: {'train': 0.7614847482543182, 'test': 0.11925762587284086, 'val': 0.11925762587284086}, 8: {'train': 0.799468791500664, 'test': 0.10092961487383798, 'val': 0.099601593625498}, 9: {'train': 0.799957346982299, 'test': 0.1000213265088505, 'val': 0.1000213265088505}, 10: {'train': 0.8000475322823417, 'test': 0.10005545432939872, 'val': 0.09989701338825953}, 11: {'train': 0.800734618916437, 'test': 0.0998294634658271, 'val': 0.0994359176177358}, 12: {'train': 0.8003886729594669, 'test': 0.10022209883398112, 'val': 0.09938922820655191}, 13: {'train': 0.805183199285076, 'test': 0.09740840035746202, 'val': 0.09740840035746202}, 14: {'train': 0.7620087336244541, 'test': 0.12008733624454149, 'val': 0.11790393013100436}, 15: {'train': 0.8017074117190531, 'test': 0.0992109688268012, 'val': 0.09908161945414565}, 16: {'train': 0.7620269279734578, 'test': 0.1189768913236372, 'val': 0.11899618070290498}, 17: {'train': 0.7617744898867674, 'test': 0.1191168019684179, 'val': 0.1191087081448147}, 18: {'train': 0.8003356544367869, 'test': 0.09982591724098487, 'val': 0.09983842832222826}, 19: {'train': 0.8004648886713971, 'test': 0.09976075904629857, 'val': 0.09977435228230433}, 20: {'train': 0.8005492583983049, 'test': 0.09975108514533748, 'val': 0.09969965645635762}, 21: {'train': 0.8001469681884985, 'test': 0.09992651590575072, 'val': 0.09992651590575072}, 22: {'train': 0.799998484750912, 'test': 0.10000265168590401, 'val': 0.09999886356318399}, 23: {'train': 0.8425655976676385, 'test': 0.08649173955296405, 'val': 0.07094266277939747}, 24: {'train': 0.7620087336244541, 'test': 0.12008733624454149, 'val': 0.11790393013100436}, 25: {'train': 0.7614847482543182, 'test': 0.11925762587284086, 'val': 0.11925762587284086}, 26: {'train': 0.7617744898867674, 'test': 0.1191168019684179, 'val': 0.1191087081448147}, 27: {'train': 0.7620269279734578, 'test': 0.11899618070290498, 'val': 0.1189768913236372}}
+2026-05-06 16:51:06,831 - INFO - Saving results to DL2experiment/hetionet_processing/...
+2026-05-06 16:51:59,977 - WARNING - /home/galadriel/anaconda3/envs/benchmark/lib/python3.9/site-packages/torch/cuda/__init__.py:128: UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 11040). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver. (Triggered internally at ../c10/cuda/CUDAFunctions.cpp:108.)
+  return torch._C._cuda_getDeviceCount() > 0
+
+2026-05-06 16:51:59,977 - INFO - Detected device: cpu
+2026-05-06 16:51:59,978 - INFO - Initializing model...
+missing_entities=604
+Traceback (most recent call last):
+  File "/home/galadriel/dr_benchmark/dev/run_training.py", line 964, in <module>
+    main(args)
+  File "/home/galadriel/dr_benchmark/dev/run_training.py", line 87, in main
+    train_model(kg_train, kg_val, kg_test, config)
+  File "/home/galadriel/dr_benchmark/dev/run_training.py", line 530, in train_model
+    model, criterion = initialize_model(config, kg_train, device)
+  File "/home/galadriel/dr_benchmark/dev/run_training.py", line 120, in initialize_model
+    model_name = config['model'].get('name', 'TransE')
+KeyError: 'model'

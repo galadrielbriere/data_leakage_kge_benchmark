@@ -1,0 +1,1675 @@
+2026-05-27 09:26:42,790 - WARNING - /linkhome/rech/genuyp01/ufq76hz/.conda/envs/torch_pyg/lib/python3.10/site-packages/ignite/handlers/checkpoint.py:16: DeprecationWarning: `TorchScript` support for functional optimizers is deprecated and will be removed in a future PyTorch release. Consider using the `torch.compile` optimizer instead.
+  from torch.distributed.optim import ZeroRedundancyOptimizer
+
+2026-05-27 09:26:42,880 - INFO - Configuration loaded:
+{
+    "common": {
+        "seed": 42,
+        "input_pkl": "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/DL3experiment/cold_start/biokg_processing_disease",
+        "out": "./",
+        "run_kg_prep": false,
+        "run_training": true,
+        "run_evaluation": true,
+        "plot_training_metrics": true,
+        "run_inference": "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/knowledge_graph/biokg_orphan_associations_only.tsv"
+    },
+    "model": {
+        "name": "ComplEx",
+        "emb_dim": 200,
+        "margin": 1
+    },
+    "sampler": {
+        "name": "Mixed",
+        "n_neg": 5
+    },
+    "optimizer": {
+        "name": "Adam",
+        "params": {
+            "lr": 0.001,
+            "weight_decay": 0.001
+        }
+    },
+    "lr_scheduler": {
+        "type": "CosineAnnealingWarmRestarts",
+        "params": {
+            "T_0": 10,
+            "T_mult": 2
+        }
+    },
+    "training": {
+        "max_epochs": 500,
+        "batch_size": 4096,
+        "eval_interval": 20,
+        "eval_batch_size": 64,
+        "patience": 10
+    },
+    "evaluation": {
+        "made_directed_relations": [
+            "DDI",
+            "PPI",
+            "DDI_inv",
+            "PPI_inv",
+            "DPI",
+            "DRUG_TARGET"
+        ],
+        "target_relations": [
+            "DRUG_DISEASE_ASSOCIATION"
+        ],
+        "thresholds": [
+            10,
+            5
+        ]
+    }
+}
+2026-05-27 09:26:42,880 - INFO - Setting number of threads to 5
+2026-05-27 09:26:43,051 - INFO - Loading parameters from params.yaml
+2026-05-27 09:26:43,051 - INFO - Output folder: ./
+2026-05-27 09:26:43,051 - INFO - Loading KG...
+2026-05-27 09:28:03,254 - INFO - Done
+2026-05-27 09:28:03,296 - INFO - Detected device: cuda
+2026-05-27 09:28:03,302 - INFO - Initializing model...
+2026-05-27 09:28:04,146 - INFO - Optimizer 'Adam' initialized with parameters: {'lr': 0.001, 'weight_decay': 0.001}
+2026-05-27 09:28:04,147 - INFO - Initializing sampler...
+2026-05-27 09:28:49,802 - INFO - Scheduler 'CosineAnnealingWarmRestarts' initialized with parameters: {'T_0': 10, 'T_mult': 2}
+2026-05-27 09:28:49,822 - INFO - Number of training batches: 858
+2026-05-27 09:28:49,834 - INFO - Engine run starting with max_epochs=500.
+2026-05-27 09:30:57,403 - INFO - Epoch 1 - Train Loss: 34406.80008846834, Validation MRR: 0, Learning Rate: 0.001
+2026-05-27 09:31:02,122 - INFO - Memory cleaned.
+2026-05-27 09:31:03,059 - INFO - Epoch[1] Complete. Time taken: 00:02:13.225
+2026-05-27 09:33:09,840 - INFO - Epoch 2 - Train Loss: 26238.166917179482, Validation MRR: 0, Learning Rate: 0.0009755282581475768
+2026-05-27 09:33:14,328 - INFO - Memory cleaned.
+2026-05-27 09:33:15,724 - INFO - Epoch[2] Complete. Time taken: 00:02:12.665
+2026-05-27 09:35:22,448 - INFO - Epoch 3 - Train Loss: 18714.781899925347, Validation MRR: 0, Learning Rate: 0.0009045084971874737
+2026-05-27 09:35:26,928 - INFO - Memory cleaned.
+2026-05-27 09:35:27,939 - INFO - Epoch[3] Complete. Time taken: 00:02:12.215
+2026-05-27 09:37:34,380 - INFO - Epoch 4 - Train Loss: 14584.054129794307, Validation MRR: 0, Learning Rate: 0.0007938926261462366
+2026-05-27 09:37:38,873 - INFO - Memory cleaned.
+2026-05-27 09:37:39,880 - INFO - Epoch[4] Complete. Time taken: 00:02:11.941
+2026-05-27 09:39:46,261 - INFO - Epoch 5 - Train Loss: 12038.930793081137, Validation MRR: 0, Learning Rate: 0.0006545084971874737
+2026-05-27 09:39:50,747 - INFO - Memory cleaned.
+2026-05-27 09:39:51,742 - INFO - Epoch[5] Complete. Time taken: 00:02:11.861
+2026-05-27 09:41:58,152 - INFO - Epoch 6 - Train Loss: 10405.492416272371, Validation MRR: 0, Learning Rate: 0.0005
+2026-05-27 09:42:02,637 - INFO - Memory cleaned.
+2026-05-27 09:42:03,632 - INFO - Epoch[6] Complete. Time taken: 00:02:11.890
+2026-05-27 09:44:10,141 - INFO - Epoch 7 - Train Loss: 9422.633995309234, Validation MRR: 0, Learning Rate: 0.00034549150281252633
+2026-05-27 09:44:14,657 - INFO - Memory cleaned.
+2026-05-27 09:44:15,676 - INFO - Epoch[7] Complete. Time taken: 00:02:12.043
+2026-05-27 09:46:22,400 - INFO - Epoch 8 - Train Loss: 8831.187740477713, Validation MRR: 0, Learning Rate: 0.00020610737385376348
+2026-05-27 09:46:27,173 - INFO - Memory cleaned.
+2026-05-27 09:46:28,216 - INFO - Epoch[8] Complete. Time taken: 00:02:12.540
+2026-05-27 09:48:34,858 - INFO - Epoch 9 - Train Loss: 8557.840169000456, Validation MRR: 0, Learning Rate: 9.549150281252633e-05
+2026-05-27 09:48:39,606 - INFO - Memory cleaned.
+2026-05-27 09:48:40,663 - INFO - Epoch[9] Complete. Time taken: 00:02:12.447
+2026-05-27 09:50:46,196 - INFO - Epoch 10 - Train Loss: 8437.186533030263, Validation MRR: 0, Learning Rate: 2.4471741852423235e-05
+2026-05-27 09:50:50,518 - INFO - Memory cleaned.
+2026-05-27 09:50:51,524 - INFO - Epoch[10] Complete. Time taken: 00:02:10.861
+2026-05-27 09:52:57,975 - INFO - Epoch 11 - Train Loss: 7690.900673739344, Validation MRR: 0, Learning Rate: 0.001
+2026-05-27 09:53:02,448 - INFO - Memory cleaned.
+2026-05-27 09:53:03,470 - INFO - Epoch[11] Complete. Time taken: 00:02:11.946
+2026-05-27 09:55:09,846 - INFO - Epoch 12 - Train Loss: 6446.787223586805, Validation MRR: 0, Learning Rate: 0.0009938441702975688
+2026-05-27 09:55:14,295 - INFO - Memory cleaned.
+2026-05-27 09:55:15,325 - INFO - Epoch[12] Complete. Time taken: 00:02:11.855
+2026-05-27 09:57:21,771 - INFO - Epoch 13 - Train Loss: 5609.536152746566, Validation MRR: 0, Learning Rate: 0.0009755282581475768
+2026-05-27 09:57:26,217 - INFO - Memory cleaned.
+2026-05-27 09:57:27,231 - INFO - Epoch[13] Complete. Time taken: 00:02:11.906
+2026-05-27 09:59:33,651 - INFO - Epoch 14 - Train Loss: 5026.644271982139, Validation MRR: 0, Learning Rate: 0.0009455032620941839
+2026-05-27 09:59:38,131 - INFO - Memory cleaned.
+2026-05-27 09:59:39,143 - INFO - Epoch[14] Complete. Time taken: 00:02:11.912
+2026-05-27 10:01:45,577 - INFO - Epoch 15 - Train Loss: 4606.122945399316, Validation MRR: 0, Learning Rate: 0.0009045084971874737
+2026-05-27 10:01:50,082 - INFO - Memory cleaned.
+2026-05-27 10:01:51,086 - INFO - Epoch[15] Complete. Time taken: 00:02:11.943
+2026-05-27 10:03:57,510 - INFO - Epoch 16 - Train Loss: 4309.196220872539, Validation MRR: 0, Learning Rate: 0.0008535533905932737
+2026-05-27 10:04:01,996 - INFO - Memory cleaned.
+2026-05-27 10:04:03,026 - INFO - Epoch[16] Complete. Time taken: 00:02:11.939
+2026-05-27 10:06:09,388 - INFO - Epoch 17 - Train Loss: 4096.623567517516, Validation MRR: 0, Learning Rate: 0.0007938926261462366
+2026-05-27 10:06:13,871 - INFO - Memory cleaned.
+2026-05-27 10:06:14,912 - INFO - Epoch[17] Complete. Time taken: 00:02:11.886
+2026-05-27 10:08:21,315 - INFO - Epoch 18 - Train Loss: 3935.77858176126, Validation MRR: 0, Learning Rate: 0.0007269952498697733
+2026-05-27 10:08:25,793 - INFO - Memory cleaned.
+2026-05-27 10:08:26,813 - INFO - Epoch[18] Complete. Time taken: 00:02:11.901
+2026-05-27 10:10:33,203 - INFO - Epoch 19 - Train Loss: 3806.4903909929712, Validation MRR: 0, Learning Rate: 0.0006545084971874737
+2026-05-27 10:10:37,672 - INFO - Memory cleaned.
+2026-05-27 10:10:38,715 - INFO - Epoch[19] Complete. Time taken: 00:02:11.902
+2026-05-27 10:12:45,583 - INFO - Epoch 20 - Train Loss: 3724.7064691475657, Validation MRR: 0, Learning Rate: 0.0005782172325201155
+2026-05-27 10:12:50,336 - INFO - Memory cleaned.
+2026-05-27 10:12:50,336 - INFO - Evaluating on validation set at epoch 20...
+Link prediction evaluation:   0%|          | 0/15 [00:00<?, ?batch/s]Link prediction evaluation:   7%|▋         | 1/15 [00:00<00:01,  7.12batch/s]Link prediction evaluation:  13%|█▎        | 2/15 [00:00<00:01,  7.50batch/s]Link prediction evaluation:  20%|██        | 3/15 [00:00<00:01,  7.63batch/s]Link prediction evaluation:  27%|██▋       | 4/15 [00:00<00:01,  7.69batch/s]Link prediction evaluation:  33%|███▎      | 5/15 [00:00<00:01,  7.74batch/s]Link prediction evaluation:  40%|████      | 6/15 [00:00<00:01,  7.78batch/s]Link prediction evaluation:  47%|████▋     | 7/15 [00:00<00:01,  7.79batch/s]Link prediction evaluation:  53%|█████▎    | 8/15 [00:01<00:00,  7.82batch/s]Link prediction evaluation:  60%|██████    | 9/15 [00:01<00:00,  7.82batch/s]Link prediction evaluation:  67%|██████▋   | 10/15 [00:01<00:00,  7.84batch/s]Link prediction evaluation:  73%|███████▎  | 11/15 [00:01<00:00,  7.83batch/s]Link prediction evaluation:  80%|████████  | 12/15 [00:01<00:00,  7.84batch/s]Link prediction evaluation:  87%|████████▋ | 13/15 [00:01<00:00,  7.84batch/s]Link prediction evaluation:  93%|█████████▎| 14/15 [00:01<00:00,  7.84batch/s]Link prediction evaluation: 100%|██████████| 15/15 [00:01<00:00,  8.03batch/s]
+2026-05-27 10:12:52,207 - INFO - Validation MRR: 0.0013399168383330107
+2026-05-27 10:12:54,050 - INFO - Epoch[20] Complete. Time taken: 00:02:15.335
+2026-05-27 10:15:00,765 - INFO - Epoch 21 - Train Loss: 3620.751984293648, Validation MRR: 0.0013399168383330107, Learning Rate: 0.0005
+2026-05-27 10:15:05,537 - INFO - Memory cleaned.
+2026-05-27 10:15:06,599 - INFO - Epoch[21] Complete. Time taken: 00:02:12.549
+2026-05-27 10:17:12,765 - INFO - Epoch 22 - Train Loss: 3564.1528551110996, Validation MRR: 0.0013399168383330107, Learning Rate: 0.0004217827674798847
+2026-05-27 10:17:17,085 - INFO - Memory cleaned.
+2026-05-27 10:17:18,093 - INFO - Epoch[22] Complete. Time taken: 00:02:11.493
+2026-05-27 10:19:23,948 - INFO - Epoch 23 - Train Loss: 3537.236134475829, Validation MRR: 0.0013399168383330107, Learning Rate: 0.00034549150281252633
+2026-05-27 10:19:28,442 - INFO - Memory cleaned.
+2026-05-27 10:19:29,465 - INFO - Epoch[23] Complete. Time taken: 00:02:11.372
+2026-05-27 10:21:35,878 - INFO - Epoch 24 - Train Loss: 3489.2797488419774, Validation MRR: 0.0013399168383330107, Learning Rate: 0.00027300475013022663
+2026-05-27 10:21:40,362 - INFO - Memory cleaned.
+2026-05-27 10:21:41,399 - INFO - Epoch[24] Complete. Time taken: 00:02:11.934
+2026-05-27 10:23:47,820 - INFO - Epoch 25 - Train Loss: 3461.109371601395, Validation MRR: 0.0013399168383330107, Learning Rate: 0.00020610737385376348
+2026-05-27 10:23:52,305 - INFO - Memory cleaned.
+2026-05-27 10:23:53,354 - INFO - Epoch[25] Complete. Time taken: 00:02:11.954
+2026-05-27 10:25:59,800 - INFO - Epoch 26 - Train Loss: 3446.501790172026, Validation MRR: 0.0013399168383330107, Learning Rate: 0.00014644660940672628
+2026-05-27 10:26:04,306 - INFO - Memory cleaned.
+2026-05-27 10:26:05,336 - INFO - Epoch[26] Complete. Time taken: 00:02:11.982
+2026-05-27 10:28:11,730 - INFO - Epoch 27 - Train Loss: 3423.443141265471, Validation MRR: 0.0013399168383330107, Learning Rate: 9.549150281252633e-05
+2026-05-27 10:28:16,226 - INFO - Memory cleaned.
+2026-05-27 10:28:17,252 - INFO - Epoch[27] Complete. Time taken: 00:02:11.916
+2026-05-27 10:30:23,814 - INFO - Epoch 28 - Train Loss: 3413.31943326566, Validation MRR: 0.0013399168383330107, Learning Rate: 5.449673790581611e-05
+2026-05-27 10:30:28,296 - INFO - Memory cleaned.
+2026-05-27 10:30:29,357 - INFO - Epoch[28] Complete. Time taken: 00:02:12.106
+2026-05-27 10:32:35,844 - INFO - Epoch 29 - Train Loss: 3405.7295672302566, Validation MRR: 0.0013399168383330107, Learning Rate: 2.4471741852423235e-05
+2026-05-27 10:32:40,421 - INFO - Memory cleaned.
+2026-05-27 10:32:41,443 - INFO - Epoch[29] Complete. Time taken: 00:02:12.085
+2026-05-27 10:34:48,193 - INFO - Epoch 30 - Train Loss: 3406.605686500556, Validation MRR: 0.0013399168383330107, Learning Rate: 6.15582970243117e-06
+2026-05-27 10:34:52,746 - INFO - Memory cleaned.
+2026-05-27 10:34:53,842 - INFO - Epoch[30] Complete. Time taken: 00:02:12.399
+2026-05-27 10:37:00,478 - INFO - Epoch 31 - Train Loss: 3584.448160885343, Validation MRR: 0.0013399168383330107, Learning Rate: 0.001
+2026-05-27 10:37:05,232 - INFO - Memory cleaned.
+2026-05-27 10:37:06,290 - INFO - Epoch[31] Complete. Time taken: 00:02:12.447
+2026-05-27 10:39:12,860 - INFO - Epoch 32 - Train Loss: 3514.9696703954296, Validation MRR: 0.0013399168383330107, Learning Rate: 0.000998458666866564
+2026-05-27 10:39:17,618 - INFO - Memory cleaned.
+2026-05-27 10:39:18,708 - INFO - Epoch[32] Complete. Time taken: 00:02:12.418
+2026-05-27 10:41:25,262 - INFO - Epoch 33 - Train Loss: 3452.788082246658, Validation MRR: 0.0013399168383330107, Learning Rate: 0.0009938441702975688
+2026-05-27 10:41:29,683 - INFO - Memory cleaned.
+2026-05-27 10:41:30,703 - INFO - Epoch[33] Complete. Time taken: 00:02:11.995
+2026-05-27 10:43:36,044 - INFO - Epoch 34 - Train Loss: 3431.1965739725733, Validation MRR: 0.0013399168383330107, Learning Rate: 0.0009861849601988384
+2026-05-27 10:43:40,519 - INFO - Memory cleaned.
+2026-05-27 10:43:41,582 - INFO - Epoch[34] Complete. Time taken: 00:02:10.879
+2026-05-27 10:45:47,980 - INFO - Epoch 35 - Train Loss: 3380.672236574314, Validation MRR: 0.0013399168383330107, Learning Rate: 0.0009755282581475768
+2026-05-27 10:45:52,441 - INFO - Memory cleaned.
+2026-05-27 10:45:53,484 - INFO - Epoch[35] Complete. Time taken: 00:02:11.902
+2026-05-27 10:47:59,829 - INFO - Epoch 36 - Train Loss: 3359.0839982104762, Validation MRR: 0.0013399168383330107, Learning Rate: 0.0009619397662556434
+2026-05-27 10:48:04,327 - INFO - Memory cleaned.
+2026-05-27 10:48:05,371 - INFO - Epoch[36] Complete. Time taken: 00:02:11.887
+2026-05-27 10:50:11,793 - INFO - Epoch 37 - Train Loss: 3328.6997644165244, Validation MRR: 0.0013399168383330107, Learning Rate: 0.0009455032620941839
+2026-05-27 10:50:16,268 - INFO - Memory cleaned.
+2026-05-27 10:50:17,307 - INFO - Epoch[37] Complete. Time taken: 00:02:11.936
+2026-05-27 10:52:23,832 - INFO - Epoch 38 - Train Loss: 3314.348645616723, Validation MRR: 0.0013399168383330107, Learning Rate: 0.0009263200821770461
+2026-05-27 10:52:28,316 - INFO - Memory cleaned.
+2026-05-27 10:52:29,364 - INFO - Epoch[38] Complete. Time taken: 00:02:12.057
+2026-05-27 10:54:35,838 - INFO - Epoch 39 - Train Loss: 3286.290821060461, Validation MRR: 0.0013399168383330107, Learning Rate: 0.0009045084971874737
+2026-05-27 10:54:40,324 - INFO - Memory cleaned.
+2026-05-27 10:54:41,338 - INFO - Epoch[39] Complete. Time taken: 00:02:11.974
+2026-05-27 10:56:47,880 - INFO - Epoch 40 - Train Loss: 3253.6061213014027, Validation MRR: 0.0013399168383330107, Learning Rate: 0.0008802029828000156
+2026-05-27 10:56:52,346 - INFO - Memory cleaned.
+2026-05-27 10:56:52,346 - INFO - Evaluating on validation set at epoch 40...
+Link prediction evaluation:   0%|          | 0/15 [00:00<?, ?batch/s]Link prediction evaluation:   7%|▋         | 1/15 [00:00<00:01,  7.80batch/s]Link prediction evaluation:  13%|█▎        | 2/15 [00:00<00:01,  7.83batch/s]Link prediction evaluation:  20%|██        | 3/15 [00:00<00:01,  7.83batch/s]Link prediction evaluation:  27%|██▋       | 4/15 [00:00<00:01,  7.84batch/s]Link prediction evaluation:  33%|███▎      | 5/15 [00:00<00:01,  7.86batch/s]Link prediction evaluation:  40%|████      | 6/15 [00:00<00:01,  7.87batch/s]Link prediction evaluation:  47%|████▋     | 7/15 [00:00<00:01,  7.87batch/s]Link prediction evaluation:  53%|█████▎    | 8/15 [00:01<00:00,  7.88batch/s]Link prediction evaluation:  60%|██████    | 9/15 [00:01<00:00,  7.88batch/s]Link prediction evaluation:  67%|██████▋   | 10/15 [00:01<00:00,  7.89batch/s]Link prediction evaluation:  73%|███████▎  | 11/15 [00:01<00:00,  7.89batch/s]Link prediction evaluation:  80%|████████  | 12/15 [00:01<00:00,  7.90batch/s]Link prediction evaluation:  87%|████████▋ | 13/15 [00:01<00:00,  7.89batch/s]Link prediction evaluation:  93%|█████████▎| 14/15 [00:01<00:00,  7.89batch/s]Link prediction evaluation: 100%|██████████| 15/15 [00:01<00:00,  8.14batch/s]
+2026-05-27 10:56:54,192 - INFO - Validation MRR: 0.002110784873366356
+2026-05-27 10:56:56,022 - INFO - Epoch[40] Complete. Time taken: 00:02:14.684
+2026-05-27 10:59:02,374 - INFO - Epoch 41 - Train Loss: 3248.4039759831003, Validation MRR: 0.002110784873366356, Learning Rate: 0.0008535533905932737
+2026-05-27 10:59:06,864 - INFO - Memory cleaned.
+2026-05-27 10:59:07,920 - INFO - Epoch[41] Complete. Time taken: 00:02:11.898
+2026-05-27 11:01:14,578 - INFO - Epoch 42 - Train Loss: 3231.03927973804, Validation MRR: 0.002110784873366356, Learning Rate: 0.000824724024165092
+2026-05-27 11:01:19,081 - INFO - Memory cleaned.
+2026-05-27 11:01:20,171 - INFO - Epoch[42] Complete. Time taken: 00:02:12.251
+2026-05-27 11:03:26,836 - INFO - Epoch 43 - Train Loss: 3224.1718377682037, Validation MRR: 0.002110784873366356, Learning Rate: 0.0007938926261462366
+2026-05-27 11:03:31,617 - INFO - Memory cleaned.
+2026-05-27 11:03:32,705 - INFO - Epoch[43] Complete. Time taken: 00:02:12.534
+2026-05-27 11:05:39,377 - INFO - Epoch 44 - Train Loss: 3198.4510114461004, Validation MRR: 0.002110784873366356, Learning Rate: 0.0007612492823579744
+2026-05-27 11:05:44,143 - INFO - Memory cleaned.
+2026-05-27 11:05:45,231 - INFO - Epoch[44] Complete. Time taken: 00:02:12.526
+2026-05-27 11:07:50,825 - INFO - Epoch 45 - Train Loss: 3171.0690964473433, Validation MRR: 0.002110784873366356, Learning Rate: 0.0007269952498697733
+2026-05-27 11:07:55,164 - INFO - Memory cleaned.
+2026-05-27 11:07:56,185 - INFO - Epoch[45] Complete. Time taken: 00:02:10.954
+2026-05-27 11:10:02,362 - INFO - Epoch 46 - Train Loss: 3169.9918245204985, Validation MRR: 0.002110784873366356, Learning Rate: 0.000691341716182545
+2026-05-27 11:10:06,848 - INFO - Memory cleaned.
+2026-05-27 11:10:07,883 - INFO - Epoch[46] Complete. Time taken: 00:02:11.697
+2026-05-27 11:12:14,554 - INFO - Epoch 47 - Train Loss: 3163.4285308023786, Validation MRR: 0.002110784873366356, Learning Rate: 0.0006545084971874737
+2026-05-27 11:12:19,026 - INFO - Memory cleaned.
+2026-05-27 11:12:20,082 - INFO - Epoch[47] Complete. Time taken: 00:02:12.199
+2026-05-27 11:14:26,657 - INFO - Epoch 48 - Train Loss: 3132.363562759522, Validation MRR: 0.002110784873366356, Learning Rate: 0.0006167226819279528
+2026-05-27 11:14:31,022 - INFO - Memory cleaned.
+2026-05-27 11:14:32,051 - INFO - Epoch[48] Complete. Time taken: 00:02:11.969
+2026-05-27 11:16:38,597 - INFO - Epoch 49 - Train Loss: 3128.699682575081, Validation MRR: 0.002110784873366356, Learning Rate: 0.0005782172325201155
+2026-05-27 11:16:43,055 - INFO - Memory cleaned.
+2026-05-27 11:16:44,131 - INFO - Epoch[49] Complete. Time taken: 00:02:12.080
+2026-05-27 11:18:50,757 - INFO - Epoch 50 - Train Loss: 3116.0104343100647, Validation MRR: 0.002110784873366356, Learning Rate: 0.0005392295478639225
+2026-05-27 11:18:55,245 - INFO - Memory cleaned.
+2026-05-27 11:18:56,290 - INFO - Epoch[50] Complete. Time taken: 00:02:12.159
+2026-05-27 11:21:02,762 - INFO - Epoch 51 - Train Loss: 3085.06331458627, Validation MRR: 0.002110784873366356, Learning Rate: 0.0005
+2026-05-27 11:21:07,208 - INFO - Memory cleaned.
+2026-05-27 11:21:08,241 - INFO - Epoch[51] Complete. Time taken: 00:02:11.951
+2026-05-27 11:23:14,785 - INFO - Epoch 52 - Train Loss: 3098.193770207119, Validation MRR: 0.002110784873366356, Learning Rate: 0.0004607704521360776
+2026-05-27 11:23:19,280 - INFO - Memory cleaned.
+2026-05-27 11:23:20,321 - INFO - Epoch[52] Complete. Time taken: 00:02:12.079
+2026-05-27 11:25:26,810 - INFO - Epoch 53 - Train Loss: 3072.8064356845725, Validation MRR: 0.002110784873366356, Learning Rate: 0.0004217827674798847
+2026-05-27 11:25:31,277 - INFO - Memory cleaned.
+2026-05-27 11:25:32,326 - INFO - Epoch[53] Complete. Time taken: 00:02:12.006
+2026-05-27 11:27:38,984 - INFO - Epoch 54 - Train Loss: 3066.0722040025094, Validation MRR: 0.002110784873366356, Learning Rate: 0.00038327731807204733
+2026-05-27 11:27:43,734 - INFO - Memory cleaned.
+2026-05-27 11:27:44,818 - INFO - Epoch[54] Complete. Time taken: 00:02:12.492
+2026-05-27 11:29:51,464 - INFO - Epoch 55 - Train Loss: 3065.0647458138005, Validation MRR: 0.002110784873366356, Learning Rate: 0.00034549150281252633
+2026-05-27 11:29:56,218 - INFO - Memory cleaned.
+2026-05-27 11:29:57,304 - INFO - Epoch[55] Complete. Time taken: 00:02:12.486
+2026-05-27 11:32:03,830 - INFO - Epoch 56 - Train Loss: 3052.00978665896, Validation MRR: 0.002110784873366356, Learning Rate: 0.0003086582838174551
+2026-05-27 11:32:08,581 - INFO - Memory cleaned.
+2026-05-27 11:32:09,680 - INFO - Epoch[56] Complete. Time taken: 00:02:12.375
+2026-05-27 11:34:14,859 - INFO - Epoch 57 - Train Loss: 3042.53167101445, Validation MRR: 0.002110784873366356, Learning Rate: 0.00027300475013022663
+2026-05-27 11:34:19,327 - INFO - Memory cleaned.
+2026-05-27 11:34:20,367 - INFO - Epoch[57] Complete. Time taken: 00:02:10.687
+2026-05-27 11:36:26,787 - INFO - Epoch 58 - Train Loss: 3042.220220065498, Validation MRR: 0.002110784873366356, Learning Rate: 0.00023875071764202561
+2026-05-27 11:36:31,281 - INFO - Memory cleaned.
+2026-05-27 11:36:32,317 - INFO - Epoch[58] Complete. Time taken: 00:02:11.950
+2026-05-27 11:38:38,665 - INFO - Epoch 59 - Train Loss: 3026.905337706292, Validation MRR: 0.002110784873366356, Learning Rate: 0.00020610737385376348
+2026-05-27 11:38:43,157 - INFO - Memory cleaned.
+2026-05-27 11:38:44,255 - INFO - Epoch[59] Complete. Time taken: 00:02:11.938
+2026-05-27 11:40:50,922 - INFO - Epoch 60 - Train Loss: 3042.874115107715, Validation MRR: 0.002110784873366356, Learning Rate: 0.00017527597583490823
+2026-05-27 11:40:55,418 - INFO - Memory cleaned.
+2026-05-27 11:40:55,418 - INFO - Evaluating on validation set at epoch 60...
+Link prediction evaluation:   0%|          | 0/15 [00:00<?, ?batch/s]Link prediction evaluation:   7%|▋         | 1/15 [00:00<00:01,  7.12batch/s]Link prediction evaluation:  13%|█▎        | 2/15 [00:00<00:01,  7.52batch/s]Link prediction evaluation:  20%|██        | 3/15 [00:00<00:01,  7.67batch/s]Link prediction evaluation:  27%|██▋       | 4/15 [00:00<00:01,  7.74batch/s]Link prediction evaluation:  33%|███▎      | 5/15 [00:00<00:01,  7.79batch/s]Link prediction evaluation:  40%|████      | 6/15 [00:00<00:01,  7.82batch/s]Link prediction evaluation:  47%|████▋     | 7/15 [00:00<00:01,  7.83batch/s]Link prediction evaluation:  53%|█████▎    | 8/15 [00:01<00:00,  7.85batch/s]Link prediction evaluation:  60%|██████    | 9/15 [00:01<00:00,  7.86batch/s]Link prediction evaluation:  67%|██████▋   | 10/15 [00:01<00:00,  7.87batch/s]Link prediction evaluation:  73%|███████▎  | 11/15 [00:01<00:00,  7.86batch/s]Link prediction evaluation:  80%|████████  | 12/15 [00:01<00:00,  7.87batch/s]Link prediction evaluation:  87%|████████▋ | 13/15 [00:01<00:00,  7.87batch/s]Link prediction evaluation:  93%|█████████▎| 14/15 [00:01<00:00,  7.88batch/s]Link prediction evaluation: 100%|██████████| 15/15 [00:01<00:00,  8.07batch/s]
+2026-05-27 11:40:57,323 - INFO - Validation MRR: 0.002384450286626816
+2026-05-27 11:40:59,204 - INFO - Epoch[60] Complete. Time taken: 00:02:14.949
+2026-05-27 11:43:05,571 - INFO - Epoch 61 - Train Loss: 3010.2302579854386, Validation MRR: 0.002384450286626816, Learning Rate: 0.00014644660940672628
+2026-05-27 11:43:10,042 - INFO - Memory cleaned.
+2026-05-27 11:43:10,976 - INFO - Epoch[61] Complete. Time taken: 00:02:11.772
+2026-05-27 11:45:17,365 - INFO - Epoch 62 - Train Loss: 3022.7996642308985, Validation MRR: 0.002384450286626816, Learning Rate: 0.00011979701719998454
+2026-05-27 11:45:21,848 - INFO - Memory cleaned.
+2026-05-27 11:45:22,907 - INFO - Epoch[62] Complete. Time taken: 00:02:11.931
+2026-05-27 11:47:29,301 - INFO - Epoch 63 - Train Loss: 3003.686216589002, Validation MRR: 0.002384450286626816, Learning Rate: 9.549150281252633e-05
+2026-05-27 11:47:33,796 - INFO - Memory cleaned.
+2026-05-27 11:47:34,785 - INFO - Epoch[63] Complete. Time taken: 00:02:11.878
+2026-05-27 11:49:41,149 - INFO - Epoch 64 - Train Loss: 3019.3220503134376, Validation MRR: 0.002384450286626816, Learning Rate: 7.367991782295391e-05
+2026-05-27 11:49:45,600 - INFO - Memory cleaned.
+2026-05-27 11:49:46,648 - INFO - Epoch[64] Complete. Time taken: 00:02:11.863
+2026-05-27 11:51:53,271 - INFO - Epoch 65 - Train Loss: 2997.777095267642, Validation MRR: 0.002384450286626816, Learning Rate: 5.449673790581611e-05
+2026-05-27 11:51:57,669 - INFO - Memory cleaned.
+2026-05-27 11:51:58,660 - INFO - Epoch[65] Complete. Time taken: 00:02:12.012
+2026-05-27 11:54:05,146 - INFO - Epoch 66 - Train Loss: 2999.0637747098986, Validation MRR: 0.002384450286626816, Learning Rate: 3.806023374435663e-05
+2026-05-27 11:54:09,883 - INFO - Memory cleaned.
+2026-05-27 11:54:10,961 - INFO - Epoch[66] Complete. Time taken: 00:02:12.300
+2026-05-27 11:56:17,484 - INFO - Epoch 67 - Train Loss: 3003.3546838919096, Validation MRR: 0.002384450286626816, Learning Rate: 2.4471741852423235e-05
+2026-05-27 11:56:22,221 - INFO - Memory cleaned.
+2026-05-27 11:56:23,261 - INFO - Epoch[67] Complete. Time taken: 00:02:12.300
+2026-05-27 11:58:29,095 - INFO - Epoch 68 - Train Loss: 3000.121064915032, Validation MRR: 0.002384450286626816, Learning Rate: 1.3815039801161721e-05
+2026-05-27 11:58:33,384 - INFO - Memory cleaned.
+2026-05-27 11:58:34,441 - INFO - Epoch[68] Complete. Time taken: 00:02:11.180
+2026-05-27 12:00:40,360 - INFO - Epoch 69 - Train Loss: 2986.588113231952, Validation MRR: 0.002384450286626816, Learning Rate: 6.15582970243117e-06
+2026-05-27 12:00:44,855 - INFO - Memory cleaned.
+2026-05-27 12:00:45,895 - INFO - Epoch[69] Complete. Time taken: 00:02:11.454
+2026-05-27 12:02:52,404 - INFO - Epoch 70 - Train Loss: 2987.469888488762, Validation MRR: 0.002384450286626816, Learning Rate: 1.541333133436018e-06
+2026-05-27 12:02:56,867 - INFO - Memory cleaned.
+2026-05-27 12:02:57,950 - INFO - Epoch[70] Complete. Time taken: 00:02:12.055
+2026-05-27 12:05:04,360 - INFO - Epoch 71 - Train Loss: 3232.3048373244565, Validation MRR: 0.002384450286626816, Learning Rate: 0.001
+2026-05-27 12:05:08,829 - INFO - Memory cleaned.
+2026-05-27 12:05:09,866 - INFO - Epoch[71] Complete. Time taken: 00:02:11.916
+2026-05-27 12:07:16,337 - INFO - Epoch 72 - Train Loss: 3210.941945781338, Validation MRR: 0.002384450286626816, Learning Rate: 0.0009996145181203615
+2026-05-27 12:07:20,799 - INFO - Memory cleaned.
+2026-05-27 12:07:21,899 - INFO - Epoch[72] Complete. Time taken: 00:02:12.033
+2026-05-27 12:09:28,415 - INFO - Epoch 73 - Train Loss: 3165.7124015849645, Validation MRR: 0.002384450286626816, Learning Rate: 0.000998458666866564
+2026-05-27 12:09:32,822 - INFO - Memory cleaned.
+2026-05-27 12:09:33,833 - INFO - Epoch[73] Complete. Time taken: 00:02:11.934
+2026-05-27 12:11:40,149 - INFO - Epoch 74 - Train Loss: 3161.736338592941, Validation MRR: 0.002384450286626816, Learning Rate: 0.0009965342284774632
+2026-05-27 12:11:44,627 - INFO - Memory cleaned.
+2026-05-27 12:11:45,691 - INFO - Epoch[74] Complete. Time taken: 00:02:11.858
+2026-05-27 12:13:51,882 - INFO - Epoch 75 - Train Loss: 3152.0117768139503, Validation MRR: 0.002384450286626816, Learning Rate: 0.0009938441702975688
+2026-05-27 12:13:56,319 - INFO - Memory cleaned.
+2026-05-27 12:13:57,363 - INFO - Epoch[75] Complete. Time taken: 00:02:11.672
+2026-05-27 12:16:03,171 - INFO - Epoch 76 - Train Loss: 3159.5251406745347, Validation MRR: 0.002384450286626816, Learning Rate: 0.0009903926402016153
+2026-05-27 12:16:07,547 - INFO - Memory cleaned.
+2026-05-27 12:16:08,638 - INFO - Epoch[76] Complete. Time taken: 00:02:11.275
+2026-05-27 12:18:14,168 - INFO - Epoch 77 - Train Loss: 3154.196797524024, Validation MRR: 0.002384450286626816, Learning Rate: 0.0009861849601988384
+2026-05-27 12:18:18,646 - INFO - Memory cleaned.
+2026-05-27 12:18:19,693 - INFO - Epoch[77] Complete. Time taken: 00:02:11.054
+2026-05-27 12:20:25,752 - INFO - Epoch 78 - Train Loss: 3146.4893449374877, Validation MRR: 0.002384450286626816, Learning Rate: 0.0009812276182268236
+2026-05-27 12:20:30,458 - INFO - Memory cleaned.
+2026-05-27 12:20:31,554 - INFO - Epoch[78] Complete. Time taken: 00:02:11.861
+2026-05-27 12:22:37,768 - INFO - Epoch 79 - Train Loss: 3147.1978034327285, Validation MRR: 0.002384450286626816, Learning Rate: 0.0009755282581475768
+2026-05-27 12:22:42,470 - INFO - Memory cleaned.
+2026-05-27 12:22:43,526 - INFO - Epoch[79] Complete. Time taken: 00:02:11.972
+2026-05-27 12:24:49,633 - INFO - Epoch 80 - Train Loss: 3138.3068867184297, Validation MRR: 0.002384450286626816, Learning Rate: 0.0009690956679612422
+2026-05-27 12:24:54,369 - INFO - Memory cleaned.
+2026-05-27 12:24:54,370 - INFO - Evaluating on validation set at epoch 80...
+Link prediction evaluation:   0%|          | 0/15 [00:00<?, ?batch/s]Link prediction evaluation:   7%|▋         | 1/15 [00:00<00:01,  7.80batch/s]Link prediction evaluation:  13%|█▎        | 2/15 [00:00<00:01,  7.85batch/s]Link prediction evaluation:  20%|██        | 3/15 [00:00<00:01,  7.84batch/s]Link prediction evaluation:  27%|██▋       | 4/15 [00:00<00:01,  7.84batch/s]Link prediction evaluation:  33%|███▎      | 5/15 [00:00<00:01,  7.86batch/s]Link prediction evaluation:  40%|████      | 6/15 [00:00<00:01,  7.86batch/s]Link prediction evaluation:  47%|████▋     | 7/15 [00:00<00:01,  7.86batch/s]Link prediction evaluation:  53%|█████▎    | 8/15 [00:01<00:00,  7.87batch/s]Link prediction evaluation:  60%|██████    | 9/15 [00:01<00:00,  7.86batch/s]Link prediction evaluation:  67%|██████▋   | 10/15 [00:01<00:00,  7.87batch/s]Link prediction evaluation:  73%|███████▎  | 11/15 [00:01<00:00,  7.86batch/s]Link prediction evaluation:  80%|████████  | 12/15 [00:01<00:00,  7.87batch/s]Link prediction evaluation:  87%|████████▋ | 13/15 [00:01<00:00,  7.86batch/s]Link prediction evaluation:  93%|█████████▎| 14/15 [00:01<00:00,  7.86batch/s]Link prediction evaluation: 100%|██████████| 15/15 [00:01<00:00,  8.12batch/s]
+2026-05-27 12:24:56,218 - INFO - Validation MRR: 0.0022453879937529564
+2026-05-27 12:24:57,313 - INFO - Epoch[80] Complete. Time taken: 00:02:13.787
+2026-05-27 12:27:02,236 - INFO - Epoch 81 - Train Loss: 3133.7212067850483, Validation MRR: 0.0022453879937529564, Learning Rate: 0.0009619397662556434
+2026-05-27 12:27:06,689 - INFO - Memory cleaned.
+2026-05-27 12:27:07,766 - INFO - Epoch[81] Complete. Time taken: 00:02:10.453
+2026-05-27 12:29:14,524 - INFO - Epoch 82 - Train Loss: 3156.7924423285294, Validation MRR: 0.0022453879937529564, Learning Rate: 0.0009540715869125407
+2026-05-27 12:29:18,897 - INFO - Memory cleaned.
+2026-05-27 12:29:19,953 - INFO - Epoch[82] Complete. Time taken: 00:02:12.187
+2026-05-27 12:31:26,091 - INFO - Epoch 83 - Train Loss: 3106.5427898299995, Validation MRR: 0.0022453879937529564, Learning Rate: 0.0009455032620941839
+2026-05-27 12:31:30,538 - INFO - Memory cleaned.
+2026-05-27 12:31:31,567 - INFO - Epoch[83] Complete. Time taken: 00:02:11.613
+2026-05-27 12:33:37,637 - INFO - Epoch 84 - Train Loss: 3107.144652278321, Validation MRR: 0.0022453879937529564, Learning Rate: 0.0009362480035363986
+2026-05-27 12:33:42,122 - INFO - Memory cleaned.
+2026-05-27 12:33:43,182 - INFO - Epoch[84] Complete. Time taken: 00:02:11.615
+2026-05-27 12:35:49,211 - INFO - Epoch 85 - Train Loss: 3114.7954750220897, Validation MRR: 0.0022453879937529564, Learning Rate: 0.0009263200821770461
+2026-05-27 12:35:53,641 - INFO - Memory cleaned.
+2026-05-27 12:35:54,571 - INFO - Epoch[85] Complete. Time taken: 00:02:11.388
+2026-05-27 12:38:00,772 - INFO - Epoch 86 - Train Loss: 3097.6720208968836, Validation MRR: 0.0022453879937529564, Learning Rate: 0.0009157348061512727
+2026-05-27 12:38:05,233 - INFO - Memory cleaned.
+2026-05-27 12:38:06,171 - INFO - Epoch[86] Complete. Time taken: 00:02:11.600
+2026-05-27 12:40:12,411 - INFO - Epoch 87 - Train Loss: 3086.7271070828997, Validation MRR: 0.0022453879937529564, Learning Rate: 0.0009045084971874737
+2026-05-27 12:40:16,885 - INFO - Memory cleaned.
+2026-05-27 12:40:17,955 - INFO - Epoch[87] Complete. Time taken: 00:02:11.784
+2026-05-27 12:42:24,096 - INFO - Epoch 88 - Train Loss: 3102.2601771195646, Validation MRR: 0.0022453879937529564, Learning Rate: 0.0008926584654403724
+2026-05-27 12:42:28,526 - INFO - Memory cleaned.
+2026-05-27 12:42:29,573 - INFO - Epoch[88] Complete. Time taken: 00:02:11.618
+2026-05-27 12:44:36,418 - INFO - Epoch 89 - Train Loss: 3083.092698531708, Validation MRR: 0.0022453879937529564, Learning Rate: 0.0008802029828000156
+2026-05-27 12:44:40,856 - INFO - Memory cleaned.
+2026-05-27 12:44:41,915 - INFO - Epoch[89] Complete. Time taken: 00:02:12.342
+2026-05-27 12:46:48,474 - INFO - Epoch 90 - Train Loss: 3090.307351642528, Validation MRR: 0.0022453879937529564, Learning Rate: 0.0008671612547178428
+2026-05-27 12:46:53,163 - INFO - Memory cleaned.
+2026-05-27 12:46:54,231 - INFO - Epoch[90] Complete. Time taken: 00:02:12.315
+2026-05-27 12:49:00,402 - INFO - Epoch 91 - Train Loss: 3099.4608154877733, Validation MRR: 0.0022453879937529564, Learning Rate: 0.0008535533905932737
+2026-05-27 12:49:05,085 - INFO - Memory cleaned.
+2026-05-27 12:49:06,176 - INFO - Epoch[91] Complete. Time taken: 00:02:11.945
+2026-05-27 12:51:12,260 - INFO - Epoch 92 - Train Loss: 3055.099317338919, Validation MRR: 0.0022453879937529564, Learning Rate: 0.0008394003727664709
+2026-05-27 12:51:16,763 - INFO - Memory cleaned.
+2026-05-27 12:51:17,801 - INFO - Epoch[92] Complete. Time taken: 00:02:11.625
+2026-05-27 12:53:22,675 - INFO - Epoch 93 - Train Loss: 3066.2529722285626, Validation MRR: 0.0022453879937529564, Learning Rate: 0.000824724024165092
+2026-05-27 12:53:27,102 - INFO - Memory cleaned.
+2026-05-27 12:53:28,179 - INFO - Epoch[93] Complete. Time taken: 00:02:10.378
+2026-05-27 12:55:34,290 - INFO - Epoch 94 - Train Loss: 3068.477423493356, Validation MRR: 0.0022453879937529564, Learning Rate: 0.000809546974654917
+2026-05-27 12:55:38,733 - INFO - Memory cleaned.
+2026-05-27 12:55:39,788 - INFO - Epoch[94] Complete. Time taken: 00:02:11.609
+2026-05-27 12:57:45,927 - INFO - Epoch 95 - Train Loss: 3055.8691223126107, Validation MRR: 0.0022453879937529564, Learning Rate: 0.0007938926261462366
+2026-05-27 12:57:50,359 - INFO - Memory cleaned.
+2026-05-27 12:57:51,431 - INFO - Epoch[95] Complete. Time taken: 00:02:11.643
+2026-05-27 12:59:57,586 - INFO - Epoch 96 - Train Loss: 3046.1278404303307, Validation MRR: 0.0022453879937529564, Learning Rate: 0.0007777851165098011
+2026-05-27 13:00:01,964 - INFO - Memory cleaned.
+2026-05-27 13:00:03,001 - INFO - Epoch[96] Complete. Time taken: 00:02:11.569
+2026-05-27 13:02:09,044 - INFO - Epoch 97 - Train Loss: 3040.6900433157766, Validation MRR: 0.0022453879937529564, Learning Rate: 0.0007612492823579744
+2026-05-27 13:02:13,375 - INFO - Memory cleaned.
+2026-05-27 13:02:14,451 - INFO - Epoch[97] Complete. Time taken: 00:02:11.450
+2026-05-27 13:04:20,493 - INFO - Epoch 98 - Train Loss: 3032.6949899141327, Validation MRR: 0.0022453879937529564, Learning Rate: 0.0007443106207484776
+2026-05-27 13:04:24,908 - INFO - Memory cleaned.
+2026-05-27 13:04:25,950 - INFO - Epoch[98] Complete. Time taken: 00:02:11.499
+2026-05-27 13:06:32,074 - INFO - Epoch 99 - Train Loss: 3050.2147265574886, Validation MRR: 0.0022453879937529564, Learning Rate: 0.0007269952498697733
+2026-05-27 13:06:36,496 - INFO - Memory cleaned.
+2026-05-27 13:06:37,559 - INFO - Epoch[99] Complete. Time taken: 00:02:11.609
+2026-05-27 13:08:43,626 - INFO - Epoch 100 - Train Loss: 3034.5898127273063, Validation MRR: 0.0022453879937529564, Learning Rate: 0.0007093298687687141
+2026-05-27 13:08:48,022 - INFO - Memory cleaned.
+2026-05-27 13:08:48,022 - INFO - Evaluating on validation set at epoch 100...
+Link prediction evaluation:   0%|          | 0/15 [00:00<?, ?batch/s]Link prediction evaluation:   7%|▋         | 1/15 [00:00<00:01,  7.79batch/s]Link prediction evaluation:  13%|█▎        | 2/15 [00:00<00:01,  7.85batch/s]Link prediction evaluation:  20%|██        | 3/15 [00:00<00:01,  7.83batch/s]Link prediction evaluation:  27%|██▋       | 4/15 [00:00<00:01,  7.84batch/s]Link prediction evaluation:  33%|███▎      | 5/15 [00:00<00:01,  7.86batch/s]Link prediction evaluation:  40%|████      | 6/15 [00:00<00:01,  7.87batch/s]Link prediction evaluation:  47%|████▋     | 7/15 [00:00<00:01,  7.88batch/s]Link prediction evaluation:  53%|█████▎    | 8/15 [00:01<00:00,  7.89batch/s]Link prediction evaluation:  60%|██████    | 9/15 [00:01<00:00,  7.90batch/s]Link prediction evaluation:  67%|██████▋   | 10/15 [00:01<00:00,  7.91batch/s]Link prediction evaluation:  73%|███████▎  | 11/15 [00:01<00:00,  7.90batch/s]Link prediction evaluation:  80%|████████  | 12/15 [00:01<00:00,  7.91batch/s]Link prediction evaluation:  87%|████████▋ | 13/15 [00:01<00:00,  7.91batch/s]Link prediction evaluation:  93%|█████████▎| 14/15 [00:01<00:00,  7.91batch/s]Link prediction evaluation: 100%|██████████| 15/15 [00:01<00:00,  8.15batch/s]
+2026-05-27 13:08:49,864 - INFO - Validation MRR: 0.002750800224021077
+2026-05-27 13:08:51,678 - INFO - Epoch[100] Complete. Time taken: 00:02:14.118
+2026-05-27 13:10:57,666 - INFO - Epoch 101 - Train Loss: 3034.249121227394, Validation MRR: 0.002750800224021077, Learning Rate: 0.000691341716182545
+2026-05-27 13:11:02,091 - INFO - Memory cleaned.
+2026-05-27 13:11:03,170 - INFO - Epoch[101] Complete. Time taken: 00:02:11.492
+2026-05-27 13:13:09,553 - INFO - Epoch 102 - Train Loss: 3021.737668830425, Validation MRR: 0.002750800224021077, Learning Rate: 0.0006730585285387465
+2026-05-27 13:13:14,208 - INFO - Memory cleaned.
+2026-05-27 13:13:15,261 - INFO - Epoch[102] Complete. Time taken: 00:02:12.091
+2026-05-27 13:15:21,361 - INFO - Epoch 103 - Train Loss: 3003.49242744906, Validation MRR: 0.002750800224021077, Learning Rate: 0.0006545084971874737
+2026-05-27 13:15:26,004 - INFO - Memory cleaned.
+2026-05-27 13:15:27,101 - INFO - Epoch[103] Complete. Time taken: 00:02:11.840
+2026-05-27 13:17:33,212 - INFO - Epoch 104 - Train Loss: 2998.779725337632, Validation MRR: 0.002750800224021077, Learning Rate: 0.0006357202249325371
+2026-05-27 13:17:37,863 - INFO - Memory cleaned.
+2026-05-27 13:17:38,928 - INFO - Epoch[104] Complete. Time taken: 00:02:11.826
+2026-05-27 13:19:44,216 - INFO - Epoch 105 - Train Loss: 2994.9131222820197, Validation MRR: 0.002750800224021077, Learning Rate: 0.0006167226819279528
+2026-05-27 13:19:48,493 - INFO - Memory cleaned.
+2026-05-27 13:19:49,547 - INFO - Epoch[105] Complete. Time taken: 00:02:10.618
+2026-05-27 13:21:55,318 - INFO - Epoch 106 - Train Loss: 2988.9042026814327, Validation MRR: 0.002750800224021077, Learning Rate: 0.0005975451610080642
+2026-05-27 13:21:59,712 - INFO - Memory cleaned.
+2026-05-27 13:22:00,756 - INFO - Epoch[106] Complete. Time taken: 00:02:11.209
+2026-05-27 13:24:06,754 - INFO - Epoch 107 - Train Loss: 2990.280107319068, Validation MRR: 0.002750800224021077, Learning Rate: 0.0005782172325201155
+2026-05-27 13:24:11,132 - INFO - Memory cleaned.
+2026-05-27 13:24:12,200 - INFO - Epoch[107] Complete. Time taken: 00:02:11.444
+2026-05-27 13:26:18,267 - INFO - Epoch 108 - Train Loss: 3001.297937589863, Validation MRR: 0.002750800224021077, Learning Rate: 0.0005587686987289189
+2026-05-27 13:26:22,621 - INFO - Memory cleaned.
+2026-05-27 13:26:23,642 - INFO - Epoch[108] Complete. Time taken: 00:02:11.442
+2026-05-27 13:28:29,660 - INFO - Epoch 109 - Train Loss: 2983.984935066174, Validation MRR: 0.002750800224021077, Learning Rate: 0.0005392295478639225
+2026-05-27 13:28:33,933 - INFO - Memory cleaned.
+2026-05-27 13:28:34,999 - INFO - Epoch[109] Complete. Time taken: 00:02:11.356
+2026-05-27 13:30:41,051 - INFO - Epoch 110 - Train Loss: 2988.5585440734803, Validation MRR: 0.002750800224021077, Learning Rate: 0.0005196299078795343
+2026-05-27 13:30:45,412 - INFO - Memory cleaned.
+2026-05-27 13:30:46,451 - INFO - Epoch[110] Complete. Time taken: 00:02:11.452
+2026-05-27 13:32:52,558 - INFO - Epoch 111 - Train Loss: 2979.4684223849877, Validation MRR: 0.002750800224021077, Learning Rate: 0.0005
+2026-05-27 13:32:56,931 - INFO - Memory cleaned.
+2026-05-27 13:32:58,000 - INFO - Epoch[111] Complete. Time taken: 00:02:11.548
+2026-05-27 13:35:04,143 - INFO - Epoch 112 - Train Loss: 2964.5850985389748, Validation MRR: 0.002750800224021077, Learning Rate: 0.00048037009212046586
+2026-05-27 13:35:08,513 - INFO - Memory cleaned.
+2026-05-27 13:35:09,552 - INFO - Epoch[112] Complete. Time taken: 00:02:11.552
+2026-05-27 13:37:15,500 - INFO - Epoch 113 - Train Loss: 2966.375359307538, Validation MRR: 0.002750800224021077, Learning Rate: 0.0004607704521360776
+2026-05-27 13:37:19,869 - INFO - Memory cleaned.
+2026-05-27 13:37:20,919 - INFO - Epoch[113] Complete. Time taken: 00:02:11.367
+2026-05-27 13:39:27,286 - INFO - Epoch 114 - Train Loss: 2964.7387212969797, Validation MRR: 0.002750800224021077, Learning Rate: 0.00044123130127108126
+2026-05-27 13:39:31,867 - INFO - Memory cleaned.
+2026-05-27 13:39:32,940 - INFO - Epoch[114] Complete. Time taken: 00:02:12.020
+2026-05-27 13:41:39,026 - INFO - Epoch 115 - Train Loss: 2954.3066524010123, Validation MRR: 0.002750800224021077, Learning Rate: 0.0004217827674798847
+2026-05-27 13:41:43,606 - INFO - Memory cleaned.
+2026-05-27 13:41:44,702 - INFO - Epoch[115] Complete. Time taken: 00:02:11.762
+2026-05-27 13:43:50,857 - INFO - Epoch 116 - Train Loss: 2969.5430752049006, Validation MRR: 0.002750800224021077, Learning Rate: 0.00040245483899193594
+2026-05-27 13:43:55,449 - INFO - Memory cleaned.
+2026-05-27 13:43:56,548 - INFO - Epoch[116] Complete. Time taken: 00:02:11.846
+2026-05-27 13:46:01,432 - INFO - Epoch 117 - Train Loss: 2941.7261981027195, Validation MRR: 0.002750800224021077, Learning Rate: 0.00038327731807204733
+2026-05-27 13:46:05,754 - INFO - Memory cleaned.
+2026-05-27 13:46:06,676 - INFO - Epoch[117] Complete. Time taken: 00:02:10.128
+2026-05-27 13:48:12,653 - INFO - Epoch 118 - Train Loss: 2944.578328037473, Validation MRR: 0.002750800224021077, Learning Rate: 0.0003642797750674628
+2026-05-27 13:48:16,915 - INFO - Memory cleaned.
+2026-05-27 13:48:17,848 - INFO - Epoch[118] Complete. Time taken: 00:02:11.172
+2026-05-27 13:50:24,126 - INFO - Epoch 119 - Train Loss: 2948.8045488608577, Validation MRR: 0.002750800224021077, Learning Rate: 0.00034549150281252633
+2026-05-27 13:50:28,499 - INFO - Memory cleaned.
+2026-05-27 13:50:29,539 - INFO - Epoch[119] Complete. Time taken: 00:02:11.691
+2026-05-27 13:52:35,719 - INFO - Epoch 120 - Train Loss: 2926.0758125819016, Validation MRR: 0.002750800224021077, Learning Rate: 0.00032694147146125364
+2026-05-27 13:52:40,093 - INFO - Memory cleaned.
+2026-05-27 13:52:40,093 - INFO - Evaluating on validation set at epoch 120...
+Link prediction evaluation:   0%|          | 0/15 [00:00<?, ?batch/s]Link prediction evaluation:   7%|▋         | 1/15 [00:00<00:01,  7.29batch/s]Link prediction evaluation:  13%|█▎        | 2/15 [00:00<00:01,  7.59batch/s]Link prediction evaluation:  20%|██        | 3/15 [00:00<00:01,  7.71batch/s]Link prediction evaluation:  27%|██▋       | 4/15 [00:00<00:01,  7.78batch/s]Link prediction evaluation:  33%|███▎      | 5/15 [00:00<00:01,  7.82batch/s]Link prediction evaluation:  40%|████      | 6/15 [00:00<00:01,  7.85batch/s]Link prediction evaluation:  47%|████▋     | 7/15 [00:00<00:01,  7.87batch/s]Link prediction evaluation:  53%|█████▎    | 8/15 [00:01<00:00,  7.89batch/s]Link prediction evaluation:  60%|██████    | 9/15 [00:01<00:00,  7.88batch/s]Link prediction evaluation:  67%|██████▋   | 10/15 [00:01<00:00,  7.89batch/s]Link prediction evaluation:  73%|███████▎  | 11/15 [00:01<00:00,  7.89batch/s]Link prediction evaluation:  80%|████████  | 12/15 [00:01<00:00,  7.90batch/s]Link prediction evaluation:  87%|████████▋ | 13/15 [00:01<00:00,  7.89batch/s]Link prediction evaluation:  93%|█████████▎| 14/15 [00:01<00:00,  7.90batch/s]Link prediction evaluation: 100%|██████████| 15/15 [00:01<00:00,  8.11batch/s]
+2026-05-27 13:52:42,007 - INFO - Validation MRR: 0.002931945025920868
+2026-05-27 13:52:43,819 - INFO - Epoch[120] Complete. Time taken: 00:02:14.280
+2026-05-27 13:54:49,980 - INFO - Epoch 121 - Train Loss: 2946.1417544855535, Validation MRR: 0.002931945025920868, Learning Rate: 0.0003086582838174551
+2026-05-27 13:54:54,376 - INFO - Memory cleaned.
+2026-05-27 13:54:55,447 - INFO - Epoch[121] Complete. Time taken: 00:02:11.628
+2026-05-27 13:57:01,499 - INFO - Epoch 122 - Train Loss: 2944.865314636905, Validation MRR: 0.002931945025920868, Learning Rate: 0.0002906701312312861
+2026-05-27 13:57:05,787 - INFO - Memory cleaned.
+2026-05-27 13:57:06,830 - INFO - Epoch[122] Complete. Time taken: 00:02:11.383
+2026-05-27 13:59:13,071 - INFO - Epoch 123 - Train Loss: 2945.8892504471623, Validation MRR: 0.002931945025920868, Learning Rate: 0.00027300475013022663
+2026-05-27 13:59:17,473 - INFO - Memory cleaned.
+2026-05-27 13:59:18,511 - INFO - Epoch[123] Complete. Time taken: 00:02:11.681
+2026-05-27 14:01:24,763 - INFO - Epoch 124 - Train Loss: 2917.4828548072264, Validation MRR: 0.002931945025920868, Learning Rate: 0.00025568937925152246
+2026-05-27 14:01:29,135 - INFO - Memory cleaned.
+2026-05-27 14:01:30,172 - INFO - Epoch[124] Complete. Time taken: 00:02:11.661
+2026-05-27 14:03:36,486 - INFO - Epoch 125 - Train Loss: 2927.3629961636725, Validation MRR: 0.002931945025920868, Learning Rate: 0.00023875071764202561
+2026-05-27 14:03:40,857 - INFO - Memory cleaned.
+2026-05-27 14:03:41,896 - INFO - Epoch[125] Complete. Time taken: 00:02:11.724
+2026-05-27 14:05:47,895 - INFO - Epoch 126 - Train Loss: 2932.725739175253, Validation MRR: 0.002931945025920868, Learning Rate: 0.00022221488349019887
+2026-05-27 14:05:52,518 - INFO - Memory cleaned.
+2026-05-27 14:05:53,577 - INFO - Epoch[126] Complete. Time taken: 00:02:11.681
+2026-05-27 14:07:59,733 - INFO - Epoch 127 - Train Loss: 2925.658290587912, Validation MRR: 0.002931945025920868, Learning Rate: 0.00020610737385376348
+2026-05-27 14:08:04,346 - INFO - Memory cleaned.
+2026-05-27 14:08:05,419 - INFO - Epoch[127] Complete. Time taken: 00:02:11.842
+2026-05-27 14:10:11,461 - INFO - Epoch 128 - Train Loss: 2925.9093324775636, Validation MRR: 0.002931945025920868, Learning Rate: 0.00019045302534508314
+2026-05-27 14:10:16,052 - INFO - Memory cleaned.
+2026-05-27 14:10:17,002 - INFO - Epoch[128] Complete. Time taken: 00:02:11.582
+2026-05-27 14:12:22,412 - INFO - Epoch 129 - Train Loss: 2934.2550386402345, Validation MRR: 0.002931945025920868, Learning Rate: 0.00017527597583490823
+2026-05-27 14:12:26,773 - INFO - Memory cleaned.
+2026-05-27 14:12:27,795 - INFO - Epoch[129] Complete. Time taken: 00:02:10.794
+2026-05-27 14:14:33,854 - INFO - Epoch 130 - Train Loss: 2902.617861099461, Validation MRR: 0.002931945025920868, Learning Rate: 0.00016059962723352923
+2026-05-27 14:14:38,205 - INFO - Memory cleaned.
+2026-05-27 14:14:39,242 - INFO - Epoch[130] Complete. Time taken: 00:02:11.446
+2026-05-27 14:16:45,343 - INFO - Epoch 131 - Train Loss: 2927.5774340759385, Validation MRR: 0.002931945025920868, Learning Rate: 0.00014644660940672628
+2026-05-27 14:16:49,698 - INFO - Memory cleaned.
+2026-05-27 14:16:50,765 - INFO - Epoch[131] Complete. Time taken: 00:02:11.523
+2026-05-27 14:18:56,765 - INFO - Epoch 132 - Train Loss: 2918.8000241867076, Validation MRR: 0.002931945025920868, Learning Rate: 0.00013283874528215717
+2026-05-27 14:19:01,119 - INFO - Memory cleaned.
+2026-05-27 14:19:02,122 - INFO - Epoch[132] Complete. Time taken: 00:02:11.357
+2026-05-27 14:21:08,216 - INFO - Epoch 133 - Train Loss: 2899.405855780207, Validation MRR: 0.002931945025920868, Learning Rate: 0.00011979701719998454
+2026-05-27 14:21:12,592 - INFO - Memory cleaned.
+2026-05-27 14:21:13,635 - INFO - Epoch[133] Complete. Time taken: 00:02:11.512
+2026-05-27 14:23:19,710 - INFO - Epoch 134 - Train Loss: 2924.816735152679, Validation MRR: 0.002931945025920868, Learning Rate: 0.00010734153455962748
+2026-05-27 14:23:24,061 - INFO - Memory cleaned.
+2026-05-27 14:23:25,090 - INFO - Epoch[134] Complete. Time taken: 00:02:11.455
+2026-05-27 14:25:31,256 - INFO - Epoch 135 - Train Loss: 2905.8251058723363, Validation MRR: 0.002931945025920868, Learning Rate: 9.549150281252633e-05
+2026-05-27 14:25:35,613 - INFO - Memory cleaned.
+2026-05-27 14:25:36,660 - INFO - Epoch[135] Complete. Time taken: 00:02:11.570
+2026-05-27 14:27:42,748 - INFO - Epoch 136 - Train Loss: 2906.7454101864296, Validation MRR: 0.002931945025920868, Learning Rate: 8.42651938487275e-05
+2026-05-27 14:27:47,167 - INFO - Memory cleaned.
+2026-05-27 14:27:48,167 - INFO - Epoch[136] Complete. Time taken: 00:02:11.507
+2026-05-27 14:29:54,173 - INFO - Epoch 137 - Train Loss: 2906.8789744393903, Validation MRR: 0.002931945025920868, Learning Rate: 7.367991782295391e-05
+2026-05-27 14:29:58,534 - INFO - Memory cleaned.
+2026-05-27 14:29:59,581 - INFO - Epoch[137] Complete. Time taken: 00:02:11.413
+2026-05-27 14:32:05,556 - INFO - Epoch 138 - Train Loss: 2905.2561614566453, Validation MRR: 0.002931945025920868, Learning Rate: 6.375199646360153e-05
+2026-05-27 14:32:10,162 - INFO - Memory cleaned.
+2026-05-27 14:32:11,234 - INFO - Epoch[138] Complete. Time taken: 00:02:11.654
+2026-05-27 14:34:17,314 - INFO - Epoch 139 - Train Loss: 2895.626820433943, Validation MRR: 0.002931945025920868, Learning Rate: 5.449673790581611e-05
+2026-05-27 14:34:21,888 - INFO - Memory cleaned.
+2026-05-27 14:34:22,975 - INFO - Epoch[139] Complete. Time taken: 00:02:11.740
+2026-05-27 14:36:28,984 - INFO - Epoch 140 - Train Loss: 2903.661432156114, Validation MRR: 0.002931945025920868, Learning Rate: 4.592841308745932e-05
+2026-05-27 14:36:33,612 - INFO - Memory cleaned.
+2026-05-27 14:36:33,612 - INFO - Evaluating on validation set at epoch 140...
+Link prediction evaluation:   0%|          | 0/15 [00:00<?, ?batch/s]Link prediction evaluation:   7%|▋         | 1/15 [00:00<00:01,  7.81batch/s]Link prediction evaluation:  13%|█▎        | 2/15 [00:00<00:01,  7.84batch/s]Link prediction evaluation:  20%|██        | 3/15 [00:00<00:01,  7.84batch/s]Link prediction evaluation:  27%|██▋       | 4/15 [00:00<00:01,  7.85batch/s]Link prediction evaluation:  33%|███▎      | 5/15 [00:00<00:01,  7.86batch/s]Link prediction evaluation:  40%|████      | 6/15 [00:00<00:01,  7.87batch/s]Link prediction evaluation:  47%|████▋     | 7/15 [00:00<00:01,  7.86batch/s]Link prediction evaluation:  53%|█████▎    | 8/15 [00:01<00:00,  7.87batch/s]Link prediction evaluation:  60%|██████    | 9/15 [00:01<00:00,  7.87batch/s]Link prediction evaluation:  67%|██████▋   | 10/15 [00:01<00:00,  7.87batch/s]Link prediction evaluation:  73%|███████▎  | 11/15 [00:01<00:00,  7.87batch/s]Link prediction evaluation:  80%|████████  | 12/15 [00:01<00:00,  7.88batch/s]Link prediction evaluation:  87%|████████▋ | 13/15 [00:01<00:00,  7.87batch/s]Link prediction evaluation:  93%|█████████▎| 14/15 [00:01<00:00,  7.87batch/s]Link prediction evaluation: 100%|██████████| 15/15 [00:01<00:00,  8.12batch/s]
+2026-05-27 14:36:35,460 - INFO - Validation MRR: 0.0028258981183171272
+2026-05-27 14:36:36,525 - INFO - Epoch[140] Complete. Time taken: 00:02:13.550
+2026-05-27 14:38:42,971 - INFO - Epoch 141 - Train Loss: 2896.698200995615, Validation MRR: 0.0028258981183171272, Learning Rate: 3.806023374435663e-05
+2026-05-27 14:38:47,351 - INFO - Memory cleaned.
+2026-05-27 14:38:48,393 - INFO - Epoch[141] Complete. Time taken: 00:02:11.869
+2026-05-27 14:40:54,450 - INFO - Epoch 142 - Train Loss: 2894.7545049235846, Validation MRR: 0.0028258981183171272, Learning Rate: 3.090433203875792e-05
+2026-05-27 14:40:58,822 - INFO - Memory cleaned.
+2026-05-27 14:40:59,824 - INFO - Epoch[142] Complete. Time taken: 00:02:11.430
+2026-05-27 14:43:05,947 - INFO - Epoch 143 - Train Loss: 2899.247673716702, Validation MRR: 0.0028258981183171272, Learning Rate: 2.4471741852423235e-05
+2026-05-27 14:43:10,360 - INFO - Memory cleaned.
+2026-05-27 14:43:11,411 - INFO - Epoch[143] Complete. Time taken: 00:02:11.587
+2026-05-27 14:45:17,475 - INFO - Epoch 144 - Train Loss: 2893.4258896024257, Validation MRR: 0.0028258981183171272, Learning Rate: 1.8772381773176416e-05
+2026-05-27 14:45:21,854 - INFO - Memory cleaned.
+2026-05-27 14:45:22,875 - INFO - Epoch[144] Complete. Time taken: 00:02:11.464
+2026-05-27 14:47:28,931 - INFO - Epoch 145 - Train Loss: 2889.920213887895, Validation MRR: 0.0028258981183171272, Learning Rate: 1.3815039801161721e-05
+2026-05-27 14:47:33,226 - INFO - Memory cleaned.
+2026-05-27 14:47:34,254 - INFO - Epoch[145] Complete. Time taken: 00:02:11.378
+2026-05-27 14:49:40,668 - INFO - Epoch 146 - Train Loss: 2876.739909272929, Validation MRR: 0.0028258981183171272, Learning Rate: 9.607359798384786e-06
+2026-05-27 14:49:45,037 - INFO - Memory cleaned.
+2026-05-27 14:49:46,067 - INFO - Epoch[146] Complete. Time taken: 00:02:11.814
+2026-05-27 14:51:52,160 - INFO - Epoch 147 - Train Loss: 2871.1152364872305, Validation MRR: 0.0028258981183171272, Learning Rate: 6.15582970243117e-06
+2026-05-27 14:51:56,532 - INFO - Memory cleaned.
+2026-05-27 14:51:57,571 - INFO - Epoch[147] Complete. Time taken: 00:02:11.504
+2026-05-27 14:54:03,751 - INFO - Epoch 148 - Train Loss: 2890.7229377819344, Validation MRR: 0.0028258981183171272, Learning Rate: 3.4657715225368535e-06
+2026-05-27 14:54:08,125 - INFO - Memory cleaned.
+2026-05-27 14:54:09,125 - INFO - Epoch[148] Complete. Time taken: 00:02:11.554
+2026-05-27 14:56:15,150 - INFO - Epoch 149 - Train Loss: 2891.8513343310915, Validation MRR: 0.0028258981183171272, Learning Rate: 1.541333133436018e-06
+2026-05-27 14:56:19,804 - INFO - Memory cleaned.
+2026-05-27 14:56:20,881 - INFO - Epoch[149] Complete. Time taken: 00:02:11.755
+2026-05-27 14:58:27,023 - INFO - Epoch 150 - Train Loss: 2899.253114923211, Validation MRR: 0.0028258981183171272, Learning Rate: 3.854818796385495e-07
+2026-05-27 14:58:31,642 - INFO - Memory cleaned.
+2026-05-27 14:58:32,696 - INFO - Epoch[150] Complete. Time taken: 00:02:11.815
+2026-05-27 15:00:38,774 - INFO - Epoch 151 - Train Loss: 3123.7061630964176, Validation MRR: 0.0028258981183171272, Learning Rate: 0.001
+2026-05-27 15:00:43,393 - INFO - Memory cleaned.
+2026-05-27 15:00:44,450 - INFO - Epoch[151] Complete. Time taken: 00:02:11.754
+2026-05-27 15:02:50,487 - INFO - Epoch 152 - Train Loss: 3087.6501191292377, Validation MRR: 0.0028258981183171272, Learning Rate: 0.0009999036202410325
+2026-05-27 15:02:54,879 - INFO - Memory cleaned.
+2026-05-27 15:02:55,933 - INFO - Epoch[152] Complete. Time taken: 00:02:11.482
+2026-05-27 15:05:02,084 - INFO - Epoch 153 - Train Loss: 3082.6043990271814, Validation MRR: 0.0028258981183171272, Learning Rate: 0.0009996145181203615
+2026-05-27 15:05:06,445 - INFO - Memory cleaned.
+2026-05-27 15:05:07,495 - INFO - Epoch[153] Complete. Time taken: 00:02:11.562
+2026-05-27 15:07:13,787 - INFO - Epoch 154 - Train Loss: 3057.9662657431363, Validation MRR: 0.0028258981183171272, Learning Rate: 0.000999132805092358
+2026-05-27 15:07:18,152 - INFO - Memory cleaned.
+2026-05-27 15:07:19,211 - INFO - Epoch[154] Complete. Time taken: 00:02:11.716
+2026-05-27 15:09:25,329 - INFO - Epoch 155 - Train Loss: 3092.941301769318, Validation MRR: 0.0028258981183171272, Learning Rate: 0.000998458666866564
+2026-05-27 15:09:29,696 - INFO - Memory cleaned.
+2026-05-27 15:09:30,746 - INFO - Epoch[155] Complete. Time taken: 00:02:11.535
+2026-05-27 15:11:36,879 - INFO - Epoch 156 - Train Loss: 3063.857207486505, Validation MRR: 0.0028258981183171272, Learning Rate: 0.0009975923633360985
+2026-05-27 15:11:41,162 - INFO - Memory cleaned.
+2026-05-27 15:11:42,181 - INFO - Epoch[156] Complete. Time taken: 00:02:11.435
+2026-05-27 15:13:48,326 - INFO - Epoch 157 - Train Loss: 3084.9912846384277, Validation MRR: 0.0028258981183171272, Learning Rate: 0.0009965342284774632
+2026-05-27 15:13:52,686 - INFO - Memory cleaned.
+2026-05-27 15:13:53,735 - INFO - Epoch[157] Complete. Time taken: 00:02:11.554
+2026-05-27 15:15:59,961 - INFO - Epoch 158 - Train Loss: 3055.6823786651967, Validation MRR: 0.0028258981183171272, Learning Rate: 0.0009952846702217886
+2026-05-27 15:16:04,327 - INFO - Memory cleaned.
+2026-05-27 15:16:05,367 - INFO - Epoch[158] Complete. Time taken: 00:02:11.631
+2026-05-27 15:18:11,551 - INFO - Epoch 159 - Train Loss: 3061.650056578519, Validation MRR: 0.0028258981183171272, Learning Rate: 0.0009938441702975688
+2026-05-27 15:18:15,929 - INFO - Memory cleaned.
+2026-05-27 15:18:16,988 - INFO - Epoch[159] Complete. Time taken: 00:02:11.621
+2026-05-27 15:20:22,978 - INFO - Epoch 160 - Train Loss: 3056.7660871889193, Validation MRR: 0.0028258981183171272, Learning Rate: 0.0009922132840449458
+2026-05-27 15:20:27,473 - INFO - Memory cleaned.
+2026-05-27 15:20:27,473 - INFO - Evaluating on validation set at epoch 160...
+Link prediction evaluation:   0%|          | 0/15 [00:00<?, ?batch/s]Link prediction evaluation:   7%|▋         | 1/15 [00:00<00:01,  7.29batch/s]Link prediction evaluation:  13%|█▎        | 2/15 [00:00<00:01,  7.62batch/s]Link prediction evaluation:  20%|██        | 3/15 [00:00<00:01,  7.72batch/s]Link prediction evaluation:  27%|██▋       | 4/15 [00:00<00:01,  7.77batch/s]Link prediction evaluation:  33%|███▎      | 5/15 [00:00<00:01,  7.81batch/s]Link prediction evaluation:  40%|████      | 6/15 [00:00<00:01,  7.84batch/s]Link prediction evaluation:  47%|████▋     | 7/15 [00:00<00:01,  7.85batch/s]Link prediction evaluation:  53%|█████▎    | 8/15 [00:01<00:00,  7.86batch/s]Link prediction evaluation:  60%|██████    | 9/15 [00:01<00:00,  7.84batch/s]Link prediction evaluation:  67%|██████▋   | 10/15 [00:01<00:00,  7.86batch/s]Link prediction evaluation:  73%|███████▎  | 11/15 [00:01<00:00,  7.85batch/s]Link prediction evaluation:  80%|████████  | 12/15 [00:01<00:00,  7.87batch/s]Link prediction evaluation:  87%|████████▋ | 13/15 [00:01<00:00,  7.85batch/s]Link prediction evaluation:  93%|█████████▎| 14/15 [00:01<00:00,  7.86batch/s]Link prediction evaluation: 100%|██████████| 15/15 [00:01<00:00,  8.08batch/s]
+2026-05-27 15:20:29,332 - INFO - Validation MRR: 0.002840614877641201
+2026-05-27 15:20:30,398 - INFO - Epoch[160] Complete. Time taken: 00:02:13.409
+2026-05-27 15:22:36,684 - INFO - Epoch 161 - Train Loss: 3075.2652193994522, Validation MRR: 0.002840614877641201, Learning Rate: 0.0009903926402016153
+2026-05-27 15:22:41,298 - INFO - Memory cleaned.
+2026-05-27 15:22:42,399 - INFO - Epoch[161] Complete. Time taken: 00:02:12.001
+2026-05-27 15:24:48,601 - INFO - Epoch 162 - Train Loss: 3075.223001526965, Validation MRR: 0.002840614877641201, Learning Rate: 0.0009883829406604362
+2026-05-27 15:24:53,241 - INFO - Memory cleaned.
+2026-05-27 15:24:54,297 - INFO - Epoch[162] Complete. Time taken: 00:02:11.898
+2026-05-27 15:26:59,971 - INFO - Epoch 163 - Train Loss: 3051.8197740397645, Validation MRR: 0.002840614877641201, Learning Rate: 0.0009861849601988384
+2026-05-27 15:27:04,377 - INFO - Memory cleaned.
+2026-05-27 15:27:05,459 - INFO - Epoch[163] Complete. Time taken: 00:02:11.162
+2026-05-27 15:29:11,922 - INFO - Epoch 164 - Train Loss: 3078.3269280415525, Validation MRR: 0.002840614877641201, Learning Rate: 0.0009837995461801298
+2026-05-27 15:29:16,403 - INFO - Memory cleaned.
+2026-05-27 15:29:17,413 - INFO - Epoch[164] Complete. Time taken: 00:02:11.953
+2026-05-27 15:31:23,541 - INFO - Epoch 165 - Train Loss: 3066.5357781904463, Validation MRR: 0.002840614877641201, Learning Rate: 0.0009812276182268236
+2026-05-27 15:31:27,903 - INFO - Memory cleaned.
+2026-05-27 15:31:28,952 - INFO - Epoch[165] Complete. Time taken: 00:02:11.539
+2026-05-27 15:33:35,102 - INFO - Epoch 166 - Train Loss: 3055.7066256210137, Validation MRR: 0.002840614877641201, Learning Rate: 0.0009784701678661044
+2026-05-27 15:33:39,465 - INFO - Memory cleaned.
+2026-05-27 15:33:40,490 - INFO - Epoch[166] Complete. Time taken: 00:02:11.537
+2026-05-27 15:35:46,639 - INFO - Epoch 167 - Train Loss: 3056.0188130030497, Validation MRR: 0.002840614877641201, Learning Rate: 0.0009755282581475768
+2026-05-27 15:35:50,990 - INFO - Memory cleaned.
+2026-05-27 15:35:52,053 - INFO - Epoch[167] Complete. Time taken: 00:02:11.564
+2026-05-27 15:37:58,077 - INFO - Epoch 168 - Train Loss: 3055.96205297073, Validation MRR: 0.002840614877641201, Learning Rate: 0.0009724030232334391
+2026-05-27 15:38:02,429 - INFO - Memory cleaned.
+2026-05-27 15:38:03,439 - INFO - Epoch[168] Complete. Time taken: 00:02:11.386
+2026-05-27 15:40:09,504 - INFO - Epoch 169 - Train Loss: 3044.38671924029, Validation MRR: 0.002840614877641201, Learning Rate: 0.0009690956679612422
+2026-05-27 15:40:13,868 - INFO - Memory cleaned.
+2026-05-27 15:40:14,915 - INFO - Epoch[169] Complete. Time taken: 00:02:11.476
+2026-05-27 15:42:21,017 - INFO - Epoch 170 - Train Loss: 3044.553195829702, Validation MRR: 0.002840614877641201, Learning Rate: 0.0009656074673794017
+2026-05-27 15:42:25,388 - INFO - Memory cleaned.
+2026-05-27 15:42:26,417 - INFO - Epoch[170] Complete. Time taken: 00:02:11.502
+2026-05-27 15:44:32,723 - INFO - Epoch 171 - Train Loss: 3050.1499752525206, Validation MRR: 0.002840614877641201, Learning Rate: 0.0009619397662556434
+2026-05-27 15:44:37,097 - INFO - Memory cleaned.
+2026-05-27 15:44:38,148 - INFO - Epoch[171] Complete. Time taken: 00:02:11.730
+2026-05-27 15:46:44,106 - INFO - Epoch 172 - Train Loss: 3040.7323135680226, Validation MRR: 0.002840614877641201, Learning Rate: 0.0009580939785585681
+2026-05-27 15:46:48,731 - INFO - Memory cleaned.
+2026-05-27 15:46:49,777 - INFO - Epoch[172] Complete. Time taken: 00:02:11.629
+2026-05-27 15:48:55,843 - INFO - Epoch 173 - Train Loss: 3058.7130115204473, Validation MRR: 0.002840614877641201, Learning Rate: 0.0009540715869125407
+2026-05-27 15:49:00,457 - INFO - Memory cleaned.
+2026-05-27 15:49:01,595 - INFO - Epoch[173] Complete. Time taken: 00:02:11.818
+2026-05-27 15:51:07,683 - INFO - Epoch 174 - Train Loss: 3038.575970090866, Validation MRR: 0.002840614877641201, Learning Rate: 0.0009498741420261108
+2026-05-27 15:51:12,336 - INFO - Memory cleaned.
+2026-05-27 15:51:13,435 - INFO - Epoch[174] Complete. Time taken: 00:02:11.840
+2026-05-27 15:53:19,565 - INFO - Epoch 175 - Train Loss: 3038.749569302169, Validation MRR: 0.002840614877641201, Learning Rate: 0.0009455032620941839
+2026-05-27 15:53:23,874 - INFO - Memory cleaned.
+2026-05-27 15:53:24,923 - INFO - Epoch[175] Complete. Time taken: 00:02:11.488
+2026-05-27 15:55:31,169 - INFO - Epoch 176 - Train Loss: 3032.1393250468013, Validation MRR: 0.002840614877641201, Learning Rate: 0.0009409606321741775
+2026-05-27 15:55:35,529 - INFO - Memory cleaned.
+2026-05-27 15:55:36,536 - INFO - Epoch[176] Complete. Time taken: 00:02:11.613
+2026-05-27 15:57:42,632 - INFO - Epoch 177 - Train Loss: 3043.1873561501134, Validation MRR: 0.002840614877641201, Learning Rate: 0.0009362480035363986
+2026-05-27 15:57:46,984 - INFO - Memory cleaned.
+2026-05-27 15:57:48,037 - INFO - Epoch[177] Complete. Time taken: 00:02:11.501
+2026-05-27 15:59:54,204 - INFO - Epoch 178 - Train Loss: 3027.6795608085963, Validation MRR: 0.002840614877641201, Learning Rate: 0.0009313671929888959
+2026-05-27 15:59:58,571 - INFO - Memory cleaned.
+2026-05-27 15:59:59,582 - INFO - Epoch[178] Complete. Time taken: 00:02:11.545
+2026-05-27 16:02:05,587 - INFO - Epoch 179 - Train Loss: 3023.419842430028, Validation MRR: 0.002840614877641201, Learning Rate: 0.0009263200821770461
+2026-05-27 16:02:09,920 - INFO - Memory cleaned.
+2026-05-27 16:02:10,990 - INFO - Epoch[179] Complete. Time taken: 00:02:11.408
+2026-05-27 16:04:17,134 - INFO - Epoch 180 - Train Loss: 3027.360146217139, Validation MRR: 0.002840614877641201, Learning Rate: 0.0009211086168581433
+2026-05-27 16:04:21,514 - INFO - Memory cleaned.
+2026-05-27 16:04:21,515 - INFO - Evaluating on validation set at epoch 180...
+Link prediction evaluation:   0%|          | 0/15 [00:00<?, ?batch/s]Link prediction evaluation:   7%|▋         | 1/15 [00:00<00:01,  7.60batch/s]Link prediction evaluation:  13%|█▎        | 2/15 [00:00<00:01,  7.75batch/s]Link prediction evaluation:  20%|██        | 3/15 [00:00<00:01,  7.81batch/s]Link prediction evaluation:  27%|██▋       | 4/15 [00:00<00:01,  7.84batch/s]Link prediction evaluation:  33%|███▎      | 5/15 [00:00<00:01,  7.87batch/s]Link prediction evaluation:  40%|████      | 6/15 [00:00<00:01,  7.87batch/s]Link prediction evaluation:  47%|████▋     | 7/15 [00:00<00:01,  7.87batch/s]Link prediction evaluation:  53%|█████▎    | 8/15 [00:01<00:00,  7.88batch/s]Link prediction evaluation:  60%|██████    | 9/15 [00:01<00:00,  7.88batch/s]Link prediction evaluation:  67%|██████▋   | 10/15 [00:01<00:00,  7.89batch/s]Link prediction evaluation:  73%|███████▎  | 11/15 [00:01<00:00,  7.89batch/s]Link prediction evaluation:  80%|████████  | 12/15 [00:01<00:00,  7.89batch/s]Link prediction evaluation:  87%|████████▋ | 13/15 [00:01<00:00,  7.89batch/s]Link prediction evaluation:  93%|█████████▎| 14/15 [00:01<00:00,  7.89batch/s]Link prediction evaluation: 100%|██████████| 15/15 [00:01<00:00,  8.13batch/s]
+2026-05-27 16:04:23,385 - INFO - Validation MRR: 0.003141075372695923
+2026-05-27 16:04:25,194 - INFO - Epoch[180] Complete. Time taken: 00:02:14.203
+2026-05-27 16:06:31,434 - INFO - Epoch 181 - Train Loss: 3037.027002373703, Validation MRR: 0.003141075372695923, Learning Rate: 0.0009157348061512727
+2026-05-27 16:06:35,785 - INFO - Memory cleaned.
+2026-05-27 16:06:36,860 - INFO - Epoch[181] Complete. Time taken: 00:02:11.666
+2026-05-27 16:08:42,919 - INFO - Epoch 182 - Train Loss: 3029.63966659904, Validation MRR: 0.003141075372695923, Learning Rate: 0.0009102007217627568
+2026-05-27 16:08:47,342 - INFO - Memory cleaned.
+2026-05-27 16:08:48,348 - INFO - Epoch[182] Complete. Time taken: 00:02:11.488
+2026-05-27 16:10:54,456 - INFO - Epoch 183 - Train Loss: 3015.465568381385, Validation MRR: 0.003141075372695923, Learning Rate: 0.0009045084971874737
+2026-05-27 16:10:58,923 - INFO - Memory cleaned.
+2026-05-27 16:11:00,001 - INFO - Epoch[183] Complete. Time taken: 00:02:11.653
+2026-05-27 16:13:06,116 - INFO - Epoch 184 - Train Loss: 3047.9973924249416, Validation MRR: 0.003141075372695923, Learning Rate: 0.0008986603268863536
+2026-05-27 16:13:10,759 - INFO - Memory cleaned.
+2026-05-27 16:13:11,844 - INFO - Epoch[184] Complete. Time taken: 00:02:11.843
+2026-05-27 16:15:17,959 - INFO - Epoch 185 - Train Loss: 3009.351548634235, Validation MRR: 0.003141075372695923, Learning Rate: 0.0008926584654403724
+2026-05-27 16:15:22,598 - INFO - Memory cleaned.
+2026-05-27 16:15:23,687 - INFO - Epoch[185] Complete. Time taken: 00:02:11.843
+2026-05-27 16:17:29,110 - INFO - Epoch 186 - Train Loss: 3033.736486640197, Validation MRR: 0.003141075372695923, Learning Rate: 0.0008865052266813684
+2026-05-27 16:17:33,506 - INFO - Memory cleaned.
+2026-05-27 16:17:34,525 - INFO - Epoch[186] Complete. Time taken: 00:02:10.837
+2026-05-27 16:19:41,184 - INFO - Epoch 187 - Train Loss: 3029.9825493042854, Validation MRR: 0.003141075372695923, Learning Rate: 0.0008802029828000156
+2026-05-27 16:19:45,547 - INFO - Memory cleaned.
+2026-05-27 16:19:46,612 - INFO - Epoch[187] Complete. Time taken: 00:02:12.088
+2026-05-27 16:21:52,707 - INFO - Epoch 188 - Train Loss: 3002.6325595766107, Validation MRR: 0.003141075372695923, Learning Rate: 0.0008737541634312985
+2026-05-27 16:21:57,041 - INFO - Memory cleaned.
+2026-05-27 16:21:58,062 - INFO - Epoch[188] Complete. Time taken: 00:02:11.449
+2026-05-27 16:24:04,180 - INFO - Epoch 189 - Train Loss: 3024.5362011489806, Validation MRR: 0.003141075372695923, Learning Rate: 0.0008671612547178428
+2026-05-27 16:24:08,573 - INFO - Memory cleaned.
+2026-05-27 16:24:09,672 - INFO - Epoch[189] Complete. Time taken: 00:02:11.610
+2026-05-27 16:26:16,155 - INFO - Epoch 190 - Train Loss: 3009.367563117373, Validation MRR: 0.003141075372695923, Learning Rate: 0.0008604267983514594
+2026-05-27 16:26:20,518 - INFO - Memory cleaned.
+2026-05-27 16:26:21,591 - INFO - Epoch[190] Complete. Time taken: 00:02:11.919
+2026-05-27 16:28:27,723 - INFO - Epoch 191 - Train Loss: 3036.9658220613674, Validation MRR: 0.003141075372695923, Learning Rate: 0.0008535533905932737
+2026-05-27 16:28:32,050 - INFO - Memory cleaned.
+2026-05-27 16:28:33,106 - INFO - Epoch[191] Complete. Time taken: 00:02:11.515
+2026-05-27 16:30:39,137 - INFO - Epoch 192 - Train Loss: 3015.2912175294805, Validation MRR: 0.003141075372695923, Learning Rate: 0.000846543681272818
+2026-05-27 16:30:43,504 - INFO - Memory cleaned.
+2026-05-27 16:30:44,541 - INFO - Epoch[192] Complete. Time taken: 00:02:11.435
+2026-05-27 16:32:50,690 - INFO - Epoch 193 - Train Loss: 3014.732450426953, Validation MRR: 0.003141075372695923, Learning Rate: 0.0008394003727664709
+2026-05-27 16:32:55,062 - INFO - Memory cleaned.
+2026-05-27 16:32:56,125 - INFO - Epoch[193] Complete. Time taken: 00:02:11.584
+2026-05-27 16:35:02,221 - INFO - Epoch 194 - Train Loss: 2995.400278565975, Validation MRR: 0.003141075372695923, Learning Rate: 0.0008321262189556409
+2026-05-27 16:35:06,613 - INFO - Memory cleaned.
+2026-05-27 16:35:07,648 - INFO - Epoch[194] Complete. Time taken: 00:02:11.523
+2026-05-27 16:37:13,603 - INFO - Epoch 195 - Train Loss: 2991.869116938431, Validation MRR: 0.003141075372695923, Learning Rate: 0.000824724024165092
+2026-05-27 16:37:18,246 - INFO - Memory cleaned.
+2026-05-27 16:37:19,173 - INFO - Epoch[195] Complete. Time taken: 00:02:11.524
+2026-05-27 16:39:25,317 - INFO - Epoch 196 - Train Loss: 3003.9262700975514, Validation MRR: 0.003141075372695923, Learning Rate: 0.0008171966420818228
+2026-05-27 16:39:29,926 - INFO - Memory cleaned.
+2026-05-27 16:39:31,024 - INFO - Epoch[196] Complete. Time taken: 00:02:11.851
+2026-05-27 16:41:37,030 - INFO - Epoch 197 - Train Loss: 3006.8584262086742, Validation MRR: 0.003141075372695923, Learning Rate: 0.000809546974654917
+2026-05-27 16:41:41,666 - INFO - Memory cleaned.
+2026-05-27 16:41:42,703 - INFO - Epoch[197] Complete. Time taken: 00:02:11.679
+2026-05-27 16:43:48,741 - INFO - Epoch 198 - Train Loss: 2987.9001733382943, Validation MRR: 0.003141075372695923, Learning Rate: 0.0008017779709767857
+2026-05-27 16:43:53,083 - INFO - Memory cleaned.
+2026-05-27 16:43:54,143 - INFO - Epoch[198] Complete. Time taken: 00:02:11.439
+2026-05-27 16:46:00,518 - INFO - Epoch 199 - Train Loss: 3000.5118327124283, Validation MRR: 0.003141075372695923, Learning Rate: 0.0007938926261462366
+2026-05-27 16:46:04,917 - INFO - Memory cleaned.
+2026-05-27 16:46:05,926 - INFO - Epoch[199] Complete. Time taken: 00:02:11.784
+2026-05-27 16:48:12,024 - INFO - Epoch 200 - Train Loss: 2984.2384224929524, Validation MRR: 0.003141075372695923, Learning Rate: 0.0007858939801138062
+2026-05-27 16:48:16,384 - INFO - Memory cleaned.
+2026-05-27 16:48:16,384 - INFO - Evaluating on validation set at epoch 200...
+Link prediction evaluation:   0%|          | 0/15 [00:00<?, ?batch/s]Link prediction evaluation:   7%|▋         | 1/15 [00:00<00:01,  7.82batch/s]Link prediction evaluation:  13%|█▎        | 2/15 [00:00<00:01,  7.85batch/s]Link prediction evaluation:  20%|██        | 3/15 [00:00<00:01,  7.83batch/s]Link prediction evaluation:  27%|██▋       | 4/15 [00:00<00:01,  7.85batch/s]Link prediction evaluation:  33%|███▎      | 5/15 [00:00<00:01,  7.86batch/s]Link prediction evaluation:  40%|████      | 6/15 [00:00<00:01,  7.87batch/s]Link prediction evaluation:  47%|████▋     | 7/15 [00:00<00:01,  7.87batch/s]Link prediction evaluation:  53%|█████▎    | 8/15 [00:01<00:00,  7.88batch/s]Link prediction evaluation:  60%|██████    | 9/15 [00:01<00:00,  7.89batch/s]Link prediction evaluation:  67%|██████▋   | 10/15 [00:01<00:00,  7.90batch/s]Link prediction evaluation:  73%|███████▎  | 11/15 [00:01<00:00,  7.89batch/s]Link prediction evaluation:  80%|████████  | 12/15 [00:01<00:00,  7.91batch/s]Link prediction evaluation:  87%|████████▋ | 13/15 [00:01<00:00,  7.90batch/s]Link prediction evaluation:  93%|█████████▎| 14/15 [00:01<00:00,  7.90batch/s]Link prediction evaluation: 100%|██████████| 15/15 [00:01<00:00,  8.14batch/s]
+2026-05-27 16:48:18,227 - INFO - Validation MRR: 0.0032072030007839203
+2026-05-27 16:48:20,140 - INFO - Epoch[200] Complete. Time taken: 00:02:14.213
+2026-05-27 16:50:26,457 - INFO - Epoch 201 - Train Loss: 3002.9508061680267, Validation MRR: 0.0032072030007839203, Learning Rate: 0.0007777851165098011
+2026-05-27 16:50:30,849 - INFO - Memory cleaned.
+2026-05-27 16:50:31,884 - INFO - Epoch[201] Complete. Time taken: 00:02:11.744
+2026-05-27 16:52:38,024 - INFO - Epoch 202 - Train Loss: 2985.0378940907767, Validation MRR: 0.0032072030007839203, Learning Rate: 0.0007695691614555002
+2026-05-27 16:52:42,407 - INFO - Memory cleaned.
+2026-05-27 16:52:43,464 - INFO - Epoch[202] Complete. Time taken: 00:02:11.580
+2026-05-27 16:54:49,430 - INFO - Epoch 203 - Train Loss: 2972.5585464050228, Validation MRR: 0.0032072030007839203, Learning Rate: 0.0007612492823579744
+2026-05-27 16:54:53,779 - INFO - Memory cleaned.
+2026-05-27 16:54:54,798 - INFO - Epoch[203] Complete. Time taken: 00:02:11.334
+2026-05-27 16:57:00,914 - INFO - Epoch 204 - Train Loss: 2990.7645029741243, Validation MRR: 0.0032072030007839203, Learning Rate: 0.0007528286866889923
+2026-05-27 16:57:05,280 - INFO - Memory cleaned.
+2026-05-27 16:57:06,354 - INFO - Epoch[204] Complete. Time taken: 00:02:11.555
+2026-05-27 16:59:12,471 - INFO - Epoch 205 - Train Loss: 2971.0110428833555, Validation MRR: 0.0032072030007839203, Learning Rate: 0.0007443106207484776
+2026-05-27 16:59:16,822 - INFO - Memory cleaned.
+2026-05-27 16:59:17,749 - INFO - Epoch[205] Complete. Time taken: 00:02:11.395
+2026-05-27 17:01:23,795 - INFO - Epoch 206 - Train Loss: 2987.307801586413, Validation MRR: 0.0032072030007839203, Learning Rate: 0.0007356983684129988
+2026-05-27 17:01:28,228 - INFO - Memory cleaned.
+2026-05-27 17:01:29,149 - INFO - Epoch[206] Complete. Time taken: 00:02:11.400
+2026-05-27 17:03:35,247 - INFO - Epoch 207 - Train Loss: 2974.2773920713503, Validation MRR: 0.0032072030007839203, Learning Rate: 0.0007269952498697733
+2026-05-27 17:03:39,878 - INFO - Memory cleaned.
+2026-05-27 17:03:40,926 - INFO - Epoch[207] Complete. Time taken: 00:02:11.777
+2026-05-27 17:05:46,947 - INFO - Epoch 208 - Train Loss: 2967.507027405971, Validation MRR: 0.0032072030007839203, Learning Rate: 0.0007182046203366711
+2026-05-27 17:05:51,581 - INFO - Memory cleaned.
+2026-05-27 17:05:52,632 - INFO - Epoch[208] Complete. Time taken: 00:02:11.706
+2026-05-27 17:07:58,333 - INFO - Epoch 209 - Train Loss: 2993.369337924895, Validation MRR: 0.0032072030007839203, Learning Rate: 0.0007093298687687141
+2026-05-27 17:08:02,607 - INFO - Memory cleaned.
+2026-05-27 17:08:03,648 - INFO - Epoch[209] Complete. Time taken: 00:02:11.016
+2026-05-27 17:10:10,289 - INFO - Epoch 210 - Train Loss: 2968.2977198002627, Validation MRR: 0.0032072030007839203, Learning Rate: 0.0007003744165515705
+2026-05-27 17:10:14,681 - INFO - Memory cleaned.
+2026-05-27 17:10:15,706 - INFO - Epoch[210] Complete. Time taken: 00:02:12.057
+2026-05-27 17:12:22,080 - INFO - Epoch 211 - Train Loss: 2961.4978302870877, Validation MRR: 0.0032072030007839203, Learning Rate: 0.000691341716182545
+2026-05-27 17:12:26,441 - INFO - Memory cleaned.
+2026-05-27 17:12:27,500 - INFO - Epoch[211] Complete. Time taken: 00:02:11.794
+2026-05-27 17:14:33,587 - INFO - Epoch 212 - Train Loss: 2967.697452604389, Validation MRR: 0.0032072030007839203, Learning Rate: 0.0006822352499395748
+2026-05-27 17:14:37,884 - INFO - Memory cleaned.
+2026-05-27 17:14:38,896 - INFO - Epoch[212] Complete. Time taken: 00:02:11.396
+2026-05-27 17:16:45,047 - INFO - Epoch 213 - Train Loss: 2957.177923216539, Validation MRR: 0.0032072030007839203, Learning Rate: 0.0006730585285387465
+2026-05-27 17:16:49,418 - INFO - Memory cleaned.
+2026-05-27 17:16:50,525 - INFO - Epoch[213] Complete. Time taken: 00:02:11.628
+2026-05-27 17:18:56,710 - INFO - Epoch 214 - Train Loss: 2955.021798443965, Validation MRR: 0.0032072030007839203, Learning Rate: 0.0006638150897808467
+2026-05-27 17:19:01,063 - INFO - Memory cleaned.
+2026-05-27 17:19:02,092 - INFO - Epoch[214] Complete. Time taken: 00:02:11.567
+2026-05-27 17:21:08,212 - INFO - Epoch 215 - Train Loss: 2964.0278823752333, Validation MRR: 0.0032072030007839203, Learning Rate: 0.0006545084971874737
+2026-05-27 17:21:12,486 - INFO - Memory cleaned.
+2026-05-27 17:21:13,538 - INFO - Epoch[215] Complete. Time taken: 00:02:11.445
+2026-05-27 17:23:19,562 - INFO - Epoch 216 - Train Loss: 2955.8049848869546, Validation MRR: 0.0032072030007839203, Learning Rate: 0.0006451423386272313
+2026-05-27 17:23:23,935 - INFO - Memory cleaned.
+2026-05-27 17:23:24,957 - INFO - Epoch[216] Complete. Time taken: 00:02:11.419
+2026-05-27 17:25:31,100 - INFO - Epoch 217 - Train Loss: 2955.8871982382752, Validation MRR: 0.0032072030007839203, Learning Rate: 0.0006357202249325371
+2026-05-27 17:25:35,472 - INFO - Memory cleaned.
+2026-05-27 17:25:36,401 - INFO - Epoch[217] Complete. Time taken: 00:02:11.444
+2026-05-27 17:27:43,243 - INFO - Epoch 218 - Train Loss: 2961.160281049703, Validation MRR: 0.0032072030007839203, Learning Rate: 0.0006262457885075791
+2026-05-27 17:27:47,665 - INFO - Memory cleaned.
+2026-05-27 17:27:48,714 - INFO - Epoch[218] Complete. Time taken: 00:02:12.313
+2026-05-27 17:29:54,251 - INFO - Epoch 219 - Train Loss: 2952.3446513887243, Validation MRR: 0.0032072030007839203, Learning Rate: 0.0006167226819279528
+2026-05-27 17:29:58,670 - INFO - Memory cleaned.
+2026-05-27 17:29:59,721 - INFO - Epoch[219] Complete. Time taken: 00:02:11.006
+2026-05-27 17:32:05,007 - INFO - Epoch 220 - Train Loss: 2950.389235557595, Validation MRR: 0.0032072030007839203, Learning Rate: 0.0006071545765325253
+2026-05-27 17:32:09,481 - INFO - Memory cleaned.
+2026-05-27 17:32:09,481 - INFO - Evaluating on validation set at epoch 220...
+Link prediction evaluation:   0%|          | 0/15 [00:00<?, ?batch/s]Link prediction evaluation:   7%|▋         | 1/15 [00:00<00:02,  6.93batch/s]Link prediction evaluation:  13%|█▎        | 2/15 [00:00<00:01,  7.46batch/s]Link prediction evaluation:  20%|██        | 3/15 [00:00<00:01,  7.64batch/s]Link prediction evaluation:  27%|██▋       | 4/15 [00:00<00:01,  7.73batch/s]Link prediction evaluation:  33%|███▎      | 5/15 [00:00<00:01,  7.79batch/s]Link prediction evaluation:  40%|████      | 6/15 [00:00<00:01,  7.82batch/s]Link prediction evaluation:  47%|████▋     | 7/15 [00:00<00:01,  7.83batch/s]Link prediction evaluation:  53%|█████▎    | 8/15 [00:01<00:00,  7.85batch/s]Link prediction evaluation:  60%|██████    | 9/15 [00:01<00:00,  7.86batch/s]Link prediction evaluation:  67%|██████▋   | 10/15 [00:01<00:00,  7.86batch/s]Link prediction evaluation:  73%|███████▎  | 11/15 [00:01<00:00,  7.86batch/s]Link prediction evaluation:  80%|████████  | 12/15 [00:01<00:00,  7.87batch/s]Link prediction evaluation:  87%|████████▋ | 13/15 [00:01<00:00,  7.86batch/s]Link prediction evaluation:  93%|█████████▎| 14/15 [00:01<00:00,  7.86batch/s]Link prediction evaluation: 100%|██████████| 15/15 [00:01<00:00,  8.06batch/s]
+2026-05-27 17:32:11,417 - INFO - Validation MRR: 0.003735348815098405
+2026-05-27 17:32:13,249 - INFO - Epoch[220] Complete. Time taken: 00:02:13.528
+2026-05-27 17:34:18,795 - INFO - Epoch 221 - Train Loss: 2949.8897024623802, Validation MRR: 0.003735348815098405, Learning Rate: 0.0005975451610080642
+2026-05-27 17:34:23,200 - INFO - Memory cleaned.
+2026-05-27 17:34:24,256 - INFO - Epoch[221] Complete. Time taken: 00:02:11.006
+2026-05-27 17:36:29,838 - INFO - Epoch 222 - Train Loss: 2936.604891119864, Validation MRR: 0.003735348815098405, Learning Rate: 0.0005878981399671772
+2026-05-27 17:36:34,256 - INFO - Memory cleaned.
+2026-05-27 17:36:35,277 - INFO - Epoch[222] Complete. Time taken: 00:02:11.021
+2026-05-27 17:38:40,899 - INFO - Epoch 223 - Train Loss: 2945.367908265307, Validation MRR: 0.003735348815098405, Learning Rate: 0.0005782172325201155
+2026-05-27 17:38:45,273 - INFO - Memory cleaned.
+2026-05-27 17:38:46,301 - INFO - Epoch[223] Complete. Time taken: 00:02:11.024
+2026-05-27 17:40:51,373 - INFO - Epoch 224 - Train Loss: 2924.94628178414, Validation MRR: 0.003735348815098405, Learning Rate: 0.0005685061708409841
+2026-05-27 17:40:55,704 - INFO - Memory cleaned.
+2026-05-27 17:40:56,747 - INFO - Epoch[224] Complete. Time taken: 00:02:10.446
+2026-05-27 17:43:02,254 - INFO - Epoch 225 - Train Loss: 2944.250251528392, Validation MRR: 0.003735348815098405, Learning Rate: 0.0005587686987289189
+2026-05-27 17:43:06,629 - INFO - Memory cleaned.
+2026-05-27 17:43:07,672 - INFO - Epoch[225] Complete. Time taken: 00:02:10.924
+2026-05-27 17:45:13,678 - INFO - Epoch 226 - Train Loss: 2946.8451925937743, Validation MRR: 0.003735348815098405, Learning Rate: 0.0005490085701647804
+2026-05-27 17:45:18,020 - INFO - Memory cleaned.
+2026-05-27 17:45:19,058 - INFO - Epoch[226] Complete. Time taken: 00:02:11.387
+2026-05-27 17:47:24,844 - INFO - Epoch 227 - Train Loss: 2931.8982150184224, Validation MRR: 0.003735348815098405, Learning Rate: 0.0005392295478639225
+2026-05-27 17:47:29,105 - INFO - Memory cleaned.
+2026-05-27 17:47:30,134 - INFO - Epoch[227] Complete. Time taken: 00:02:11.075
+2026-05-27 17:49:36,270 - INFO - Epoch 228 - Train Loss: 2936.664013056225, Validation MRR: 0.003735348815098405, Learning Rate: 0.0005294354018255945
+2026-05-27 17:49:40,628 - INFO - Memory cleaned.
+2026-05-27 17:49:41,643 - INFO - Epoch[228] Complete. Time taken: 00:02:11.509
+2026-05-27 17:51:47,549 - INFO - Epoch 229 - Train Loss: 2919.3344351674796, Validation MRR: 0.003735348815098405, Learning Rate: 0.0005196299078795343
+2026-05-27 17:51:51,942 - INFO - Memory cleaned.
+2026-05-27 17:51:53,003 - INFO - Epoch[229] Complete. Time taken: 00:02:11.359
+2026-05-27 17:53:59,054 - INFO - Epoch 230 - Train Loss: 2937.8073865218475, Validation MRR: 0.003735348815098405, Learning Rate: 0.0005098168462303141
+2026-05-27 17:54:03,334 - INFO - Memory cleaned.
+2026-05-27 17:54:04,346 - INFO - Epoch[230] Complete. Time taken: 00:02:11.343
+2026-05-27 17:56:10,909 - INFO - Epoch 231 - Train Loss: 2908.2499121001983, Validation MRR: 0.003735348815098405, Learning Rate: 0.0005
+2026-05-27 17:56:15,294 - INFO - Memory cleaned.
+2026-05-27 17:56:16,349 - INFO - Epoch[231] Complete. Time taken: 00:02:12.003
+2026-05-27 17:58:22,317 - INFO - Epoch 232 - Train Loss: 2921.8434404428217, Validation MRR: 0.003735348815098405, Learning Rate: 0.0004901831537696859
+2026-05-27 17:58:26,679 - INFO - Memory cleaned.
+2026-05-27 17:58:27,719 - INFO - Epoch[232] Complete. Time taken: 00:02:11.370
+2026-05-27 18:00:33,675 - INFO - Epoch 233 - Train Loss: 2921.3406740750306, Validation MRR: 0.003735348815098405, Learning Rate: 0.00048037009212046586
+2026-05-27 18:00:38,037 - INFO - Memory cleaned.
+2026-05-27 18:00:39,082 - INFO - Epoch[233] Complete. Time taken: 00:02:11.362
+2026-05-27 18:02:44,758 - INFO - Epoch 234 - Train Loss: 2920.835849322014, Validation MRR: 0.003735348815098405, Learning Rate: 0.00047056459817440544
+2026-05-27 18:02:49,369 - INFO - Memory cleaned.
+2026-05-27 18:02:50,432 - INFO - Epoch[234] Complete. Time taken: 00:02:11.351
+2026-05-27 18:04:56,387 - INFO - Epoch 235 - Train Loss: 2924.379696029967, Validation MRR: 0.003735348815098405, Learning Rate: 0.0004607704521360776
+2026-05-27 18:05:00,859 - INFO - Memory cleaned.
+2026-05-27 18:05:01,918 - INFO - Epoch[235] Complete. Time taken: 00:02:11.486
+2026-05-27 18:07:07,547 - INFO - Epoch 236 - Train Loss: 2925.7628357007075, Validation MRR: 0.003735348815098405, Learning Rate: 0.0004509914298352197
+2026-05-27 18:07:11,980 - INFO - Memory cleaned.
+2026-05-27 18:07:13,022 - INFO - Epoch[236] Complete. Time taken: 00:02:11.104
+2026-05-27 18:09:18,158 - INFO - Epoch 237 - Train Loss: 2911.156846459881, Validation MRR: 0.003735348815098405, Learning Rate: 0.00044123130127108126
+2026-05-27 18:09:22,452 - INFO - Memory cleaned.
+2026-05-27 18:09:23,499 - INFO - Epoch[237] Complete. Time taken: 00:02:10.476
+2026-05-27 18:11:27,752 - INFO - Epoch 238 - Train Loss: 2921.9021522551234, Validation MRR: 0.003735348815098405, Learning Rate: 0.0004314938291590161
+2026-05-27 18:11:32,143 - INFO - Memory cleaned.
+2026-05-27 18:11:33,098 - INFO - Epoch[238] Complete. Time taken: 00:02:09.599
+2026-05-27 18:13:36,868 - INFO - Epoch 239 - Train Loss: 2908.7532026229646, Validation MRR: 0.003735348815098405, Learning Rate: 0.0004217827674798847
+2026-05-27 18:13:41,089 - INFO - Memory cleaned.
+2026-05-27 18:13:42,144 - INFO - Epoch[239] Complete. Time taken: 00:02:09.046
+2026-05-27 18:15:45,306 - INFO - Epoch 240 - Train Loss: 2921.3242396138367, Validation MRR: 0.003735348815098405, Learning Rate: 0.00041210186003282274
+2026-05-27 18:15:49,548 - INFO - Memory cleaned.
+2026-05-27 18:15:49,548 - INFO - Evaluating on validation set at epoch 240...
+Link prediction evaluation:   0%|          | 0/15 [00:00<?, ?batch/s]Link prediction evaluation:   7%|▋         | 1/15 [00:00<00:01,  7.88batch/s]Link prediction evaluation:  13%|█▎        | 2/15 [00:00<00:01,  7.92batch/s]Link prediction evaluation:  20%|██        | 3/15 [00:00<00:01,  7.91batch/s]Link prediction evaluation:  27%|██▋       | 4/15 [00:00<00:01,  7.92batch/s]Link prediction evaluation:  33%|███▎      | 5/15 [00:00<00:01,  7.93batch/s]Link prediction evaluation:  40%|████      | 6/15 [00:00<00:01,  7.94batch/s]Link prediction evaluation:  47%|████▋     | 7/15 [00:00<00:01,  7.94batch/s]Link prediction evaluation:  53%|█████▎    | 8/15 [00:01<00:00,  7.95batch/s]Link prediction evaluation:  60%|██████    | 9/15 [00:01<00:00,  7.94batch/s]Link prediction evaluation:  67%|██████▋   | 10/15 [00:01<00:00,  7.95batch/s]Link prediction evaluation:  73%|███████▎  | 11/15 [00:01<00:00,  7.95batch/s]Link prediction evaluation:  80%|████████  | 12/15 [00:01<00:00,  7.96batch/s]Link prediction evaluation:  87%|████████▋ | 13/15 [00:01<00:00,  7.95batch/s]Link prediction evaluation:  93%|█████████▎| 14/15 [00:01<00:00,  7.95batch/s]Link prediction evaluation: 100%|██████████| 15/15 [00:01<00:00,  8.20batch/s]
+2026-05-27 18:15:51,382 - INFO - Validation MRR: 0.0028238408267498016
+2026-05-27 18:15:52,404 - INFO - Epoch[240] Complete. Time taken: 00:02:10.259
+2026-05-27 18:17:55,006 - INFO - Epoch 241 - Train Loss: 2927.3240241410595, Validation MRR: 0.0028238408267498016, Learning Rate: 0.00040245483899193594
+2026-05-27 18:17:59,186 - INFO - Memory cleaned.
+2026-05-27 18:18:00,223 - INFO - Epoch[241] Complete. Time taken: 00:02:07.819
+2026-05-27 18:20:02,712 - INFO - Epoch 242 - Train Loss: 2921.491630469889, Validation MRR: 0.0028238408267498016, Learning Rate: 0.0003928454234674747
+2026-05-27 18:20:06,882 - INFO - Memory cleaned.
+2026-05-27 18:20:07,898 - INFO - Epoch[242] Complete. Time taken: 00:02:07.675
+2026-05-27 18:22:10,503 - INFO - Epoch 243 - Train Loss: 2907.9981305594924, Validation MRR: 0.0028238408267498016, Learning Rate: 0.00038327731807204733
+2026-05-27 18:22:14,676 - INFO - Memory cleaned.
+2026-05-27 18:22:15,701 - INFO - Epoch[243] Complete. Time taken: 00:02:07.803
+2026-05-27 18:24:18,177 - INFO - Epoch 244 - Train Loss: 2907.2674539479312, Validation MRR: 0.0028238408267498016, Learning Rate: 0.00037375421149242114
+2026-05-27 18:24:22,348 - INFO - Memory cleaned.
+2026-05-27 18:24:23,360 - INFO - Epoch[244] Complete. Time taken: 00:02:07.659
+2026-05-27 18:26:25,905 - INFO - Epoch 245 - Train Loss: 2896.188074541841, Validation MRR: 0.0028238408267498016, Learning Rate: 0.0003642797750674628
+2026-05-27 18:26:30,075 - INFO - Memory cleaned.
+2026-05-27 18:26:31,114 - INFO - Epoch[245] Complete. Time taken: 00:02:07.754
+2026-05-27 18:28:33,692 - INFO - Epoch 246 - Train Loss: 2877.3012441432984, Validation MRR: 0.0028238408267498016, Learning Rate: 0.0003548576613727688
+2026-05-27 18:28:37,863 - INFO - Memory cleaned.
+2026-05-27 18:28:38,895 - INFO - Epoch[246] Complete. Time taken: 00:02:07.781
+2026-05-27 18:30:41,481 - INFO - Epoch 247 - Train Loss: 2900.079345701976, Validation MRR: 0.0028238408267498016, Learning Rate: 0.00034549150281252633
+2026-05-27 18:30:45,660 - INFO - Memory cleaned.
+2026-05-27 18:30:46,676 - INFO - Epoch[247] Complete. Time taken: 00:02:07.781
+2026-05-27 18:32:49,536 - INFO - Epoch 248 - Train Loss: 2897.303323393338, Validation MRR: 0.0028238408267498016, Learning Rate: 0.0003361849102191533
+2026-05-27 18:32:53,712 - INFO - Memory cleaned.
+2026-05-27 18:32:54,748 - INFO - Epoch[248] Complete. Time taken: 00:02:08.071
+2026-05-27 18:34:57,292 - INFO - Epoch 249 - Train Loss: 2917.974033570204, Validation MRR: 0.0028238408267498016, Learning Rate: 0.00032694147146125364
+2026-05-27 18:35:01,467 - INFO - Memory cleaned.
+2026-05-27 18:35:02,505 - INFO - Epoch[249] Complete. Time taken: 00:02:07.757
+2026-05-27 18:37:05,141 - INFO - Epoch 250 - Train Loss: 2903.2567439915306, Validation MRR: 0.0028238408267498016, Learning Rate: 0.0003177647500604252
+2026-05-27 18:37:09,312 - INFO - Memory cleaned.
+2026-05-27 18:37:10,331 - INFO - Epoch[250] Complete. Time taken: 00:02:07.825
+2026-05-27 18:39:12,990 - INFO - Epoch 251 - Train Loss: 2897.5719313528384, Validation MRR: 0.0028238408267498016, Learning Rate: 0.0003086582838174551
+2026-05-27 18:39:17,236 - INFO - Memory cleaned.
+2026-05-27 18:39:18,266 - INFO - Epoch[251] Complete. Time taken: 00:02:07.936
+2026-05-27 18:41:21,071 - INFO - Epoch 252 - Train Loss: 2888.72810827122, Validation MRR: 0.0028238408267498016, Learning Rate: 0.0002996255834484295
+2026-05-27 18:41:25,312 - INFO - Memory cleaned.
+2026-05-27 18:41:26,334 - INFO - Epoch[252] Complete. Time taken: 00:02:08.067
+2026-05-27 18:43:29,144 - INFO - Epoch 253 - Train Loss: 2889.182939182417, Validation MRR: 0.0028238408267498016, Learning Rate: 0.0002906701312312861
+2026-05-27 18:43:33,389 - INFO - Memory cleaned.
+2026-05-27 18:43:34,433 - INFO - Epoch[253] Complete. Time taken: 00:02:08.099
+2026-05-27 18:45:37,110 - INFO - Epoch 254 - Train Loss: 2881.799256254391, Validation MRR: 0.0028238408267498016, Learning Rate: 0.00028179537966332904
+2026-05-27 18:45:41,360 - INFO - Memory cleaned.
+2026-05-27 18:45:42,377 - INFO - Epoch[254] Complete. Time taken: 00:02:07.944
+2026-05-27 18:47:44,980 - INFO - Epoch 255 - Train Loss: 2903.691976096369, Validation MRR: 0.0028238408267498016, Learning Rate: 0.00027300475013022663
+2026-05-27 18:47:49,217 - INFO - Memory cleaned.
+2026-05-27 18:47:50,269 - INFO - Epoch[255] Complete. Time taken: 00:02:07.892
+2026-05-27 18:49:52,857 - INFO - Epoch 256 - Train Loss: 2886.3993440116737, Validation MRR: 0.0028238408267498016, Learning Rate: 0.00026430163158700117
+2026-05-27 18:49:57,094 - INFO - Memory cleaned.
+2026-05-27 18:49:58,107 - INFO - Epoch[256] Complete. Time taken: 00:02:07.838
+2026-05-27 18:52:00,684 - INFO - Epoch 257 - Train Loss: 2880.9597981315983, Validation MRR: 0.0028238408267498016, Learning Rate: 0.00025568937925152246
+2026-05-27 18:52:04,926 - INFO - Memory cleaned.
+2026-05-27 18:52:05,976 - INFO - Epoch[257] Complete. Time taken: 00:02:07.869
+2026-05-27 18:54:08,676 - INFO - Epoch 258 - Train Loss: 2888.2577813484686, Validation MRR: 0.0028238408267498016, Learning Rate: 0.0002471713133110078
+2026-05-27 18:54:12,911 - INFO - Memory cleaned.
+2026-05-27 18:54:13,924 - INFO - Epoch[258] Complete. Time taken: 00:02:07.948
+2026-05-27 18:56:16,688 - INFO - Epoch 259 - Train Loss: 2902.8039461797075, Validation MRR: 0.0028238408267498016, Learning Rate: 0.00023875071764202561
+2026-05-27 18:56:20,928 - INFO - Memory cleaned.
+2026-05-27 18:56:21,958 - INFO - Epoch[259] Complete. Time taken: 00:02:08.034
+2026-05-27 18:58:24,707 - INFO - Epoch 260 - Train Loss: 2866.8243197922966, Validation MRR: 0.0028238408267498016, Learning Rate: 0.0002304308385445001
+2026-05-27 18:58:28,943 - INFO - Memory cleaned.
+2026-05-27 18:58:28,943 - INFO - Evaluating on validation set at epoch 260...
+Link prediction evaluation:   0%|          | 0/15 [00:00<?, ?batch/s]Link prediction evaluation:   7%|▋         | 1/15 [00:00<00:01,  7.87batch/s]Link prediction evaluation:  13%|█▎        | 2/15 [00:00<00:01,  7.91batch/s]Link prediction evaluation:  20%|██        | 3/15 [00:00<00:01,  7.90batch/s]Link prediction evaluation:  27%|██▋       | 4/15 [00:00<00:01,  7.91batch/s]Link prediction evaluation:  33%|███▎      | 5/15 [00:00<00:01,  7.93batch/s]Link prediction evaluation:  40%|████      | 6/15 [00:00<00:01,  7.93batch/s]Link prediction evaluation:  47%|████▋     | 7/15 [00:00<00:01,  7.93batch/s]Link prediction evaluation:  53%|█████▎    | 8/15 [00:01<00:00,  7.94batch/s]Link prediction evaluation:  60%|██████    | 9/15 [00:01<00:00,  7.94batch/s]Link prediction evaluation:  67%|██████▋   | 10/15 [00:01<00:00,  7.95batch/s]Link prediction evaluation:  73%|███████▎  | 11/15 [00:01<00:00,  7.94batch/s]Link prediction evaluation:  80%|████████  | 12/15 [00:01<00:00,  7.95batch/s]Link prediction evaluation:  87%|████████▋ | 13/15 [00:01<00:00,  7.95batch/s]Link prediction evaluation:  93%|█████████▎| 14/15 [00:01<00:00,  7.95batch/s]Link prediction evaluation: 100%|██████████| 15/15 [00:01<00:00,  8.20batch/s]
+2026-05-27 18:58:30,788 - INFO - Validation MRR: 0.002344891196116805
+2026-05-27 18:58:31,808 - INFO - Epoch[260] Complete. Time taken: 00:02:09.850
+2026-05-27 19:00:34,490 - INFO - Epoch 261 - Train Loss: 2878.1424468565087, Validation MRR: 0.002344891196116805, Learning Rate: 0.00022221488349019887
+2026-05-27 19:00:38,736 - INFO - Memory cleaned.
+2026-05-27 19:00:39,778 - INFO - Epoch[261] Complete. Time taken: 00:02:07.970
+2026-05-27 19:02:42,490 - INFO - Epoch 262 - Train Loss: 2881.1114216233, Validation MRR: 0.002344891196116805, Learning Rate: 0.00021410601988619394
+2026-05-27 19:02:46,739 - INFO - Memory cleaned.
+2026-05-27 19:02:47,768 - INFO - Epoch[262] Complete. Time taken: 00:02:07.990
+2026-05-27 19:04:50,488 - INFO - Epoch 263 - Train Loss: 2871.2615446297355, Validation MRR: 0.002344891196116805, Learning Rate: 0.00020610737385376348
+2026-05-27 19:04:54,722 - INFO - Memory cleaned.
+2026-05-27 19:04:55,759 - INFO - Epoch[263] Complete. Time taken: 00:02:07.991
+2026-05-27 19:06:58,479 - INFO - Epoch 264 - Train Loss: 2878.7120901722155, Validation MRR: 0.002344891196116805, Learning Rate: 0.0001982220290232143
+2026-05-27 19:07:02,714 - INFO - Memory cleaned.
+2026-05-27 19:07:03,730 - INFO - Epoch[264] Complete. Time taken: 00:02:07.972
+2026-05-27 19:09:06,553 - INFO - Epoch 265 - Train Loss: 2881.4390531781496, Validation MRR: 0.002344891196116805, Learning Rate: 0.00019045302534508314
+2026-05-27 19:09:10,798 - INFO - Memory cleaned.
+2026-05-27 19:09:11,842 - INFO - Epoch[265] Complete. Time taken: 00:02:08.111
+2026-05-27 19:11:14,589 - INFO - Epoch 266 - Train Loss: 2870.5897678661636, Validation MRR: 0.002344891196116805, Learning Rate: 0.00018280335791817716
+2026-05-27 19:11:18,830 - INFO - Memory cleaned.
+2026-05-27 19:11:19,847 - INFO - Epoch[266] Complete. Time taken: 00:02:08.005
+2026-05-27 19:13:22,582 - INFO - Epoch 267 - Train Loss: 2854.455631698023, Validation MRR: 0.002344891196116805, Learning Rate: 0.00017527597583490823
+2026-05-27 19:13:26,817 - INFO - Memory cleaned.
+2026-05-27 19:13:27,859 - INFO - Epoch[267] Complete. Time taken: 00:02:08.011
+2026-05-27 19:15:30,752 - INFO - Epoch 268 - Train Loss: 2882.108419136984, Validation MRR: 0.002344891196116805, Learning Rate: 0.00016787378104435912
+2026-05-27 19:15:35,007 - INFO - Memory cleaned.
+2026-05-27 19:15:36,028 - INFO - Epoch[268] Complete. Time taken: 00:02:08.168
+2026-05-27 19:17:40,264 - INFO - Epoch 269 - Train Loss: 2876.07579639534, Validation MRR: 0.002344891196116805, Learning Rate: 0.00016059962723352923
+2026-05-27 19:17:44,533 - INFO - Memory cleaned.
+2026-05-27 19:17:45,577 - INFO - Epoch[269] Complete. Time taken: 00:02:09.549
+2026-05-27 19:19:52,897 - INFO - Epoch 270 - Train Loss: 2876.598737928381, Validation MRR: 0.002344891196116805, Learning Rate: 0.00015345631872718213
+2026-05-27 19:19:57,128 - INFO - Memory cleaned.
+2026-05-27 19:19:58,156 - INFO - Epoch[270] Complete. Time taken: 00:02:12.579
+2026-05-27 19:22:05,059 - INFO - Epoch 271 - Train Loss: 2881.678821888519, Validation MRR: 0.002344891196116805, Learning Rate: 0.00014644660940672628
+2026-05-27 19:22:09,292 - INFO - Memory cleaned.
+2026-05-27 19:22:10,341 - INFO - Epoch[271] Complete. Time taken: 00:02:12.184
+2026-05-27 19:24:14,693 - INFO - Epoch 272 - Train Loss: 2874.8005454164695, Validation MRR: 0.002344891196116805, Learning Rate: 0.0001395732016485406
+2026-05-27 19:24:18,910 - INFO - Memory cleaned.
+2026-05-27 19:24:19,944 - INFO - Epoch[272] Complete. Time taken: 00:02:09.603
+2026-05-27 19:26:22,662 - INFO - Epoch 273 - Train Loss: 2871.6462807932858, Validation MRR: 0.002344891196116805, Learning Rate: 0.00013283874528215717
+2026-05-27 19:26:26,885 - INFO - Memory cleaned.
+2026-05-27 19:26:27,935 - INFO - Epoch[273] Complete. Time taken: 00:02:07.990
+2026-05-27 19:28:30,648 - INFO - Epoch 274 - Train Loss: 2878.4554680134065, Validation MRR: 0.002344891196116805, Learning Rate: 0.0001262458365687017
+2026-05-27 19:28:34,871 - INFO - Memory cleaned.
+2026-05-27 19:28:35,893 - INFO - Epoch[274] Complete. Time taken: 00:02:07.958
+2026-05-27 19:30:38,613 - INFO - Epoch 275 - Train Loss: 2869.127547187303, Validation MRR: 0.002344891196116805, Learning Rate: 0.00011979701719998454
+2026-05-27 19:30:42,830 - INFO - Memory cleaned.
+2026-05-27 19:30:43,872 - INFO - Epoch[275] Complete. Time taken: 00:02:07.978
+2026-05-27 19:32:46,592 - INFO - Epoch 276 - Train Loss: 2873.3617610701986, Validation MRR: 0.002344891196116805, Learning Rate: 0.00011349477331863167
+2026-05-27 19:32:50,810 - INFO - Memory cleaned.
+2026-05-27 19:32:51,824 - INFO - Epoch[276] Complete. Time taken: 00:02:07.952
+2026-05-27 19:34:54,594 - INFO - Epoch 277 - Train Loss: 2860.3635796763992, Validation MRR: 0.002344891196116805, Learning Rate: 0.00010734153455962748
+2026-05-27 19:34:58,811 - INFO - Memory cleaned.
+2026-05-27 19:34:59,873 - INFO - Epoch[277] Complete. Time taken: 00:02:08.049
+2026-05-27 19:37:02,584 - INFO - Epoch 278 - Train Loss: 2870.2301049297316, Validation MRR: 0.002344891196116805, Learning Rate: 0.0001013396731136465
+2026-05-27 19:37:06,807 - INFO - Memory cleaned.
+2026-05-27 19:37:07,822 - INFO - Epoch[278] Complete. Time taken: 00:02:07.948
+2026-05-27 19:39:10,594 - INFO - Epoch 279 - Train Loss: 2876.0350615369503, Validation MRR: 0.002344891196116805, Learning Rate: 9.549150281252633e-05
+2026-05-27 19:39:14,810 - INFO - Memory cleaned.
+2026-05-27 19:39:15,852 - INFO - Epoch[279] Complete. Time taken: 00:02:08.030
+2026-05-27 19:41:18,557 - INFO - Epoch 280 - Train Loss: 2856.58679421678, Validation MRR: 0.002344891196116805, Learning Rate: 8.979927823724321e-05
+2026-05-27 19:41:22,779 - INFO - Memory cleaned.
+2026-05-27 19:41:22,779 - INFO - Evaluating on validation set at epoch 280...
+Link prediction evaluation:   0%|          | 0/15 [00:00<?, ?batch/s]Link prediction evaluation:   7%|▋         | 1/15 [00:00<00:01,  7.88batch/s]Link prediction evaluation:  13%|█▎        | 2/15 [00:00<00:01,  7.92batch/s]Link prediction evaluation:  20%|██        | 3/15 [00:00<00:01,  7.91batch/s]Link prediction evaluation:  27%|██▋       | 4/15 [00:00<00:01,  7.92batch/s]Link prediction evaluation:  33%|███▎      | 5/15 [00:00<00:01,  7.93batch/s]Link prediction evaluation:  40%|████      | 6/15 [00:00<00:01,  7.94batch/s]Link prediction evaluation:  47%|████▋     | 7/15 [00:00<00:01,  7.94batch/s]Link prediction evaluation:  53%|█████▎    | 8/15 [00:01<00:00,  7.95batch/s]Link prediction evaluation:  60%|██████    | 9/15 [00:01<00:00,  7.95batch/s]Link prediction evaluation:  67%|██████▋   | 10/15 [00:01<00:00,  7.95batch/s]Link prediction evaluation:  73%|███████▎  | 11/15 [00:01<00:00,  7.95batch/s]Link prediction evaluation:  80%|████████  | 12/15 [00:01<00:00,  7.96batch/s]Link prediction evaluation:  87%|████████▋ | 13/15 [00:01<00:00,  7.95batch/s]Link prediction evaluation:  93%|█████████▎| 14/15 [00:01<00:00,  7.95batch/s]Link prediction evaluation: 100%|██████████| 15/15 [00:01<00:00,  8.21batch/s]
+2026-05-27 19:41:24,608 - INFO - Validation MRR: 0.0022906868252903223
+2026-05-27 19:41:25,627 - INFO - Epoch[280] Complete. Time taken: 00:02:09.774
+2026-05-27 19:43:28,360 - INFO - Epoch 281 - Train Loss: 2867.4850244009062, Validation MRR: 0.0022906868252903223, Learning Rate: 8.42651938487275e-05
+2026-05-27 19:43:32,590 - INFO - Memory cleaned.
+2026-05-27 19:43:33,648 - INFO - Epoch[281] Complete. Time taken: 00:02:08.021
+2026-05-27 19:45:36,530 - INFO - Epoch 282 - Train Loss: 2863.900094893677, Validation MRR: 0.0022906868252903223, Learning Rate: 7.889138314185668e-05
+2026-05-27 19:45:40,748 - INFO - Memory cleaned.
+2026-05-27 19:45:41,787 - INFO - Epoch[282] Complete. Time taken: 00:02:08.139
+2026-05-27 19:47:44,508 - INFO - Epoch 283 - Train Loss: 2865.888714223759, Validation MRR: 0.0022906868252903223, Learning Rate: 7.367991782295391e-05
+2026-05-27 19:47:48,727 - INFO - Memory cleaned.
+2026-05-27 19:47:49,802 - INFO - Epoch[283] Complete. Time taken: 00:02:08.015
+2026-05-27 19:49:52,642 - INFO - Epoch 284 - Train Loss: 2861.365195515869, Validation MRR: 0.0022906868252903223, Learning Rate: 6.863280701110408e-05
+2026-05-27 19:49:56,861 - INFO - Memory cleaned.
+2026-05-27 19:49:57,883 - INFO - Epoch[284] Complete. Time taken: 00:02:08.081
+2026-05-27 19:52:00,633 - INFO - Epoch 285 - Train Loss: 2879.343142308978, Validation MRR: 0.0022906868252903223, Learning Rate: 6.375199646360153e-05
+2026-05-27 19:52:04,850 - INFO - Memory cleaned.
+2026-05-27 19:52:05,898 - INFO - Epoch[285] Complete. Time taken: 00:02:08.015
+2026-05-27 19:54:08,701 - INFO - Epoch 286 - Train Loss: 2862.630759554002, Validation MRR: 0.0022906868252903223, Learning Rate: 5.903936782582253e-05
+2026-05-27 19:54:12,926 - INFO - Memory cleaned.
+2026-05-27 19:54:13,942 - INFO - Epoch[286] Complete. Time taken: 00:02:08.043
+2026-05-27 19:56:16,720 - INFO - Epoch 287 - Train Loss: 2850.272518735122, Validation MRR: 0.0022906868252903223, Learning Rate: 5.449673790581611e-05
+2026-05-27 19:56:20,957 - INFO - Memory cleaned.
+2026-05-27 19:56:22,007 - INFO - Epoch[287] Complete. Time taken: 00:02:08.065
+2026-05-27 19:58:24,858 - INFO - Epoch 288 - Train Loss: 2856.8517294245376, Validation MRR: 0.0022906868252903223, Learning Rate: 5.0125857973889246e-05
+2026-05-27 19:58:29,082 - INFO - Memory cleaned.
+2026-05-27 19:58:30,110 - INFO - Epoch[288] Complete. Time taken: 00:02:08.103
+2026-05-27 20:00:32,974 - INFO - Epoch 289 - Train Loss: 2849.0848952622982, Validation MRR: 0.0022906868252903223, Learning Rate: 4.592841308745932e-05
+2026-05-27 20:00:37,203 - INFO - Memory cleaned.
+2026-05-27 20:00:38,246 - INFO - Epoch[289] Complete. Time taken: 00:02:08.136
+2026-05-27 20:02:41,224 - INFO - Epoch 290 - Train Loss: 2866.008903735707, Validation MRR: 0.0022906868252903223, Learning Rate: 4.190602144143207e-05
+2026-05-27 20:02:45,442 - INFO - Memory cleaned.
+2026-05-27 20:02:46,464 - INFO - Epoch[290] Complete. Time taken: 00:02:08.218
+2026-05-27 20:04:49,247 - INFO - Epoch 291 - Train Loss: 2868.6993088246645, Validation MRR: 0.0022906868252903223, Learning Rate: 3.806023374435663e-05
+2026-05-27 20:04:53,463 - INFO - Memory cleaned.
+2026-05-27 20:04:54,509 - INFO - Epoch[291] Complete. Time taken: 00:02:08.044
+2026-05-27 20:06:57,280 - INFO - Epoch 292 - Train Loss: 2858.3841454537464, Validation MRR: 0.0022906868252903223, Learning Rate: 3.439253262059833e-05
+2026-05-27 20:07:01,500 - INFO - Memory cleaned.
+2026-05-27 20:07:02,538 - INFO - Epoch[292] Complete. Time taken: 00:02:08.029
+2026-05-27 20:09:05,287 - INFO - Epoch 293 - Train Loss: 2863.277483608244, Validation MRR: 0.0022906868252903223, Learning Rate: 3.090433203875792e-05
+2026-05-27 20:09:09,506 - INFO - Memory cleaned.
+2026-05-27 20:09:10,560 - INFO - Epoch[293] Complete. Time taken: 00:02:08.022
+2026-05-27 20:11:13,284 - INFO - Epoch 294 - Train Loss: 2861.024240574005, Validation MRR: 0.0022906868252903223, Learning Rate: 2.7596976766561034e-05
+2026-05-27 20:11:17,500 - INFO - Memory cleaned.
+2026-05-27 20:11:18,536 - INFO - Epoch[294] Complete. Time taken: 00:02:07.975
+2026-05-27 20:13:21,309 - INFO - Epoch 295 - Train Loss: 2858.4740565164743, Validation MRR: 0.0022906868252903223, Learning Rate: 2.4471741852423235e-05
+2026-05-27 20:13:25,525 - INFO - Memory cleaned.
+2026-05-27 20:13:26,567 - INFO - Epoch[295] Complete. Time taken: 00:02:08.032
+2026-05-27 20:15:29,289 - INFO - Epoch 296 - Train Loss: 2840.9032879100573, Validation MRR: 0.0022906868252903223, Learning Rate: 2.152983213389559e-05
+2026-05-27 20:15:33,504 - INFO - Memory cleaned.
+2026-05-27 20:15:34,530 - INFO - Epoch[296] Complete. Time taken: 00:02:07.962
+2026-05-27 20:17:37,249 - INFO - Epoch 297 - Train Loss: 2863.07575097645, Validation MRR: 0.0022906868252903223, Learning Rate: 1.8772381773176416e-05
+2026-05-27 20:17:41,467 - INFO - Memory cleaned.
+2026-05-27 20:17:42,509 - INFO - Epoch[297] Complete. Time taken: 00:02:07.979
+2026-05-27 20:19:45,235 - INFO - Epoch 298 - Train Loss: 2850.713033280757, Validation MRR: 0.0022906868252903223, Learning Rate: 1.6200453819870064e-05
+2026-05-27 20:19:49,455 - INFO - Memory cleaned.
+2026-05-27 20:19:50,493 - INFO - Epoch[298] Complete. Time taken: 00:02:07.984
+2026-05-27 20:21:53,342 - INFO - Epoch 299 - Train Loss: 2859.7941041042736, Validation MRR: 0.0022906868252903223, Learning Rate: 1.3815039801161721e-05
+2026-05-27 20:21:57,586 - INFO - Memory cleaned.
+2026-05-27 20:21:58,637 - INFO - Epoch[299] Complete. Time taken: 00:02:08.144
+2026-05-27 20:24:01,601 - INFO - Epoch 300 - Train Loss: 2842.8051523433096, Validation MRR: 0.0022906868252903223, Learning Rate: 1.1617059339563806e-05
+2026-05-27 20:24:05,823 - INFO - Memory cleaned.
+2026-05-27 20:24:05,823 - INFO - Evaluating on validation set at epoch 300...
+Link prediction evaluation:   0%|          | 0/15 [00:00<?, ?batch/s]Link prediction evaluation:   7%|▋         | 1/15 [00:00<00:01,  7.16batch/s]Link prediction evaluation:  13%|█▎        | 2/15 [00:00<00:01,  7.57batch/s]Link prediction evaluation:  20%|██        | 3/15 [00:00<00:01,  7.72batch/s]Link prediction evaluation:  27%|██▋       | 4/15 [00:00<00:01,  7.80batch/s]Link prediction evaluation:  33%|███▎      | 5/15 [00:00<00:01,  7.85batch/s]Link prediction evaluation:  40%|████      | 6/15 [00:00<00:01,  7.89batch/s]Link prediction evaluation:  47%|████▋     | 7/15 [00:00<00:01,  7.90batch/s]Link prediction evaluation:  53%|█████▎    | 8/15 [00:01<00:00,  7.92batch/s]Link prediction evaluation:  60%|██████    | 9/15 [00:01<00:00,  7.93batch/s]Link prediction evaluation:  67%|██████▋   | 10/15 [00:01<00:00,  7.94batch/s]Link prediction evaluation:  73%|███████▎  | 11/15 [00:01<00:00,  7.94batch/s]Link prediction evaluation:  80%|████████  | 12/15 [00:01<00:00,  7.95batch/s]Link prediction evaluation:  87%|████████▋ | 13/15 [00:01<00:00,  7.95batch/s]Link prediction evaluation:  93%|█████████▎| 14/15 [00:01<00:00,  7.95batch/s]Link prediction evaluation: 100%|██████████| 15/15 [00:01<00:00,  8.14batch/s]
+2026-05-27 20:24:07,717 - INFO - Validation MRR: 0.0023913676850497723
+2026-05-27 20:24:08,767 - INFO - Epoch[300] Complete. Time taken: 00:02:10.130
+2026-05-27 20:26:11,512 - INFO - Epoch 301 - Train Loss: 2850.6640359047346, Validation MRR: 0.0023913676850497723, Learning Rate: 9.607359798384786e-06
+2026-05-27 20:26:15,738 - INFO - Memory cleaned.
+2026-05-27 20:26:16,786 - INFO - Epoch[301] Complete. Time taken: 00:02:08.019
+2026-05-27 20:28:19,530 - INFO - Epoch 302 - Train Loss: 2847.3618424219912, Validation MRR: 0.0023913676850497723, Learning Rate: 7.786715955054202e-06
+2026-05-27 20:28:23,769 - INFO - Memory cleaned.
+2026-05-27 20:28:24,798 - INFO - Epoch[302] Complete. Time taken: 00:02:08.012
+2026-05-27 20:30:27,548 - INFO - Epoch 303 - Train Loss: 2842.383518597401, Validation MRR: 0.0023913676850497723, Learning Rate: 6.15582970243117e-06
+2026-05-27 20:30:31,772 - INFO - Memory cleaned.
+2026-05-27 20:30:32,819 - INFO - Epoch[303] Complete. Time taken: 00:02:08.021
+2026-05-27 20:32:35,909 - INFO - Epoch 304 - Train Loss: 2861.309314977935, Validation MRR: 0.0023913676850497723, Learning Rate: 4.715329778211374e-06
+2026-05-27 20:32:40,118 - INFO - Memory cleaned.
+2026-05-27 20:32:41,144 - INFO - Epoch[304] Complete. Time taken: 00:02:08.325
+2026-05-27 20:34:43,744 - INFO - Epoch 305 - Train Loss: 2838.4796141594406, Validation MRR: 0.0023913676850497723, Learning Rate: 3.4657715225368535e-06
+2026-05-27 20:34:47,914 - INFO - Memory cleaned.
+2026-05-27 20:34:48,975 - INFO - Epoch[305] Complete. Time taken: 00:02:07.830
+2026-05-27 20:36:51,597 - INFO - Epoch 306 - Train Loss: 2848.3318362773816, Validation MRR: 0.0023913676850497723, Learning Rate: 2.4076366639015913e-06
+2026-05-27 20:36:55,775 - INFO - Memory cleaned.
+2026-05-27 20:36:56,807 - INFO - Epoch[306] Complete. Time taken: 00:02:07.832
+2026-05-27 20:38:59,411 - INFO - Epoch 307 - Train Loss: 2859.603484535148, Validation MRR: 0.0023913676850497723, Learning Rate: 1.541333133436018e-06
+2026-05-27 20:39:03,583 - INFO - Memory cleaned.
+2026-05-27 20:39:04,647 - INFO - Epoch[307] Complete. Time taken: 00:02:07.839
+2026-05-27 20:41:07,285 - INFO - Epoch 308 - Train Loss: 2856.9756177800587, Validation MRR: 0.0023913676850497723, Learning Rate: 8.671949076420882e-07
+2026-05-27 20:41:11,464 - INFO - Memory cleaned.
+2026-05-27 20:41:12,498 - INFO - Epoch[308] Complete. Time taken: 00:02:07.851
+2026-05-27 20:43:15,098 - INFO - Epoch 309 - Train Loss: 2854.1663768351705, Validation MRR: 0.0023913676850497723, Learning Rate: 3.854818796385495e-07
+2026-05-27 20:43:19,270 - INFO - Memory cleaned.
+2026-05-27 20:43:20,310 - INFO - Epoch[309] Complete. Time taken: 00:02:07.812
+2026-05-27 20:45:22,863 - INFO - Epoch 310 - Train Loss: 2867.1706565434242, Validation MRR: 0.0023913676850497723, Learning Rate: 9.637975896759077e-08
+2026-05-27 20:45:27,042 - INFO - Memory cleaned.
+2026-05-27 20:45:28,114 - INFO - Epoch[310] Complete. Time taken: 00:02:07.803
+2026-05-27 20:47:30,733 - INFO - Epoch 311 - Train Loss: 3079.0372310587254, Validation MRR: 0.0023913676850497723, Learning Rate: 0.001
+2026-05-27 20:47:34,905 - INFO - Memory cleaned.
+2026-05-27 20:47:36,023 - INFO - Epoch[311] Complete. Time taken: 00:02:07.909
+2026-05-27 20:49:38,582 - INFO - Epoch 312 - Train Loss: 3058.4995089080567, Validation MRR: 0.0023913676850497723, Learning Rate: 0.000999975904479664
+2026-05-27 20:49:42,756 - INFO - Memory cleaned.
+2026-05-27 20:49:43,809 - INFO - Epoch[312] Complete. Time taken: 00:02:07.786
+2026-05-27 20:51:46,439 - INFO - Epoch 313 - Train Loss: 3023.1122517694293, Validation MRR: 0.0023913676850497723, Learning Rate: 0.0009999036202410325
+2026-05-27 20:51:50,612 - INFO - Memory cleaned.
+2026-05-27 20:51:51,656 - INFO - Epoch[313] Complete. Time taken: 00:02:07.847
+2026-05-27 20:53:54,757 - INFO - Epoch 314 - Train Loss: 3025.7113461212275, Validation MRR: 0.0023913676850497723, Learning Rate: 0.0009997831542510106
+2026-05-27 20:53:58,958 - INFO - Memory cleaned.
+2026-05-27 20:54:00,008 - INFO - Epoch[314] Complete. Time taken: 00:02:08.352
+2026-05-27 20:56:02,711 - INFO - Epoch 315 - Train Loss: 3018.0315903505034, Validation MRR: 0.0023913676850497723, Learning Rate: 0.0009996145181203615
+2026-05-27 20:56:06,910 - INFO - Memory cleaned.
+2026-05-27 20:56:07,982 - INFO - Epoch[315] Complete. Time taken: 00:02:07.975
+2026-05-27 20:58:10,787 - INFO - Epoch 316 - Train Loss: 3015.5595089800827, Validation MRR: 0.0023913676850497723, Learning Rate: 0.0009993977281025862
+2026-05-27 20:58:15,007 - INFO - Memory cleaned.
+2026-05-27 20:58:16,057 - INFO - Epoch[316] Complete. Time taken: 00:02:08.074
+2026-05-27 21:00:18,856 - INFO - Epoch 317 - Train Loss: 3030.957220674324, Validation MRR: 0.0023913676850497723, Learning Rate: 0.000999132805092358
+2026-05-27 21:00:23,072 - INFO - Memory cleaned.
+2026-05-27 21:00:24,121 - INFO - Epoch[317] Complete. Time taken: 00:02:08.064
+2026-05-27 21:02:26,881 - INFO - Epoch 318 - Train Loss: 3033.4589229556, Validation MRR: 0.0023913676850497723, Learning Rate: 0.0009988197746235079
+2026-05-27 21:02:31,104 - INFO - Memory cleaned.
+2026-05-27 21:02:32,143 - INFO - Epoch[318] Complete. Time taken: 00:02:08.022
+2026-05-27 21:04:34,925 - INFO - Epoch 319 - Train Loss: 3012.9769333985173, Validation MRR: 0.0023913676850497723, Learning Rate: 0.000998458666866564
+2026-05-27 21:04:39,143 - INFO - Memory cleaned.
+2026-05-27 21:04:40,221 - INFO - Epoch[319] Complete. Time taken: 00:02:08.078
+2026-05-27 21:06:42,972 - INFO - Epoch 320 - Train Loss: 3010.457792371542, Validation MRR: 0.0023913676850497723, Learning Rate: 0.0009980495166258437
+2026-05-27 21:06:47,188 - INFO - Memory cleaned.
+2026-05-27 21:06:47,188 - INFO - Evaluating on validation set at epoch 320...
+Link prediction evaluation:   0%|          | 0/15 [00:00<?, ?batch/s]Link prediction evaluation:   7%|▋         | 1/15 [00:00<00:01,  7.88batch/s]Link prediction evaluation:  13%|█▎        | 2/15 [00:00<00:01,  7.91batch/s]Link prediction evaluation:  20%|██        | 3/15 [00:00<00:01,  7.91batch/s]Link prediction evaluation:  27%|██▋       | 4/15 [00:00<00:01,  7.92batch/s]Link prediction evaluation:  33%|███▎      | 5/15 [00:00<00:01,  7.93batch/s]Link prediction evaluation:  40%|████      | 6/15 [00:00<00:01,  7.94batch/s]Link prediction evaluation:  47%|████▋     | 7/15 [00:00<00:01,  7.94batch/s]Link prediction evaluation:  53%|█████▎    | 8/15 [00:01<00:00,  7.94batch/s]Link prediction evaluation:  60%|██████    | 9/15 [00:01<00:00,  7.94batch/s]Link prediction evaluation:  67%|██████▋   | 10/15 [00:01<00:00,  7.95batch/s]Link prediction evaluation:  73%|███████▎  | 11/15 [00:01<00:00,  7.94batch/s]Link prediction evaluation:  80%|████████  | 12/15 [00:01<00:00,  7.95batch/s]Link prediction evaluation:  87%|████████▋ | 13/15 [00:01<00:00,  7.95batch/s]Link prediction evaluation:  93%|█████████▎| 14/15 [00:01<00:00,  7.95batch/s]Link prediction evaluation: 100%|██████████| 15/15 [00:01<00:00,  8.20batch/s]
+2026-05-27 21:06:49,020 - INFO - Validation MRR: 0.0022871310357004404
+2026-05-27 21:06:50,061 - INFO - Epoch[320] Complete. Time taken: 00:02:09.840
+2026-05-27 21:08:52,829 - INFO - Epoch 321 - Train Loss: 3021.9400647293205, Validation MRR: 0.0022871310357004404, Learning Rate: 0.0009975923633360985
+2026-05-27 21:08:57,056 - INFO - Memory cleaned.
+2026-05-27 21:08:58,099 - INFO - Epoch[321] Complete. Time taken: 00:02:08.038
+2026-05-27 21:11:00,838 - INFO - Epoch 322 - Train Loss: 3031.079087390461, Validation MRR: 0.0022871310357004404, Learning Rate: 0.0009970872510587142
+2026-05-27 21:11:05,055 - INFO - Memory cleaned.
+2026-05-27 21:11:06,096 - INFO - Epoch[322] Complete. Time taken: 00:02:07.997
+2026-05-27 21:13:08,852 - INFO - Epoch 323 - Train Loss: 3023.016631455768, Validation MRR: 0.0022871310357004404, Learning Rate: 0.0009965342284774632
+2026-05-27 21:13:13,067 - INFO - Memory cleaned.
+2026-05-27 21:13:14,118 - INFO - Epoch[323] Complete. Time taken: 00:02:08.022
+2026-05-27 21:15:16,890 - INFO - Epoch 324 - Train Loss: 3028.9245091969174, Validation MRR: 0.0022871310357004404, Learning Rate: 0.000995933348893813
+2026-05-27 21:15:21,105 - INFO - Memory cleaned.
+2026-05-27 21:15:22,152 - INFO - Epoch[324] Complete. Time taken: 00:02:08.034
+2026-05-27 21:17:24,901 - INFO - Epoch 325 - Train Loss: 3037.909428646254, Validation MRR: 0.0022871310357004404, Learning Rate: 0.0009952846702217886
+2026-05-27 21:17:29,119 - INFO - Memory cleaned.
+2026-05-27 21:17:30,167 - INFO - Epoch[325] Complete. Time taken: 00:02:08.015
+2026-05-27 21:19:32,879 - INFO - Epoch 326 - Train Loss: 3016.1244880274, Validation MRR: 0.0022871310357004404, Learning Rate: 0.0009945882549823905
+2026-05-27 21:19:37,096 - INFO - Memory cleaned.
+2026-05-27 21:19:38,148 - INFO - Epoch[326] Complete. Time taken: 00:02:07.981
+2026-05-27 21:21:40,900 - INFO - Epoch 327 - Train Loss: 3032.6234641165042, Validation MRR: 0.0022871310357004404, Learning Rate: 0.0009938441702975688
+2026-05-27 21:21:45,116 - INFO - Memory cleaned.
+2026-05-27 21:21:46,161 - INFO - Epoch[327] Complete. Time taken: 00:02:08.012
+2026-05-27 21:23:48,932 - INFO - Epoch 328 - Train Loss: 3015.0414543319794, Validation MRR: 0.0022871310357004404, Learning Rate: 0.0009930524878837544
+2026-05-27 21:23:53,148 - INFO - Memory cleaned.
+2026-05-27 21:23:54,188 - INFO - Epoch[328] Complete. Time taken: 00:02:08.026
+2026-05-27 21:25:56,898 - INFO - Epoch 329 - Train Loss: 3020.2205798755986, Validation MRR: 0.0022871310357004404, Learning Rate: 0.0009922132840449458
+2026-05-27 21:26:01,123 - INFO - Memory cleaned.
+2026-05-27 21:26:02,177 - INFO - Epoch[329] Complete. Time taken: 00:02:07.989
+2026-05-27 21:28:05,021 - INFO - Epoch 330 - Train Loss: 3006.401867081161, Validation MRR: 0.0022871310357004404, Learning Rate: 0.000991326639665356
+2026-05-27 21:28:09,250 - INFO - Memory cleaned.
+2026-05-27 21:28:10,179 - INFO - Epoch[330] Complete. Time taken: 00:02:08.002
+2026-05-27 21:30:13,237 - INFO - Epoch 331 - Train Loss: 3004.2377574869197, Validation MRR: 0.0022871310357004404, Learning Rate: 0.0009903926402016153
+2026-05-27 21:30:17,468 - INFO - Memory cleaned.
+2026-05-27 21:30:18,474 - INFO - Epoch[331] Complete. Time taken: 00:02:08.296
+2026-05-27 21:32:21,182 - INFO - Epoch 332 - Train Loss: 3019.5822182081365, Validation MRR: 0.0022871310357004404, Learning Rate: 0.0009894113756745361
+2026-05-27 21:32:25,396 - INFO - Memory cleaned.
+2026-05-27 21:32:26,317 - INFO - Epoch[332] Complete. Time taken: 00:02:07.842
+2026-05-27 21:34:29,101 - INFO - Epoch 333 - Train Loss: 3010.0961134679847, Validation MRR: 0.0022871310357004404, Learning Rate: 0.0009883829406604362
+2026-05-27 21:34:33,349 - INFO - Memory cleaned.
+2026-05-27 21:34:34,411 - INFO - Epoch[333] Complete. Time taken: 00:02:08.094
+2026-05-27 21:36:37,174 - INFO - Epoch 334 - Train Loss: 3021.8351132397415, Validation MRR: 0.0022871310357004404, Learning Rate: 0.0009873074342820224
+2026-05-27 21:36:41,415 - INFO - Memory cleaned.
+2026-05-27 21:36:42,328 - INFO - Epoch[334] Complete. Time taken: 00:02:07.917
+2026-05-27 21:38:45,034 - INFO - Epoch 335 - Train Loss: 3020.5240052695253, Validation MRR: 0.0022871310357004404, Learning Rate: 0.0009861849601988384
+2026-05-27 21:38:49,251 - INFO - Memory cleaned.
+2026-05-27 21:38:50,294 - INFO - Epoch[335] Complete. Time taken: 00:02:07.966
+2026-05-27 21:40:53,010 - INFO - Epoch 336 - Train Loss: 3011.9376168163685, Validation MRR: 0.0022871310357004404, Learning Rate: 0.000985015626597272
+2026-05-27 21:40:57,226 - INFO - Memory cleaned.
+2026-05-27 21:40:58,240 - INFO - Epoch[336] Complete. Time taken: 00:02:07.947
+2026-05-27 21:43:00,954 - INFO - Epoch 337 - Train Loss: 3009.4440475787487, Validation MRR: 0.0022871310357004404, Learning Rate: 0.0009837995461801298
+2026-05-27 21:43:05,173 - INFO - Memory cleaned.
+2026-05-27 21:43:06,240 - INFO - Epoch[337] Complete. Time taken: 00:02:07.999
+2026-05-27 21:45:08,957 - INFO - Epoch 338 - Train Loss: 3015.54566024947, Validation MRR: 0.0022871310357004404, Learning Rate: 0.0009825368361557737
+2026-05-27 21:45:13,172 - INFO - Memory cleaned.
+2026-05-27 21:45:14,184 - INFO - Epoch[338] Complete. Time taken: 00:02:07.944
+2026-05-27 21:47:16,943 - INFO - Epoch 339 - Train Loss: 3002.061575680579, Validation MRR: 0.0022871310357004404, Learning Rate: 0.0009812276182268236
+2026-05-27 21:47:21,159 - INFO - Memory cleaned.
+2026-05-27 21:47:22,208 - INFO - Epoch[339] Complete. Time taken: 00:02:08.024
+2026-05-27 21:49:24,909 - INFO - Epoch 340 - Train Loss: 3011.6635753405585, Validation MRR: 0.0022871310357004404, Learning Rate: 0.0009798720185784286
+2026-05-27 21:49:29,125 - INFO - Memory cleaned.
+2026-05-27 21:49:29,125 - INFO - Evaluating on validation set at epoch 340...
+Link prediction evaluation:   0%|          | 0/15 [00:00<?, ?batch/s]Link prediction evaluation:   7%|▋         | 1/15 [00:00<00:01,  7.09batch/s]Link prediction evaluation:  13%|█▎        | 2/15 [00:00<00:01,  7.54batch/s]Link prediction evaluation:  20%|██        | 3/15 [00:00<00:01,  7.70batch/s]Link prediction evaluation:  27%|██▋       | 4/15 [00:00<00:01,  7.79batch/s]Link prediction evaluation:  33%|███▎      | 5/15 [00:00<00:01,  7.84batch/s]Link prediction evaluation:  40%|████      | 6/15 [00:00<00:01,  7.87batch/s]Link prediction evaluation:  47%|████▋     | 7/15 [00:00<00:01,  7.89batch/s]Link prediction evaluation:  53%|█████▎    | 8/15 [00:01<00:00,  7.91batch/s]Link prediction evaluation:  60%|██████    | 9/15 [00:01<00:00,  7.92batch/s]Link prediction evaluation:  67%|██████▋   | 10/15 [00:01<00:00,  7.93batch/s]Link prediction evaluation:  73%|███████▎  | 11/15 [00:01<00:00,  7.93batch/s]Link prediction evaluation:  80%|████████  | 12/15 [00:01<00:00,  7.94batch/s]Link prediction evaluation:  87%|████████▋ | 13/15 [00:01<00:00,  7.94batch/s]Link prediction evaluation:  93%|█████████▎| 14/15 [00:01<00:00,  7.94batch/s]Link prediction evaluation: 100%|██████████| 15/15 [00:01<00:00,  8.13batch/s]
+2026-05-27 21:49:31,015 - INFO - Validation MRR: 0.00362386554479599
+2026-05-27 21:49:32,042 - INFO - Epoch[340] Complete. Time taken: 00:02:09.833
+2026-05-27 21:51:34,714 - INFO - Epoch 341 - Train Loss: 3005.058696014241, Validation MRR: 0.00362386554479599, Learning Rate: 0.0009784701678661044
+2026-05-27 21:51:38,939 - INFO - Memory cleaned.
+2026-05-27 21:51:39,992 - INFO - Epoch[341] Complete. Time taken: 00:02:07.950
+2026-05-27 21:53:42,766 - INFO - Epoch 342 - Train Loss: 3010.5712676641947, Validation MRR: 0.00362386554479599, Learning Rate: 0.0009770222012031402
+2026-05-27 21:53:46,983 - INFO - Memory cleaned.
+2026-05-27 21:53:47,988 - INFO - Epoch[342] Complete. Time taken: 00:02:07.996
+2026-05-27 21:55:50,750 - INFO - Epoch 343 - Train Loss: 3022.192333981429, Validation MRR: 0.00362386554479599, Learning Rate: 0.0009755282581475768
+2026-05-27 21:55:54,967 - INFO - Memory cleaned.
+2026-05-27 21:55:56,040 - INFO - Epoch[343] Complete. Time taken: 00:02:08.053
+2026-05-27 21:57:58,811 - INFO - Epoch 344 - Train Loss: 2988.8143072987364, Validation MRR: 0.00362386554479599, Learning Rate: 0.0009739884826887552
+2026-05-27 21:58:03,025 - INFO - Memory cleaned.
+2026-05-27 21:58:04,024 - INFO - Epoch[344] Complete. Time taken: 00:02:07.983
+2026-05-27 22:00:06,741 - INFO - Epoch 345 - Train Loss: 3012.9297399542884, Validation MRR: 0.00362386554479599, Learning Rate: 0.0009724030232334391
+2026-05-27 22:00:10,957 - INFO - Memory cleaned.
+2026-05-27 22:00:11,996 - INFO - Epoch[345] Complete. Time taken: 00:02:07.972
+2026-05-27 22:02:14,728 - INFO - Epoch 346 - Train Loss: 3011.6764058790413, Validation MRR: 0.00362386554479599, Learning Rate: 0.0009707720325915104
+2026-05-27 22:02:18,943 - INFO - Memory cleaned.
+2026-05-27 22:02:19,959 - INFO - Epoch[346] Complete. Time taken: 00:02:07.963
+2026-05-27 22:04:22,735 - INFO - Epoch 347 - Train Loss: 2991.3617711559164, Validation MRR: 0.00362386554479599, Learning Rate: 0.0009690956679612422
+2026-05-27 22:04:26,950 - INFO - Memory cleaned.
+2026-05-27 22:04:28,017 - INFO - Epoch[347] Complete. Time taken: 00:02:08.058
+2026-05-27 22:06:30,773 - INFO - Epoch 348 - Train Loss: 3012.644053472322, Validation MRR: 0.00362386554479599, Learning Rate: 0.0009673740909141462
+2026-05-27 22:06:34,991 - INFO - Memory cleaned.
+2026-05-27 22:06:36,009 - INFO - Epoch[348] Complete. Time taken: 00:02:07.992
+2026-05-27 22:08:38,772 - INFO - Epoch 349 - Train Loss: 3007.25296594975, Validation MRR: 0.00362386554479599, Learning Rate: 0.0009656074673794017
+2026-05-27 22:08:42,988 - INFO - Memory cleaned.
+2026-05-27 22:08:44,054 - INFO - Epoch[349] Complete. Time taken: 00:02:08.045
+2026-05-27 22:10:46,762 - INFO - Epoch 350 - Train Loss: 2994.9105488657874, Validation MRR: 0.00362386554479599, Learning Rate: 0.000963795967627862
+2026-05-27 22:10:50,978 - INFO - Memory cleaned.
+2026-05-27 22:10:51,993 - INFO - Epoch[350] Complete. Time taken: 00:02:07.938
+2026-05-27 22:12:54,706 - INFO - Epoch 351 - Train Loss: 2992.5182272804323, Validation MRR: 0.00362386554479599, Learning Rate: 0.0009619397662556434
+2026-05-27 22:12:58,922 - INFO - Memory cleaned.
+2026-05-27 22:12:59,973 - INFO - Epoch[351] Complete. Time taken: 00:02:07.980
+2026-05-27 22:15:02,700 - INFO - Epoch 352 - Train Loss: 2999.095777962862, Validation MRR: 0.00362386554479599, Learning Rate: 0.0009600390421672975
+2026-05-27 22:15:06,916 - INFO - Memory cleaned.
+2026-05-27 22:15:07,923 - INFO - Epoch[352] Complete. Time taken: 00:02:07.949
+2026-05-27 22:17:10,658 - INFO - Epoch 353 - Train Loss: 3011.4948899817437, Validation MRR: 0.00362386554479599, Learning Rate: 0.0009580939785585681
+2026-05-27 22:17:14,874 - INFO - Memory cleaned.
+2026-05-27 22:17:15,917 - INFO - Epoch[353] Complete. Time taken: 00:02:07.994
+2026-05-27 22:19:18,672 - INFO - Epoch 354 - Train Loss: 3017.878938419384, Validation MRR: 0.00362386554479599, Learning Rate: 0.0009561047628987338
+2026-05-27 22:19:22,889 - INFO - Memory cleaned.
+2026-05-27 22:19:23,885 - INFO - Epoch[354] Complete. Time taken: 00:02:07.968
+2026-05-27 22:21:26,623 - INFO - Epoch 355 - Train Loss: 3003.4958254377534, Validation MRR: 0.00362386554479599, Learning Rate: 0.0009540715869125407
+2026-05-27 22:21:30,838 - INFO - Memory cleaned.
+2026-05-27 22:21:31,897 - INFO - Epoch[355] Complete. Time taken: 00:02:08.012
+2026-05-27 22:23:34,787 - INFO - Epoch 356 - Train Loss: 2989.613636023109, Validation MRR: 0.00362386554479599, Learning Rate: 0.0009519946465617218
+2026-05-27 22:23:39,002 - INFO - Memory cleaned.
+2026-05-27 22:23:40,026 - INFO - Epoch[356] Complete. Time taken: 00:02:08.128
+2026-05-27 22:25:42,746 - INFO - Epoch 357 - Train Loss: 3004.32380436448, Validation MRR: 0.00362386554479599, Learning Rate: 0.0009498741420261108
+2026-05-27 22:25:46,962 - INFO - Memory cleaned.
+2026-05-27 22:25:48,005 - INFO - Epoch[357] Complete. Time taken: 00:02:07.979
+2026-05-27 22:27:50,760 - INFO - Epoch 358 - Train Loss: 3006.8769033406907, Validation MRR: 0.00362386554479599, Learning Rate: 0.0009477102776843484
+2026-05-27 22:27:54,976 - INFO - Memory cleaned.
+2026-05-27 22:27:55,994 - INFO - Epoch[358] Complete. Time taken: 00:02:07.989
+2026-05-27 22:29:58,739 - INFO - Epoch 359 - Train Loss: 3002.4648782876025, Validation MRR: 0.00362386554479599, Learning Rate: 0.0009455032620941839
+2026-05-27 22:30:02,955 - INFO - Memory cleaned.
+2026-05-27 22:30:04,037 - INFO - Epoch[359] Complete. Time taken: 00:02:08.043
+2026-05-27 22:32:06,862 - INFO - Epoch 360 - Train Loss: 3004.5537461576955, Validation MRR: 0.00362386554479599, Learning Rate: 0.0009432533079723733
+2026-05-27 22:32:11,095 - INFO - Memory cleaned.
+2026-05-27 22:32:11,095 - INFO - Evaluating on validation set at epoch 360...
+Link prediction evaluation:   0%|          | 0/15 [00:00<?, ?batch/s]Link prediction evaluation:   7%|▋         | 1/15 [00:00<00:01,  7.39batch/s]Link prediction evaluation:  13%|█▎        | 2/15 [00:00<00:01,  7.70batch/s]Link prediction evaluation:  20%|██        | 3/15 [00:00<00:01,  7.79batch/s]Link prediction evaluation:  27%|██▋       | 4/15 [00:00<00:01,  7.84batch/s]Link prediction evaluation:  33%|███▎      | 5/15 [00:00<00:01,  7.88batch/s]Link prediction evaluation:  40%|████      | 6/15 [00:00<00:01,  7.90batch/s]Link prediction evaluation:  47%|████▋     | 7/15 [00:00<00:01,  7.91batch/s]Link prediction evaluation:  53%|█████▎    | 8/15 [00:01<00:00,  7.93batch/s]Link prediction evaluation:  60%|██████    | 9/15 [00:01<00:00,  7.93batch/s]Link prediction evaluation:  67%|██████▋   | 10/15 [00:01<00:00,  7.94batch/s]Link prediction evaluation:  73%|███████▎  | 11/15 [00:01<00:00,  7.94batch/s]Link prediction evaluation:  80%|████████  | 12/15 [00:01<00:00,  7.95batch/s]Link prediction evaluation:  87%|████████▋ | 13/15 [00:01<00:00,  7.94batch/s]Link prediction evaluation:  93%|█████████▎| 14/15 [00:01<00:00,  7.94batch/s]Link prediction evaluation: 100%|██████████| 15/15 [00:01<00:00,  8.16batch/s]
+2026-05-27 22:32:12,935 - INFO - Validation MRR: 0.004709777422249317
+2026-05-27 22:32:14,738 - INFO - Epoch[360] Complete. Time taken: 00:02:10.700
+2026-05-27 22:34:17,859 - INFO - Epoch 361 - Train Loss: 2988.195139618542, Validation MRR: 0.004709777422249317, Learning Rate: 0.0009409606321741775
+2026-05-27 22:34:22,128 - INFO - Memory cleaned.
+2026-05-27 22:34:23,033 - INFO - Epoch[361] Complete. Time taken: 00:02:08.295
+2026-05-27 22:36:26,964 - INFO - Epoch 362 - Train Loss: 2973.8237883016377, Validation MRR: 0.004709777422249317, Learning Rate: 0.0009386254556724621
+2026-05-27 22:36:31,217 - INFO - Memory cleaned.
+2026-05-27 22:36:32,267 - INFO - Epoch[362] Complete. Time taken: 00:02:09.233
+2026-05-27 22:38:35,934 - INFO - Epoch 363 - Train Loss: 2992.3366407327726, Validation MRR: 0.004709777422249317, Learning Rate: 0.0009362480035363986
+2026-05-27 22:38:40,187 - INFO - Memory cleaned.
+2026-05-27 22:38:41,253 - INFO - Epoch[363] Complete. Time taken: 00:02:08.986
+2026-05-27 22:40:44,894 - INFO - Epoch 364 - Train Loss: 3011.2779138516335, Validation MRR: 0.004709777422249317, Learning Rate: 0.000933828504909772
+2026-05-27 22:40:49,139 - INFO - Memory cleaned.
+2026-05-27 22:40:50,166 - INFO - Epoch[364] Complete. Time taken: 00:02:08.913
+2026-05-27 22:42:53,853 - INFO - Epoch 365 - Train Loss: 3014.476403400026, Validation MRR: 0.004709777422249317, Learning Rate: 0.0009313671929888959
+2026-05-27 22:42:58,132 - INFO - Memory cleaned.
+2026-05-27 22:42:59,139 - INFO - Epoch[365] Complete. Time taken: 00:02:08.973
+2026-05-27 22:45:02,761 - INFO - Epoch 366 - Train Loss: 2968.5027942225397, Validation MRR: 0.004709777422249317, Learning Rate: 0.000928864305000136
+2026-05-27 22:45:07,019 - INFO - Memory cleaned.
+2026-05-27 22:45:08,054 - INFO - Epoch[366] Complete. Time taken: 00:02:08.915
+2026-05-27 22:47:11,747 - INFO - Epoch 367 - Train Loss: 2999.6219045113885, Validation MRR: 0.004709777422249317, Learning Rate: 0.0009263200821770461
+2026-05-27 22:47:16,009 - INFO - Memory cleaned.
+2026-05-27 22:47:17,059 - INFO - Epoch[367] Complete. Time taken: 00:02:09.004
+2026-05-27 22:49:20,689 - INFO - Epoch 368 - Train Loss: 2980.5640332501343, Validation MRR: 0.004709777422249317, Learning Rate: 0.0009237347697371172
+2026-05-27 22:49:24,952 - INFO - Memory cleaned.
+2026-05-27 22:49:25,965 - INFO - Epoch[368] Complete. Time taken: 00:02:08.906
+2026-05-27 22:51:29,697 - INFO - Epoch 369 - Train Loss: 2986.8795936855527, Validation MRR: 0.004709777422249317, Learning Rate: 0.0009211086168581433
+2026-05-27 22:51:33,968 - INFO - Memory cleaned.
+2026-05-27 22:51:34,979 - INFO - Epoch[369] Complete. Time taken: 00:02:09.014
+2026-05-27 22:53:38,670 - INFO - Epoch 370 - Train Loss: 2982.360268854304, Validation MRR: 0.004709777422249317, Learning Rate: 0.0009184418766542046
+2026-05-27 22:53:42,941 - INFO - Memory cleaned.
+2026-05-27 22:53:43,979 - INFO - Epoch[370] Complete. Time taken: 00:02:09.000
+2026-05-27 22:55:47,645 - INFO - Epoch 371 - Train Loss: 2979.5687926778464, Validation MRR: 0.004709777422249317, Learning Rate: 0.0009157348061512727
+2026-05-27 22:55:51,899 - INFO - Memory cleaned.
+2026-05-27 22:55:52,914 - INFO - Epoch[371] Complete. Time taken: 00:02:08.935
+2026-05-27 22:57:56,596 - INFO - Epoch 372 - Train Loss: 2985.9082012561794, Validation MRR: 0.004709777422249317, Learning Rate: 0.0009129876662624366
+2026-05-27 22:58:00,845 - INFO - Memory cleaned.
+2026-05-27 22:58:01,871 - INFO - Epoch[372] Complete. Time taken: 00:02:08.957
+2026-05-27 23:00:05,547 - INFO - Epoch 373 - Train Loss: 2999.7501782407544, Validation MRR: 0.004709777422249317, Learning Rate: 0.0009102007217627568
+2026-05-27 23:00:09,813 - INFO - Memory cleaned.
+2026-05-27 23:00:10,891 - INFO - Epoch[373] Complete. Time taken: 00:02:09.020
+2026-05-27 23:02:14,580 - INFO - Epoch 374 - Train Loss: 2985.460464868625, Validation MRR: 0.004709777422249317, Learning Rate: 0.0009073742412637447
+2026-05-27 23:02:18,843 - INFO - Memory cleaned.
+2026-05-27 23:02:19,873 - INFO - Epoch[374] Complete. Time taken: 00:02:08.982
+2026-05-27 23:04:23,497 - INFO - Epoch 375 - Train Loss: 2987.9652544318974, Validation MRR: 0.004709777422249317, Learning Rate: 0.0009045084971874737
+2026-05-27 23:04:27,750 - INFO - Memory cleaned.
+2026-05-27 23:04:28,761 - INFO - Epoch[375] Complete. Time taken: 00:02:08.888
+2026-05-27 23:06:32,446 - INFO - Epoch 376 - Train Loss: 2987.635494635288, Validation MRR: 0.004709777422249317, Learning Rate: 0.0009016037657403224
+2026-05-27 23:06:36,724 - INFO - Memory cleaned.
+2026-05-27 23:06:37,754 - INFO - Epoch[376] Complete. Time taken: 00:02:08.993
+2026-05-27 23:08:41,358 - INFO - Epoch 377 - Train Loss: 2970.4723566681473, Validation MRR: 0.004709777422249317, Learning Rate: 0.0008986603268863536
+2026-05-27 23:08:45,611 - INFO - Memory cleaned.
+2026-05-27 23:08:46,643 - INFO - Epoch[377] Complete. Time taken: 00:02:08.888
+2026-05-27 23:10:50,272 - INFO - Epoch 378 - Train Loss: 2977.3582175855363, Validation MRR: 0.004709777422249317, Learning Rate: 0.0008956784643203301
+2026-05-27 23:10:54,541 - INFO - Memory cleaned.
+2026-05-27 23:10:55,567 - INFO - Epoch[378] Complete. Time taken: 00:02:08.924
+2026-05-27 23:12:59,207 - INFO - Epoch 379 - Train Loss: 2971.275428828471, Validation MRR: 0.004709777422249317, Learning Rate: 0.0008926584654403724
+2026-05-27 23:13:03,460 - INFO - Memory cleaned.
+2026-05-27 23:13:04,500 - INFO - Epoch[379] Complete. Time taken: 00:02:08.933
+2026-05-27 23:15:08,085 - INFO - Epoch 380 - Train Loss: 2989.7345809895646, Validation MRR: 0.004709777422249317, Learning Rate: 0.0008896006213202583
+2026-05-27 23:15:12,353 - INFO - Memory cleaned.
+2026-05-27 23:15:12,353 - INFO - Evaluating on validation set at epoch 380...
+Link prediction evaluation:   0%|          | 0/15 [00:00<?, ?batch/s]Link prediction evaluation:   7%|▋         | 1/15 [00:00<00:01,  7.85batch/s]Link prediction evaluation:  13%|█▎        | 2/15 [00:00<00:01,  7.88batch/s]Link prediction evaluation:  20%|██        | 3/15 [00:00<00:01,  7.88batch/s]Link prediction evaluation:  27%|██▋       | 4/15 [00:00<00:01,  7.90batch/s]Link prediction evaluation:  33%|███▎      | 5/15 [00:00<00:01,  7.91batch/s]Link prediction evaluation:  40%|████      | 6/15 [00:00<00:01,  7.91batch/s]Link prediction evaluation:  47%|████▋     | 7/15 [00:00<00:01,  7.90batch/s]Link prediction evaluation:  53%|█████▎    | 8/15 [00:01<00:00,  7.91batch/s]Link prediction evaluation:  60%|██████    | 9/15 [00:01<00:00,  7.91batch/s]Link prediction evaluation:  67%|██████▋   | 10/15 [00:01<00:00,  7.91batch/s]Link prediction evaluation:  73%|███████▎  | 11/15 [00:01<00:00,  7.91batch/s]Link prediction evaluation:  80%|████████  | 12/15 [00:01<00:00,  7.93batch/s]Link prediction evaluation:  87%|████████▋ | 13/15 [00:01<00:00,  7.92batch/s]Link prediction evaluation:  93%|█████████▎| 14/15 [00:01<00:00,  7.92batch/s]Link prediction evaluation: 100%|██████████| 15/15 [00:01<00:00,  8.17batch/s]
+2026-05-27 23:15:14,192 - INFO - Validation MRR: 0.002625676104798913
+2026-05-27 23:15:15,213 - INFO - Epoch[380] Complete. Time taken: 00:02:10.713
+2026-05-27 23:17:18,916 - INFO - Epoch 381 - Train Loss: 2988.1009421330004, Validation MRR: 0.002625676104798913, Learning Rate: 0.0008865052266813684
+2026-05-27 23:17:23,195 - INFO - Memory cleaned.
+2026-05-27 23:17:24,230 - INFO - Epoch[381] Complete. Time taken: 00:02:09.017
+2026-05-27 23:19:27,821 - INFO - Epoch 382 - Train Loss: 2967.3081833104775, Validation MRR: 0.002625676104798913, Learning Rate: 0.0008833725798642807
+2026-05-27 23:19:32,080 - INFO - Memory cleaned.
+2026-05-27 23:19:33,107 - INFO - Epoch[382] Complete. Time taken: 00:02:08.877
+2026-05-27 23:21:36,779 - INFO - Epoch 383 - Train Loss: 2963.955125950189, Validation MRR: 0.002625676104798913, Learning Rate: 0.0008802029828000156
+2026-05-27 23:21:41,052 - INFO - Memory cleaned.
+2026-05-27 23:21:42,079 - INFO - Epoch[383] Complete. Time taken: 00:02:08.972
+2026-05-27 23:23:45,670 - INFO - Epoch 384 - Train Loss: 2983.7508582837854, Validation MRR: 0.002625676104798913, Learning Rate: 0.0008769967409809347
+2026-05-27 23:23:49,921 - INFO - Memory cleaned.
+2026-05-27 23:23:50,961 - INFO - Epoch[384] Complete. Time taken: 00:02:08.881
+2026-05-27 23:25:54,504 - INFO - Epoch 385 - Train Loss: 2968.375220853784, Validation MRR: 0.002625676104798913, Learning Rate: 0.0008737541634312985
+2026-05-27 23:25:58,771 - INFO - Memory cleaned.
+2026-05-27 23:25:59,841 - INFO - Epoch[385] Complete. Time taken: 00:02:08.880
+2026-05-27 23:28:03,483 - INFO - Epoch 386 - Train Loss: 2978.345453917313, Validation MRR: 0.002625676104798913, Learning Rate: 0.0008704755626774796
+2026-05-27 23:28:07,740 - INFO - Memory cleaned.
+2026-05-27 23:28:08,778 - INFO - Epoch[386] Complete. Time taken: 00:02:08.936
+2026-05-27 23:30:12,512 - INFO - Epoch 387 - Train Loss: 2984.357142911631, Validation MRR: 0.002625676104798913, Learning Rate: 0.0008671612547178428
+2026-05-27 23:30:16,748 - INFO - Memory cleaned.
+2026-05-27 23:30:17,772 - INFO - Epoch[387] Complete. Time taken: 00:02:08.994
+2026-05-27 23:32:21,327 - INFO - Epoch 388 - Train Loss: 2991.7010235992825, Validation MRR: 0.002625676104798913, Learning Rate: 0.0008638115589922875
+2026-05-27 23:32:25,600 - INFO - Memory cleaned.
+2026-05-27 23:32:26,621 - INFO - Epoch[388] Complete. Time taken: 00:02:08.849
+2026-05-27 23:34:29,937 - INFO - Epoch 389 - Train Loss: 2986.56143229759, Validation MRR: 0.002625676104798913, Learning Rate: 0.0008604267983514594
+2026-05-27 23:34:34,229 - INFO - Memory cleaned.
+2026-05-27 23:34:35,247 - INFO - Epoch[389] Complete. Time taken: 00:02:08.626
+2026-05-27 23:36:38,013 - INFO - Epoch 390 - Train Loss: 2983.0647386233723, Validation MRR: 0.002625676104798913, Learning Rate: 0.0008570072990256341
+2026-05-27 23:36:42,249 - INFO - Memory cleaned.
+2026-05-27 23:36:43,277 - INFO - Epoch[390] Complete. Time taken: 00:02:08.029
+2026-05-27 23:38:45,879 - INFO - Epoch 391 - Train Loss: 2960.905072193949, Validation MRR: 0.002625676104798913, Learning Rate: 0.0008535533905932737
+2026-05-27 23:38:50,116 - INFO - Memory cleaned.
+2026-05-27 23:38:51,135 - INFO - Epoch[391] Complete. Time taken: 00:02:07.859
+2026-05-27 23:40:54,114 - INFO - Epoch 392 - Train Loss: 2986.43093743311, Validation MRR: 0.002625676104798913, Learning Rate: 0.0008500654059492618
+2026-05-27 23:40:58,355 - INFO - Memory cleaned.
+2026-05-27 23:40:59,275 - INFO - Epoch[392] Complete. Time taken: 00:02:08.139
+2026-05-27 23:43:01,818 - INFO - Epoch 393 - Train Loss: 2961.6072499161346, Validation MRR: 0.002625676104798913, Learning Rate: 0.000846543681272818
+2026-05-27 23:43:06,059 - INFO - Memory cleaned.
+2026-05-27 23:43:06,977 - INFO - Epoch[393] Complete. Time taken: 00:02:07.702
+2026-05-27 23:45:09,739 - INFO - Epoch 394 - Train Loss: 2965.9065085418592, Validation MRR: 0.002625676104798913, Learning Rate: 0.0008429885559950963
+2026-05-27 23:45:13,980 - INFO - Memory cleaned.
+2026-05-27 23:45:15,005 - INFO - Epoch[394] Complete. Time taken: 00:02:08.028
+2026-05-27 23:47:17,824 - INFO - Epoch 395 - Train Loss: 2980.217958715022, Validation MRR: 0.002625676104798913, Learning Rate: 0.0008394003727664709
+2026-05-27 23:47:22,064 - INFO - Memory cleaned.
+2026-05-27 23:47:23,083 - INFO - Epoch[395] Complete. Time taken: 00:02:08.078
+2026-05-27 23:49:25,833 - INFO - Epoch 396 - Train Loss: 2961.5305257895384, Validation MRR: 0.002625676104798913, Learning Rate: 0.0008357794774235093
+2026-05-27 23:49:30,073 - INFO - Memory cleaned.
+2026-05-27 23:49:31,115 - INFO - Epoch[396] Complete. Time taken: 00:02:08.032
+2026-05-27 23:51:33,866 - INFO - Epoch 397 - Train Loss: 2952.2657141035334, Validation MRR: 0.002625676104798913, Learning Rate: 0.0008321262189556409
+2026-05-27 23:51:38,106 - INFO - Memory cleaned.
+2026-05-27 23:51:39,138 - INFO - Epoch[397] Complete. Time taken: 00:02:08.022
+2026-05-27 23:53:41,923 - INFO - Epoch 398 - Train Loss: 2965.231843564086, Validation MRR: 0.002625676104798913, Learning Rate: 0.0008284409494715207
+2026-05-27 23:53:46,164 - INFO - Memory cleaned.
+2026-05-27 23:53:47,198 - INFO - Epoch[398] Complete. Time taken: 00:02:08.060
+2026-05-27 23:55:49,970 - INFO - Epoch 399 - Train Loss: 2954.3527755610844, Validation MRR: 0.002625676104798913, Learning Rate: 0.000824724024165092
+2026-05-27 23:55:54,209 - INFO - Memory cleaned.
+2026-05-27 23:55:55,243 - INFO - Epoch[399] Complete. Time taken: 00:02:08.044
+2026-05-27 23:57:57,997 - INFO - Epoch 400 - Train Loss: 2963.0483406852454, Validation MRR: 0.002625676104798913, Learning Rate: 0.0008209758012813515
+2026-05-27 23:58:02,238 - INFO - Memory cleaned.
+2026-05-27 23:58:02,238 - INFO - Evaluating on validation set at epoch 400...
+Link prediction evaluation:   0%|          | 0/15 [00:00<?, ?batch/s]Link prediction evaluation:   7%|▋         | 1/15 [00:00<00:01,  7.29batch/s]Link prediction evaluation:  13%|█▎        | 2/15 [00:00<00:01,  7.64batch/s]Link prediction evaluation:  20%|██        | 3/15 [00:00<00:01,  7.76batch/s]Link prediction evaluation:  27%|██▋       | 4/15 [00:00<00:01,  7.82batch/s]Link prediction evaluation:  33%|███▎      | 5/15 [00:00<00:01,  7.87batch/s]Link prediction evaluation:  40%|████      | 6/15 [00:00<00:01,  7.89batch/s]Link prediction evaluation:  47%|████▋     | 7/15 [00:00<00:01,  7.91batch/s]Link prediction evaluation:  53%|█████▎    | 8/15 [00:01<00:00,  7.92batch/s]Link prediction evaluation:  60%|██████    | 9/15 [00:01<00:00,  7.93batch/s]Link prediction evaluation:  67%|██████▋   | 10/15 [00:01<00:00,  7.94batch/s]Link prediction evaluation:  73%|███████▎  | 11/15 [00:01<00:00,  7.94batch/s]Link prediction evaluation:  80%|████████  | 12/15 [00:01<00:00,  7.95batch/s]Link prediction evaluation:  87%|████████▋ | 13/15 [00:01<00:00,  7.94batch/s]Link prediction evaluation:  93%|█████████▎| 14/15 [00:01<00:00,  7.94batch/s]Link prediction evaluation: 100%|██████████| 15/15 [00:01<00:00,  8.15batch/s]
+2026-05-27 23:58:04,108 - INFO - Validation MRR: 0.003383414587005973
+2026-05-27 23:58:05,135 - INFO - Epoch[400] Complete. Time taken: 00:02:09.893
+2026-05-28 00:00:07,985 - INFO - Epoch 401 - Train Loss: 2957.3198886618075, Validation MRR: 0.003383414587005973, Learning Rate: 0.0008171966420818228
+2026-05-28 00:00:12,238 - INFO - Memory cleaned.
+2026-05-28 00:00:13,257 - INFO - Epoch[401] Complete. Time taken: 00:02:08.121
+2026-05-28 00:02:16,052 - INFO - Epoch 402 - Train Loss: 2958.8117394468195, Validation MRR: 0.003383414587005973, Learning Rate: 0.0008133869108097349
+2026-05-28 00:02:20,299 - INFO - Memory cleaned.
+2026-05-28 00:02:21,316 - INFO - Epoch[402] Complete. Time taken: 00:02:08.059
+2026-05-28 00:04:24,107 - INFO - Epoch 403 - Train Loss: 2950.4904537693265, Validation MRR: 0.003383414587005973, Learning Rate: 0.000809546974654917
+2026-05-28 00:04:28,351 - INFO - Memory cleaned.
+2026-05-28 00:04:29,349 - INFO - Epoch[403] Complete. Time taken: 00:02:08.033
+2026-05-28 00:06:32,267 - INFO - Epoch 404 - Train Loss: 2951.866679285979, Validation MRR: 0.003383414587005973, Learning Rate: 0.0008056772037184083
+2026-05-28 00:06:36,509 - INFO - Memory cleaned.
+2026-05-28 00:06:37,539 - INFO - Epoch[404] Complete. Time taken: 00:02:08.189
+2026-05-28 00:08:40,685 - INFO - Epoch 405 - Train Loss: 2960.264802566677, Validation MRR: 0.003383414587005973, Learning Rate: 0.0008017779709767857
+2026-05-28 00:08:44,910 - INFO - Memory cleaned.
+2026-05-28 00:08:45,920 - INFO - Epoch[405] Complete. Time taken: 00:02:08.381
+2026-05-28 00:10:48,689 - INFO - Epoch 406 - Train Loss: 2956.3838225238296, Validation MRR: 0.003383414587005973, Learning Rate: 0.0007978496522462167
+2026-05-28 00:10:52,919 - INFO - Memory cleaned.
+2026-05-28 00:10:53,922 - INFO - Epoch[406] Complete. Time taken: 00:02:08.002
+2026-05-28 00:12:56,413 - INFO - Epoch 407 - Train Loss: 2963.7094772059518, Validation MRR: 0.003383414587005973, Learning Rate: 0.0007938926261462366
+2026-05-28 00:13:00,622 - INFO - Memory cleaned.
+2026-05-28 00:13:01,622 - INFO - Epoch[407] Complete. Time taken: 00:02:07.699
+2026-05-28 00:15:04,213 - INFO - Epoch 408 - Train Loss: 2953.048364268168, Validation MRR: 0.003383414587005973, Learning Rate: 0.0007899072740632569
+2026-05-28 00:15:08,426 - INFO - Memory cleaned.
+2026-05-28 00:15:09,442 - INFO - Epoch[408] Complete. Time taken: 00:02:07.820
+2026-05-28 00:17:11,998 - INFO - Epoch 409 - Train Loss: 2958.792178214787, Validation MRR: 0.003383414587005973, Learning Rate: 0.0007858939801138062
+2026-05-28 00:17:16,208 - INFO - Memory cleaned.
+2026-05-28 00:17:17,224 - INFO - Epoch[409] Complete. Time taken: 00:02:07.782
+2026-05-28 00:19:19,837 - INFO - Epoch 410 - Train Loss: 2953.7821493845877, Validation MRR: 0.003383414587005973, Learning Rate: 0.0007818531311075083
+2026-05-28 00:19:24,042 - INFO - Memory cleaned.
+2026-05-28 00:19:25,061 - INFO - Epoch[410] Complete. Time taken: 00:02:07.836
+2026-05-28 00:21:27,780 - INFO - Epoch 411 - Train Loss: 2946.769068202811, Validation MRR: 0.003383414587005973, Learning Rate: 0.0007777851165098011
+2026-05-28 00:21:31,984 - INFO - Memory cleaned.
+2026-05-28 00:21:33,007 - INFO - Epoch[411] Complete. Time taken: 00:02:07.947
+2026-05-28 00:23:35,688 - INFO - Epoch 412 - Train Loss: 2960.0398252643176, Validation MRR: 0.003383414587005973, Learning Rate: 0.0007736903284043983
+2026-05-28 00:23:39,895 - INFO - Memory cleaned.
+2026-05-28 00:23:40,897 - INFO - Epoch[412] Complete. Time taken: 00:02:07.890
+2026-05-28 00:25:43,633 - INFO - Epoch 413 - Train Loss: 2946.3210062775615, Validation MRR: 0.003383414587005973, Learning Rate: 0.0007695691614555002
+2026-05-28 00:25:47,837 - INFO - Memory cleaned.
+2026-05-28 00:25:48,854 - INFO - Epoch[413] Complete. Time taken: 00:02:07.957
+2026-05-28 00:27:51,510 - INFO - Epoch 414 - Train Loss: 2956.277946342794, Validation MRR: 0.003383414587005973, Learning Rate: 0.0007654220128697547
+2026-05-28 00:27:55,715 - INFO - Memory cleaned.
+2026-05-28 00:27:56,732 - INFO - Epoch[414] Complete. Time taken: 00:02:07.877
+2026-05-28 00:29:59,467 - INFO - Epoch 415 - Train Loss: 2981.4611661567615, Validation MRR: 0.003383414587005973, Learning Rate: 0.0007612492823579744
+2026-05-28 00:30:03,670 - INFO - Memory cleaned.
+2026-05-28 00:30:04,688 - INFO - Epoch[415] Complete. Time taken: 00:02:07.956
+2026-05-28 00:32:07,358 - INFO - Epoch 416 - Train Loss: 2927.8535489223123, Validation MRR: 0.003383414587005973, Learning Rate: 0.0007570513720966108
+2026-05-28 00:32:11,564 - INFO - Memory cleaned.
+2026-05-28 00:32:12,567 - INFO - Epoch[416] Complete. Time taken: 00:02:07.879
+2026-05-28 00:34:15,213 - INFO - Epoch 417 - Train Loss: 2949.292818181698, Validation MRR: 0.003383414587005973, Learning Rate: 0.0007528286866889923
+2026-05-28 00:34:19,420 - INFO - Memory cleaned.
+2026-05-28 00:34:20,424 - INFO - Epoch[417] Complete. Time taken: 00:02:07.857
+2026-05-28 00:36:23,160 - INFO - Epoch 418 - Train Loss: 2939.8784185232785, Validation MRR: 0.003383414587005973, Learning Rate: 0.0007485816331263272
+2026-05-28 00:36:27,365 - INFO - Memory cleaned.
+2026-05-28 00:36:28,382 - INFO - Epoch[418] Complete. Time taken: 00:02:07.958
+2026-05-28 00:38:31,044 - INFO - Epoch 419 - Train Loss: 2965.3051624038, Validation MRR: 0.003383414587005973, Learning Rate: 0.0007443106207484776
+2026-05-28 00:38:35,246 - INFO - Memory cleaned.
+2026-05-28 00:38:36,255 - INFO - Epoch[419] Complete. Time taken: 00:02:07.872
+2026-05-28 00:40:38,938 - INFO - Epoch 420 - Train Loss: 2938.050544612583, Validation MRR: 0.003383414587005973, Learning Rate: 0.0007400160612045057
+2026-05-28 00:40:43,146 - INFO - Memory cleaned.
+2026-05-28 00:40:43,146 - INFO - Evaluating on validation set at epoch 420...
+Link prediction evaluation:   0%|          | 0/15 [00:00<?, ?batch/s]Link prediction evaluation:   7%|▋         | 1/15 [00:00<00:01,  7.89batch/s]Link prediction evaluation:  13%|█▎        | 2/15 [00:00<00:01,  7.92batch/s]Link prediction evaluation:  20%|██        | 3/15 [00:00<00:01,  7.91batch/s]Link prediction evaluation:  27%|██▋       | 4/15 [00:00<00:01,  7.92batch/s]Link prediction evaluation:  33%|███▎      | 5/15 [00:00<00:01,  7.93batch/s]Link prediction evaluation:  40%|████      | 6/15 [00:00<00:01,  7.94batch/s]Link prediction evaluation:  47%|████▋     | 7/15 [00:00<00:01,  7.94batch/s]Link prediction evaluation:  53%|█████▎    | 8/15 [00:01<00:00,  7.95batch/s]Link prediction evaluation:  60%|██████    | 9/15 [00:01<00:00,  7.95batch/s]Link prediction evaluation:  67%|██████▋   | 10/15 [00:01<00:00,  7.95batch/s]Link prediction evaluation:  73%|███████▎  | 11/15 [00:01<00:00,  7.95batch/s]Link prediction evaluation:  80%|████████  | 12/15 [00:01<00:00,  7.96batch/s]Link prediction evaluation:  87%|████████▋ | 13/15 [00:01<00:00,  7.95batch/s]Link prediction evaluation:  93%|█████████▎| 14/15 [00:01<00:00,  7.95batch/s]Link prediction evaluation: 100%|██████████| 15/15 [00:01<00:00,  8.21batch/s]
+2026-05-28 00:40:44,975 - INFO - Validation MRR: 0.004119488876312971
+2026-05-28 00:40:46,022 - INFO - Epoch[420] Complete. Time taken: 00:02:09.768
+2026-05-28 00:42:48,730 - INFO - Epoch 421 - Train Loss: 2938.373100267621, Validation MRR: 0.004119488876312971, Learning Rate: 0.0007356983684129988
+2026-05-28 00:42:52,996 - INFO - Memory cleaned.
+2026-05-28 00:42:54,013 - INFO - Epoch[421] Complete. Time taken: 00:02:07.990
+2026-05-28 00:44:56,758 - INFO - Epoch 422 - Train Loss: 2960.9186444137767, Validation MRR: 0.004119488876312971, Learning Rate: 0.0007313579585221751
+2026-05-28 00:45:00,990 - INFO - Memory cleaned.
+2026-05-28 00:45:02,021 - INFO - Epoch[422] Complete. Time taken: 00:02:08.008
+2026-05-28 00:47:05,325 - INFO - Epoch 423 - Train Loss: 2932.484668479471, Validation MRR: 0.004119488876312971, Learning Rate: 0.0007269952498697733
+2026-05-28 00:47:09,548 - INFO - Memory cleaned.
+2026-05-28 00:47:10,482 - INFO - Epoch[423] Complete. Time taken: 00:02:08.460
+2026-05-28 00:49:13,352 - INFO - Epoch 424 - Train Loss: 2923.9813946621102, Validation MRR: 0.004119488876312971, Learning Rate: 0.0007226106629427342
+2026-05-28 00:49:17,579 - INFO - Memory cleaned.
+2026-05-28 00:49:18,491 - INFO - Epoch[424] Complete. Time taken: 00:02:08.009
+2026-05-28 00:51:21,443 - INFO - Epoch 425 - Train Loss: 2930.375752819623, Validation MRR: 0.004119488876312971, Learning Rate: 0.0007182046203366711
+2026-05-28 00:51:25,667 - INFO - Memory cleaned.
+2026-05-28 00:51:26,758 - INFO - Epoch[425] Complete. Time taken: 00:02:08.267
+2026-05-28 00:53:29,631 - INFO - Epoch 426 - Train Loss: 2940.262257560234, Validation MRR: 0.004119488876312971, Learning Rate: 0.000713777546715141
+2026-05-28 00:53:33,859 - INFO - Memory cleaned.
+2026-05-28 00:53:34,853 - INFO - Epoch[426] Complete. Time taken: 00:02:08.095
+2026-05-28 00:55:37,604 - INFO - Epoch 427 - Train Loss: 2934.952105192367, Validation MRR: 0.004119488876312971, Learning Rate: 0.0007093298687687141
+2026-05-28 00:55:41,826 - INFO - Memory cleaned.
+2026-05-28 00:55:42,854 - INFO - Epoch[427] Complete. Time taken: 00:02:08.001
+2026-05-28 00:57:45,591 - INFO - Epoch 428 - Train Loss: 2924.7968251795137, Validation MRR: 0.004119488876312971, Learning Rate: 0.0007048620151738476
+2026-05-28 00:57:49,816 - INFO - Memory cleaned.
+2026-05-28 00:57:50,816 - INFO - Epoch[428] Complete. Time taken: 00:02:07.962
+2026-05-28 00:59:53,522 - INFO - Epoch 429 - Train Loss: 2930.246381377041, Validation MRR: 0.004119488876312971, Learning Rate: 0.0007003744165515705
+2026-05-28 00:59:57,744 - INFO - Memory cleaned.
+2026-05-28 00:59:58,792 - INFO - Epoch[429] Complete. Time taken: 00:02:07.976
+2026-05-28 01:02:01,607 - INFO - Epoch 430 - Train Loss: 2931.6085496365076, Validation MRR: 0.004119488876312971, Learning Rate: 0.000695867505425978
+2026-05-28 01:02:05,813 - INFO - Memory cleaned.
+2026-05-28 01:02:06,828 - INFO - Epoch[430] Complete. Time taken: 00:02:08.035
+2026-05-28 01:04:09,443 - INFO - Epoch 431 - Train Loss: 2933.950301751648, Validation MRR: 0.004119488876312971, Learning Rate: 0.000691341716182545
+2026-05-28 01:04:13,649 - INFO - Memory cleaned.
+2026-05-28 01:04:14,674 - INFO - Epoch[431] Complete. Time taken: 00:02:07.846
+2026-05-28 01:06:17,301 - INFO - Epoch 432 - Train Loss: 2930.6630189052667, Validation MRR: 0.004119488876312971, Learning Rate: 0.0006867974850262581
+2026-05-28 01:06:21,506 - INFO - Memory cleaned.
+2026-05-28 01:06:22,512 - INFO - Epoch[432] Complete. Time taken: 00:02:07.839
+2026-05-28 01:08:25,147 - INFO - Epoch 433 - Train Loss: 2941.999776936938, Validation MRR: 0.004119488876312971, Learning Rate: 0.0006822352499395748
+2026-05-28 01:08:29,353 - INFO - Memory cleaned.
+2026-05-28 01:08:30,364 - INFO - Epoch[433] Complete. Time taken: 00:02:07.852
+2026-05-28 01:10:33,022 - INFO - Epoch 434 - Train Loss: 2911.5485988797645, Validation MRR: 0.004119488876312971, Learning Rate: 0.0006776554506402082
+2026-05-28 01:10:37,227 - INFO - Memory cleaned.
+2026-05-28 01:10:38,262 - INFO - Epoch[434] Complete. Time taken: 00:02:07.898
+2026-05-28 01:12:40,884 - INFO - Epoch 435 - Train Loss: 2914.6648826972255, Validation MRR: 0.004119488876312971, Learning Rate: 0.0006730585285387465
+2026-05-28 01:12:45,089 - INFO - Memory cleaned.
+2026-05-28 01:12:46,099 - INFO - Epoch[435] Complete. Time taken: 00:02:07.836
+2026-05-28 01:14:48,734 - INFO - Epoch 436 - Train Loss: 2917.4419905180466, Validation MRR: 0.004119488876312971, Learning Rate: 0.0006684449266961102
+2026-05-28 01:14:52,940 - INFO - Memory cleaned.
+2026-05-28 01:14:53,939 - INFO - Epoch[436] Complete. Time taken: 00:02:07.840
+2026-05-28 01:16:56,726 - INFO - Epoch 437 - Train Loss: 2910.611048287042, Validation MRR: 0.004119488876312971, Learning Rate: 0.0006638150897808467
+2026-05-28 01:17:00,967 - INFO - Memory cleaned.
+2026-05-28 01:17:02,059 - INFO - Epoch[437] Complete. Time taken: 00:02:08.120
+2026-05-28 01:19:04,869 - INFO - Epoch 438 - Train Loss: 2944.0728368334617, Validation MRR: 0.004119488876312971, Learning Rate: 0.0006591694640262749
+2026-05-28 01:19:09,111 - INFO - Memory cleaned.
+2026-05-28 01:19:10,122 - INFO - Epoch[438] Complete. Time taken: 00:02:08.063
+2026-05-28 01:21:12,900 - INFO - Epoch 439 - Train Loss: 2930.167680727406, Validation MRR: 0.004119488876312971, Learning Rate: 0.0006545084971874737
+2026-05-28 01:21:17,140 - INFO - Memory cleaned.
+2026-05-28 01:21:18,214 - INFO - Epoch[439] Complete. Time taken: 00:02:08.092
+2026-05-28 01:23:21,281 - INFO - Epoch 440 - Train Loss: 2925.550374039601, Validation MRR: 0.004119488876312971, Learning Rate: 0.0006498326384981283
+2026-05-28 01:23:25,502 - INFO - Memory cleaned.
+2026-05-28 01:23:25,502 - INFO - Evaluating on validation set at epoch 440...
+Link prediction evaluation:   0%|          | 0/15 [00:00<?, ?batch/s]Link prediction evaluation:   7%|▋         | 1/15 [00:00<00:01,  7.87batch/s]Link prediction evaluation:  13%|█▎        | 2/15 [00:00<00:01,  7.90batch/s]Link prediction evaluation:  20%|██        | 3/15 [00:00<00:01,  7.90batch/s]Link prediction evaluation:  27%|██▋       | 4/15 [00:00<00:01,  7.91batch/s]Link prediction evaluation:  33%|███▎      | 5/15 [00:00<00:01,  7.92batch/s]Link prediction evaluation:  40%|████      | 6/15 [00:00<00:01,  7.93batch/s]Link prediction evaluation:  47%|████▋     | 7/15 [00:00<00:01,  7.93batch/s]Link prediction evaluation:  53%|█████▎    | 8/15 [00:01<00:00,  7.94batch/s]Link prediction evaluation:  60%|██████    | 9/15 [00:01<00:00,  7.94batch/s]Link prediction evaluation:  67%|██████▋   | 10/15 [00:01<00:00,  7.95batch/s]Link prediction evaluation:  73%|███████▎  | 11/15 [00:01<00:00,  7.94batch/s]Link prediction evaluation:  80%|████████  | 12/15 [00:01<00:00,  7.95batch/s]Link prediction evaluation:  87%|████████▋ | 13/15 [00:01<00:00,  7.95batch/s]Link prediction evaluation:  93%|█████████▎| 14/15 [00:01<00:00,  7.94batch/s]Link prediction evaluation: 100%|██████████| 15/15 [00:01<00:00,  8.20batch/s]
+2026-05-28 01:23:27,333 - INFO - Validation MRR: 0.004571165423840284
+2026-05-28 01:23:28,335 - INFO - Epoch[440] Complete. Time taken: 00:02:10.121
+2026-05-28 01:25:31,161 - INFO - Epoch 441 - Train Loss: 2908.4307895053676, Validation MRR: 0.004571165423840284, Learning Rate: 0.0006451423386272313
+2026-05-28 01:25:35,343 - INFO - Memory cleaned.
+2026-05-28 01:25:36,353 - INFO - Epoch[441] Complete. Time taken: 00:02:08.018
+2026-05-28 01:27:39,185 - INFO - Epoch 442 - Train Loss: 2926.4315009522384, Validation MRR: 0.004571165423840284, Learning Rate: 0.000640438049635646
+2026-05-28 01:27:43,386 - INFO - Memory cleaned.
+2026-05-28 01:27:44,400 - INFO - Epoch[442] Complete. Time taken: 00:02:08.047
+2026-05-28 01:29:47,114 - INFO - Epoch 443 - Train Loss: 2923.025483951574, Validation MRR: 0.004571165423840284, Learning Rate: 0.0006357202249325371
+2026-05-28 01:29:51,315 - INFO - Memory cleaned.
+2026-05-28 01:29:52,335 - INFO - Epoch[443] Complete. Time taken: 00:02:07.935
+2026-05-28 01:31:55,021 - INFO - Epoch 444 - Train Loss: 2924.373802911568, Validation MRR: 0.004571165423840284, Learning Rate: 0.0006309893192316686
+2026-05-28 01:31:59,223 - INFO - Memory cleaned.
+2026-05-28 01:32:00,226 - INFO - Epoch[444] Complete. Time taken: 00:02:07.891
+2026-05-28 01:34:02,984 - INFO - Epoch 445 - Train Loss: 2919.9116511216407, Validation MRR: 0.004571165423840284, Learning Rate: 0.0006262457885075791
+2026-05-28 01:34:07,192 - INFO - Memory cleaned.
+2026-05-28 01:34:08,213 - INFO - Epoch[445] Complete. Time taken: 00:02:07.986
+2026-05-28 01:36:10,932 - INFO - Epoch 446 - Train Loss: 2926.1186837959963, Validation MRR: 0.004571165423840284, Learning Rate: 0.000621490089951632
+2026-05-28 01:36:15,131 - INFO - Memory cleaned.
+2026-05-28 01:36:16,155 - INFO - Epoch[446] Complete. Time taken: 00:02:07.942
+2026-05-28 01:38:18,878 - INFO - Epoch 447 - Train Loss: 2907.386089844387, Validation MRR: 0.004571165423840284, Learning Rate: 0.0006167226819279528
+2026-05-28 01:38:23,076 - INFO - Memory cleaned.
+2026-05-28 01:38:24,103 - INFO - Epoch[447] Complete. Time taken: 00:02:07.948
+2026-05-28 01:40:26,797 - INFO - Epoch 448 - Train Loss: 2923.9751149714666, Validation MRR: 0.004571165423840284, Learning Rate: 0.0006119440239292492
+2026-05-28 01:40:30,997 - INFO - Memory cleaned.
+2026-05-28 01:40:32,032 - INFO - Epoch[448] Complete. Time taken: 00:02:07.928
+2026-05-28 01:42:34,821 - INFO - Epoch 449 - Train Loss: 2910.4931503663765, Validation MRR: 0.004571165423840284, Learning Rate: 0.0006071545765325253
+2026-05-28 01:42:39,022 - INFO - Memory cleaned.
+2026-05-28 01:42:40,038 - INFO - Epoch[449] Complete. Time taken: 00:02:08.007
+2026-05-28 01:44:42,749 - INFO - Epoch 450 - Train Loss: 2916.9429049042656, Validation MRR: 0.004571165423840284, Learning Rate: 0.0006023548013546899
+2026-05-28 01:44:46,956 - INFO - Memory cleaned.
+2026-05-28 01:44:47,968 - INFO - Epoch[450] Complete. Time taken: 00:02:07.929
+2026-05-28 01:46:50,656 - INFO - Epoch 451 - Train Loss: 2895.758674285989, Validation MRR: 0.004571165423840284, Learning Rate: 0.0005975451610080642
+2026-05-28 01:46:54,857 - INFO - Memory cleaned.
+2026-05-28 01:46:55,916 - INFO - Epoch[451] Complete. Time taken: 00:02:07.948
+2026-05-28 01:48:58,657 - INFO - Epoch 452 - Train Loss: 2910.782744270204, Validation MRR: 0.004571165423840284, Learning Rate: 0.0005927261190557955
+2026-05-28 01:49:02,856 - INFO - Memory cleaned.
+2026-05-28 01:49:03,859 - INFO - Epoch[452] Complete. Time taken: 00:02:07.943
+2026-05-28 01:51:06,802 - INFO - Epoch 453 - Train Loss: 2912.658740888469, Validation MRR: 0.004571165423840284, Learning Rate: 0.0005878981399671772
+2026-05-28 01:51:11,045 - INFO - Memory cleaned.
+2026-05-28 01:51:12,085 - INFO - Epoch[453] Complete. Time taken: 00:02:08.225
+2026-05-28 01:53:14,900 - INFO - Epoch 454 - Train Loss: 2906.8174767700243, Validation MRR: 0.004571165423840284, Learning Rate: 0.0005830616890728828
+2026-05-28 01:53:19,142 - INFO - Memory cleaned.
+2026-05-28 01:53:20,081 - INFO - Epoch[454] Complete. Time taken: 00:02:07.996
+2026-05-28 01:55:22,797 - INFO - Epoch 455 - Train Loss: 2901.547541774753, Validation MRR: 0.004571165423840284, Learning Rate: 0.0005782172325201155
+2026-05-28 01:55:27,036 - INFO - Memory cleaned.
+2026-05-28 01:55:27,954 - INFO - Epoch[455] Complete. Time taken: 00:02:07.873
+2026-05-28 01:57:30,697 - INFO - Epoch 456 - Train Loss: 2910.0130220491824, Validation MRR: 0.004571165423840284, Learning Rate: 0.0005733652372276809
+2026-05-28 01:57:34,933 - INFO - Memory cleaned.
+2026-05-28 01:57:35,989 - INFO - Epoch[456] Complete. Time taken: 00:02:08.035
+2026-05-28 01:59:38,898 - INFO - Epoch 457 - Train Loss: 2897.5287435820783, Validation MRR: 0.004571165423840284, Learning Rate: 0.0005685061708409841
+2026-05-28 01:59:43,138 - INFO - Memory cleaned.
+2026-05-28 01:59:44,163 - INFO - Epoch[457] Complete. Time taken: 00:02:08.174
+2026-05-28 02:01:47,216 - INFO - Epoch 458 - Train Loss: 2896.1523833811716, Validation MRR: 0.004571165423840284, Learning Rate: 0.0005636405016869565
+2026-05-28 02:01:51,431 - INFO - Memory cleaned.
+2026-05-28 02:01:52,438 - INFO - Epoch[458] Complete. Time taken: 00:02:08.275
+2026-05-28 02:03:55,168 - INFO - Epoch 459 - Train Loss: 2898.165916996388, Validation MRR: 0.004571165423840284, Learning Rate: 0.0005587686987289189
+2026-05-28 02:03:59,391 - INFO - Memory cleaned.
+2026-05-28 02:04:00,392 - INFO - Epoch[459] Complete. Time taken: 00:02:07.954
+2026-05-28 02:06:03,135 - INFO - Epoch 460 - Train Loss: 2915.3590763517773, Validation MRR: 0.004571165423840284, Learning Rate: 0.0005538912315213797
+2026-05-28 02:06:07,352 - INFO - Memory cleaned.
+2026-05-28 02:06:07,352 - INFO - Evaluating on validation set at epoch 460...
+Link prediction evaluation:   0%|          | 0/15 [00:00<?, ?batch/s]Link prediction evaluation:   7%|▋         | 1/15 [00:00<00:02,  6.88batch/s]Link prediction evaluation:  13%|█▎        | 2/15 [00:00<00:01,  7.45batch/s]Link prediction evaluation:  20%|██        | 3/15 [00:00<00:01,  7.65batch/s]Link prediction evaluation:  27%|██▋       | 4/15 [00:00<00:01,  7.76batch/s]Link prediction evaluation:  33%|███▎      | 5/15 [00:00<00:01,  7.83batch/s]Link prediction evaluation:  40%|████      | 6/15 [00:00<00:01,  7.87batch/s]Link prediction evaluation:  47%|████▋     | 7/15 [00:00<00:01,  7.89batch/s]Link prediction evaluation:  53%|█████▎    | 8/15 [00:01<00:00,  7.91batch/s]Link prediction evaluation:  60%|██████    | 9/15 [00:01<00:00,  7.92batch/s]Link prediction evaluation:  67%|██████▋   | 10/15 [00:01<00:00,  7.94batch/s]Link prediction evaluation:  73%|███████▎  | 11/15 [00:01<00:00,  7.93batch/s]Link prediction evaluation:  80%|████████  | 12/15 [00:01<00:00,  7.95batch/s]Link prediction evaluation:  87%|████████▋ | 13/15 [00:01<00:00,  7.94batch/s]Link prediction evaluation:  93%|█████████▎| 14/15 [00:01<00:00,  7.95batch/s]Link prediction evaluation: 100%|██████████| 15/15 [00:01<00:00,  8.12batch/s]
+2026-05-28 02:06:09,252 - INFO - Validation MRR: 0.0034233785700052977
+2026-05-28 02:06:10,292 - INFO - Epoch[460] Complete. Time taken: 00:02:09.900
+2026-05-28 02:08:13,078 - INFO - Epoch 461 - Train Loss: 2908.067516041454, Validation MRR: 0.0034233785700052977, Learning Rate: 0.0005490085701647804
+2026-05-28 02:08:17,304 - INFO - Memory cleaned.
+2026-05-28 02:08:18,347 - INFO - Epoch[461] Complete. Time taken: 00:02:08.055
+2026-05-28 02:10:21,087 - INFO - Epoch 462 - Train Loss: 2899.7842390794067, Validation MRR: 0.0034233785700052977, Learning Rate: 0.0005441211852601849
+2026-05-28 02:10:25,304 - INFO - Memory cleaned.
+2026-05-28 02:10:26,314 - INFO - Epoch[462] Complete. Time taken: 00:02:07.967
+2026-05-28 02:12:29,084 - INFO - Epoch 463 - Train Loss: 2885.369875374779, Validation MRR: 0.0034233785700052977, Learning Rate: 0.0005392295478639225
+2026-05-28 02:12:33,301 - INFO - Memory cleaned.
+2026-05-28 02:12:34,297 - INFO - Epoch[463] Complete. Time taken: 00:02:07.984
+2026-05-28 02:14:37,035 - INFO - Epoch 464 - Train Loss: 2899.81152875268, Validation MRR: 0.0034233785700052977, Learning Rate: 0.0005343341294421868
+2026-05-28 02:14:41,260 - INFO - Memory cleaned.
+2026-05-28 02:14:42,291 - INFO - Epoch[464] Complete. Time taken: 00:02:07.994
+2026-05-28 02:16:45,014 - INFO - Epoch 465 - Train Loss: 2895.4063823491847, Validation MRR: 0.0034233785700052977, Learning Rate: 0.0005294354018255945
+2026-05-28 02:16:49,235 - INFO - Memory cleaned.
+2026-05-28 02:16:50,282 - INFO - Epoch[465] Complete. Time taken: 00:02:07.991
+2026-05-28 02:18:53,026 - INFO - Epoch 466 - Train Loss: 2894.400904133529, Validation MRR: 0.0034233785700052977, Learning Rate: 0.0005245338371637091
+2026-05-28 02:18:57,252 - INFO - Memory cleaned.
+2026-05-28 02:18:58,257 - INFO - Epoch[466] Complete. Time taken: 00:02:07.974
+2026-05-28 02:21:00,982 - INFO - Epoch 467 - Train Loss: 2889.9418103668836, Validation MRR: 0.0034233785700052977, Learning Rate: 0.0005196299078795343
+2026-05-28 02:21:05,200 - INFO - Memory cleaned.
+2026-05-28 02:21:06,233 - INFO - Epoch[467] Complete. Time taken: 00:02:07.976
+2026-05-28 02:23:08,962 - INFO - Epoch 468 - Train Loss: 2917.5931335637206, Validation MRR: 0.0034233785700052977, Learning Rate: 0.0005147240866239817
+2026-05-28 02:23:13,186 - INFO - Memory cleaned.
+2026-05-28 02:23:14,213 - INFO - Epoch[468] Complete. Time taken: 00:02:07.980
+2026-05-28 02:25:16,941 - INFO - Epoch 469 - Train Loss: 2898.8214827785846, Validation MRR: 0.0034233785700052977, Learning Rate: 0.0005098168462303141
+2026-05-28 02:25:21,160 - INFO - Memory cleaned.
+2026-05-28 02:25:22,160 - INFO - Epoch[469] Complete. Time taken: 00:02:07.947
+2026-05-28 02:27:24,879 - INFO - Epoch 470 - Train Loss: 2884.2834572695733, Validation MRR: 0.0034233785700052977, Learning Rate: 0.000504908659668575
+2026-05-28 02:27:29,100 - INFO - Memory cleaned.
+2026-05-28 02:27:30,106 - INFO - Epoch[470] Complete. Time taken: 00:02:07.946
+2026-05-28 02:29:32,839 - INFO - Epoch 471 - Train Loss: 2903.5996178726677, Validation MRR: 0.0034233785700052977, Learning Rate: 0.0005
+2026-05-28 02:29:37,059 - INFO - Memory cleaned.
+2026-05-28 02:29:38,060 - INFO - Epoch[471] Complete. Time taken: 00:02:07.954
+2026-05-28 02:31:40,769 - INFO - Epoch 472 - Train Loss: 2891.64618798329, Validation MRR: 0.0034233785700052977, Learning Rate: 0.0004950913403314252
+2026-05-28 02:31:44,991 - INFO - Memory cleaned.
+2026-05-28 02:31:46,001 - INFO - Epoch[472] Complete. Time taken: 00:02:07.940
+2026-05-28 02:33:48,732 - INFO - Epoch 473 - Train Loss: 2887.042353176772, Validation MRR: 0.0034233785700052977, Learning Rate: 0.0004901831537696859
+2026-05-28 02:33:52,949 - INFO - Memory cleaned.
+2026-05-28 02:33:53,945 - INFO - Epoch[473] Complete. Time taken: 00:02:07.945
+2026-05-28 02:35:56,675 - INFO - Epoch 474 - Train Loss: 2887.6024992588145, Validation MRR: 0.0034233785700052977, Learning Rate: 0.0004852759133760185
+2026-05-28 02:36:00,893 - INFO - Memory cleaned.
+2026-05-28 02:36:01,910 - INFO - Epoch[474] Complete. Time taken: 00:02:07.964
+2026-05-28 02:38:04,654 - INFO - Epoch 475 - Train Loss: 2878.0664781691894, Validation MRR: 0.0034233785700052977, Learning Rate: 0.00048037009212046586
+2026-05-28 02:38:08,870 - INFO - Memory cleaned.
+2026-05-28 02:38:09,882 - INFO - Epoch[475] Complete. Time taken: 00:02:07.971
+2026-05-28 02:40:12,605 - INFO - Epoch 476 - Train Loss: 2893.8182660496914, Validation MRR: 0.0034233785700052977, Learning Rate: 0.0004754661628362911
+2026-05-28 02:40:16,821 - INFO - Memory cleaned.
+2026-05-28 02:40:17,845 - INFO - Epoch[476] Complete. Time taken: 00:02:07.963
+2026-05-28 02:42:20,496 - INFO - Epoch 477 - Train Loss: 2902.116952260578, Validation MRR: 0.0034233785700052977, Learning Rate: 0.00047056459817440544
+2026-05-28 02:42:24,711 - INFO - Memory cleaned.
+2026-05-28 02:42:25,717 - INFO - Epoch[477] Complete. Time taken: 00:02:07.872
+2026-05-28 02:44:28,390 - INFO - Epoch 478 - Train Loss: 2903.780113428427, Validation MRR: 0.0034233785700052977, Learning Rate: 0.00046566587055781305
+2026-05-28 02:44:32,608 - INFO - Memory cleaned.
+2026-05-28 02:44:33,648 - INFO - Epoch[478] Complete. Time taken: 00:02:07.931
+2026-05-28 02:46:36,352 - INFO - Epoch 479 - Train Loss: 2885.3387343553445, Validation MRR: 0.0034233785700052977, Learning Rate: 0.0004607704521360776
+2026-05-28 02:46:40,573 - INFO - Memory cleaned.
+2026-05-28 02:46:41,591 - INFO - Epoch[479] Complete. Time taken: 00:02:07.943
+2026-05-28 02:48:44,166 - INFO - Epoch 480 - Train Loss: 2893.7307801403185, Validation MRR: 0.0034233785700052977, Learning Rate: 0.0004558788147398152
+2026-05-28 02:48:48,385 - INFO - Memory cleaned.
+2026-05-28 02:48:48,385 - INFO - Evaluating on validation set at epoch 480...
+Link prediction evaluation:   0%|          | 0/15 [00:00<?, ?batch/s]Link prediction evaluation:   7%|▋         | 1/15 [00:00<00:01,  7.87batch/s]Link prediction evaluation:  13%|█▎        | 2/15 [00:00<00:01,  7.91batch/s]Link prediction evaluation:  20%|██        | 3/15 [00:00<00:01,  7.90batch/s]Link prediction evaluation:  27%|██▋       | 4/15 [00:00<00:01,  7.91batch/s]Link prediction evaluation:  33%|███▎      | 5/15 [00:00<00:01,  7.92batch/s]Link prediction evaluation:  40%|████      | 6/15 [00:00<00:01,  7.93batch/s]Link prediction evaluation:  47%|████▋     | 7/15 [00:00<00:01,  7.93batch/s]Link prediction evaluation:  53%|█████▎    | 8/15 [00:01<00:00,  7.94batch/s]Link prediction evaluation:  60%|██████    | 9/15 [00:01<00:00,  7.94batch/s]Link prediction evaluation:  67%|██████▋   | 10/15 [00:01<00:00,  7.95batch/s]Link prediction evaluation:  73%|███████▎  | 11/15 [00:01<00:00,  7.94batch/s]Link prediction evaluation:  80%|████████  | 12/15 [00:01<00:00,  7.95batch/s]Link prediction evaluation:  87%|████████▋ | 13/15 [00:01<00:00,  7.94batch/s]Link prediction evaluation:  93%|█████████▎| 14/15 [00:01<00:00,  7.94batch/s]Link prediction evaluation: 100%|██████████| 15/15 [00:01<00:00,  8.20batch/s]
+2026-05-28 02:48:50,216 - INFO - Validation MRR: 0.0018074449617415667
+2026-05-28 02:48:51,232 - INFO - Epoch[480] Complete. Time taken: 00:02:09.641
+2026-05-28 02:50:53,852 - INFO - Epoch 481 - Train Loss: 2887.378170006187, Validation MRR: 0.0018074449617415667, Learning Rate: 0.0004509914298352197
+2026-05-28 02:50:58,078 - INFO - Memory cleaned.
+2026-05-28 02:50:59,101 - INFO - Epoch[481] Complete. Time taken: 00:02:07.869
+2026-05-28 02:53:01,802 - INFO - Epoch 482 - Train Loss: 2889.7142343812675, Validation MRR: 0.0018074449617415667, Learning Rate: 0.00044610876847862044
+2026-05-28 02:53:06,018 - INFO - Memory cleaned.
+2026-05-28 02:53:07,028 - INFO - Epoch[482] Complete. Time taken: 00:02:07.927
+2026-05-28 02:55:09,739 - INFO - Epoch 483 - Train Loss: 2896.9865153861383, Validation MRR: 0.0018074449617415667, Learning Rate: 0.00044123130127108126
+2026-05-28 02:55:13,953 - INFO - Memory cleaned.
+2026-05-28 02:55:14,963 - INFO - Epoch[483] Complete. Time taken: 00:02:07.935
+2026-05-28 02:57:18,218 - INFO - Epoch 484 - Train Loss: 2883.3114743998053, Validation MRR: 0.0018074449617415667, Learning Rate: 0.00043635949831304354
+2026-05-28 02:57:22,454 - INFO - Memory cleaned.
+2026-05-28 02:57:23,544 - INFO - Epoch[484] Complete. Time taken: 00:02:08.581
+2026-05-28 02:59:26,657 - INFO - Epoch 485 - Train Loss: 2888.1187105040976, Validation MRR: 0.0018074449617415667, Learning Rate: 0.0004314938291590161
+2026-05-28 02:59:30,895 - INFO - Memory cleaned.
+2026-05-28 02:59:31,832 - INFO - Epoch[485] Complete. Time taken: 00:02:08.288
+2026-05-28 03:01:34,675 - INFO - Epoch 486 - Train Loss: 2894.8167147265, Validation MRR: 0.0018074449617415667, Learning Rate: 0.00042663476277231917
+2026-05-28 03:01:38,873 - INFO - Memory cleaned.
+2026-05-28 03:01:39,888 - INFO - Epoch[486] Complete. Time taken: 00:02:08.056
+2026-05-28 03:03:42,687 - INFO - Epoch 487 - Train Loss: 2878.0586517777606, Validation MRR: 0.0018074449617415667, Learning Rate: 0.0004217827674798847
+2026-05-28 03:03:46,888 - INFO - Memory cleaned.
+2026-05-28 03:03:47,901 - INFO - Epoch[487] Complete. Time taken: 00:02:08.013
+2026-05-28 03:05:50,747 - INFO - Epoch 488 - Train Loss: 2886.4965020640834, Validation MRR: 0.0018074449617415667, Learning Rate: 0.0004169383109271173
+2026-05-28 03:05:54,946 - INFO - Memory cleaned.
+2026-05-28 03:05:55,962 - INFO - Epoch[488] Complete. Time taken: 00:02:08.062
+2026-05-28 03:07:58,839 - INFO - Epoch 489 - Train Loss: 2863.5321556165477, Validation MRR: 0.0018074449617415667, Learning Rate: 0.00041210186003282274
+2026-05-28 03:08:03,035 - INFO - Memory cleaned.
+2026-05-28 03:08:04,061 - INFO - Epoch[489] Complete. Time taken: 00:02:08.098
+2026-05-28 03:10:06,916 - INFO - Epoch 490 - Train Loss: 2867.6385508843086, Validation MRR: 0.0018074449617415667, Learning Rate: 0.00040727388094420445
+2026-05-28 03:10:11,113 - INFO - Memory cleaned.
+2026-05-28 03:10:12,129 - INFO - Epoch[490] Complete. Time taken: 00:02:08.068
+2026-05-28 03:12:15,039 - INFO - Epoch 491 - Train Loss: 2888.3727808770905, Validation MRR: 0.0018074449617415667, Learning Rate: 0.00040245483899193594
+2026-05-28 03:12:19,237 - INFO - Memory cleaned.
+2026-05-28 03:12:20,278 - INFO - Epoch[491] Complete. Time taken: 00:02:08.149
+2026-05-28 03:14:23,106 - INFO - Epoch 492 - Train Loss: 2878.0074886581788, Validation MRR: 0.0018074449617415667, Learning Rate: 0.00039764519864531023
+2026-05-28 03:14:27,303 - INFO - Memory cleaned.
+2026-05-28 03:14:28,345 - INFO - Epoch[492] Complete. Time taken: 00:02:08.067
+2026-05-28 03:16:31,159 - INFO - Epoch 493 - Train Loss: 2887.490905198136, Validation MRR: 0.0018074449617415667, Learning Rate: 0.0003928454234674747
+2026-05-28 03:16:35,356 - INFO - Memory cleaned.
+2026-05-28 03:16:36,369 - INFO - Epoch[493] Complete. Time taken: 00:02:08.024
+2026-05-28 03:18:39,085 - INFO - Epoch 494 - Train Loss: 2871.271539665075, Validation MRR: 0.0018074449617415667, Learning Rate: 0.00038805597607075086
+2026-05-28 03:18:43,282 - INFO - Memory cleaned.
+2026-05-28 03:18:44,330 - INFO - Epoch[494] Complete. Time taken: 00:02:07.961
+2026-05-28 03:20:47,164 - INFO - Epoch 495 - Train Loss: 2872.074346505449, Validation MRR: 0.0018074449617415667, Learning Rate: 0.00038327731807204733
+2026-05-28 03:20:51,361 - INFO - Memory cleaned.
+2026-05-28 03:20:52,389 - INFO - Epoch[495] Complete. Time taken: 00:02:08.059
+2026-05-28 03:22:55,236 - INFO - Epoch 496 - Train Loss: 2884.4727192555656, Validation MRR: 0.0018074449617415667, Learning Rate: 0.0003785099100483682
+2026-05-28 03:22:59,433 - INFO - Memory cleaned.
+2026-05-28 03:23:00,476 - INFO - Epoch[496] Complete. Time taken: 00:02:08.087
+2026-05-28 03:25:03,347 - INFO - Epoch 497 - Train Loss: 2870.9087604786155, Validation MRR: 0.0018074449617415667, Learning Rate: 0.00037375421149242114
+2026-05-28 03:25:07,543 - INFO - Memory cleaned.
+2026-05-28 03:25:08,556 - INFO - Epoch[497] Complete. Time taken: 00:02:08.080
+2026-05-28 03:27:11,248 - INFO - Epoch 498 - Train Loss: 2866.9022118995504, Validation MRR: 0.0018074449617415667, Learning Rate: 0.0003690106807683312
+2026-05-28 03:27:15,446 - INFO - Memory cleaned.
+2026-05-28 03:27:16,467 - INFO - Epoch[498] Complete. Time taken: 00:02:07.911
+2026-05-28 03:29:19,159 - INFO - Epoch 499 - Train Loss: 2875.749800571772, Validation MRR: 0.0018074449617415667, Learning Rate: 0.0003642797750674628
+2026-05-28 03:29:23,356 - INFO - Memory cleaned.
+2026-05-28 03:29:24,373 - INFO - Epoch[499] Complete. Time taken: 00:02:07.906
+2026-05-28 03:31:27,159 - INFO - Epoch 500 - Train Loss: 2884.360860819735, Validation MRR: 0.0018074449617415667, Learning Rate: 0.00035956195036435394
+2026-05-28 03:31:31,355 - INFO - Memory cleaned.
+2026-05-28 03:31:31,355 - INFO - Evaluating on validation set at epoch 500...
+Link prediction evaluation:   0%|          | 0/15 [00:00<?, ?batch/s]Link prediction evaluation:   7%|▋         | 1/15 [00:00<00:01,  7.09batch/s]Link prediction evaluation:  13%|█▎        | 2/15 [00:00<00:01,  7.52batch/s]Link prediction evaluation:  20%|██        | 3/15 [00:00<00:01,  7.69batch/s]Link prediction evaluation:  27%|██▋       | 4/15 [00:00<00:01,  7.78batch/s]Link prediction evaluation:  33%|███▎      | 5/15 [00:00<00:01,  7.84batch/s]Link prediction evaluation:  40%|████      | 6/15 [00:00<00:01,  7.87batch/s]Link prediction evaluation:  47%|████▋     | 7/15 [00:00<00:01,  7.89batch/s]Link prediction evaluation:  53%|█████▎    | 8/15 [00:01<00:00,  7.91batch/s]Link prediction evaluation:  60%|██████    | 9/15 [00:01<00:00,  7.92batch/s]Link prediction evaluation:  67%|██████▋   | 10/15 [00:01<00:00,  7.94batch/s]Link prediction evaluation:  73%|███████▎  | 11/15 [00:01<00:00,  7.93batch/s]Link prediction evaluation:  80%|████████  | 12/15 [00:01<00:00,  7.94batch/s]Link prediction evaluation:  87%|████████▋ | 13/15 [00:01<00:00,  7.94batch/s]Link prediction evaluation:  93%|█████████▎| 14/15 [00:01<00:00,  7.94batch/s]Link prediction evaluation: 100%|██████████| 15/15 [00:01<00:00,  8.13batch/s]
+2026-05-28 03:31:33,241 - INFO - Validation MRR: 0.0022756545804440975
+2026-05-28 03:31:34,254 - INFO - Epoch[500] Complete. Time taken: 00:02:09.881
+2026-05-28 03:31:34,254 - INFO - Training completed after 500 epochs.
+2026-05-28 03:31:34,254 - INFO - Engine run complete. Time taken: 18:02:44.420
+2026-05-28 03:31:39,901 - INFO - Loading best model.
+2026-05-28 03:31:39,903 - INFO - Best model is ./checkpoints/best_model_checkpoint_val_mrr=0.0047.pt
+2026-05-28 03:31:39,904 - WARNING - /lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/dev/run_training.py:820: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  checkpoint = torch.load(os.path.join(checkpoint_dir, best_model), map_location=device)
+
+2026-05-28 03:31:40,898 - INFO - Best model successfully loaded.
+2026-05-28 03:31:40,899 - INFO - Evaluating on the test set with best model...
+DRUG_DISEASE_ASSOCIATION
+Link prediction evaluation:   0%|          | 0/15 [00:00<?, ?batch/s]Link prediction evaluation:   7%|▋         | 1/15 [00:00<00:01,  7.04batch/s]Link prediction evaluation:  13%|█▎        | 2/15 [00:00<00:01,  7.47batch/s]Link prediction evaluation:  20%|██        | 3/15 [00:00<00:01,  7.61batch/s]Link prediction evaluation:  27%|██▋       | 4/15 [00:00<00:01,  7.70batch/s]Link prediction evaluation:  33%|███▎      | 5/15 [00:00<00:01,  7.73batch/s]Link prediction evaluation:  40%|████      | 6/15 [00:00<00:01,  7.76batch/s]Link prediction evaluation:  47%|████▋     | 7/15 [00:00<00:01,  7.77batch/s]Link prediction evaluation:  53%|█████▎    | 8/15 [00:01<00:00,  7.79batch/s]Link prediction evaluation:  60%|██████    | 9/15 [00:01<00:00,  7.80batch/s]Link prediction evaluation:  67%|██████▋   | 10/15 [00:01<00:00,  7.81batch/s]Link prediction evaluation:  73%|███████▎  | 11/15 [00:01<00:00,  7.80batch/s]Link prediction evaluation:  80%|████████  | 12/15 [00:01<00:00,  7.81batch/s]Link prediction evaluation:  87%|████████▋ | 13/15 [00:01<00:00,  7.81batch/s]Link prediction evaluation:  93%|█████████▎| 14/15 [00:01<00:00,  7.82batch/s]Link prediction evaluation: 100%|██████████| 15/15 [00:01<00:00,  7.88batch/s]
+2026-05-28 03:31:42,856 - INFO - Final Test MRR with best model: 0.006923602428287268
+2026-05-28 03:31:42,856 - INFO - Final Test Hits@10 with best model: 0.018518518074415624
+Link prediction evaluation:   0%|          | 0/14 [00:00<?, ?batch/s]Link prediction evaluation:   7%|▋         | 1/14 [00:00<00:01,  7.81batch/s]Link prediction evaluation:  14%|█▍        | 2/14 [00:00<00:01,  7.81batch/s]Link prediction evaluation:  21%|██▏       | 3/14 [00:00<00:01,  7.80batch/s]Link prediction evaluation:  29%|██▊       | 4/14 [00:00<00:01,  7.80batch/s]Link prediction evaluation:  36%|███▌      | 5/14 [00:00<00:01,  7.80batch/s]Link prediction evaluation:  43%|████▎     | 6/14 [00:00<00:01,  7.79batch/s]Link prediction evaluation:  50%|█████     | 7/14 [00:00<00:00,  7.80batch/s]Link prediction evaluation:  57%|█████▋    | 8/14 [00:01<00:00,  7.81batch/s]Link prediction evaluation:  64%|██████▍   | 9/14 [00:01<00:00,  7.80batch/s]Link prediction evaluation:  71%|███████▏  | 10/14 [00:01<00:00,  7.80batch/s]Link prediction evaluation:  79%|███████▊  | 11/14 [00:01<00:00,  7.80batch/s]Link prediction evaluation:  86%|████████▌ | 12/14 [00:01<00:00,  7.81batch/s]Link prediction evaluation:  93%|█████████▎| 13/14 [00:01<00:00,  7.80batch/s]Link prediction evaluation: 100%|██████████| 14/14 [00:01<00:00,  8.09batch/s]
+Link prediction evaluation:   0%|          | 0/2 [00:00<?, ?batch/s]Link prediction evaluation:  50%|█████     | 1/2 [00:00<00:00,  8.01batch/s]Link prediction evaluation: 100%|██████████| 2/2 [00:00<00:00, 12.58batch/s]
+2026-05-28 03:31:56,096 - INFO - MRR for frequent nodes (threshold=10) in relation DRUG_DISEASE_ASSOCIATION: 0.006358471233397722
+2026-05-28 03:31:56,096 - INFO - MRR for infrequent nodes (threshold=10) in relation DRUG_DISEASE_ASSOCIATION: 0.012951675802469254
+2026-05-28 03:31:56,096 - INFO - Hits@10 for frequent nodes (threshold=10) in relation DRUG_DISEASE_ASSOCIATION: 0.01909722201526165
+2026-05-28 03:31:56,096 - INFO - Hits@10 for infrequent nodes (threshold=10) in relation DRUG_DISEASE_ASSOCIATION: 0.012345679104328156
+2026-05-28 03:31:56,101 - INFO - MRR evaluation results stored in ./evaluation_metrics.yaml
+2026-05-28 03:31:56,104 - INFO - Hit@10 evaluation results stored in ./evaluation_hit@10.yaml
+Link prediction evaluation:   0%|          | 0/5 [00:00<?, ?batch/s]Link prediction evaluation:  20%|██        | 1/5 [00:00<00:00,  8.14batch/s]Link prediction evaluation:  40%|████      | 2/5 [00:00<00:00,  8.19batch/s]Link prediction evaluation:  60%|██████    | 3/5 [00:00<00:00,  8.19batch/s]Link prediction evaluation:  80%|████████  | 4/5 [00:00<00:00,  8.22batch/s]Link prediction evaluation: 100%|██████████| 5/5 [00:00<00:00,  8.98batch/s]
+Link prediction evaluation:   0%|          | 0/5 [00:00<?, ?batch/s]Link prediction evaluation:  40%|████      | 2/5 [00:00<00:00, 16.34batch/s]Link prediction evaluation:  80%|████████  | 4/5 [00:00<00:00, 16.46batch/s]Link prediction evaluation: 100%|██████████| 5/5 [00:00<00:00, 18.00batch/s]
+2026-05-28 03:31:57,059 - INFO - MRR on inference set: 0.006362902000546455
+2026-05-28 03:31:57,062 - INFO - Evaluation results stored in ./inference_metrics.yaml

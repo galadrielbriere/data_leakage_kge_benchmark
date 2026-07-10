@@ -1,0 +1,56 @@
+seed = 42
+
+kg_pkl = "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/DL2experiment/kg_processing/kgate/"
+output_directory = "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/DL2experiment/models/run2/GCN_RESCAL_maxIntra/"
+run_kg_preprocessing = false
+
+[model]
+node_embedding_dimensions = 200
+edge_embedding_dimensions = -1
+
+[model.encoder]
+name = "GCN"
+gnn_layer_number = 1
+neighbor_aggregation = "max" 
+
+[model.decoder]
+name = "RESCAL"
+margin = 1
+dissimilarity = "L2"
+filter_count = 3
+
+[sampler]
+name = "Mixed"
+negative_triplet_count = 5
+
+[optimizer]
+name = "Adam"
+
+[optimizer.params]
+lr = 0.001
+weight_decay = 0.001
+
+[learning_rate_scheduler]
+type = "CosineAnnealingWarmRestarts"
+
+[learning_rate_scheduler.params]
+T_0 = 10
+T_mult = 2
+
+[training]
+max_epochs = 250
+patience = 5
+train_batch_size = 4096
+evaluation_interval = 10
+evaluation_batch_size = 256
+save_interval = 5
+pretrained_embeddings = "auto"
+
+[evaluation]
+objective = "Link Prediction"
+target_edges = ["indication"]
+made_directed_edges = ["drug_drug", "disease_disease", "protein_protein", "drug_drug_inv", "disease_disease_inv", "protein_protein_inv"]
+thresholds = [10, 5]
+inference_kg = '/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/knowledge_graph/orphan_associations.tsv'
+
+

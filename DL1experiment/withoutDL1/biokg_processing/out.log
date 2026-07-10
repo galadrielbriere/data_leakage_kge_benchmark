@@ -1,0 +1,96 @@
+2026-05-28 14:38:08,740 - WARNING - /home/galadriel/anaconda3/envs/benchmark/lib/python3.9/site-packages/ignite/handlers/checkpoint.py:16: DeprecationWarning: `TorchScript` support for functional optimizers is deprecated and will be removed in a future PyTorch release. Consider using the `torch.compile` optimizer instead.
+  from torch.distributed.optim import ZeroRedundancyOptimizer
+
+2026-05-28 14:38:08,779 - INFO - Configuration loaded:
+{
+    "common": {
+        "seed": 42,
+        "input_csv": "knowledge_graph/biokg_without_orphan_associations.tsv",
+        "out": "DL1experiment/withoutDL1/biokg_processing/",
+        "run_kg_prep": true,
+        "run_training": false,
+        "run_evaluation": false
+    },
+    "clean_kg": {
+        "remove_duplicates_triplets": true,
+        "make_directed": true,
+        "make_directed_params": [
+            "DDI",
+            "PPI"
+        ],
+        "check_DL1": true,
+        "check_DL1_params": {
+            "theta1": 0.5,
+            "theta2": 0.5,
+            "theta": 0.5
+        },
+        "permute_kg": false,
+        "clean_train_set": true,
+        "cold_start_split": false
+    }
+}
+2026-05-28 14:38:08,779 - INFO - Setting number of threads to 20
+2026-05-28 14:38:08,807 - INFO - Loading parameters from /home/galadriel/dr_benchmark/DL1experiment/withoutDL1/biokg_processing/params.yaml
+2026-05-28 14:38:08,807 - INFO - Output folder: DL1experiment/withoutDL1/biokg_processing/
+2026-05-28 14:38:08,807 - INFO - Preparing KG...
+2026-05-28 14:38:52,225 - INFO - KG with 105522 entities
+2026-05-28 14:38:52,225 - INFO - Removing duplicated triplets...
+  0%|          | 0/17 [00:00<?, ?it/s]  6%|▌         | 1/17 [00:00<00:01,  8.64it/s] 18%|█▊        | 3/17 [00:04<00:21,  1.55s/it] 35%|███▌      | 6/17 [00:04<00:06,  1.59it/s] 47%|████▋     | 8/17 [00:04<00:03,  2.29it/s] 59%|█████▉    | 10/17 [00:04<00:02,  3.26it/s] 71%|███████   | 12/17 [00:05<00:01,  3.66it/s] 76%|███████▋  | 13/17 [00:05<00:01,  3.38it/s] 82%|████████▏ | 14/17 [00:05<00:00,  3.31it/s] 88%|████████▊ | 15/17 [00:06<00:00,  3.30it/s] 94%|█████████▍| 16/17 [00:06<00:00,  2.44it/s]100%|██████████| 17/17 [00:06<00:00,  2.47it/s]
+2026-05-28 14:39:40,357 - INFO - Checking for semantically redundant and Cartesian product relations...
+  0%|          | 0/17 [00:00<?, ?it/s]  6%|▌         | 1/17 [00:00<00:07,  2.16it/s] 12%|█▏        | 2/17 [00:00<00:04,  3.35it/s] 18%|█▊        | 3/17 [00:18<01:58,  8.43s/it] 24%|██▎       | 4/17 [00:18<01:07,  5.19s/it] 35%|███▌      | 6/17 [00:19<00:27,  2.54s/it] 41%|████      | 7/17 [00:19<00:19,  1.90s/it] 47%|████▋     | 8/17 [00:20<00:15,  1.67s/it] 53%|█████▎    | 9/17 [00:20<00:09,  1.24s/it] 65%|██████▍   | 11/17 [00:21<00:04,  1.35it/s] 76%|███████▋  | 13/17 [00:22<00:02,  1.53it/s] 82%|████████▏ | 14/17 [00:23<00:02,  1.27it/s] 88%|████████▊ | 15/17 [00:24<00:01,  1.02it/s] 94%|█████████▍| 16/17 [00:29<00:01,  1.92s/it]100%|██████████| 17/17 [00:30<00:00,  1.50s/it]100%|██████████| 17/17 [00:30<00:00,  1.77s/it]
+2026-05-28 14:40:10,392 - INFO - Finding duplicate relations
+  0%|          | 0/136 [00:00<?, ?it/s] 30%|███       | 41/136 [00:00<00:00, 386.11it/s] 59%|█████▉    | 80/136 [00:00<00:00, 321.51it/s] 95%|█████████▍| 129/136 [00:00<00:00, 369.71it/s]100%|██████████| 136/136 [00:00<00:00, 332.46it/s]
+2026-05-28 14:40:10,801 - INFO - Duplicate relations: 1
+2026-05-28 14:40:10,801 - INFO - Reverse duplicate relations: 0
+
+2026-05-28 14:40:11,392 - INFO - Adding 1 near-duplicate relations ([('DPI', 'DRUG_TARGET')]) to the list of known SAME-SENSE redundant relations.
+  0%|          | 0/17 [00:00<?, ?it/s]  6%|▌         | 1/17 [00:00<00:05,  3.10it/s] 12%|█▏        | 2/17 [00:00<00:04,  3.63it/s] 18%|█▊        | 3/17 [00:07<00:44,  3.17s/it] 24%|██▎       | 4/17 [00:07<00:26,  2.04s/it] 29%|██▉       | 5/17 [00:07<00:16,  1.41s/it] 35%|███▌      | 6/17 [00:08<00:11,  1.04s/it] 41%|████      | 7/17 [00:08<00:07,  1.32it/s] 47%|████▋     | 8/17 [00:08<00:05,  1.58it/s] 53%|█████▎    | 9/17 [00:08<00:04,  1.91it/s] 59%|█████▉    | 10/17 [00:09<00:02,  2.34it/s] 76%|███████▋  | 13/17 [00:09<00:00,  4.05it/s] 82%|████████▏ | 14/17 [00:09<00:00,  3.32it/s] 88%|████████▊ | 15/17 [00:10<00:00,  3.30it/s] 94%|█████████▍| 16/17 [00:10<00:00,  2.51it/s]100%|██████████| 17/17 [00:10<00:00,  1.55it/s]
+2026-05-28 14:40:22,381 - INFO - Adding reverse triplets for relations DDI, PPI...
+2026-05-28 14:40:46,836 - INFO - Adding created reverses ['DDI', 'PPI'] to the list of known redundant relations.
+2026-05-28 14:40:46,836 - INFO - Splitting the dataset into train, validation and test sets...
+2026-05-28 14:40:48,090 - INFO - Entity coverage verified successfully.
+2026-05-28 14:40:48,091 - INFO - Cleaning the train set to avoid data leakage...
+2026-05-28 14:40:48,091 - INFO - Step 1: with respect to validation set.
+2026-05-28 14:40:48,091 - INFO - [reverse] Processing relation pair: (2, 17)
+2026-05-28 14:40:48,447 - INFO - Found 106780 triplets to remove for relation 17 with reverse 2.
+2026-05-28 14:40:48,508 - INFO - Found 106893 reverse triplets to remove for relation 2 with reverse 17.
+2026-05-28 14:40:48,508 - INFO - [reverse] Processing relation pair: (13, 18)
+2026-05-28 14:40:48,538 - INFO - Found 9105 triplets to remove for relation 18 with reverse 13.
+2026-05-28 14:40:48,582 - INFO - Found 9101 reverse triplets to remove for relation 13 with reverse 18.
+2026-05-28 14:40:48,582 - INFO - [duplicate] Processing relation pair: (5, 10)
+2026-05-28 14:40:48,607 - INFO - Found 1221 duplicate triplets to remove for relation 10 (dup of 5).
+2026-05-28 14:40:48,628 - INFO - Found 1225 duplicate triplets to remove for relation 5 (dup of 10).
+2026-05-28 14:40:48,629 - INFO - Step 2: with respect to test set.
+2026-05-28 14:40:48,629 - INFO - [reverse] Processing relation pair: (2, 17)
+2026-05-28 14:40:48,689 - INFO - Found 106964 triplets to remove for relation 17 with reverse 2.
+2026-05-28 14:40:48,736 - INFO - Found 106851 reverse triplets to remove for relation 2 with reverse 17.
+2026-05-28 14:40:48,736 - INFO - [reverse] Processing relation pair: (13, 18)
+2026-05-28 14:40:48,758 - INFO - Found 9080 triplets to remove for relation 18 with reverse 13.
+2026-05-28 14:40:48,782 - INFO - Found 9084 reverse triplets to remove for relation 13 with reverse 18.
+2026-05-28 14:40:48,782 - INFO - [duplicate] Processing relation pair: (5, 10)
+2026-05-28 14:40:48,803 - INFO - Found 1241 duplicate triplets to remove for relation 10 (dup of 5).
+2026-05-28 14:40:48,819 - INFO - Found 1241 duplicate triplets to remove for relation 5 (dup of 10).
+2026-05-28 14:40:49,399 - INFO - Entity coverage verification failed...
+2026-05-28 14:40:49,614 - INFO - Total entities in full kg: 105522
+2026-05-28 14:40:49,614 - INFO - Entities present in kg_train: 103785
+2026-05-28 14:40:49,614 - INFO - Missing entities in kg_train: 1737
+2026-05-28 14:40:50,263 - INFO - Entity coverage verified successfully.
+2026-05-28 14:40:50,263 - INFO - Computing triplet proportions...
+2026-05-28 14:40:50,346 - INFO - {0: {'train': 0.8022721893491124, 'test': 0.09907692307692308, 'val': 0.0986508875739645}, 1: {'train': 0.8026728051665708, 'test': 0.09866359741671463, 'val': 0.09866359741671463}, 2: {'train': 0.7618439385865553, 'test': 0.11907892329210482, 'val': 0.11907713812133984}, 3: {'train': 0.8107333060221221, 'test': 0.09545268332650553, 'val': 0.09381401065137239}, 4: {'train': 0.8055869074492099, 'test': 0.09678329571106095, 'val': 0.09762979683972912}, 5: {'train': 0.785191848867681, 'test': 0.10759964016114523, 'val': 0.10720851097117377}, 6: {'train': 0.8009950248756219, 'test': 0.09950248756218906, 'val': 0.09950248756218906}, 7: {'train': 0.8017904727686458, 'test': 0.09898499955088476, 'val': 0.09922452768046948}, 8: {'train': 0.7998818199724247, 'test': 0.10005909001378767, 'val': 0.10005909001378767}, 9: {'train': 0.8007430582714118, 'test': 0.09972624168947986, 'val': 0.09953070003910833}, 10: {'train': 0.7695982457514292, 'test': 0.11480930378259849, 'val': 0.11559245046597227}, 11: {'train': 0.8, 'test': 0.1, 'val': 0.1}, 12: {'train': 0.8006792297488908, 'test': 0.09971184192471298, 'val': 0.0996089283263962}, 13: {'train': 0.7622971390329597, 'test': 0.1188723439852769, 'val': 0.11883051698176343}, 14: {'train': 0.8061971521651597, 'test': 0.09696548189904462, 'val': 0.0968373659357956}, 15: {'train': 0.8102415659808571, 'test': 0.09499116417051152, 'val': 0.09476726984863144}, 16: {'train': 0.8918849512069851, 'test': 0.05341551104262968, 'val': 0.054699537750385205}, 17: {'train': 0.7618439385865553, 'test': 0.11907803070672233, 'val': 0.11907803070672233}, 18: {'train': 0.7622971390329597, 'test': 0.1188409737326418, 'val': 0.11886188723439853}}
+2026-05-28 14:40:50,346 - INFO - Saving results to DL1experiment/withoutDL1/biokg_processing/...
+2026-05-28 14:42:09,490 - WARNING - /home/galadriel/anaconda3/envs/benchmark/lib/python3.9/site-packages/torch/cuda/__init__.py:128: UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 11040). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver. (Triggered internally at ../c10/cuda/CUDAFunctions.cpp:108.)
+  return torch._C._cuda_getDeviceCount() > 0
+
+2026-05-28 14:42:09,490 - INFO - Detected device: cpu
+2026-05-28 14:42:09,491 - INFO - Initializing model...
+missing_entities=3584
+Traceback (most recent call last):
+  File "/home/galadriel/dr_benchmark/dev/run_training.py", line 964, in <module>
+    main(args)
+  File "/home/galadriel/dr_benchmark/dev/run_training.py", line 87, in main
+    train_model(kg_train, kg_val, kg_test, config)
+  File "/home/galadriel/dr_benchmark/dev/run_training.py", line 530, in train_model
+    model, criterion = initialize_model(config, kg_train, device)
+  File "/home/galadriel/dr_benchmark/dev/run_training.py", line 120, in initialize_model
+    model_name = config['model'].get('name', 'TransE')
+KeyError: 'model'

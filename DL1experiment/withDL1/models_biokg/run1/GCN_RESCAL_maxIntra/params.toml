@@ -1,0 +1,45 @@
+seed = 42
+
+kg_pkl = "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/DL1experiment/withDL1/biokg_processing/kgate/"
+output_directory = "/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/DL1experiment/withDL1/models_biokg/run1/GCN_RESCAL_maxIntra/"
+run_kg_preprocessing = false
+
+[model]
+node_embedding_dimensions = 200
+edge_embedding_dimensions = -1
+
+[model.encoder]
+name = "GCN"
+gnn_layer_number = 1
+neighbor_aggregation = "max" 
+
+[model.decoder]
+name = "RESCAL"
+
+[sampler]
+name = "Mixed"
+negative_triplet_count = 5
+
+[optimizer]
+name = "Adam"
+
+[optimizer.params]
+lr = 0.001
+weight_decay = 0.001
+
+[training]
+max_epochs = 250
+patience = 5
+train_batch_size = 4096
+evaluation_interval = 10
+evaluation_batch_size = 256
+save_interval = 2
+pretrained_embeddings = "auto"
+
+[evaluation]
+objective = "Link Prediction"
+target_edges = ["DRUG_DISEASE_ASSOCIATION"]
+made_directed_edges = ['DDI', 'PPI', 'DDI_inv', 'PPI_inv', 'DPI', 'DRUG_TARGET']
+thresholds = [10, 5]
+inference_kg = '/lustre/fswork/projects/rech/rnk/ufq76hz/dr_benchmark/knowledge_graph/biokg_orphan_associations_only.tsv'
+
