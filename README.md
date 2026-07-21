@@ -26,8 +26,8 @@ included in this repository. The plotting code and notebooks live in the
 1. **Clone the repository** (it ships with the experiment results):
 
 ```bash
-   git clone https://github.com/galadrielbriere/drug_repurposing_kge_benchmark.git
-   cd drug_repurposing_kge_benchmark/radar_plots
+   git clone https://github.com/galadrielbriere/data_leakage_kge_benchmark.git
+   cd data_leakage_kge_benchmark/radar_plots
 ```
 
 2. **Set the configuration.** Open `kg_configs.py` and set `DATA_ROOT` to the
@@ -50,8 +50,8 @@ included in this repository. The plotting code and notebooks live in the
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/galadrielbriere/drug_repurposing_kge_benchmark.git
-   cd drug_repurposing_kge_benchmark
+   git clone https://github.com/galadrielbriere/data_leakage_kge_benchmark.git
+   cd data_leakage_kge_benchmark
    ```
 
 2. Create the environment and install dependencies:
