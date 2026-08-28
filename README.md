@@ -6,7 +6,7 @@
 - **Benjamin Loire** (Aix Marseille Univ, INSERM, MMG, Marseille, France) 
 - **Anaïs Baudot** (Aix Marseille Univ, INSERM, MMG, Marseille, France; Barcelona Supercomputing Center, Barcelona, Spain)
 
-📄 Brière, G., Stosskopf, T., Loire, B., & Baudot, A. (2025). *Benchmarking the Impact of Data Leakage on the Performance of Knowledge Graph Embedding Models for Biomedical Link Prediction*. [bioRxiv](https://doi.org/10.1101/2025.01.23.634511)
+📄 [Brière, G., Stosskopf, T., Loire, B., & Baudot, A. (2026). Benchmarking the Impact of Data Leakage on the Performance of Knowledge Graph Embedding Models for Biomedical Link Prediction. *Bioinformatics*, Volume 42, Issue 8, August 2026, btag608](https://doi.org/10.1093/bioinformatics/btag608)
 
 
 ## 🚧 **Note**
